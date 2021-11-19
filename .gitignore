@@ -1,0 +1,9 @@
+*.dll
+*.exe
+*.log
+server.cfg
+node_modules/
+modules/
+data/
+crashdumps/
+cache/

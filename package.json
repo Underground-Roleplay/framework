@@ -1,0 +1,11 @@
+{
+  "name": "urp-framework",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "i18n": "^0.13.3",
+    "sjcl": "^1.0.8"
+  }
+}

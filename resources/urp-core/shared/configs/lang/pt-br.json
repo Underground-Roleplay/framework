@@ -1,0 +1,25 @@
+{
+    "SERVER": {
+        "STARTING": "O server está sendo iniciado...",
+        "LOCALE_STARTED": "Internacionalização inicializada",
+        "DATABASE_STARTED": "Database inicializada",
+        "STARTED": "O server foi iniciado"
+    },
+    "PLAYER": {
+        "NEW_CONNECTED": "O Jogador {{ playerName }} foi conectado",
+        "CONNECTED_TOO_SOON": "Nossos servidores ainda não estão prontos, tente conectar mais tarde",
+        "MISSING_IDENTIFICATORS": "Não foi possivel encontrar seus identificadores"
+    },
+    "ACCOUNT": {
+        "REGISTER_ERROR": "Tivemos um problema ao registrar sua conta, tente novamente mais tarde",
+        "LOGIN_ERROR": "Há um problema com o seu login, tente entrar em contato com um administrador",
+        "NEW_CREATED": "Uma nova conta foi criada para o player com socialID: {{ sID }}",
+        "BANNED": "Você foi banido de nossos servidores",
+        "LOGIN": "O player {{ playerName }} foi logado na conta com socialID: {{ sID }}"
+    },
+    "CHARACTER": {
+        "CREATION_ERROR": "Ocorreu um erro ao criar novo personagem [userID = {{ usrID }}]",
+        "CREATION_SUCCESS": "Um novo personagem foi criado [userID = {{ usrID }}]"
+    },
+    "WELCOME": "Bem vindo ao {{ serverName }}"
+}
