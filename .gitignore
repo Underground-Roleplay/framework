@@ -3,7 +3,7 @@
 *.log
 server.cfg
 node_modules/
-modules/
+/modules/
 data/
 crashdumps/
 cache/
