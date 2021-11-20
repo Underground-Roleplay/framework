@@ -2,6 +2,31 @@
 # yarn lockfile v1
 
 
+"@altv/types-client@^1.9.4":
+  version "1.9.4"
+  resolved "https://registry.yarnpkg.com/@altv/types-client/-/types-client-1.9.4.tgz#10706a1355ee45140834dbfaecdc6f0ce7a23803"
+  integrity sha512-6AUIqTvJE8lfbJuRgZHsxEZoWB2cCn87jWZiyOwPhSsxBBPnD2cUL+bk4NJiJ4moVAwNubkkBFVCaqniayJbpA==
+
+"@altv/types-natives@^1.4.3":
+  version "1.4.3"
+  resolved "https://registry.yarnpkg.com/@altv/types-natives/-/types-natives-1.4.3.tgz#45b0e91bf35a06d25c7703c0593fc0097bdfd3ab"
+  integrity sha512-O/qHgF4QqjzXeLzkx2QbSo+F/aRw+K8GFJaBiGiWFUecEj2MrdrwzuFzmQvGHG8BgQ0RPJ/b6FRJZE8pzDFhVw==
+
+"@altv/types-server@^2.1.1":
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/@altv/types-server/-/types-server-2.1.1.tgz#c556802420f9c1e21ea80ecc621d7f3a44c6cc9a"
+  integrity sha512-o6uwQAOFNfwZgFSdTw0LHER6XNrmdO+GLl9pBPkYi2PFAdVGmo6RVEtkl8TYy+L6eajyVI40YZIF9Yw9dwhJ9Q==
+
+"@altv/types-shared@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@altv/types-shared/-/types-shared-1.1.0.tgz#fb2ea39e4d5a5f039ecb50689acf62ee706a21f2"
+  integrity sha512-o09zVB4J00WTBMAoZGkKknuZOYoMKtU7RY4MGGWj3vF7p6xNYK+vMShYoXckRe5tWXalnV/oyUk6B38ydqFgnQ==
+
+"@altv/types-webview@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@altv/types-webview/-/types-webview-1.0.2.tgz#806681664dd6361295577afa8ab6090fb123621e"
+  integrity sha512-3RceTutIDS/XV8YUn/AiSe61BERBb6LfCCQxIcN5bvlh26lPXC0naxtQTcG39pSgj8a5iiVT8LaRNdEZP6JBcA==
+
 debug@^4.1.1:
   version "4.3.2"
   resolved "https://registry.yarnpkg.com/debug/-/debug-4.3.2.tgz#f0a49c18ac8779e31d4a0c6029dfb76873c7428b"

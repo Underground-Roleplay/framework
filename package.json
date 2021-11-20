@@ -7,5 +7,12 @@
   "dependencies": {
     "i18n": "^0.13.3",
     "sjcl": "^1.0.8"
+  },
+  "devDependencies": {
+    "@altv/types-client": "^1.9.4",
+    "@altv/types-natives": "^1.4.3",
+    "@altv/types-server": "^2.1.1",
+    "@altv/types-shared": "^1.1.0",
+    "@altv/types-webview": "^1.0.2"
   }
 }
