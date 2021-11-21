@@ -29,8 +29,6 @@ Core.PermissionList = {}
 
 Core.Translate = translate
 
-Core.serverCallbacks = {}
-
 Core.Functions = functions
 
 Core.DBReady = false

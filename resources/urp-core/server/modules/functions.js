@@ -115,20 +115,5 @@ const emitPlayerData = (source, key, value) => {
     });
 }
 
-// Callbacks
-const createCallback = (name, cb) => {
-    if(!Core.serverCallbacks[name]){
-        Core.serverCallbacks[name] = cb
-    }
-}
-
-const triggerCallback = (name, source, cb, ...args) => {
-    if (!Core.serverCallbacks[name]) {
-     console.log('Callback doesnt exists')
-     return;
-    }
-    Core.serverCallbacks[name](source, ...args)
-}
-
-export default { login, getPlayerIdentifier, setPosition, getMoney, createCallback, triggerCallback, hasPermission, 
+export default { login, getPlayerIdentifier, setPosition, getMoney, hasPermission, 
 addPermission, getCurrentInventory, spawnVehicle, emitPlayerData }
