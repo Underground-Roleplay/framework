@@ -109,6 +109,12 @@ const hasPermission = (source, perm) => {
     return false
 }
 
+const emitPlayerData = (source, key, value) => {
+    alt.nextTick(() => {
+        alt.emitClient(source, 'playerData:set', key, value);
+    });
+}
+
 // Callbacks
 const createCallback = (name, cb) => {
     if(!Core.serverCallbacks[name]){
@@ -125,4 +131,4 @@ const triggerCallback = (name, source, cb, ...args) => {
 }
 
 export default { login, getPlayerIdentifier, setPosition, getMoney, createCallback, triggerCallback, hasPermission, 
-addPermission, getCurrentInventory, spawnVehicle }
+addPermission, getCurrentInventory, spawnVehicle, emitPlayerData }

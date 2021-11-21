@@ -215,6 +215,7 @@ const saveInventory = async (source) => {
     if(!source) return;
     const { inventory, ssn } = source.playerData;
     db.execute('UPDATE characters SET inventory = ? WHERE ssn = ?', [JSON.stringify(inventory), ssn], undefined, alt.resourceName)
+    Core.Functions.emitPlayerData(source, 'inventory', inventory)
 }
 // End inventory
 const createCharacter = async (source, playerData, select = true) => {
@@ -244,6 +245,8 @@ const selectCharacter = async (source, playerData) => {
     const model = source.playerData.charinfo.gender === 0 ? 'mp_m_freemode_01' : 'mp_f_freemode_01'
     chat.success(`Logado com sucesso!`);
     Core.Functions.setPosition(source, position.x, position.y, position.z, model)
+    Core.Functions.emitPlayerData(source, 'charinfo', source.playerData.charinfo)
+    Core.Functions.emitPlayerData(source, 'inventory', source.playerData.inventory)
     source.health = source.playerData.metadata.health
     source.armour = source.playerData.metadata.armour
     //We can't pass source directly due its complexity

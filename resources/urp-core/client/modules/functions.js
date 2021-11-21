@@ -8,6 +8,23 @@ const startTicks = () => {
     }, 5000)
 }
 
+const handleSetplayerData = (key, value) => {
+    if(!alt.Player.local.playerData) {
+        alt.Player.local.playerData = {}
+    }
+
+    alt.emit('playerData:changed', key, value, alt.Player.local.playerData[key])
+    alt.Player.local.playerData[key] = value;
+    alt.log('[DEBUG] player meta for', key, 'updated')
+}
+
+
+const getPlayerData = (key) => {
+    if(!alt.Player.local.playerData[key]) return {};
+    return alt.Player.local.playerData[key]
+}
+
+
 const drawText = (x, y, width, height, scale, {r, g, b, a}, text) => {
     natives.setTextFont(4)
     natives.setTextProportional(0)
@@ -37,4 +54,4 @@ const drawText3D = (x, y, z, text) => {
     natives.clearDrawOrigin()
 }
 
-export default {drawText, drawText3D, startTicks}
+export default {drawText, drawText3D, startTicks, handleSetplayerData, getPlayerData}
