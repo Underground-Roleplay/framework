@@ -39,8 +39,8 @@ $(document).on("dblclick", ".item-slot", function(e) {
     var ItemData = $(this).data("item");
     var ItemInventory = $(this).parent().attr("data-inventory");
     if (ItemData) {
-        Inventory.Close();
         alt.emit('inventory:useItem', ItemInventory, ItemData)
+        Inventory.Close();
         // $.post(
         //     "https://qb-inventory/UseItem",
         //     JSON.stringify({
@@ -756,10 +756,10 @@ function handleDragDrop() {
             fromData = ui.draggable.data("item");
             fromInventory = ui.draggable.parent().attr("data-inventory");
             if (fromData.useable) {
+                alt.emit('inventory:useItem', fromInventory, fromData)
                 if (fromData.shouldClose) {
                     Inventory.Close();
                 }
-                alt.emit('inventory:useItem', fromInventory, fromData)
                 // $.post(
                 //     "https://qb-inventory/UseItem",
                 //     JSON.stringify({

@@ -3,28 +3,18 @@ import * as alt from 'alt-client';
 
 let isOpen = false
 
-alt.onServer('inventory:open' , (iData) => {
-    const data = {
-        inventory: iData,
-        slots: Core.Config.MaxInvSlots,
-        other: undefined,
-        maxWeight: Core.Config.MaxWeight,
-        ammo: {},
-        maxAmmo: 100
-    }
-    openInventory(data)
-})
-
 const openInventory = (data) => {
     Core.Browser.open('http://resources/urp-inventory/client/html/ui.html', true, true)
     Core.Browser.on('inventory:useItem', (inventory, item) => {
-        alt.log('use', inventory, item)
+        alt.log('use')
+        alt.emitServer('inventory:useItem', item.name)
     })
     Core.Browser.on('inventory:Notify', (msg, type) => {
         alt.log('notify', msg, type)
     })
     Core.Browser.on('inventory:dropItem', (inventory, item, amount) => {
-        alt.log('drop', inventory, item, amount)
+        alt.log('drop')
+        alt.emitServer('inventory:dropItem', item.name, amount)
     })
     Core.Browser.on('inventory:close', () => {
         closeInventory()
@@ -32,18 +22,39 @@ const openInventory = (data) => {
     Core.Browser.on('load', () => {
         Core.Browser.emit('inventory:open', data)
      })
+    alt.toggleGameControls(false)
     isOpen = true
 }
 
 const closeInventory = () => {
     Core.Browser.close()
+    alt.toggleGameControls(true)
     isOpen = false
+}
+
+const updateInventory = (iData, isError) => {
+    const data = {
+        inventory: iData,
+        slots: Core.Config.MaxInvSlots,
+        maxWeight: Core.Config.MaxWeight,
+        error: isError
+    }
+    Core.Browser.emit('inventory:update', data)
 }
 
 
 alt.on('keydown', (key) => {
     if(key === 73 && !isOpen) {
-        alt.emitServer('inventory:getInventoryData')
+        const inventory = Core.Functions.getPlayerData('inventory')
+        const data = {
+            inventory: inventory,
+            slots: Core.Config.MaxInvSlots,
+            other: undefined,
+            maxWeight: Core.Config.MaxWeight,
+            ammo: {},
+            maxAmmo: 100
+        }
+        openInventory(data)
     }
     if(key === 27 && isOpen){
         closeInventory()
