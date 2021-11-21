@@ -1,26 +1,7 @@
 import Core from 'urp-core';
 import * as alt from 'alt-client';
 
-const inventoryView = new alt.WebView('http://resource/client/html/ui.html', false)
 let isOpen = false
-
-inventoryView.on('load', () => {
-    inventoryView.on('inventory:useItem', (inventory, item) => {
-        alt.log('use', inventory, item)
-    })
-    inventoryView.on('inventory:Notify', (msg, type) => {
-        alt.log('notify', msg, type)
-    })
-    inventoryView.on('inventory:dropItem', (inventory, item, amount) => {
-        alt.log('drop', inventory, item, amount)
-    })
-    inventoryView.on('inventory:close', (inventory, item, amount) => {
-        inventoryView.unfocus()
-        alt.toggleGameControls(true);
-        alt.showCursor(false)
-        isOpen = false
-    })
-})
 
 alt.onServer('inventory:open' , (iData) => {
     const data = {
@@ -31,12 +12,33 @@ alt.onServer('inventory:open' , (iData) => {
         ammo: {},
         maxAmmo: 100
     }
-    inventoryView.emit('inventory:open', data)
-    inventoryView.focus()
-    alt.toggleGameControls(false);
-    alt.showCursor(true)
-    isOpen = true
+    openInventory(data)
 })
+
+const openInventory = (data) => {
+    Core.Browser.open('http://resources/urp-inventory/client/html/ui.html', true, true)
+    Core.Browser.on('inventory:useItem', (inventory, item) => {
+        alt.log('use', inventory, item)
+    })
+    Core.Browser.on('inventory:Notify', (msg, type) => {
+        alt.log('notify', msg, type)
+    })
+    Core.Browser.on('inventory:dropItem', (inventory, item, amount) => {
+        alt.log('drop', inventory, item, amount)
+    })
+    Core.Browser.on('inventory:close', () => {
+        closeInventory()
+    })
+    Core.Browser.on('load', () => {
+        Core.Browser.emit('inventory:open', data)
+     })
+    isOpen = true
+}
+
+const closeInventory = () => {
+    Core.Browser.close()
+    isOpen = false
+}
 
 
 alt.on('keydown', (key) => {
@@ -44,10 +46,6 @@ alt.on('keydown', (key) => {
         alt.emitServer('inventory:getInventoryData')
     }
     if(key === 27 && isOpen){
-        inventoryView.emit('inventory:close')
-        inventoryView.unfocus()
-        alt.toggleGameControls(true);
-        alt.showCursor(false)
-        isOpen = false
+        closeInventory()
     }
 })
