@@ -192,6 +192,25 @@ const addItem = (source, item, amount, slot, info) => {
     return false
 }
 
+const removeItem = (source, item, amount) => {
+    amount = Number(amount)
+
+    const slot = getItemSlot(source.playerData.inventory, item)
+    if(!slot) return false;
+
+    if(source.playerData.inventory[slot].amount > amount){
+        source.playerData.inventory[slot].amount = source.playerData.inventory[slot].amount - amount
+        saveInventory(source)
+        return true
+    }
+    if(source.playerData.inventory[slot].amount === amount){
+        source.playerData.inventory[slot] = undefined
+        saveInventory(source)
+        return true
+    }
+    return false
+}
+
 const saveInventory = async (source) => {
     if(!source) return;
     const { inventory, ssn } = source.playerData;
@@ -232,4 +251,4 @@ const selectCharacter = async (source, playerData) => {
     alt.emitClient(source, 'Core:Client:CharacterLoaded')
 }
 
-export default { startCharacter, addItem, tickManager, updateBasicData }
+export default { startCharacter, addItem, tickManager, updateBasicData, getItemSlot, removeItem }
