@@ -37,6 +37,7 @@ const open = async (url, cursor = true, blurBackground, isOverlay = false) => {
     if(!instance) {
         createInstance()
     }
+
     // instance.isVisible = false
     if(isClosing){
         await new Promise((resolve) => {
@@ -52,8 +53,9 @@ const open = async (url, cursor = true, blurBackground, isOverlay = false) => {
     }
 
     if (currentEvents.length > 0){
-        alt.log('There`s events clean it up')
+        close(0)
     }
+
     if (blurBackground) {
         native.triggerScreenblurFadeIn(100);
         native.displayRadar(false);

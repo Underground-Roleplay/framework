@@ -249,9 +249,122 @@ const selectCharacter = async (source, playerData) => {
     Core.Functions.emitPlayerData(source, 'inventory', source.playerData.inventory)
     source.health = source.playerData.metadata.health
     source.armour = source.playerData.metadata.armour
+    loadCustoms(source)
     //We can't pass source directly due its complexity
     alt.emit('Core:Server:CharacterLoaded', source.id)
     alt.emitClient(source, 'Core:Client:CharacterLoaded')
 }
 
-export default { startCharacter, addItem, tickManager, updateBasicData, getItemSlot, removeItem }
+const getProps = (source) => {
+    if(!source || !source.playerData) return;
+    const props = [
+        source.getProp(0),
+        source.getProp(1),
+        source.getProp(2),
+        source.getProp(6),
+        source.getProp(7),
+    ] 
+    return props
+}
+
+const getComponentVariations = (source) => {
+    if(!source || !source.playerData) return;
+    const cloth = [
+        source.getClothes(0), // Head?
+        source.getClothes(1), // Beard
+        source.getClothes(2), // Hair
+        source.getClothes(3),
+        source.getClothes(4),
+        source.getClothes(5),
+        source.getClothes(6),
+        source.getClothes(7),
+        source.getClothes(8),
+        source.getClothes(9),
+        source.getClothes(10),
+        source.getClothes(11)
+    ] 
+    return cloth
+}
+
+const getFaceFeatures = (source) => {
+    if(!source || !source.playerData) return;
+    const features = [
+        source.getFaceFeatureScale(0), //Nose_Width
+        source.getFaceFeatureScale(1), //Nose_Peak_Hight
+        source.getFaceFeatureScale(2), //Nose_Peak_Lenght
+        source.getFaceFeatureScale(3), //Nose_Bone_High
+        source.getFaceFeatureScale(4), //Nose_Peak_Lowering
+        source.getFaceFeatureScale(5), //Nose_Bone_Twist
+        source.getFaceFeatureScale(6), //EyeBrown_High
+        source.getFaceFeatureScale(7), //EyeBrown_Forward
+        source.getFaceFeatureScale(8), //Cheeks_Bone_High
+        source.getFaceFeatureScale(9), //Cheeks_Bone_Width
+        source.getFaceFeatureScale(10), //Cheeks_Width
+        source.getFaceFeatureScale(11), //Eyes_Openning
+        source.getFaceFeatureScale(12), //Lips_Thickness
+        source.getFaceFeatureScale(13), //Jaw_Bone_Width
+        source.getFaceFeatureScale(14), //Jaw_Bone_Back_Lenght
+        source.getFaceFeatureScale(15), //Chimp_Bone_Lowering
+        source.getFaceFeatureScale(16), //Chimp_Bone_Lenght
+        source.getFaceFeatureScale(17), //Chimp_Bone_Width
+        source.getFaceFeatureScale(18), //Chimp_Hole
+        source.getFaceFeatureScale(19),  //Neck_Thikness
+    ]
+    return features
+}
+
+const getHairColors = (source) => {
+    if(!source || !source.playerData) return;
+    const hair = [
+        source.getHairColor(),
+        source.getHairHighlightColor()
+    ]
+    return hair
+}
+
+const createCustoms = (source) => {
+    const { ssn } = source.playerData
+    const customizations = {
+        "headBlend": source.getHeadBlendData(),
+        "componentVariations": getComponentVariations(source),
+        "features": getFaceFeatures(source),
+        "props": getProps(source),
+        "eyeColor": source.getEyeColor(),
+        "hairColor": getHairColors(source)
+    }
+    db.execute('INSERT INTO characters_customs (ssn, model, customizations, cloakroom) VALUES (?,?,?,?)', [ssn, 
+    source.model, JSON.stringify(customizations), 0], undefined, alt.resourceName)
+}
+
+
+// TODO METHODS TO SET PROPERTIES
+// const setHeadBlend = (source) => {
+//     if(!source || !source.playerData || !source.playerData.customizations) return;
+//     const { headBlend } = source.playerData.customizations
+//     source.setHeadBlendData(
+//         headBlend.shapeFirstID, 
+//         headBlend.shapeSecondID, 
+//         headBlend.shapeThirdID, 
+//         headBlend.skinFirstID, 
+//         headBlend.skinSecondID, 
+//         headBlend.skinThirdID, 
+//         headBlend.shapeMix, 
+//         headBlend.skinMix, 
+//         headBlend.thirdMix
+//         )
+// }
+
+const loadCustoms = async (source) => {
+   const { ssn } = source.playerData
+   const result = await executeSync('SELECT * FROM characters_customs WHERE ssn = ?', [ssn])
+   if(result[0]){
+        source.playerData.customizations = JSON.parse(result[0].customizations)
+        console.log('set appearance')
+        // setHeadBlend(source)
+        return
+    }
+    console.log('create appearance')
+    createCustoms(source)
+}
+
+export default { startCharacter, addItem, tickManager, updateBasicData, getItemSlot, removeItem, loadCustoms }
