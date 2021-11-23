@@ -1,5 +1,5 @@
 # TODO
-
+## PS: Our current customization system uses RC branch, this framework will not work in release by now
 ### Standalone resources (Already packed - non optional):
 
 - mysql2-wrapper (https://github.com/nickplayz/mysql2-wrapper)

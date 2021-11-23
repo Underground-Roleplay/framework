@@ -44,6 +44,7 @@ const createSSN = async () => {
 const checkPlayerData = async (source, playerData = undefined) => {
     if (!source) return;
     if(!playerData){
+        //  Maybe we can call creator over here before the data creation
         playerData = new Object()
         playerData.source = source
         playerData.ssn = await createSSN()
@@ -233,11 +234,13 @@ const createCharacter = async (source, playerData, select = true) => {
         inventory: JSON.stringify(playerData.inventory)
     }, undefined, alt.resourceName)
     console.log(Core.Translate('CHARACTER.CREATION_SUCCESS'))
+    //  Maybe we can call creator over here before the DB creation
     if(select){
     startCharacter(source, playerData)
     }
 }
 
+//  Player creator must be called before selectCharater
 const selectCharacter = async (source, playerData) => {
     source.playerData = playerData
     source.Functions = new Object()
@@ -322,7 +325,17 @@ const getHairColors = (source) => {
     return hair
 }
 
+
+//  Use this to update all customization data after a change on playerData
+const updateCustoms = async (source) => {
+    if(!source || !source.playerData) return;
+    const { ssn, customizations } = source.playerData
+    db.execute('UPDATE characters_customs SET model = ?, customizations = ?, cloakroom = ? WHERE ssn = ?', [source.model, JSON.stringify(customizations),
+     0, ssn], undefined, alt.resourceName)
+}
+
 const createCustoms = (source) => {
+    if(!source || !source.playerData) return;
     const { ssn } = source.playerData
     const customizations = {
         "headBlend": source.getHeadBlendData(),
@@ -336,35 +349,68 @@ const createCustoms = (source) => {
     source.model, JSON.stringify(customizations), 0], undefined, alt.resourceName)
 }
 
+const setComponentVariations = (source, componentVariations) => {
+    if(!source || !source.playerData) return;
+    for(let i = 0; i < componentVariations.length; i++){
+        source.setClothes(i, componentVariations[i].drawable, componentVariations[i].texture)
+    }
+}
 
-// TODO METHODS TO SET PROPERTIES
-// const setHeadBlend = (source) => {
-//     if(!source || !source.playerData || !source.playerData.customizations) return;
-//     const { headBlend } = source.playerData.customizations
-//     source.setHeadBlendData(
-//         headBlend.shapeFirstID, 
-//         headBlend.shapeSecondID, 
-//         headBlend.shapeThirdID, 
-//         headBlend.skinFirstID, 
-//         headBlend.skinSecondID, 
-//         headBlend.skinThirdID, 
-//         headBlend.shapeMix, 
-//         headBlend.skinMix, 
-//         headBlend.thirdMix
-//         )
-// }
+const setFaceFeatures = (source, faceFeatures) => {
+    if(!source || !source.playerData) return;
+    for(let i = 0; i < faceFeatures.length; i++){
+        source.setFaceFeature(i, faceFeatures[i])
+    }
+}
+
+const setProps = (source, props) => {
+    if(!source || !source.playerData) return;
+    for(let i = 0; i < props.length; i++){
+        if (i <= 2) {
+            source.setProp(i, props[i].drawable, props[i].texture)
+        } else {
+            source.setProp(i + 3, props[i].drawable, props[i].texture)
+        }
+        
+    }
+}
+
+const changeCloth = (source, component, drawable, texture) => {
+    if(!source || !source.playerData) return;
+    source.setClothes(component, drawable, texture)
+    source.playerData.customizations.componentVariations[component].drawable = drawable
+    source.playerData.customizations.componentVariations[component].texture = texture
+    updateCustoms(source)
+}
 
 const loadCustoms = async (source) => {
+    if(!source || !source.playerData) return;
    const { ssn } = source.playerData
    const result = await executeSync('SELECT * FROM characters_customs WHERE ssn = ?', [ssn])
    if(result[0]){
-        source.playerData.customizations = JSON.parse(result[0].customizations)
         console.log('set appearance')
-        // setHeadBlend(source)
+        source.playerData.customizations = JSON.parse(result[0].customizations)
+        const {headBlend, componentVariations, features, props, eyeColor, hairColor} = source.playerData.customizations
+        source.setHeadBlendData(
+            headBlend.shapeFirstID, 
+            headBlend.shapeSecondID, 
+            headBlend.shapeThirdID, 
+            headBlend.skinFirstID, 
+            headBlend.skinSecondID, 
+            headBlend.skinThirdID, 
+            headBlend.shapeMix, 
+            headBlend.skinMix, 
+            headBlend.thirdMix
+        )
+        setComponentVariations(source, componentVariations)
+        setFaceFeatures(source, features)
+        setProps(source, props)
+        source.setEyeColor(eyeColor)
+        source.setHairColor(hairColor)
         return
     }
     console.log('create appearance')
     createCustoms(source)
 }
 
-export default { startCharacter, addItem, tickManager, updateBasicData, getItemSlot, removeItem, loadCustoms }
+export default { startCharacter, addItem, tickManager, updateBasicData, getItemSlot, removeItem, loadCustoms, changeCloth }

@@ -55,3 +55,16 @@ chat.registerCmd('whitelist', (source, [id])=>{
       return;
    }
 })
+
+
+chat.registerCmd('cloth', (source, [component, drawable, texture])=>{
+   if(!component || !drawable || !texture){
+      alt.emitClient(source, 'client:notify:sendMessage', 
+      {iconType: 0, title: 'COMANDOS', 
+      message: 'use /cloth [component drawable texture]', 
+      color: 'FC2E20', width: 244, duration: 3000}
+      )
+      return;
+   }
+   Core.Character.changeCloth(source, component, drawable, texture)
+})
