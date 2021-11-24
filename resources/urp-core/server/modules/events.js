@@ -17,6 +17,10 @@ alt.on('playerDisconnect', async (source) => {
     Core.Character.updateBasicData(source)
 })
 
+alt.on('playerDeath', (source, killer, weaponHash) => {
+    Core.Character.setDeath(source, true)
+})
+
 //Ticks
 alt.onClient("Core:Server:CharacterTick", (source) => {
     Core.Character.tickManager(source)

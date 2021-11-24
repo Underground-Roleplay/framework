@@ -12,7 +12,9 @@ alt.onServer('playerData:set', (key, value) => {
 })
 
 alt.on('playerData:changed', (key, value, old) => {
-    alt.log('dsdas', key, value, old)
+    if(key === 'isDead'){
+    Core.Functions.handleDeath(value)
+    }
 })
 
 alt.on('connectionComplete', () => {

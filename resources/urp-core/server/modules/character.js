@@ -79,6 +79,10 @@ const tickManager = (source) =>{
     if (Date.now() < source.nextPingTime) {
         return;
     }
+    if (source.nextDeathSpawn && Date.now() > source.nextDeathSpawn) {
+        setDeath(source, false)
+        source.spawn(0, 0, 0, 0)
+    }
     updateBasicData(source)
     source.nextPingTime = Date.now() + Core.Config.SaveInterval;
 }
@@ -250,6 +254,7 @@ const selectCharacter = async (source, playerData) => {
     Core.Functions.setPosition(source, position.x, position.y, position.z, model)
     Core.Functions.emitPlayerData(source, 'charinfo', source.playerData.charinfo)
     Core.Functions.emitPlayerData(source, 'inventory', source.playerData.inventory)
+    setDeath(source, source.playerData.metadata.isdead)
     source.health = source.playerData.metadata.health
     source.armour = source.playerData.metadata.armour
     loadCustoms(source)
@@ -375,6 +380,25 @@ const setProps = (source, props) => {
     }
 }
 
+const setDeath = (source, isDead) => {
+    source.playerData.metadata.isdead = isDead
+    if(!source.playerData.metadata.isdead){
+        source.nextDeathSpawn = null
+        Core.Functions.emitPlayerData(source, 'isDead', source.playerData.metadata.isdead)
+        saveMetadata(source)
+        return;
+    }
+    source.nextDeathSpawn = Date.now() + 30000
+    Core.Functions.emitPlayerData(source, 'isDead', source.playerData.metadata.isdead)
+    saveMetadata(source)
+}
+
+const saveMetadata = (source) => {
+    if(!source) return;
+    const { metadata, ssn } = source.playerData
+    db.execute('UPDATE characters SET metadata = ? WHERE ssn = ?', [JSON.stringify(metadata), ssn], undefined, alt.resourceName)
+}
+
 const changeCloth = (source, component, drawable, texture) => {
     if(!source || !source.playerData) return;
     source.setClothes(component, drawable, texture)
@@ -413,4 +437,5 @@ const loadCustoms = async (source) => {
     createCustoms(source)
 }
 
-export default { startCharacter, addItem, tickManager, updateBasicData, getItemSlot, removeItem, loadCustoms, changeCloth }
+export default { startCharacter, addItem, tickManager, updateBasicData, getItemSlot, removeItem, loadCustoms, changeCloth,
+    setDeath }
