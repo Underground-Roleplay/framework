@@ -2,7 +2,7 @@ import * as native from 'natives'
 import * as alt from 'alt-client'
 
 
-const blankURL = 'http://resource/client/html/blank.html'
+const blankURL = 'http://resources/urp-core/client/html/blank.html'
 
 let instance;
 let currentEvents = []
@@ -93,6 +93,8 @@ const emit = (eventName, ...args) => {
 //  Return webview to blank and turn off all events
 const close = (delay = 0) => {
     if(!instance) return;
+    instance.isVisible = false;
+    alt.log('closing')
     isClosing = true;
     instance.url = blankURL
     showCursor(false)
@@ -100,6 +102,7 @@ const close = (delay = 0) => {
 
     alt.Player.local.webViewOpen = false
     native.triggerScreenblurFadeOut(100)
+    native.displayRadar(true);
 
     for (let i = 0; i < currentEvents.length; i++) {
         const eventData = currentEvents[i];

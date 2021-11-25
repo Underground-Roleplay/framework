@@ -1,4 +1,5 @@
 import Core from 'urp-core';
+import chat from 'urp-chat';
 import * as alt from 'alt-client';
 
 let isOpen = false
@@ -44,7 +45,7 @@ const updateInventory = (iData, isError) => {
 
 
 alt.on('keydown', (key) => {
-    if(key === 73 && !isOpen) {
+    if(key === 73 && !isOpen && !alt.Player.local.webViewOpen && !alt.Player.local.isDead && !alt.isMenuOpen() && !chat.isChatOpen()) {
         const inventory = Core.Functions.getPlayerData('inventory')
         const data = {
             inventory: inventory,
