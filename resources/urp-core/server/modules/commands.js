@@ -100,3 +100,11 @@ chat.registerCmd('createTestInteractions', (source)=>{
 chat.registerCmd('createInteraction', (source)=>{
    Core.Interactions.createSingleInteraction(source.pos, 'random', 'test', false)
 })
+
+chat.registerCmd('createPed', (source) => {
+   Core.Entities.createPed(source.pos, 0, {pedType:3, modelHash: alt.hash('mp_m_freemode_01')})
+})
+chat.registerCmd('createMarker', (source) => {
+   const color =  new alt.RGBA(0, 181, 204, 200)
+   Core.Entities.createMarker(source.pos, 0, {type: 0, r: color.r, g: color.g, b: color.b, a: color.a})
+})

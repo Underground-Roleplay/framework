@@ -8,6 +8,8 @@ import functions from './modules/functions'
 
 import browser from './modules/browser'
 
+import entities from './modules/entities'
+
 import './modules/events'
 
 
@@ -19,5 +21,6 @@ Core.Browser = browser
 
 Core.Functions = functions
 
+Core.Entities = entities
 
 export default Core;

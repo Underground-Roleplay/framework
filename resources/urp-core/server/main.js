@@ -13,6 +13,7 @@ import { init, translate } from './libs/locale';
 import { Items } from '../shared/configs/items';
 import { executeSync } from './libs/utils';
 import interactions from './modules/interactions';
+import entities from './modules/entities';
 
 const Core = {}
 
@@ -25,6 +26,8 @@ Core.Shared.Items = Items
 init(Core.Config.lang)
 
 Core.Character = character
+
+Core.Entities = entities
 
 Core.PermissionList = {}
 
