@@ -1,4 +1,4 @@
-*.dll
+/*.dll
 *.exe
 *.log
 server.cfg
@@ -7,3 +7,5 @@ node_modules/
 data/
 crashdumps/
 cache/
+
+/AltV.Net.Host.runtimeconfig.json

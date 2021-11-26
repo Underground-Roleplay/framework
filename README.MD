@@ -7,3 +7,4 @@
 - mysql2-wrapper (https://github.com/nickplayz/mysql2-wrapper)
 - altV-better-notify (https://github.com/LorianAtashi01/altV-better-notify)
 - altV-Chat-Extended (https://github.com/Stuyk/altV-Chat-Extended) [Archived]
+- altv-csharp-entity-sync-to-js-wrapper (https://github.com/Kudze/altv-csharp-entity-sync-to-js-wrapper)
