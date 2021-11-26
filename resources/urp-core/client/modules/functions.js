@@ -62,6 +62,31 @@ const handleDeathMovement = () => {
     }
 }
 
+const interactionMode = () => {
+    let interactionTick;
+    if(interactionTick){
+        alt.clearInterval(interactionTick);
+        interactionTick = null;
+    }
+
+    interactionTick = alt.everyTick(() => {
+        if (!alt.Player.local.playerData.inInteraction || !alt.Player.local.playerData.inInteraction.type) {
+            return;
+        }
+        helpPrompt(`Aperte ~INPUT_FRONTEND_RB~ para interagir`)
+        // We can use a keymap in the future :D
+        if (natives.isControlJustPressed(0, 206)) {
+            alt.emitServer('interaction:trigger', alt.Player.local.playerData.inInteraction.type);
+        }
+    })
+}
+
+function helpPrompt(msg) {
+    natives.beginTextCommandDisplayHelp('STRING');
+    natives.addTextComponentSubstringPlayerName(msg);
+    natives.endTextCommandDisplayHelp(0, false, true, -1);
+}
+
 const drawText2D = (text, pos, scale, color) => {
     if (scale > 2) {
         scale = 2;
@@ -108,4 +133,4 @@ const drawText3D = (x, y, z, text) => {
     natives.clearDrawOrigin()
 }
 
-export default {drawText, drawText3D, startTicks, handleSetplayerData, getPlayerData, handleDeath}
+export default {drawText, drawText3D, startTicks, handleSetplayerData, getPlayerData, handleDeath, interactionMode}

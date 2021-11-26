@@ -12,6 +12,7 @@ import './modules/commands';
 import { init, translate } from './libs/locale';
 import { Items } from '../shared/configs/items';
 import { executeSync } from './libs/utils';
+import interactions from './modules/interactions';
 
 const Core = {}
 
@@ -28,6 +29,8 @@ Core.Character = character
 Core.PermissionList = {}
 
 Core.Translate = translate
+
+Core.Interactions = interactions
 
 Core.Functions = functions
 
