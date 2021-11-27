@@ -9,3 +9,7 @@ crashdumps/
 cache/
 
 /AltV.Net.Host.runtimeconfig.json
+package-lock.json
+jsconfig.json
+yarn.lock
+yarn.lock
