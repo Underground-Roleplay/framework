@@ -256,13 +256,15 @@ const selectCharacter = async (source, playerData, fromCreation = false) => {
     setDeath(source, source.playerData.metadata.isdead)
     source.health = source.playerData.metadata.health
     source.armour = source.playerData.metadata.armour
-    if(fromCreation){
-        Core.Functions.setPosition(source, position.x, position.y, position.z)
-        loadCustoms(source)
-    }else{
-        Core.Functions.setPosition(source, position.x, position.y, position.z, model)
-        loadCustoms(source)
-    }
+    Core.Functions.setPosition(source, position.x, position.y, position.z)
+    loadCustoms(source)
+    // if(fromCreation){
+    //     // Core.Functions.setPosition(source, position.x, position.y, position.z)
+      
+    // }else{
+    //     // Core.Functions.setPosition(source, position.x, position.y, position.z, model)
+    //     loadCustoms(source)
+    // }
     //We can't pass source directly due its complexity
     alt.emit('Core:Server:CharacterLoaded', source.id)
     alt.emitClient(source, 'Core:Client:CharacterLoaded')
@@ -298,6 +300,27 @@ const getComponentVariations = (source) => {
     ] 
     return cloth
 }
+
+const getHeadOverlays = (source) => {
+    if(!source || !source.playerData) return;
+    const headOverlays = [
+        source.getHeadOverlay(0),
+        source.getHeadOverlay(1),
+        source.getHeadOverlay(2), 
+        source.getHeadOverlay(3),
+        source.getHeadOverlay(4),
+        source.getHeadOverlay(5),
+        source.getHeadOverlay(6),
+        source.getHeadOverlay(7),
+        source.getHeadOverlay(8),
+        source.getHeadOverlay(9),
+        source.getHeadOverlay(10),
+        source.getHeadOverlay(11),
+        source.getHeadOverlay(12)
+    ] 
+    return headOverlays
+}
+
 
 const getFaceFeatures = (source) => {
     if(!source || !source.playerData) return;
@@ -352,7 +375,8 @@ const createCustoms = (source) => {
         "features": getFaceFeatures(source),
         "props": getProps(source),
         "eyeColor": source.getEyeColor(),
-        "hairColor": getHairColors(source)
+        "hairColor": getHairColors(source),
+        "headOverlays": getHeadOverlays(source)
     }
     db.execute('INSERT INTO characters_customs (ssn, model, customizations, cloakroom) VALUES (?,?,?,?)', [ssn, 
     source.model, JSON.stringify(customizations), 0], undefined, alt.resourceName)
@@ -382,6 +406,15 @@ const setProps = (source, props) => {
         }
         
     }
+}
+
+const setHeadOverlays = (source, headOverlays) => {
+    if(!source || !source.playerData) return;
+    for(let i = 0; i < headOverlays.length; i++){
+        source.setHeadOverlay(i, headOverlays[i].index, headOverlays[i].opacity)
+        source.setHeadOverlayColor(i, headOverlays[i].colorType, headOverlays[i].colorIndex, headOverlays[i].secondColorIndex)
+    }
+  
 }
 
 const setDeath = (source, isDead) => {
@@ -416,9 +449,13 @@ const loadCustoms = async (source) => {
    const { ssn } = source.playerData
    const result = await executeSync('SELECT * FROM characters_customs WHERE ssn = ?', [ssn])
    if(result[0]){
-        console.log('set appearance')
         source.playerData.customizations = JSON.parse(result[0].customizations)
-        const {headBlend, componentVariations, features, props, eyeColor, hairColor} = source.playerData.customizations
+        const {headBlend, componentVariations, 
+            features, props, eyeColor, hairColor, headOverlays} = source.playerData.customizations
+        if(source.model !== parseInt(result[0].model)){
+            const { position } = source.playerData
+            Core.Functions.setPosition(source, position.x, position.y, position.z, result[0].model)
+        }
         source.setHeadBlendData(
             headBlend.shapeFirstID, 
             headBlend.shapeSecondID, 
@@ -434,7 +471,9 @@ const loadCustoms = async (source) => {
         setFaceFeatures(source, features)
         setProps(source, props)
         source.setEyeColor(eyeColor)
-        source.setHairColor(hairColor)
+        source.setHairColor(hairColor[0])
+        source.setHairHighlightColor(hairColor[1])
+        setHeadOverlays(source, headOverlays)
         return
     }
     console.log('create appearance')

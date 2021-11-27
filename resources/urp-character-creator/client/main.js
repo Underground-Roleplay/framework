@@ -68,10 +68,10 @@ const opencCreator = () => {
         alt.emitServer(`Creator:setFaceFeature`, data)
     })
     Core.Browser.on(`Creator:setEyeColor`, (data) => {
-        alt.emitServer(`Creators:etEyeColor`, data)
+        alt.emitServer(`Creators:setEyeColor`, data)
     })
     Core.Browser.on(`Creator:setHeadOverlay`, (data) => {
-        alt.emitServer(`Creator:setEyeColor`, data)
+        alt.emitServer(`Creator:setHeadOverlay`, data)
     })
     Core.Browser.on(`Creator:setHeadOverlayColor`, (data) => {
         alt.emitServer(`Creator:setHeadOverlayColor`, data)

@@ -7,7 +7,6 @@ alt.onClient('Creator:charSetGender', (source, data) => {
 });
 
 alt.onClient('Creator:setHeadBlendData', (source, data) => {
-    //console.log('Creator:setHeadBlendData', data)
     const parsed = JSON.parse(data)
     source.setHeadBlendData(
         parsed[0],
@@ -30,21 +29,18 @@ alt.onClient('Creator:setFaceFeature', (source, data) => {
 });
 
 alt.onClient('Creator:setEyeColor', (source, data) => {
-    //  Strange bug over here
-    //console.log('Creator:setEyeColor', data)
     source.setEyeColor(data)
 });
 
 alt.onClient('Creator:setHeadOverlay', (source, data) => {
-    //console.log('Creator:setHeadOverlay', data)
     const parsed = JSON.parse(data)
     for(let i = 0; i < parsed.length; i++){
-        source.setHeadOverlay(i, parsed[i], 255)
+        const overlayIndex = parsed[i] === 0 ? 255 : parsed[i]
+        source.setHeadOverlay(i, overlayIndex, 255)
     }
 });
 
 alt.onClient('Creator:setHeadOverlayColor', (source, data) => {
-    //console.log('Creator:setHeadOverlayColor',data)
     const parsed = JSON.parse(data)
     for(let i = 0; i < parsed.length; i++){
         let colorType;
@@ -59,17 +55,14 @@ alt.onClient('Creator:setHeadOverlayColor', (source, data) => {
 });
 
 alt.onClient('Creator:setHair', (source, data) => {
-    //console.log('Creator:setHair', data)
     source.setClothes(2, data, 0)
 });
 
 alt.onClient('Creator:setHairColor', (source, data) => {
-    //console.log('Creator:setHairColor', data)
     source.setHairColor(data)
 });
 
 alt.onClient('Creator:setHairHighlightColor', (source, data) => {
-    //console.log('Creator:setHairHighlightColor', data)
     source.setHairHighlightColor(data)
 });
 
