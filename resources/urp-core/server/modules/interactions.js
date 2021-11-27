@@ -5,7 +5,7 @@ let registeredInteractions = 0;
 
 const List = {}
 
-const createSingleInteraction = (position, type, eventName, isServer, blip, maxRadius = 2.5, height = 2.5) =>{
+const createSingleInteraction = (position, type, eventName, isServer, blip, ped, marker, maxRadius = 2.5, height = 2.5) =>{
     if(!position || !type || !eventName) throw new Error('Missing parameters to create a new interaction');
     const vector = new alt.Vector3(position.x, position.y, position.z)
     const colshape = new alt.ColshapeCylinder(vector.x, vector.y, vector.z, maxRadius, height)
@@ -14,6 +14,12 @@ const createSingleInteraction = (position, type, eventName, isServer, blip, maxR
     colshape['interactionType'] = type
     colshape['isServer'] = isServer
     colshape['eventName'] = eventName
+    if(ped){
+        Core.Entities.createPed(position, 0, {pedType: ped.pedType, modelHash: ped.modelHash})
+    }
+    if(marker){
+        Core.Entities.createMarker(position, 0, {type: marker.type, r: marker.color.r, g: marker.color.g, b: marker.color.b, a: marker.color.a})
+    }
     if(blip){
         const pointBlip = new alt.PointBlip(vector.x, vector.y, vector.z)
         pointBlip.name = blip.name || type
@@ -49,6 +55,12 @@ const createMultipleInteractions = (interactions, maxRadius = 2.5, height = 2.5)
             pointBlip.sprite = interaction.blip.sprite || 1
             pointBlip.color = interaction.blip.color || 1
             colshape['blip'] = pointBlip
+        }
+        if(interaction.ped){
+            Core.Entities.createPed(position, 0, {pedType: interaction.ped.pedType, modelHash: interaction.ped.modelHash})
+        }
+        if(interaction.marker){
+            Core.Entities.createMarker(position, 0, {type: interaction.marker.type, r: interaction.marker.color.r, g: interaction.marker.color.g, b: interaction.marker.color.b, a: interaction.marker.color.a})
         }
         if(!List[interaction.type]){
             List[interaction.type] = []

@@ -98,7 +98,15 @@ chat.registerCmd('createTestInteractions', (source)=>{
 })
 
 chat.registerCmd('createInteraction', (source)=>{
-   Core.Interactions.createSingleInteraction(source.pos, 'random', 'test', false)
+   Core.Interactions.createSingleInteraction(source.pos, 'random', 'test', false, undefined, undefined, )
+})
+
+chat.registerCmd('createInteractionWithMarker', (source)=>{
+   Core.Interactions.createSingleInteraction(source.pos, 'random', 'test', false, {name: 'Random event marker'}, undefined, {type: 5, color: new alt.RGBA(0, 181, 204, 200)} )
+})
+
+chat.registerCmd('createInteractionWithPed', (source)=>{
+   Core.Interactions.createSingleInteraction(source.pos, 'random', 'test', false, undefined, {pedType: 2, modelHash: alt.hash('s_m_o_busker_01')}, )
 })
 
 chat.registerCmd('createPed', (source) => {
