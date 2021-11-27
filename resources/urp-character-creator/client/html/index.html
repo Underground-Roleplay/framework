@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html>
+    <head>                            
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <link rel="stylesheet" type="text/css" href="css/material.min.css">
+        <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
+        
+        <script src="js/jquery.js"></script>
+    </head>
+  <body>
+  
+  <div id="errMsg"></div>
+    <div class="inventory inv_left">
+      <div class="inventory_head">
+        <div class="inventory_head_left">
+          <span>Character</span><label>Creator</label>
+        </div>  
+        <div class="inventory_isset isnotset changeGender" data-value="1">
+            <img src="images/creator/female.png">
+        </div>
+        <div class="inventory_isset changeGender" data-value="0">
+            <img src="images/creator/male.png">
+        </div> 
+      </div>
+      <div class="inventory_content">
+          <div class="creator_menus">
+            <div class="creator_menu active" data-menu="parents">
+                <img src="images/creator/parents.png">
+                <label>Parents</label>
+            </div>
+            <div class="creator_menu" data-menu="eyes">
+              <img src="images/creator/eye.png">
+                <label>Eyes</label>
+            </div>
+            <div class="creator_menu" data-menu="nose">
+              <img src="images/creator/nose.png">
+                <label>Nose</label>
+            </div>
+            <div class="creator_menu" data-menu="chin">
+              <img src="images/creator/chin.png">
+                <label>Chin</label>
+            </div>
+            <div class="creator_menu" data-menu="cheek">
+              <img src="images/creator/cheek.png">
+                <label>Cheek</label>
+            </div>
+            <div class="creator_menu" data-menu="lips">
+              <img src="images/creator/lips.png">
+                <label>Lips</label>
+            </div>
+            <div class="creator_menu" data-menu="neck">
+              <img src="images/creator/neck.png">
+                <label>Neck</label>
+            </div>
+          </div>
+      </div>
+      
+      <div class="creator_content">
+        <div id="parents" class="creator_submenu">
+          <ul>
+            <label class="creator_menu_label">Father's face</label>
+            <li class="range range-primary">
+              <input type="range" min="0" max="45" value="0" step="1" class="slider" data-type="parents" id="changeShapeFirstID" oninput="ShapeFirstID.value=value">
+              <output id="ShapeFirstID">0</output>
+            </li>
+            <label class="creator_menu_label">Father's ancestry</label>
+            <li class="range range-primary">
+                <input type="range" min="0" max="45" value="0" step="1" class="slider" data-type="parents" id="changeSkinFirstID" oninput="SkinFirstID.value=value">
+                <output id="SkinFirstID">0</output>
+            </li>
+            <label class="creator_menu_label">Mother's face</label>
+            <li class="range range-primary">
+                <input type="range" min="0" max="45" value="0" step="1" class="slider" data-type="parents" id="changeShapeSecondID" oninput="ShapeSecondID.value=value">
+                <output id="ShapeSecondID">0</output>
+            </li>
+            <label class="creator_menu_label">Mother's ancestry</label>
+            <li class="range range-primary">
+                <input type="range" min="0" max="45" value="0" step="1" class="slider" data-type="parents" id="changeSkinSecondID" oninput="SkinSecondID.value=value">
+                <output id="SkinSecondID">0</output>
+            </li>
+            <label class="creator_menu_label">Face dominant gene</label>
+            <li class="range range-primary">
+                <input type="range" min="-100" max="100" value="0" step="1" class="slider" data-type="parents" id="changeShapeMix" oninput="ShapeMix.value=value">
+                <output id="ShapeMix">0</output>
+            </li>
+            <label style="font-size: 10px;"><i class="fa fa-mars" aria-hidden="true"></i> Father<span style="float: right">Mother <i class="fa fa-venus" aria-hidden="true"></i></span></label>
+            <label class="creator_menu_label">Ancestry dominant gene</label>
+            <li class="range range-primary">
+                <input type="range" min="-100" max="100" value="0" step="1" class="slider" data-type="parents" id="changeSkinMix" oninput="SkinMix.value=value">
+                <output id="SkinMix">0</output>
+            </li>
+            <label style="font-size: 10px;"><i class="fa fa-mars" aria-hidden="true"></i> Father<span style="float: right">Mother <i class="fa fa-venus" aria-hidden="true"></i></span></label>
+          </ul>
+        </div>
+        
+        <div id="eyes" class="creator_submenu" style="display:none">
+            <ul>
+              <label class="creator_menu_label">Eye state</label>
+              <li class="range range-success">
+                <input type="range" min="-1" max="1" value="0" step="0.1" class="slider" id="changeEyesWidth" data-type="face" oninput="widthEyes.value=value">
+                <output id="widthEyes">0</output>
+              </li>
+              <label style="font-size: 10px;">Opened<span style="float: right">Closed</span></label>
+              <label class="creator_menu_label">Eye color</label>
+              <li class="range range-success">
+                <input type="range" min="0" max="31" value="0" step="1" class="slider" id="changeEyeColor" data-type="eyes" oninput="colorEye.value=value">
+                <output id="colorEye">0</output>
+              </li>
+              <label style="display: block; font-size: 10px; width: 100%; text-align: center;" id="eyeColorName">Green</label>
+              <label class="creator_menu_label">Eyebrows</label>
+              <li class="range range-success">
+                <input type="range" min="0" max="33" value="0" step="1" class="slider" id="changeEyebrows" data-type="overlay" oninput="Eyebrows.value=value">
+                <output id="Eyebrows">0</output>
+              </li>
+              <label class="creator_menu_label">Eyebrow color</label>
+              <li class="range range-success">
+                <input type="range" min="0" max="64" value="0" step="1" class="slider" id="changeEyebrows" data-type="overlay_color" oninput="eyebrowsColor.value=value">
+                <output id="eyebrowsColor">0</output>
+              </li>
+              <label class="creator_menu_label">Brow width</label>
+              <li class="range range-success">
+                <input type="range" min="-1" max="1" value="0" step="0.1" class="slider" id="changeBrowWidth" data-type="face" oninput="widthBrow.value=value">
+                <output id="widthBrow">0</output>
+              </li>
+              <label class="creator_menu_label">Brow shape</label>
+              <li class="range range-success">
+                <input type="range" min="-1" max="1" value="0" step="0.1" class="slider" id="changeBrowHeight" data-type="face" oninput="shapeBrow.value=value">
+                <output id="shapeBrow">0</output>
+              </li>
+            </ul>
+        </div>
+        <div id="nose" class="creator_submenu" style="display:none">
+            <ul>
+                <label class="creator_menu_label">Nose width</label>
+                <li class="range range-info">
+                  <input type="range" min="-1" max="1" value="0" step="0.1" class="slider" data-type="face" id="changeNoseWidth" oninput="widthNose.value=value">
+                  <output id="widthNose">0</output>
+                </li>
+                <label class="creator_menu_label">Nose height</label>
+                <li class="range range-info">
+                    <input type="range" min="-1" max="1" value="0" step="0.1"  class="slider" data-type="face" id="changeNoseHeight" oninput="heightNose.value=value">
+                    <output id="heightNose">0</output>
+                </li>
+                <label class="creator_menu_label">Nose length</label>
+                <li class="range range-info">
+                    <input type="range" min="-1" max="1" value="0" step="0.1" class="slider" data-type="face" id="changeNoseLength" oninput="lengthNose.value=value">
+                    <output id="lengthNose">0</output>
+                </li>
+                <label class="creator_menu_label">Nose bridge shift</label>
+                <li class="range range-info">
+                    <input type="range" min="-1" max="1" value="0" step="0.1" class="slider" data-type="face" id="changeNoseBridge" oninput="bridgeNose.value=value">
+                    <output id="bridgeNose">0</output>
+                </li>
+                <label class="creator_menu_label">Nose tip</label>
+                <li class="range range-info">
+                    <input type="range" min="-1" max="1" value="0" step="0.1" class="slider" data-type="face" id="changeNoseTip" oninput="tipNose.value=value">
+                    <output id="tipNose">0</output>
+                </li>
+                <label class="creator_menu_label">Nose shift</label>
+                <li class="range range-info">
+                    <input type="range" min="-1" max="1" value="0" step="0.1" class="slider" data-type="face" id="changeNoseShift" oninput="shiftNose.value=value">
+                    <output id="shiftNose">0</output>
+                </li>
+              </ul>
+          </div>
+          <div id="chin" class="creator_submenu" style="display:none">
+            <ul>
+                <label class="creator_menu_label">Chin length</label>
+                <li class="range range-danger">
+                  <input type="range" min="-1" max="1" value="0" step="0.1" class="slider" data-type="face" id="changeChinLength" oninput="lengthChin.value=value">
+                  <output id="lengthChin">0</output>
+                </li>
+                <label class="creator_menu_label">Chin position</label>
+                <li class="range range-danger">
+                  <input type="range" min="-1" max="1" value="0" step="0.1" class="slider" data-type="face" id="changeChinPosition" oninput="positionChin.value=value">
+                  <output id="positionChin">0</output>
+                </li>
+                <label class="creator_menu_label">Chin width</label>
+                <li class="range range-danger">
+                  <input type="range" min="-1" max="1" value="0" step="0.1" class="slider" data-type="face" id="changeChinWidth" oninput="widthChin.value=value">
+                  <output id="widthChin">0</output>
+                </li>
+                <label class="creator_menu_label">Chin height</label>
+                <li class="range range-danger">
+                  <input type="range" min="-1" max="1" value="0" step="0.1" class="slider" data-type="face" id="changeChinHeight" oninput="heightChin.value=value">
+                  <output id="heightChin">0</output>
+                </li>
+                <label class="creator_menu_label">Jaw width</label>
+                <li class="range range-danger">
+                  <input type="range" min="-1" max="1" value="0" step="0.1" class="slider" data-type="face" id="changeJawWidth" oninput="widthJaw.value=value">
+                  <output id="widthJaw">0</output>
+                </li>
+                <label class="creator_menu_label">Jaw height</label>
+                <li class="range range-danger">
+                  <input type="range" min="-1" max="1" value="0" step="0.1" class="slider" data-type="face" id="changeJawHeight" oninput="heightJaw.value=value">
+                  <output id="heightJaw">0</output>
+                </li>
+              </ul>
+          </div>
+          <div id="cheek" class="creator_submenu" style="display:none">
+            <ul>
+                <label class="creator_menu_label">Cheekbone height</label>
+                <li class="range range-warning">
+                  <input type="range" min="-1" max="1" value="0" step="0.1" class="slider" id="changeCheekboneHeight" data-type="face" oninput="heightCheekbone.value=value">
+                  <output id="heightCheekbone">0</output>
+                </li>
+                <label class="creator_menu_label">Cheekbone width</label>
+                <li class="range range-warning">
+                  <input type="range" min="-1" max="1" value="0" step="0.1" class="slider" id="changeCheekboneWidth" data-type="face" oninput="widthCheekbone.value=value">
+                  <output id="widthCheekbone">0</output>
+                </li>
+                <label class="creator_menu_label">Cheeks width</label>
+                <li class="range range-warning">
+                  <input type="range" min="-1" max="1" value="0" step="0.1" class="slider" id="changeCheeksWidth" data-type="face" oninput="widthCheeks.value=value">
+                  <output id="widthCheeks">0</output>
+                </li>
+          </div>
+          <div id="lips" class="creator_submenu" style="display:none">
+            <ul>
+                <label class="creator_menu_label">Lips width</label>
+                <li class="range range-info">
+                  <input type="range" min="-1" max="1" value="0" step="0.1" class="slider" id="changeLipsWidth" data-type="face" oninput="widthLips.value=value">
+                  <output id="widthLips">0</output>
+                </li>
+          </div>
+          <div id="neck" class="creator_submenu" style="display:none">
+              <ul>
+                  <label class="creator_menu_label">Neck height</label>
+                  <li class="range range-success">
+                    <input type="range" min="-1" max="1" value="0" step="0.1" class="slider" id="changeNeckHeight" data-type="face" oninput="heightNeck.value=value">
+                    <output id="heightNeck">0</output>
+                  </li>
+            </div>
+      </div>
+    </div>
+
+    <div id="inventory_main">
+      <div class="randomize">Randomize</div>
+      <div id="inventory_content">
+        <div class="inventory_content_bottom_buttons">
+          <div id="inv_cancel" class="btn-5"><div class="inv_cancel"><i class="fa fa-ban"></i> <span>Cancel</span></div></div>
+          <div id="inv_confirm" class="btn-5"><div class="inv_confirm"><i class="fa fa-check"></i> <span>Confirm</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="inventory inv_right">
+        <div class="inventory_head">
+            <div class="inventory_head_left">
+              <span>Character</span><label>Styling</label>
+            </div>  
+          </div>
+          <div class="inventory_content">
+              <div class="creator_menus">
+                <div class="styling_menu active" data-menu="face_skin">
+                  <img src="images/creator/face.png">
+                    <label>Face</label>
+                </div>
+                <div class="styling_menu" data-menu="hair">
+                  <img src="images/creator/hair.png">
+                    <label>Hair</label>
+                </div>
+                <div class="styling_menu" data-menu="beard">
+                  <img src="images/creator/beard.png">
+                    <label>Beard</label>
+                </div>
+                <div class="styling_menu" data-menu="makeup">
+                  <img src="images/creator/make_up.png">
+                    <label>Makeup</label>
+                </div>
+                <div class="styling_menu" data-menu="age">
+                  <img src="images/creator/aging.png">
+                    <label>Ageing</label>
+                </div>
+                <div class="styling_menu" data-menu="chest">
+                  <img src="images/creator/chest.png">
+                    <label>Chest</label>
+                </div>
+                <div class="styling_menu" data-menu="body">
+                  <img src="images/creator/body.png">
+                    <label>Body</label>
+                </div>
+              </div>
+          </div>
+          <div class="styling_content">
+              <div id="face_skin" class="styling_submenu">
+                  <ul>
+                    <label class="creator_menu_label">Blemishes</label>
+                    <li class="range range-success">
+                      <input type="range" min="0" max="24" value="0" step="1" class="slider" id="changeBlemishes" data-type="overlay" oninput="blemishes.value=value">
+                      <output id="blemishes">0</output>
+                    </li>
+                    <label class="creator_menu_label">Freckles</label>
+                    <li class="range range-success">
+                      <input type="range" min="0" max="18" value="0" step="1" class="slider" id="changeFreckles" data-type="overlay" oninput="freckles.value=value">
+                      <output id="freckles">0</output>
+                    </li>
+                    <label class="creator_menu_label">Complexion</label>
+                    <li class="range range-success">
+                      <input type="range" min="0" max="12" value="0" step="1" class="slider" id="changeComplexion" data-type="overlay" oninput="complexion.value=value">
+                      <output id="complexion">0</output>
+                    </li>
+                    <label class="creator_menu_label">Blush</label>
+                    <li class="range range-success">
+                      <input type="range" min="0" max="7" value="0" step="1" class="slider" id="changeBlush" data-type="overlay" oninput="blush.value=value">
+                      <output id="blush">0</output>
+                    </li>
+                    <label class="creator_menu_label">Blush color</label>
+                    <li class="range range-success">
+                      <input type="range" min="0" max="64" value="0" step="1" class="slider" id="changeBlush" data-type="overlay_color" oninput="blushColor.value=value">
+                      <output id="beardColor">0</output>
+                    </li>
+                  </ul>
+              </div>
+              <div id="hair" class="styling_submenu" style="display:none">
+                  <ul>
+                    <label class="creator_menu_label">Hair</label>
+                    <li class="range range-warning">
+                      <input type="range" min="0" max="37" value="0" step="1" class="slider" id="changeHair" data-type="hair" oninput="hair.value=value">
+                      <output id="hair">0</output>
+                    </li>
+                    <label class="creator_menu_label">Hair color</label>
+                    <li class="range range-warning">
+                      <input type="range" min="0" max="63" value="0" step="1" class="slider" id="changeHair" data-type="hairColor" oninput="hairColor.value=value">
+                      <output id="hairColor">0</output>
+                    </li>
+                    <label class="creator_menu_label">Hair highlight</label>
+                    <li class="range range-warning">
+                      <input type="range" min="0" max="63" value="0" step="1" class="slider" id="changeHair" data-type="hairColorHighlight" oninput="hairColorHighlight.value=value">
+                      <output id="hairColorHighlight">0</output>
+                    </li>
+                  </ul>
+              </div>
+              <div id="beard" class="styling_submenu" style="display:none">
+                <ul>
+                  <label class="creator_menu_label">Beard</label>
+                  <li class="range range-danger">
+                    <input type="range" min="0" max="29" value="0" step="1" class="slider" id="changeFacialHair" data-type="overlay" oninput="beardValue.value=value">
+                    <output id="beardValue">0</output>
+                  </li>
+                  <label class="creator_menu_label">Beard color</label>
+                  <li class="range range-danger">
+                    <input type="range" min="0" max="64" value="0" step="1" class="slider" id="changeFacialHair" data-type="overlay_color" oninput="beardColor.value=value">
+                    <output id="beardColor">0</output>
+                  </li>
+                </ul>
+            </div>
+            <div id="makeup" class="styling_submenu" style="display:none">
+              <ul>
+                <label class="creator_menu_label">Makeup</label>
+                <li class="range range-info">
+                  <input type="range" min="0" max="72" value="0" step="1" class="slider" id="changeMakeup" data-type="overlay" oninput="makeupValue.value=value">
+                  <output id="makeupValue">0</output>
+                </li>
+                <label class="creator_menu_label">Lipstick</label>
+                <li class="range range-info">
+                  <input type="range" min="0" max="10" value="0" step="1" class="slider" id="changeLipstick" data-type="overlay" oninput="lipstickValue.value=value">
+                  <output id="lipstickValue">0</output>
+                </li>
+                <label class="creator_menu_label">Lipstick color</label>
+                <li class="range range-info">
+                  <input type="range" min="0" max="64" value="0" step="1" class="slider" id="changeLipstick" data-type="overlay_color" oninput="lipstickColor.value=value">
+                  <output id="lipstickColor">0</output>
+                </li>
+              </ul>
+            </div>
+            <div id="age" class="styling_submenu" style="display:none">
+              <ul>
+                <label class="creator_menu_label">Ageing</label>
+                <li class="range range-primary">
+                  <input type="range" min="0" max="15" value="0" step="1" class="slider" id="changeAgeing" data-type="overlay" oninput="ageingValue.value=value">
+                  <output id="ageingValue">0</output>
+                </li>
+              </ul>
+            </div>
+            <div id="chest" class="styling_submenu" style="display:none">
+              <ul>
+                <label class="creator_menu_label">Chest hair</label>
+                <li class="range range-success">
+                  <input type="range" min="0" max="17" value="0" step="1" class="slider" id="changeChestHair" data-type="overlay" oninput="chestHairValue.value=value">
+                  <output id="chestHairValue">0</output>
+                </li>
+                <label class="creator_menu_label">Chest hair color</label>
+                <li class="range range-success">
+                  <input type="range" min="0" max="64" value="0" step="1" class="slider" id="changeChestHair" data-type="overlay_color" oninput="chestHairColor.value=value">
+                  <output id="chestHairColor">0</output>
+                </li>
+              </ul>
+            </div>
+            <div id="body" class="styling_submenu" style="display:none">
+              <ul>
+                <label class="creator_menu_label">Sun damage</label>
+                <li class="range range-danger">
+                  <input type="range" min="0" max="11" value="0" step="1" class="slider" id="changeSunDamage" data-type="overlay" oninput="sunDamageValue.value=value">
+                  <output id="sunDamageValue">0</output>
+                </li>
+                <label class="creator_menu_label">Body blemishes</label>
+                <li class="range range-danger">
+                  <input type="range" min="0" max="12" value="0" step="1" class="slider" id="changeBodyBlemishes" data-type="overlay" oninput="bodyBlemishesValue.value=value">
+                  <output id="bodyBlemishesValue">0</output>
+                </li>
+                <label class="creator_menu_label">More body blemishes</label>
+                <li class="range range-danger">
+                  <input type="range" min="0" max="1" value="0" step="1" class="slider" id="changeAddBodyBlemishes" data-type="overlay" oninput="addbodyBlemishesValue.value=value">
+                  <output id="addbodyBlemishesValue">0</output>
+                </li>
+              </ul>
+            </div>
+          </div>
+    </div>
+      <script src="js/creator.min.js" type="text/javascript"></script>
+  </body>
+</html>

@@ -66,7 +66,7 @@ const checkPlayerData = async (source, playerData = undefined) => {
         playerData.position = Core.Config.DefaultSpawn
         //Inventory 
         playerData.inventory = []
-        createCharacter(source, playerData)
+        createCharacter(source, playerData, false)
         return;
     }
     selectCharacter(source, playerData)
@@ -238,6 +238,7 @@ const createCharacter = async (source, playerData, select = true) => {
         inventory: JSON.stringify(playerData.inventory)
     }, undefined, alt.resourceName)
     console.log(Core.Translate('CHARACTER.CREATION_SUCCESS'))
+    alt.emit('Creator:Start', source, playerData)
     //  Maybe we can call creator over here before the DB creation
     if(select){
     startCharacter(source, playerData)
@@ -245,19 +246,23 @@ const createCharacter = async (source, playerData, select = true) => {
 }
 
 //  Player creator must be called before selectCharater
-const selectCharacter = async (source, playerData) => {
+const selectCharacter = async (source, playerData, fromCreation = false) => {
     source.playerData = playerData
-    source.Functions = new Object()
     const { position } = source.playerData
     const model = source.playerData.charinfo.gender === 0 ? 'mp_m_freemode_01' : 'mp_f_freemode_01'
     chat.success(`Logado com sucesso!`);
-    Core.Functions.setPosition(source, position.x, position.y, position.z, model)
     Core.Functions.emitPlayerData(source, 'charinfo', source.playerData.charinfo)
     Core.Functions.emitPlayerData(source, 'inventory', source.playerData.inventory)
     setDeath(source, source.playerData.metadata.isdead)
     source.health = source.playerData.metadata.health
     source.armour = source.playerData.metadata.armour
-    loadCustoms(source)
+    if(fromCreation){
+        Core.Functions.setPosition(source, position.x, position.y, position.z)
+        loadCustoms(source)
+    }else{
+        Core.Functions.setPosition(source, position.x, position.y, position.z, model)
+        loadCustoms(source)
+    }
     //We can't pass source directly due its complexity
     alt.emit('Core:Server:CharacterLoaded', source.id)
     alt.emitClient(source, 'Core:Client:CharacterLoaded')
@@ -329,7 +334,6 @@ const getHairColors = (source) => {
     ]
     return hair
 }
-
 
 //  Use this to update all customization data after a change on playerData
 const updateCustoms = async (source) => {
@@ -437,5 +441,5 @@ const loadCustoms = async (source) => {
     createCustoms(source)
 }
 
-export default { startCharacter, addItem, tickManager, updateBasicData, getItemSlot, removeItem, loadCustoms, changeCloth,
+export default { startCharacter, selectCharacter, addItem, tickManager, updateBasicData, getItemSlot, removeItem, loadCustoms, changeCloth,
     setDeath }
