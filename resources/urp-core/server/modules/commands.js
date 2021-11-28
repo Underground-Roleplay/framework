@@ -117,6 +117,10 @@ chat.registerCmd('createMarker', (source) => {
    Core.Entities.createMarker(source.pos, 0, {type: 0, r: color.r, g: color.g, b: color.b, a: color.a})
 })
 
-chat.registerCmd('noclip', (source) => {
-   alt.emitClient(source, 'toogle:Noclip');
+chat.registerCmd('noclip', (source) => {   
+   alt.emitClient(source, 'admin:noclip');
 })
+chat.registerCmd('tpwp', (source) => {   
+   alt.emitClient(source, 'admin:tpwp');
+})
+

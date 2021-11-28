@@ -187,7 +187,7 @@ function getCamDirection() {
 };
 
 var loop;
-alt.onServer('toogle:Noclip', () => {
+alt.onServer('admin:Noclip', () => {
   if ( isNoclip == false ) {
     isNoclip = true;
     natives.freezeEntityPosition(alt.Player.local.scriptID, true);
@@ -229,5 +229,50 @@ alt.onServer('toogle:Noclip', () => {
     alt.clearEveryTick(loop);
   } 
 });
+
+alt.onServer(`admin:tpwp`, () => {
+    let blip = natives.getFirstBlipInfoId(8);
+    
+    if (blip != 0) {
+        let tpEnt = alt.Player.local.scriptID;
+
+        if (natives.isPedInAnyVehicle(tpEnt, true)) {
+            tpEnt = natives.getVehiclePedIsIn(myPed, false);
+        };
+
+        let { x, y } = natives.getBlipInfoIdCoord(blip);
+        let z = 0.1;
+
+        natives.freezeEntityPosition(tpEnt, true);
+        natives.requestCollisionAtCoord(x, y, z);
+        natives.setEntityCoords(tpEnt, x, y, z, true, true, true, true);
+
+        const interval = alt.setInterval(() => {
+        let tpEntCoord = natives.getEntityCoords(tpEnt, true);
+        let loaded, ground;
+
+        if (z > 1999.0) {
+            z = 0.1;
+        } else {
+            z += 15.1;
+        };
+
+        natives.requestCollisionAtCoord(tpEntCoord.x, tpEntCoord.y, z);
+        natives.setEntityCoords(tpEnt, x, y, z, true, true, true, true);
+        
+        [loaded, ground] = natives.getGroundZFor3dCoord(tpEntCoord.x, tpEntCoord.y, tpEntCoord.z, z, 0, true);
+
+        if (loaded) {
+            z = ground;
+
+            natives.setEntityCoords(tpEnt, x, y, z, true, true, true, true);
+            natives.freezeEntityPosition(tpEnt, false);                    
+            alt.clearInterval(interval);
+        };
+        }, 0);
+    } else if (blip === 0) {
+        return
+    };
+})
 
 export default {drawText, drawText3D, startTicks, handleSetplayerData, getPlayerData, handleDeath, interactionMode, RequestModel}
