@@ -3,9 +3,9 @@ import * as natives from 'natives';
 import Core from '../main';
 
 //  Initialize Ticks
-alt.onServer('Core:Client:CharacterLoaded', () => {
+alt.onServer('Core:Client:CharacterLoaded',  async () => {
     Core.Functions.startTicks()
-    Core.Functions.interactionMode()
+    Core.Utils.interactionMode()
 })
 
 //  Entity sync

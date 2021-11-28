@@ -122,11 +122,7 @@ const addItem = (source, item, amount, slot, info) => {
     const totalWeight = getCurrentWeight(source.playerData.inventory)
     const itemInfo = Core.Shared.Items[item.toLowerCase()]
     if(!itemInfo){
-        alt.emitClient(source, 'client:notify:sendMessage', 
-        {iconType: 0, title: 'INVENTARIO', 
-        message: 'O item não existe', 
-        color: 'FC2E20', width: 244, duration: 3000}
-        )
+       alt.emitClient(source,'notify', 'error', 'INVENTARIO', 'O item não existe')
         return false;
     }
     if(!slot){
@@ -189,11 +185,7 @@ const addItem = (source, item, amount, slot, info) => {
             }
         }
     }
-    alt.emitClient(source, 'client:notify:sendMessage', 
-    {iconType: 0, title: 'INVENTARIO', 
-    message: 'Seu inventario está cheio', 
-    color: 'FC2E20', width: 244, duration: 3000}
-    )
+    alt.emitClient(source,'notify', 'error', 'INVENTARIO', 'Seu inventario está cheio')
     return false
 }
 

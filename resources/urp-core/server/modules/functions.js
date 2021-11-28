@@ -115,5 +115,4 @@ const emitPlayerData = (source, key, value) => {
     });
 }
 
-export default { login, getPlayerIdentifier, setPosition, getMoney, hasPermission, 
-addPermission, getCurrentInventory, spawnVehicle, emitPlayerData }
+export default { login, getPlayerIdentifier, setPosition, getMoney, hasPermission, addPermission, getCurrentInventory, spawnVehicle, emitPlayerData }

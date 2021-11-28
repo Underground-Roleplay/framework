@@ -6,11 +6,7 @@ import { config } from './config'
 
 chat.registerCmd('changeTime', (source, [hours, minutes]) => {
     if(!hours || !minutes){
-       alt.emitClient(source, 'client:notify:sendMessage', 
-       {iconType: 0, title: 'COMANDOS', 
-       message: 'USE /changeTime [hours minutes]', 
-       color: 'FC2E20', width: 244, duration: 3000}
-       )
+       alt.emitClient(source,'notify', 'error', 'Error', 'USE /changeTime [hours minutes]')
        return;
     } 
     const isAllowed = Core.Functions.hasPermission(source, 'admin')
@@ -21,21 +17,13 @@ chat.registerCmd('changeTime', (source, [hours, minutes]) => {
             updateTime(player)
         })
     }else{
-     alt.emitClient(source, 'client:notify:sendMessage', 
-     {iconType: 0, title: 'SISTEMA DE PERMISSÃO', 
-     message: 'Você NÃO possui as permissões necessarias', 
-     color: 'FC2E20', width: 244, duration: 3000}
-     )
+       alt.emitClient(source,'notify', 'error', 'SISTEMA DE PERMISSÃO', 'Você NÃO possui as permissões necessarias')
     }
 })
 
 chat.registerCmd('changeWeather', (source, [weather]) => {
     if(!weather){
-       alt.emitClient(source, 'client:notify:sendMessage', 
-       {iconType: 0, title: 'COMANDOS', 
-       message: 'USE /changeWeather [weather]', 
-       color: 'FC2E20', width: 244, duration: 3000}
-       )
+       alt.emitClient(source,'notify', 'error', 'COMANDOS', 'USE /changeWeather [weather]')
        return;
     } 
     const isAllowed = Core.Functions.hasPermission(source, 'admin')
@@ -44,11 +32,7 @@ chat.registerCmd('changeWeather', (source, [weather]) => {
             player.setWeather(weather)
         })
     }else{
-     alt.emitClient(source, 'client:notify:sendMessage', 
-     {iconType: 0, title: 'SISTEMA DE PERMISSÃO', 
-     message: 'Você NÃO possui as permissões necessarias', 
-     color: 'FC2E20', width: 244, duration: 3000}
-     )
+       alt.emitClient(source,'notify', 'error', 'SISTEMA DE PERMISSÃO', 'Você NÃO possui as permissões necessarias')
     }
 })
 
