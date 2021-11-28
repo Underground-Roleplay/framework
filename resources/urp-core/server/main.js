@@ -50,6 +50,7 @@ alt.on('database:Ready', async() => {
             }
         }
     }
+    alt.emit('Core:CreateLog', 'default', 'SERVER', undefined, Core.Translate('SERVER.STARTED'))
     console.log(Core.Translate('SERVER.STARTED'))
 })
 
