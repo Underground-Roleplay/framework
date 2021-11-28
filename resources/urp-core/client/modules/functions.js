@@ -163,4 +163,71 @@ const RequestModel = async (modelHash, timeoutMs = 1000) => {
     });
 };
 
+
+let isNoclip = false;
+let noclip_speed = 1.0;
+
+
+function getCamDirection() {
+  let heading = natives.getGameplayCamRelativeHeading() + natives.getEntityHeading(alt.Player.local.scriptID);
+  let pitch = natives.getGameplayCamRelativePitch();
+
+  let x = -Math.sin(heading * (Math.PI / 180.0));
+  let y = Math.cos(heading * (Math.PI / 180.0));
+  let z = Math.sin(pitch * Math.PI / 180.0);
+  let len = Math.sqrt((x * x) + (y * y) + (z * z));
+
+  if (len != 0) {
+    x /= len;
+    y /= len;
+    z /= len;
+  };
+
+  return [x, y, z];
+};
+
+var loop;
+alt.onServer('toogle:Noclip', () => {
+  if ( isNoclip == false ) {
+    isNoclip = true;
+    natives.freezeEntityPosition(alt.Player.local.scriptID, true);
+    natives.setEntityVisible(alt.Player.local.scriptID, false,0);
+    natives.setEntityCollision(alt.Player.local.scriptID, false, false);
+    loop = alt.everyTick(()=>{
+      if (isNoclip) {
+        natives.setEntityInvincible(alt.Player.local.scriptID, true);
+        noclip_speed = 0.5;
+        if (natives.isControlPressed(0,21)) {
+          noclip_speed = 2.5;
+        };
+        if (natives.isControlPressed(0,32)) {
+          let { x, y, z } = natives.getEntityCoords(alt.Player.local.scriptID, true);
+          let [dx, dy, dz] = getCamDirection();
+          natives.setEntityVelocity(alt.Player.local.scriptID, 0.0001, 0.0001, 0.0001);
+          x += noclip_speed * dx;
+          y += noclip_speed * dy;
+          z += noclip_speed * dz;
+          natives.setEntityCoordsNoOffset(alt.Player.local.scriptID, x, y, z, true, true, true);
+        };
+        if (natives.isControlPressed(0,269)) {
+          let { x, y, z } = natives.getEntityCoords(alt.Player.local.scriptID, true);
+          let [dx, dy, dz] = getCamDirection();
+          natives.setEntityVelocity(alt.Player.local.scriptID, 0.0001, 0.0001, 0.0001);
+          x -= noclip_speed * dx;
+          y -= noclip_speed * dy;
+          z -= noclip_speed * dz;
+          natives.setEntityCoordsNoOffset(alt.Player.local.scriptID, x, y, z, true, true, true);
+        };
+      };
+    })
+  } else {
+    isNoclip = false;
+    natives.setEntityInvincible(alt.Player.local.scriptID, false);
+    natives.freezeEntityPosition(alt.Player.local.scriptID, false);
+    natives.setEntityVisible(alt.Player.local.scriptID, true, 0);
+    natives.setEntityCollision(alt.Player.local.scriptID, true, true);
+    alt.clearEveryTick(loop);
+  } 
+});
+
 export default {drawText, drawText3D, startTicks, handleSetplayerData, getPlayerData, handleDeath, interactionMode, RequestModel}
