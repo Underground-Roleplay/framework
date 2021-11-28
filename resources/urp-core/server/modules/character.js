@@ -248,7 +248,7 @@ const selectCharacter = async (source, playerData, fromCreation = false) => {
     setDeath(source, source.playerData.metadata.isdead)
     source.health = source.playerData.metadata.health
     source.armour = source.playerData.metadata.armour
-    Core.Functions.setPosition(source, position.x, position.y, position.z)
+    Core.Functions.setPosition(source, position.x, position.y, position.z, model)
     loadCustoms(source)
     // if(fromCreation){
     //     // Core.Functions.setPosition(source, position.x, position.y, position.z)
