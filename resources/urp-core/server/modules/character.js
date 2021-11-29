@@ -472,5 +472,64 @@ const loadCustoms = async (source) => {
     createCustoms(source)
 }
 
-export default { startCharacter, selectCharacter, addItem, tickManager, updateBasicData, getItemSlot, removeItem, loadCustoms, changeCloth,
+
+const setMoney = (source, moneytype, amount) => {
+    if(source.playerData.money[moneytype]){
+        source.playerData.money[moneytype] = parseInt(amount)
+        db.update('UPDATE characters SET money = ? WHERE ssn = ?', [JSON.stringify(source.playerData.money), source.playerData.ssn], undefined, alt.resourceName)
+    }
+    return
+}
+
+const moneyDeposit = (source, amount) => {
+    if(source.playerData.money['cash'] >= amount){
+        source.playerData.money['cash'] = parseInt(source.playerData.money['cash']) - parseInt(amount)
+        source.playerData.money['bank'] = parseInt(source.playerData.money['bank']) + parseInt(amount)
+        db.update('UPDATE characters SET money = ? WHERE ssn = ?', [JSON.stringify(source.playerData.money), source.playerData.ssn], undefined, alt.resourceName)
+    } else {
+        alt.log('Não possui a quantia na carteira')
+    }
+    return
+}
+const moneywithdraw = (source, amount) => {
+    if(source.playerData.money['bank'] >= amount){
+        source.playerData.money['bank'] = parseInt(source.playerData.money['bank']) - parseInt(amount)
+        source.playerData.money['cash'] = parseInt(source.playerData.money['cash']) + parseInt(amount)
+        db.update('UPDATE characters SET money = ? WHERE ssn = ?', [JSON.stringify(source.playerData.money), source.playerData.ssn], undefined, alt.resourceName)
+    } else {
+        alt.log('Não possui a quantia no banco')
+    }
+    return
+}
+
+const getPayment = (source, amount) => {
+    if (amount < 0) {
+        return
+    }
+    if(source.playerData.money['cash'] > parseInt(amount)){
+        source.playerData.money['cash'] = parseInt(source.playerData.money['cash']) - parseInt(amount)
+        db.update('UPDATE characters SET money = ? WHERE ssn = ?', [JSON.stringify(source.playerData.money), source.playerData.ssn], undefined, alt.resourceName)
+        return
+    } else if(source.playerData.money['bank'] > parseInt(amount)){
+        source.playerData.money['bank'] = parseInt(source.playerData.money['bank']) - parseInt(amount)
+        db.update('UPDATE characters SET money = ? WHERE ssn = ?', [JSON.stringify(source.playerData.money), source.playerData.ssn], undefined, alt.resourceName)
+        return
+    } else {
+        alt.log('vai trabalhar vagabundo')
+    }
+    return
+}
+
+const addMoney = (source, moneytype, amount) => {
+    if (amount < 0) {
+        return
+    }
+    if(source.playerData.money[moneytype]){
+        source.playerData.money[moneytype] = parseInt(source.playerData.money[moneytype]) + parseInt(amount)
+        db.update('UPDATE characters SET money = ? WHERE ssn = ?', [JSON.stringify(source.playerData.money), source.playerData.ssn], undefined, alt.resourceName)
+    }
+    return
+}
+
+export default { startCharacter,setMoney, addMoney, getPayment, moneyDeposit, moneywithdraw, selectCharacter, addItem, tickManager, updateBasicData, getItemSlot, removeItem, loadCustoms, changeCloth,
     setDeath }

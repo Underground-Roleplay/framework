@@ -39,7 +39,7 @@ chat.registerCmd('c', (source, [model]) => {
   const isAllowed = Core.Functions.hasPermission(source, 'admin')
   if(isAllowed){
      Core.Functions.spawnVehicle(source, model)
-     alt.emitClient(source,'notify', 'sucess', 'SISTEMA',  `${model} spawnado`)
+     alt.emitClient(source,'notify', 'sucess', 'SISTEMA',  `${model} SPAWNADO`)
   }else{
    alt.emitClient(source,'notify', 'error', 'SISTEMA DE PERMISSÃO', 'Você NÃO possui as permissões necessarias')
   }
@@ -60,6 +60,46 @@ chat.registerCmd('cloth', (source, [component, drawable, texture])=>{
       return;
    }
    Core.Character.changeCloth(source, component, drawable, texture)
+})
+
+chat.registerCmd('setmoney', (source, [moneytype, amount])=>{
+   if(amount == NaN){return}
+
+   if(moneytype && amount){
+      Core.Character.setMoney(source, moneytype, amount)
+   }
+})
+
+chat.registerCmd('addmoney', (source, [moneytype, amount])=>{
+   if(amount == NaN){return}
+
+   if(moneytype && amount){
+      Core.Character.addMoney(source, moneytype, amount)
+   }
+})
+
+chat.registerCmd('getpayment', (source, [amount])=>{
+   if(amount == NaN){return}
+
+   if(amount){
+      Core.Character.getPayment(source, amount)
+   }
+}) 
+
+chat.registerCmd('deposit', (source, [amount])=>{
+   if(amount == NaN){return}
+
+   if(amount){
+      Core.Character.moneyDeposit(source, amount)
+   }
+})
+
+chat.registerCmd('withdraw', (source, [amount])=>{
+   if(amount == NaN){return}
+
+   if(amount){
+      Core.Character.moneywithdraw(source, amount)
+   }
 })
 
 chat.registerCmd('createTestInteractions', (source)=>{
@@ -89,6 +129,7 @@ chat.registerCmd('createMarker', (source) => {
 chat.registerCmd('noclip', (source) => {   
    alt.emitClient(source, 'admin:noclip');
 })
+
 chat.registerCmd('tpwp', (source) => {   
    const isAllowed = Core.Functions.hasPermission(source, 'admin')
    if(isAllowed){
