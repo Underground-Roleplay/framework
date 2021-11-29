@@ -1,5 +1,5 @@
 export const Webhooks = {
-    'default':'https://discord.com/api/webhooks/914204642408288278/ua7BQv96WHHJlCSc4_WmSpyRnuQE5F--UEzE6Kg-NzipeT4WxZvoNzymdSuRVin2CBBQ',
+    'default':'',
     'testwebhook':'',
     'playermoney':'',
     'playerinventory':'',
