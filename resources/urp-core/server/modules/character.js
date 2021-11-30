@@ -246,6 +246,7 @@ const selectCharacter = async (source, playerData, fromCreation = false) => {
     chat.send(source, `Logado com sucesso!`);
     Core.Functions.emitPlayerData(source, 'charinfo', source.playerData.charinfo)
     Core.Functions.emitPlayerData(source, 'inventory', source.playerData.inventory)
+    Core.Functions.emitPlayerData(source, 'metadata', source.playerData.metadata)
     setDeath(source, source.playerData.metadata.isdead)
     source.health = source.playerData.metadata.health
     source.armour = source.playerData.metadata.armour
