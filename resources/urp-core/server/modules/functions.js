@@ -77,7 +77,7 @@ const spawnVehicle = (source, model) => {
        const vehicle = new alt.Vehicle(model, fwd.x, fwd.y, fwd.z, 0, 0, 0)
        vehicle.numberPlateText = 'STAFF'
    }catch(e){
-        console.error(`${model} does not exist.`);
+        console.error(Core.Translate('VEHICLE.INCORRECT_MODEL', {model: model}));
         throw e;
    }
 }
