@@ -1,5 +1,4 @@
 # TODO
-## PS: Our current customization system uses RC branch, this framework will not work in release by now
 
 In order to run this framework you will need .NET SDK 5.0, you can find it here: https://dotnet.microsoft.com/download/dotnet/5.0
 
