@@ -5,6 +5,7 @@ import { URPConfig } from '../shared/configs/base';
 
 import functions from './modules/functions';
 import character from './modules/character';
+import vehicle from './modules/vehicle';
 
 import './modules/events';
 import './modules/commands';
@@ -26,6 +27,7 @@ Core.Shared.Items = Items
 init(Core.Config.lang)
 
 Core.Character = character
+Core.Vehicle = vehicle
 
 Core.Entities = entities
 
@@ -50,7 +52,7 @@ alt.on('database:Ready', async() => {
             }
         }
     }
-    alt.emit('Core:CreateLog', 'default', 'SERVER', undefined, Core.Translate('SERVER.STARTED'))
+    //alt.emit('Core:CreateLog', 'default', 'SERVER', undefined, Core.Translate('SERVER.STARTED'))
     console.log(Core.Translate('SERVER.STARTED'))
 })
 
