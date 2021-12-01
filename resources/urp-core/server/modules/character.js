@@ -73,18 +73,52 @@ const checkPlayerData = async (source, playerData = undefined) => {
 }
 
 const tickManager = (source) =>{
-    if (!source.nextPingTime) {
+    if (!source.nextPingTime && !source.timeHungerThirstDec) {
         source.nextPingTime = Date.now() + Core.Config.SaveInterval;
+        source.timeHungerThirstDec = Date.now() + Core.Config.HungerThirstTime;
     }
-    if (Date.now() < source.nextPingTime) {
-        return;
+
+    if (Date.now() > source.nextPingTime) {
+        source.nextPingTime = Date.now() + Core.Config.SaveInterval;
+        updateBasicData(source)
     }
+
+    if (Date.now() > source.timeHungerThirstDec) {
+        source.timeHungerThirstDec = Date.now() + Core.Config.HungerThirstTime;
+        addHungerThirstDecay(source)
+    }
+
     if (source.nextDeathSpawn && Date.now() > source.nextDeathSpawn) {
         setDeath(source, false)
         source.spawn(0, 0, 0, 0)
     }
-    updateBasicData(source)
-    source.nextPingTime = Date.now() + Core.Config.SaveInterval;
+
+   
+}
+
+const addHungerThirstDecay = (source) => {
+    if(!source) return;
+
+    if(source.playerData.metadata.hunger === undefined || source.playerData.metadata.hunger === null){
+        source.playerData.metadata.hunger = 100 
+    }
+
+    if(source.playerData.metadata.thirst === undefined || source.playerData.metadata.thirst === null){
+        source.playerData.metadata.thirst = 100 
+    }
+
+    source.playerData.metadata.hunger -= Core.Config.HungerRate;
+    source.playerData.metadata.thirst -= Core.Config.ThirstRate;
+
+    if(source.playerData.metadata.hunger <= 0){
+        source.playerData.metadata.hunger = 0
+    }
+
+    if(source.playerData.metadata.thirst <= 0){
+        source.playerData.metadata.thirst = 0
+    }
+    saveMetadata(source)
+    Core.Functions.emitPlayerData(source, 'metadata', source.playerData.metadata)
 }
 
 const updateBasicData = async (source) => {

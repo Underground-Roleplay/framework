@@ -6,6 +6,12 @@ URPConfig.DefaultModel = `mp_m_freemode_01`
 //CHARACTER
 URPConfig.SaveInterval = 4950
 URPConfig.MaxCharacters = 3
+//Hunger and Thirst
+URPConfig.HungerRate = 4.2
+URPConfig.ThirstRate = 3.8
+//Every 5 Min
+URPConfig.HungerThirstTime = (1000 * 60) * 5
+
 URPConfig.DefaultMoney = { cash: 5000, bank: 5000, crypto: 0 }
 URPConfig.DefaultInfo = {
     firstname: "Firstname",
