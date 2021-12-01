@@ -13,8 +13,8 @@ const startTicks = () => {
 }
 
 const getMetaData = (key) => {
-    if(!alt.Player.local.playerData[key]) return 0;
-    return alt.Player.local.playerData[key]
+    if(!alt.Player.local.playerData.metadata[key]) return undefined;
+    return alt.Player.local.playerData.metadata[key]
 }
 
 const handleSetplayerData = (key, value) => {
