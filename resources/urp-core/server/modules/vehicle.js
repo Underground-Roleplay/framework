@@ -150,7 +150,7 @@ const getVehicleCondition = (vehicles) => {
 }
 
 const spawnVehicle = async (source, id) => {
-    const result = await executeSync('SELECT * from vehicles WHERE ssn = ? AND id = ?', [source.playerData.ssn, id], undefined, alt.resourceName)
+    const result = await executeSync('SELECT * from vehicles WHERE ssn = ? AND id = ?', [source.playerData.ssn, id])
     const vehicleData = result[0]
     if(vehicleData){
         vehicleData.metadata = JSON.parse(vehicleData.metadata)
