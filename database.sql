@@ -64,6 +64,7 @@ CREATE TABLE IF NOT EXISTS `permissions` (
   KEY `socialID` (`socialID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
+-- Data exporting was unselected.
 
 -- Dumping structure for table urp.users
 CREATE TABLE IF NOT EXISTS `users` (
