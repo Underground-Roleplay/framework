@@ -11,8 +11,8 @@ chat.registerCmd('changeTime', (source, [hours, minutes]) => {
     } 
     const isAllowed = Core.Functions.hasPermission(source, 'admin')
     if(isAllowed){
-        time.hour = Number(hours)
-        time.minute = Number(minutes)
+        time.hour = parseInt(hours)
+        time.minute = parseInt(minutes)
         alt.Player.all.forEach((player) => {
             updateTime(player)
         })

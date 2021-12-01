@@ -19852,7 +19852,7 @@ if (!connectionString) {
 const createConnection = () => {
     const isURI = connectionString.includes('mysql://');
     if (isURI) {
-        return Object(promise["createPool"])({ uri: connectionString });
+        return Object(promise["createPool"])({ uri: connectionString, namedPlaceholders: true });
     }
     const options = connectionString
         .replace(/(?:host(?:name)|ip|server|data\s?source|addr(?:ess)?)=/gi, 'host=')
