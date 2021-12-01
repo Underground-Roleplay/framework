@@ -86,6 +86,20 @@ chat.registerCmd('getpayment', (source, [amount])=>{
    }
 }) 
 
+chat.registerCmd('garage', (source)=> {
+   Core.Vehicle.loadGarage(source)
+}) 
+
+chat.registerCmd('addcar', (source,[model])=> {
+   Core.Vehicle.addVehicle(source, model)
+})
+
+chat.registerCmd('spawncar', (source,[id])=> {
+   Core.Vehicle.spawnVehicle(source, id)
+})
+
+
+
 chat.registerCmd('deposit', (source, [amount])=>{
    if(amount == NaN){return}
 
@@ -127,7 +141,7 @@ chat.registerCmd('createMarker', (source) => {
 })
 
 chat.registerCmd('noclip', (source) => {   
-   alt.emitClient(source, 'admin:noclip');
+   alt.emitClient(source, 'admin:Noclip');
 })
 
 chat.registerCmd('tpwp', (source) => {   
