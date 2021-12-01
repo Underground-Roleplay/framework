@@ -17,7 +17,7 @@ chat.registerCmd('changeTime', (source, [hours, minutes]) => {
             updateTime(player)
         })
     }else{
-       alt.emitClient(source,'notify', 'error', 'SISTEMA DE PERMISSÃO', 'Você NÃO possui as permissões necessarias')
+       alt.emitClient(source,'notify', 'error', Core.Translate('PERMISSIONS.LABEL'), Core.Translate('PERMISSIONS.DONT_HAVE_PERM'))
     }
 })
 
@@ -32,7 +32,7 @@ chat.registerCmd('changeWeather', (source, [weather]) => {
             player.setWeather(weather)
         })
     }else{
-       alt.emitClient(source,'notify', 'error', 'SISTEMA DE PERMISSÃO', 'Você NÃO possui as permissões necessarias')
+       alt.emitClient(source,'notify', 'error', Core.Translate('PERMISSIONS.LABEL'), Core.Translate('PERMISSIONS.DONT_HAVE_PERM'))
     }
 })
 

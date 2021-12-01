@@ -1,8 +1,9 @@
 import * as alt from 'alt-server';
+import * as chat from 'urp-chat';
 
 import Core from '../main';
 
-import {executeSync, insertSync, hashString, compareHash, getVectorInFrontOfPlayer} from '../libs/utils';
+import {executeSync, insertSync, hashString, compareHash, getVectorInFrontOfPlayer, getClosestEntity} from '../libs/utils';
 
 // Utils
 const getPlayerIdentifier = (source) => {
@@ -70,6 +71,16 @@ const getCurrentInventory = (source) => {
     return source.playerData.inventory
 }
 
+const getIdentityByProximity = (source) => {
+    const closestSource = getClosestEntity(source.pos, source.rot, [...alt.Player.all], 10)
+    console.log('DEBUG', closestSource)
+    if(!closestSource || closestSource === source){
+        alt.emitClient(source,'notify', 'error', Core.Translate('SYSTEM.LABEL'), Core.Translate('NO_PLAYERS_NEAR'))
+        return;
+    }
+    chat.send(source, `${JSON.stringify(closestSource.playerData.charinfo)} ${closestSource.playerData.ssn}`)
+}
+
 // Vehicles
 const spawnVehicle = (source, model) => {
    try{
@@ -115,4 +126,4 @@ const emitPlayerData = (source, key, value) => {
     });
 }
 
-export default { login, getPlayerIdentifier, setPosition, getMoney, hasPermission, addPermission, getCurrentInventory, spawnVehicle, emitPlayerData }
+export default { login, getPlayerIdentifier, setPosition, getMoney, hasPermission, addPermission, getCurrentInventory, spawnVehicle, emitPlayerData, getIdentityByProximity }

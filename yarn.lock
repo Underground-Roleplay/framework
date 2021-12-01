@@ -2,145 +2,140 @@
 # yarn lockfile v1
 
 
-"@altv/types-client@^1.9.6", "@altv/types-client@>=1.7.0", "@altv/types-client@1.9.x":
-  "integrity" "sha512-zJiNm6jYhhjJGA2yrUOX1tIpeFCGzsiwRxL30nh5u/bkYRFA0KaV+QkNgRNbFByV5EFxhlsDAFpyKE6asO8YSg=="
-  "resolved" "https://registry.npmjs.org/@altv/types-client/-/types-client-1.9.6.tgz"
-  "version" "1.9.6"
+"@altv/types-client@^1.9.6":
+  version "1.9.6"
+  resolved "https://registry.npmjs.org/@altv/types-client/-/types-client-1.9.6.tgz"
+  integrity sha512-zJiNm6jYhhjJGA2yrUOX1tIpeFCGzsiwRxL30nh5u/bkYRFA0KaV+QkNgRNbFByV5EFxhlsDAFpyKE6asO8YSg==
 
 "@altv/types-natives@^1.4.3":
-  "integrity" "sha512-O/qHgF4QqjzXeLzkx2QbSo+F/aRw+K8GFJaBiGiWFUecEj2MrdrwzuFzmQvGHG8BgQ0RPJ/b6FRJZE8pzDFhVw=="
-  "resolved" "https://registry.npmjs.org/@altv/types-natives/-/types-natives-1.4.3.tgz"
-  "version" "1.4.3"
+  version "1.4.3"
+  resolved "https://registry.npmjs.org/@altv/types-natives/-/types-natives-1.4.3.tgz"
+  integrity sha512-O/qHgF4QqjzXeLzkx2QbSo+F/aRw+K8GFJaBiGiWFUecEj2MrdrwzuFzmQvGHG8BgQ0RPJ/b6FRJZE8pzDFhVw==
 
 "@altv/types-server@^2.1.3":
-  "integrity" "sha512-vErkKhH47sKevRVc3vO7xHIiZ6gFBtohsrL7fcIaQSOW1S2doJrCGArnWO2vr68Qq1MfK+d5awqf0fZlW40eRA=="
-  "resolved" "https://registry.npmjs.org/@altv/types-server/-/types-server-2.1.3.tgz"
-  "version" "2.1.3"
+  version "2.1.3"
+  resolved "https://registry.npmjs.org/@altv/types-server/-/types-server-2.1.3.tgz"
+  integrity sha512-vErkKhH47sKevRVc3vO7xHIiZ6gFBtohsrL7fcIaQSOW1S2doJrCGArnWO2vr68Qq1MfK+d5awqf0fZlW40eRA==
 
-"@altv/types-shared@^1.1.0", "@altv/types-shared@1.1.x":
-  "integrity" "sha512-o09zVB4J00WTBMAoZGkKknuZOYoMKtU7RY4MGGWj3vF7p6xNYK+vMShYoXckRe5tWXalnV/oyUk6B38ydqFgnQ=="
-  "resolved" "https://registry.npmjs.org/@altv/types-shared/-/types-shared-1.1.0.tgz"
-  "version" "1.1.0"
+"@altv/types-shared@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.npmjs.org/@altv/types-shared/-/types-shared-1.1.0.tgz"
+  integrity sha512-o09zVB4J00WTBMAoZGkKknuZOYoMKtU7RY4MGGWj3vF7p6xNYK+vMShYoXckRe5tWXalnV/oyUk6B38ydqFgnQ==
 
 "@altv/types-webview@^1.0.2":
-  "integrity" "sha512-3RceTutIDS/XV8YUn/AiSe61BERBb6LfCCQxIcN5bvlh26lPXC0naxtQTcG39pSgj8a5iiVT8LaRNdEZP6JBcA=="
-  "resolved" "https://registry.npmjs.org/@altv/types-webview/-/types-webview-1.0.2.tgz"
-  "version" "1.0.2"
+  version "1.0.2"
+  resolved "https://registry.npmjs.org/@altv/types-webview/-/types-webview-1.0.2.tgz"
+  integrity sha512-3RceTutIDS/XV8YUn/AiSe61BERBb6LfCCQxIcN5bvlh26lPXC0naxtQTcG39pSgj8a5iiVT8LaRNdEZP6JBcA==
 
-"@altv/types-worker@1.0.x":
-  "integrity" "sha512-TyYAJaYYTim85UT9B3pM7+9bJolEv7xb44Sr8LUOKcvXSF8OJJLMZP2eRcP0MuVRXNqjLy0ECbJA7ttlHEfV5g=="
-  "resolved" "https://registry.npmjs.org/@altv/types-worker/-/types-worker-1.0.1.tgz"
-  "version" "1.0.1"
+data-uri-to-buffer@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.npmjs.org/data-uri-to-buffer/-/data-uri-to-buffer-4.0.0.tgz"
+  integrity sha512-Vr3mLBA8qWmcuschSLAOogKgQ/Jwxulv3RNE4FXnYWRGujzrRWQI4m12fQqRkwX06C0KanhLr4hK+GydchZsaA==
 
-"data-uri-to-buffer@^4.0.0":
-  "integrity" "sha512-Vr3mLBA8qWmcuschSLAOogKgQ/Jwxulv3RNE4FXnYWRGujzrRWQI4m12fQqRkwX06C0KanhLr4hK+GydchZsaA=="
-  "resolved" "https://registry.npmjs.org/data-uri-to-buffer/-/data-uri-to-buffer-4.0.0.tgz"
-  "version" "4.0.0"
-
-"debug@^4.1.1":
-  "integrity" "sha512-mOp8wKcvj7XxC78zLgw/ZA+6TSgkoE2C/ienthhRD298T7UNwAg9diBpLRxC0mOezLl4B0xV7M0cCO6P/O0Xhw=="
-  "resolved" "https://registry.npmjs.org/debug/-/debug-4.3.2.tgz"
-  "version" "4.3.2"
+debug@^4.1.1:
+  version "4.3.2"
+  resolved "https://registry.npmjs.org/debug/-/debug-4.3.2.tgz"
+  integrity sha512-mOp8wKcvj7XxC78zLgw/ZA+6TSgkoE2C/ienthhRD298T7UNwAg9diBpLRxC0mOezLl4B0xV7M0cCO6P/O0Xhw==
   dependencies:
-    "ms" "2.1.2"
+    ms "2.1.2"
 
-"fetch-blob@^3.1.2":
-  "integrity" "sha512-ax1Y5I9w+9+JiM+wdHkhBoxew+zG4AJ2SvAD1v1szpddUIiPERVGBxrMcB2ZqW0Y3PP8bOWYv2zqQq1Jp2kqUQ=="
-  "resolved" "https://registry.npmjs.org/fetch-blob/-/fetch-blob-3.1.3.tgz"
-  "version" "3.1.3"
+fetch-blob@^3.1.2:
+  version "3.1.3"
+  resolved "https://registry.npmjs.org/fetch-blob/-/fetch-blob-3.1.3.tgz"
+  integrity sha512-ax1Y5I9w+9+JiM+wdHkhBoxew+zG4AJ2SvAD1v1szpddUIiPERVGBxrMcB2ZqW0Y3PP8bOWYv2zqQq1Jp2kqUQ==
   dependencies:
-    "web-streams-polyfill" "^3.0.3"
+    web-streams-polyfill "^3.0.3"
 
-"formdata-polyfill@^4.0.10":
-  "integrity" "sha512-buewHzMvYL29jdeQTVILecSaZKnt/RJWjoZCF5OW60Z67/GmSLBkOFM7qh1PI3zFNtJbaZL5eQu1vLfazOwj4g=="
-  "resolved" "https://registry.npmjs.org/formdata-polyfill/-/formdata-polyfill-4.0.10.tgz"
-  "version" "4.0.10"
+formdata-polyfill@^4.0.10:
+  version "4.0.10"
+  resolved "https://registry.npmjs.org/formdata-polyfill/-/formdata-polyfill-4.0.10.tgz"
+  integrity sha512-buewHzMvYL29jdeQTVILecSaZKnt/RJWjoZCF5OW60Z67/GmSLBkOFM7qh1PI3zFNtJbaZL5eQu1vLfazOwj4g==
   dependencies:
-    "fetch-blob" "^3.1.2"
+    fetch-blob "^3.1.2"
 
-"i18n@^0.13.3":
-  "integrity" "sha512-QDmY2joBdKxj3wvk2LKyvZkjwGHta882kYHwEvx1WbwiPAet49kEU7cxzGfnrtWrfh4+7I07kBc0ZSjSlhnKyQ=="
-  "resolved" "https://registry.npmjs.org/i18n/-/i18n-0.13.3.tgz"
-  "version" "0.13.3"
+i18n@^0.13.3:
+  version "0.13.3"
+  resolved "https://registry.npmjs.org/i18n/-/i18n-0.13.3.tgz"
+  integrity sha512-QDmY2joBdKxj3wvk2LKyvZkjwGHta882kYHwEvx1WbwiPAet49kEU7cxzGfnrtWrfh4+7I07kBc0ZSjSlhnKyQ==
   dependencies:
-    "debug" "^4.1.1"
-    "make-plural" "^6.2.2"
-    "math-interval-parser" "^2.0.1"
-    "messageformat" "^2.3.0"
-    "mustache" "^4.0.1"
-    "sprintf-js" "^1.1.2"
+    debug "^4.1.1"
+    make-plural "^6.2.2"
+    math-interval-parser "^2.0.1"
+    messageformat "^2.3.0"
+    mustache "^4.0.1"
+    sprintf-js "^1.1.2"
 
-"make-plural@^4.3.0":
-  "integrity" "sha512-xTYd4JVHpSCW+aqDof6w/MebaMVNTVYBZhbB/vi513xXdiPT92JMVCo0Jq8W2UZnzYRFeVbQiQ+I25l13JuKvA=="
-  "resolved" "https://registry.npmjs.org/make-plural/-/make-plural-4.3.0.tgz"
-  "version" "4.3.0"
+make-plural@^4.3.0:
+  version "4.3.0"
+  resolved "https://registry.npmjs.org/make-plural/-/make-plural-4.3.0.tgz"
+  integrity sha512-xTYd4JVHpSCW+aqDof6w/MebaMVNTVYBZhbB/vi513xXdiPT92JMVCo0Jq8W2UZnzYRFeVbQiQ+I25l13JuKvA==
   optionalDependencies:
-    "minimist" "^1.2.0"
+    minimist "^1.2.0"
 
-"make-plural@^6.2.2":
-  "integrity" "sha512-8iTuFioatnTTmb/YJjywkVIHLjcwkFD9Ms0JpxjEm9Mo8eQYkh1z+55dwv4yc1jQ8ftVBxWQbihvZL1DfzGGWA=="
-  "resolved" "https://registry.npmjs.org/make-plural/-/make-plural-6.2.2.tgz"
-  "version" "6.2.2"
+make-plural@^6.2.2:
+  version "6.2.2"
+  resolved "https://registry.npmjs.org/make-plural/-/make-plural-6.2.2.tgz"
+  integrity sha512-8iTuFioatnTTmb/YJjywkVIHLjcwkFD9Ms0JpxjEm9Mo8eQYkh1z+55dwv4yc1jQ8ftVBxWQbihvZL1DfzGGWA==
 
-"math-interval-parser@^2.0.1":
-  "integrity" "sha512-VmlAmb0UJwlvMyx8iPhXUDnVW1F9IrGEd9CIOmv+XL8AErCUUuozoDMrgImvnYt2A+53qVX/tPW6YJurMKYsvA=="
-  "resolved" "https://registry.npmjs.org/math-interval-parser/-/math-interval-parser-2.0.1.tgz"
-  "version" "2.0.1"
+math-interval-parser@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.npmjs.org/math-interval-parser/-/math-interval-parser-2.0.1.tgz"
+  integrity sha512-VmlAmb0UJwlvMyx8iPhXUDnVW1F9IrGEd9CIOmv+XL8AErCUUuozoDMrgImvnYt2A+53qVX/tPW6YJurMKYsvA==
 
-"messageformat-formatters@^2.0.1":
-  "integrity" "sha512-E/lQRXhtHwGuiQjI7qxkLp8AHbMD5r2217XNe/SREbBlSawe0lOqsFb7rflZJmlQFSULNLIqlcjjsCPlB3m3Mg=="
-  "resolved" "https://registry.npmjs.org/messageformat-formatters/-/messageformat-formatters-2.0.1.tgz"
-  "version" "2.0.1"
+messageformat-formatters@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.npmjs.org/messageformat-formatters/-/messageformat-formatters-2.0.1.tgz"
+  integrity sha512-E/lQRXhtHwGuiQjI7qxkLp8AHbMD5r2217XNe/SREbBlSawe0lOqsFb7rflZJmlQFSULNLIqlcjjsCPlB3m3Mg==
 
-"messageformat-parser@^4.1.2":
-  "integrity" "sha512-2fU3XDCanRqeOCkn7R5zW5VQHWf+T3hH65SzuqRvjatBK7r4uyFa5mEX+k6F9Bd04LVM5G4/BHBTUJsOdW7uyg=="
-  "resolved" "https://registry.npmjs.org/messageformat-parser/-/messageformat-parser-4.1.3.tgz"
-  "version" "4.1.3"
+messageformat-parser@^4.1.2:
+  version "4.1.3"
+  resolved "https://registry.npmjs.org/messageformat-parser/-/messageformat-parser-4.1.3.tgz"
+  integrity sha512-2fU3XDCanRqeOCkn7R5zW5VQHWf+T3hH65SzuqRvjatBK7r4uyFa5mEX+k6F9Bd04LVM5G4/BHBTUJsOdW7uyg==
 
-"messageformat@^2.3.0":
-  "integrity" "sha512-uTzvsv0lTeQxYI2y1NPa1lItL5VRI8Gb93Y2K2ue5gBPyrbJxfDi/EYWxh2PKv5yO42AJeeqblS9MJSh/IEk4w=="
-  "resolved" "https://registry.npmjs.org/messageformat/-/messageformat-2.3.0.tgz"
-  "version" "2.3.0"
+messageformat@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.npmjs.org/messageformat/-/messageformat-2.3.0.tgz"
+  integrity sha512-uTzvsv0lTeQxYI2y1NPa1lItL5VRI8Gb93Y2K2ue5gBPyrbJxfDi/EYWxh2PKv5yO42AJeeqblS9MJSh/IEk4w==
   dependencies:
-    "make-plural" "^4.3.0"
-    "messageformat-formatters" "^2.0.1"
-    "messageformat-parser" "^4.1.2"
+    make-plural "^4.3.0"
+    messageformat-formatters "^2.0.1"
+    messageformat-parser "^4.1.2"
 
-"minimist@^1.2.0":
-  "integrity" "sha512-FM9nNUYrRBAELZQT3xeZQ7fmMOBg6nWNmJKTcgsJeaLstP/UODVpGsr5OhXhhXg6f+qtJ8uiZ+PUxkDWcgIXLw=="
-  "resolved" "https://registry.npmjs.org/minimist/-/minimist-1.2.5.tgz"
-  "version" "1.2.5"
+minimist@^1.2.0:
+  version "1.2.5"
+  resolved "https://registry.npmjs.org/minimist/-/minimist-1.2.5.tgz"
+  integrity sha512-FM9nNUYrRBAELZQT3xeZQ7fmMOBg6nWNmJKTcgsJeaLstP/UODVpGsr5OhXhhXg6f+qtJ8uiZ+PUxkDWcgIXLw==
 
-"ms@2.1.2":
-  "integrity" "sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w=="
-  "resolved" "https://registry.npmjs.org/ms/-/ms-2.1.2.tgz"
-  "version" "2.1.2"
+ms@2.1.2:
+  version "2.1.2"
+  resolved "https://registry.npmjs.org/ms/-/ms-2.1.2.tgz"
+  integrity sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==
 
-"mustache@^4.0.1":
-  "integrity" "sha512-71ippSywq5Yb7/tVYyGbkBggbU8H3u5Rz56fH60jGFgr8uHwxs+aSKeqmluIVzM0m0kB7xQjKS6qPfd0b2ZoqQ=="
-  "resolved" "https://registry.npmjs.org/mustache/-/mustache-4.2.0.tgz"
-  "version" "4.2.0"
+mustache@^4.0.1:
+  version "4.2.0"
+  resolved "https://registry.npmjs.org/mustache/-/mustache-4.2.0.tgz"
+  integrity sha512-71ippSywq5Yb7/tVYyGbkBggbU8H3u5Rz56fH60jGFgr8uHwxs+aSKeqmluIVzM0m0kB7xQjKS6qPfd0b2ZoqQ==
 
-"node-fetch@^3.1.0":
-  "integrity" "sha512-QU0WbIfMUjd5+MUzQOYhenAazakV7Irh1SGkWCsRzBwvm4fAhzEUaHMJ6QLP7gWT6WO9/oH2zhKMMGMuIrDyKw=="
-  "resolved" "https://registry.npmjs.org/node-fetch/-/node-fetch-3.1.0.tgz"
-  "version" "3.1.0"
+node-fetch@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.npmjs.org/node-fetch/-/node-fetch-3.1.0.tgz"
+  integrity sha512-QU0WbIfMUjd5+MUzQOYhenAazakV7Irh1SGkWCsRzBwvm4fAhzEUaHMJ6QLP7gWT6WO9/oH2zhKMMGMuIrDyKw==
   dependencies:
-    "data-uri-to-buffer" "^4.0.0"
-    "fetch-blob" "^3.1.2"
-    "formdata-polyfill" "^4.0.10"
+    data-uri-to-buffer "^4.0.0"
+    fetch-blob "^3.1.2"
+    formdata-polyfill "^4.0.10"
 
-"sjcl@^1.0.8":
-  "integrity" "sha512-LzIjEQ0S0DpIgnxMEayM1rq9aGwGRG4OnZhCdjx7glTaJtf4zRfpg87ImfjSJjoW9vKpagd82McDOwbRT5kQKQ=="
-  "resolved" "https://registry.npmjs.org/sjcl/-/sjcl-1.0.8.tgz"
-  "version" "1.0.8"
+sjcl@^1.0.8:
+  version "1.0.8"
+  resolved "https://registry.npmjs.org/sjcl/-/sjcl-1.0.8.tgz"
+  integrity sha512-LzIjEQ0S0DpIgnxMEayM1rq9aGwGRG4OnZhCdjx7glTaJtf4zRfpg87ImfjSJjoW9vKpagd82McDOwbRT5kQKQ==
 
-"sprintf-js@^1.1.2":
-  "integrity" "sha512-VE0SOVEHCk7Qc8ulkWw3ntAzXuqf7S2lvwQaDLRnUeIEaKNQJzV6BwmLKhOqT61aGhfUMrXeaBk+oDGCzvhcug=="
-  "resolved" "https://registry.npmjs.org/sprintf-js/-/sprintf-js-1.1.2.tgz"
-  "version" "1.1.2"
+sprintf-js@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.npmjs.org/sprintf-js/-/sprintf-js-1.1.2.tgz"
+  integrity sha512-VE0SOVEHCk7Qc8ulkWw3ntAzXuqf7S2lvwQaDLRnUeIEaKNQJzV6BwmLKhOqT61aGhfUMrXeaBk+oDGCzvhcug==
 
-"web-streams-polyfill@^3.0.3":
-  "integrity" "sha512-EqPmREeOzttaLRm5HS7io98goBgZ7IVz79aDvqjD0kYXLtFZTc0T/U6wHTPKyIjb+MdN7DFIIX6hgdBEpWmfPA=="
-  "resolved" "https://registry.npmjs.org/web-streams-polyfill/-/web-streams-polyfill-3.2.0.tgz"
-  "version" "3.2.0"
+web-streams-polyfill@^3.0.3:
+  version "3.2.0"
+  resolved "https://registry.npmjs.org/web-streams-polyfill/-/web-streams-polyfill-3.2.0.tgz"
+  integrity sha512-EqPmREeOzttaLRm5HS7io98goBgZ7IVz79aDvqjD0kYXLtFZTc0T/U6wHTPKyIjb+MdN7DFIIX6hgdBEpWmfPA==

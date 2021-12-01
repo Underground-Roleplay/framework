@@ -39,7 +39,7 @@ chat.registerCmd('c', (source, [model]) => {
   const isAllowed = Core.Functions.hasPermission(source, 'admin')
   if(isAllowed){
      Core.Functions.spawnVehicle(source, model)
-     alt.emitClient(source,'notify', 'sucess', 'SISTEMA',  `${model} SPAWNED`)
+     alt.emitClient(source,'notify', 'sucess', Core.Translate('SYSTEM.LABEL'),  `${model} SPAWNED`)
   }else{
    alt.emitClient(source,'notify', 'error', Core.Translate('PERMISSIONS.LABEL'), Core.Translate('PERMISSIONS.DONT_HAVE_PERM'))
   }
@@ -116,6 +116,10 @@ chat.registerCmd('withdraw', (source, [amount])=>{
    }
 })
 
+chat.registerCmd('getIdentity', (source) => {
+   Core.Functions.getIdentityByProximity(source)
+})
+
 chat.registerCmd('createTestInteractions', (source)=>{
    Core.Interactions.createMultipleInteractions(defaultInteractions)
 })
@@ -135,6 +139,7 @@ chat.registerCmd('createInteractionWithPed', (source)=>{
 chat.registerCmd('createPed', (source) => {
    Core.Entities.createPed(source.pos, 0, {pedType:3, modelHash: alt.hash('mp_m_freemode_01')})
 })
+
 chat.registerCmd('createMarker', (source) => {
    const color =  new alt.RGBA(0, 181, 204, 200)
    Core.Entities.createMarker(source.pos, 0, {type: 0, r: color.r, g: color.g, b: color.b, a: color.a})

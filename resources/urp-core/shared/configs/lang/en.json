@@ -36,5 +36,9 @@
     "COMMANDS":{
         "LABEL": "COMMANDS"
     },
+    "SYSTEM": {
+        "LABEL": "SYSTEM"
+    },
+    "NO_PLAYERS_NEAR": "No players nearby",
     "WELCOME": "Welcome to {{ serverName }}"
 }

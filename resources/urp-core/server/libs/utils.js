@@ -58,6 +58,53 @@ function getVectorInFrontOfPlayer(source, distance)  {
 
    return new alt.Vector3(posFront.x, posFront.y, posFront.z);
 }
+
+/**
+ * Get the closest server entity type. Server only.
+ * @param {Vector3} playerPosition
+ * @param {Vector3} rot player rotation
+ * @param {Array<{ pos: Vector3; valid?: boolean }>} entities
+ * @param {number} distance
+ * @return {*}
+ */
+function getClosestEntity(
+    playerPosition,
+    rot,
+    entities,
+    dist,
+    checkBackwards = false
+) {
+    const fwdVector = getForwardVector(rot);
+    let position;
+
+    if (!checkBackwards) {
+        position = new alt.Vector3(playerPosition.x + fwdVector.x * dist, playerPosition.y + fwdVector.y * dist, playerPosition.z)
+    } else {
+        position = new alt.Vector3(playerPosition.x - fwdVector.x * dist, playerPosition.y - fwdVector.y * dist, playerPosition.z)
+    }
+
+    let lastRange = 25;
+    let closestEntity;
+
+    for (let i = 0; i < entities.length; i++) {
+        const entity = entities[i];
+
+        if (!entity || !entity.valid) {
+            continue;
+        }
+
+        const dist = position.distanceTo(entity.pos);
+        if (dist > lastRange) {
+            continue;
+        }
+
+        closestEntity = entity;
+        lastRange = dist;
+    }
+
+    return closestEntity;
+}
+
 // STUYK'S Encryption System
 // https://github.com/Stuyk
 
@@ -91,4 +138,4 @@ const compareHash = (plainString, pbkdf2Hash) => {
     return true;
 }
 
-export { executeSync, insertSync, updateSync, hashString, compareHash, getForwardVector, getVectorInFrontOfPlayer }
+export { executeSync, insertSync, updateSync, hashString, compareHash, getForwardVector, getVectorInFrontOfPlayer, getClosestEntity }
