@@ -122,7 +122,8 @@ const addItem = (source, item, amount, slot, info) => {
     const totalWeight = getCurrentWeight(source.playerData.inventory)
     const itemInfo = Core.Shared.Items[item.toLowerCase()]
     if(!itemInfo){
-       alt.emitClient(source,'notify', 'error', 'INVENTARIO', 'O item não existe')
+       alt.emitClient(source,'notify', 'error', Core.Translate('INVENTORY.LABEL'), 
+       Core.Translate('ITEM_DOESNT_EXISTS'))
         return false;
     }
     if(!slot){
@@ -185,7 +186,7 @@ const addItem = (source, item, amount, slot, info) => {
             }
         }
     }
-    alt.emitClient(source,'notify', 'error', 'INVENTARIO', 'Seu inventario está cheio')
+    alt.emitClient(source,'notify', 'error', Core.Translate('INVENTORY.LABEL'), Core.Translate('INVENTORY.FULL'))
     return false
 }
 
@@ -229,7 +230,7 @@ const createCharacter = async (source, playerData, select = true) => {
         metadata: JSON.stringify(playerData.metadata),
         inventory: JSON.stringify(playerData.inventory)
     }, undefined, alt.resourceName)
-    console.log(Core.Translate('CHARACTER.CREATION_SUCCESS'))
+    console.log(Core.Translate('CHARACTER.CREATION_SUCCESS', {socialID: source.socialID}))
     alt.emit('Creator:Start', source, playerData)
     //  Maybe we can call creator over here before the DB creation
     if(select){
@@ -242,9 +243,10 @@ const selectCharacter = async (source, playerData, fromCreation = false) => {
     source.playerData = playerData
     const { position } = source.playerData
     const model = source.playerData.charinfo.gender === 0 ? 'mp_m_freemode_01' : 'mp_f_freemode_01'
-    chat.success(`Logado com sucesso!`);
+    chat.send(source, `Logado com sucesso!`);
     Core.Functions.emitPlayerData(source, 'charinfo', source.playerData.charinfo)
     Core.Functions.emitPlayerData(source, 'inventory', source.playerData.inventory)
+    Core.Functions.emitPlayerData(source, 'metadata', source.playerData.metadata)
     setDeath(source, source.playerData.metadata.isdead)
     source.health = source.playerData.metadata.health
     source.armour = source.playerData.metadata.armour
@@ -487,6 +489,7 @@ const moneyDeposit = (source, amount) => {
         source.playerData.money['bank'] = parseInt(source.playerData.money['bank']) + parseInt(amount)
         updateMoney(source)
     } else {
+        // TODO
         alt.log('Não possui a quantia na carteira')
     }
     return
@@ -497,6 +500,7 @@ const moneywithdraw = (source, amount) => {
         source.playerData.money['cash'] = parseInt(source.playerData.money['cash']) + parseInt(amount)
         updateMoney(source)
     } else {
+        // TODO
         alt.log('Não possui a quantia no banco')
     }
     return
@@ -515,6 +519,7 @@ const getPayment = (source, amount) => {
         updateMoney(source)
         return
     } else {
+        // TODO
         alt.log('vai trabalhar vagabundo')
     }
     return

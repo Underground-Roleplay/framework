@@ -18,8 +18,23 @@
         "LOGIN": "The player {{ playerName }} has been logged into the account with socialID: {{ sID }}"
     },
     "CHARACTER": {
-        "CREATION_ERROR": "There was an error creating a new character [userID = {{ usrID }}]",
-        "CREATION_SUCCESS": "A new character was created [userID = {{ usrID }}]"
+        "CREATION_ERROR": "There was an error creating a new character [socialID = {{ socialID }}]",
+        "CREATION_SUCCESS": "A new character was created [socialID = {{ socialID }}]"
+    },
+    "VEHICLE": {
+        "INCORRECT_MODEL": "{{ model }} - isn't a valid model!"
+    },
+    "INVENTORY": {
+        "LABEL": "INVENTORY",
+        "ITEM_DOESNT_EXISTS": "This item does not exists",
+        "FULL": "You inventory is full"
+    },
+    "PERMISSIONS": {
+        "LABEL": "PERMISSION SYSTEM",
+        "DONT_HAVE_PERM": "You DON'T have the necessary permissions"
+    },
+    "COMMANDS":{
+        "LABEL": "COMMANDS"
     },
     "WELCOME": "Welcome to {{ serverName }}"
 }

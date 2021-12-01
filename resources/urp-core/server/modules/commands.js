@@ -6,49 +6,49 @@ import Core from '../main';
 chat.registerCmd('addItem', (source, args) => {
    const [ item, amount, slot ] = args
    if(!item || !amount){
-      alt.emitClient(source,'notify', 'error', 'COMANDOS', 'USE /addItem nome_do_item quantidade')
+      alt.emitClient(source,'notify', 'error', Core.Translate('COMMANDS.LABEL'), '/addItem item_name amount')
       return;
    } 
    const isAllowed = Core.Functions.hasPermission(source, 'admin')
    if(isAllowed){
         Core.Character.addItem(source, item, amount, slot ? slot : undefined)
    }else{
-      alt.emitClient(source,'notify', 'error', 'SISTEMA DE PERMISSÃO', 'Você NÃO possui as permissões necessarias')
+      alt.emitClient(source,'notify', 'error', Core.Translate('PERMISSIONS.LABEL'), Core.Translate('PERMISSIONS.DONT_HAVE_PERM'))
    }
 })
 
 chat.registerCmd('tpcds', (source, [x, y, z]) => {
    if(!x || !y || !z){
-      alt.emitClient(source,'notify', 'error', 'COMANDOS', 'USE /tpcds x y z')
+      alt.emitClient(source,'notify', 'error', Core.Translate('COMMANDS.LABEL'), '/tpcds x y z')
       return;
    } 
    const isAllowed = Core.Functions.hasPermission(source, 'admin')
    if(isAllowed){
         Core.Functions.setPosition(source, parseInt(x), parseInt(y), parseInt(z))
    }else{
-      alt.emitClient(source,'notify', 'error', 'SISTEMA DE PERMISSÃO', 'Você NÃO possui as permissões necessarias')
+      alt.emitClient(source,'notify', 'error', Core.Translate('PERMISSIONS.LABEL'), Core.Translate('PERMISSIONS.DONT_HAVE_PERM'))
    }
 })
 
 
 chat.registerCmd('c', (source, [model]) => {
    if(!model){
-      alt.emitClient(source,'notify', 'error', 'COMANDOS', 'use /c (modelo)')
+      alt.emitClient(source,'notify', 'error', Core.Translate('COMMANDS.LABEL'), '/c (model)')
       return;
   }
   const isAllowed = Core.Functions.hasPermission(source, 'admin')
   if(isAllowed){
      Core.Functions.spawnVehicle(source, model)
-     alt.emitClient(source,'notify', 'sucess', 'SISTEMA',  `${model} SPAWNADO`)
+     alt.emitClient(source,'notify', 'sucess', 'SISTEMA',  `${model} SPAWNED`)
   }else{
-   alt.emitClient(source,'notify', 'error', 'SISTEMA DE PERMISSÃO', 'Você NÃO possui as permissões necessarias')
+   alt.emitClient(source,'notify', 'error', Core.Translate('PERMISSIONS.LABEL'), Core.Translate('PERMISSIONS.DONT_HAVE_PERM'))
   }
 })
 
 // TODO
 chat.registerCmd('whitelist', (source, [id])=>{
    if(!id){
-      alt.emitClient(source,'notify', 'error', 'COMANDOS', 'Especifique um id para adicionar a whitelist')
+      alt.emitClient(source,'notify', 'error', Core.Translate('COMMANDS.LABEL'), 'Especifique um id para adicionar a whitelist')
       return;
    }
 })
@@ -56,7 +56,7 @@ chat.registerCmd('whitelist', (source, [id])=>{
 
 chat.registerCmd('cloth', (source, [component, drawable, texture])=>{
    if(!component || !drawable || !texture){
-      alt.emitClient(source,'notify', 'error', 'COMANDOS', 'use /cloth [component drawable texture]')
+      alt.emitClient(source,'notify', 'error', Core.Translate('COMMANDS.LABEL'), 'use /cloth [component drawable texture]')
       return;
    }
    Core.Character.changeCloth(source, component, drawable, texture)

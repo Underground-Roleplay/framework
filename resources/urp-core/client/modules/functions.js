@@ -12,6 +12,11 @@ const startTicks = () => {
     }, 5000)
 }
 
+const getMetaData = (key) => {
+    if(!alt.Player.local.playerData.metadata[key]) return undefined;
+    return alt.Player.local.playerData.metadata[key]
+}
+
 const handleSetplayerData = (key, value) => {
     if(!alt.Player.local.playerData) {
         alt.Player.local.playerData = {}
@@ -206,4 +211,4 @@ alt.onServer(`admin:tpwp`, () => {
     };
 })
 
-export default {startTicks, handleSetplayerData, getPlayerData, handleDeath, RequestModel}
+export default {startTicks, handleSetplayerData, getPlayerData, handleDeath, RequestModel, getMetaData}
