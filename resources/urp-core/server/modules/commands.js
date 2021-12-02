@@ -36,13 +36,13 @@ chat.registerCmd('c', (source, [model]) => {
       alt.emitClient(source,'notify', 'error', Core.Translate('COMMANDS.LABEL'), '/c (model)')
       return;
   }
-  const isAllowed = Core.Functions.hasPermission(source, 'admin')
-  if(isAllowed){
+  //const isAllowed = Core.Functions.hasPermission(source, 'admin')
+  //if(isAllowed){
      Core.Functions.spawnVehicle(source, model)
      alt.emitClient(source,'notify', 'sucess', Core.Translate('SYSTEM.LABEL'),  `${model} SPAWNED`)
-  }else{
-   alt.emitClient(source,'notify', 'error', Core.Translate('PERMISSIONS.LABEL'), Core.Translate('PERMISSIONS.DONT_HAVE_PERM'))
-  }
+  //}else{
+  // alt.emitClient(source,'notify', 'error', Core.Translate('PERMISSIONS.LABEL'), Core.Translate('PERMISSIONS.DONT_HAVE_PERM'))
+ // }
 })
 
 // TODO
@@ -85,19 +85,6 @@ chat.registerCmd('getpayment', (source, [amount])=>{
       Core.Character.getPayment(source, amount)
    }
 }) 
-
-chat.registerCmd('garage', (source)=> {
-   Core.Vehicle.loadGarage(source)
-}) 
-
-chat.registerCmd('addcar', (source,[model])=> {
-   Core.Vehicle.addVehicle(source, model)
-})
-
-chat.registerCmd('spawncar', (source,[id])=> {
-   Core.Vehicle.spawnVehicle(source, id)
-})
-
 
 
 chat.registerCmd('deposit', (source, [amount])=>{
@@ -148,6 +135,7 @@ chat.registerCmd('createMarker', (source) => {
 chat.registerCmd('noclip', (source) => {   
    alt.emitClient(source, 'admin:Noclip');
 })
+
 
 chat.registerCmd('tpwp', (source) => {   
    const isAllowed = Core.Functions.hasPermission(source, 'admin')

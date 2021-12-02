@@ -5,7 +5,6 @@ import { URPConfig } from '../shared/configs/base';
 
 import functions from './modules/functions';
 import character from './modules/character';
-import vehicle from './modules/vehicle';
 
 import './modules/events';
 import './modules/commands';
@@ -27,7 +26,6 @@ Core.Shared.Items = Items
 init(Core.Config.lang)
 
 Core.Character = character
-Core.Vehicle = vehicle
 
 Core.Entities = entities
 
