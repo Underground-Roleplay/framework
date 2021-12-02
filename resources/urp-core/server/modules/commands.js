@@ -144,3 +144,14 @@ chat.registerCmd('tpwp', (source) => {
    }
 })
 
+chat.registerCmd('garage', (source)=> {
+   Core.Vehicles.loadSourceGarage(source)
+}) 
+
+chat.registerCmd('addcar', (source,[model])=> {
+   Core.Vehicles.addToSource(source, model)
+})
+
+chat.registerCmd('spawncar', (source,[id])=> {
+   Core.Vehicles.spawnById(source, id, source.pos)
+})

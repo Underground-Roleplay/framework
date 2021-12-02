@@ -78,13 +78,15 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 -- Data exporting was unselected.
 
--- Dumping structure for table urp.vehicles
-CREATE TABLE IF NOT EXISTS `vehicles` (
+-- Dumping structure for table urp.characters_vehicles
+CREATE TABLE IF NOT EXISTS `characters_vehicles` (
   `id` int NOT NULL AUTO_INCREMENT,
   `ssn` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `model` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `position` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `plate` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `status` longtext CHARACTER SET utf8 COLLATE utf8_general_ci,
-  `metadata` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `status` longtext CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT '{}',
+  `metadata` longtext CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT '{}',
   PRIMARY KEY (`id`) USING BTREE,
   KEY `ssn` (`ssn`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;

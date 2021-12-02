@@ -8,6 +8,7 @@ import character from './modules/character';
 import interactions from './modules/interactions';
 import entities from './modules/entities';
 import inventory from './modules/inventory';
+import vehicles from './modules/vehicles';
 
 import './modules/events';
 import './modules/commands';
@@ -15,6 +16,7 @@ import './modules/commands';
 import { init, translate } from './libs/locale';
 import { Items } from '../shared/configs/items';
 import { executeSync } from './libs/utils';
+
 
 const Core = {}
 
@@ -29,6 +31,8 @@ init(Core.Config.lang)
 Core.Character = character
 
 Core.Inventory = inventory
+
+Core.Vehicles = vehicles
 
 Core.Entities = entities
 
