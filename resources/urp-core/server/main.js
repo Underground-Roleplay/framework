@@ -5,6 +5,9 @@ import { URPConfig } from '../shared/configs/base';
 
 import functions from './modules/functions';
 import character from './modules/character';
+import interactions from './modules/interactions';
+import entities from './modules/entities';
+import inventory from './modules/inventory';
 
 import './modules/events';
 import './modules/commands';
@@ -12,8 +15,6 @@ import './modules/commands';
 import { init, translate } from './libs/locale';
 import { Items } from '../shared/configs/items';
 import { executeSync } from './libs/utils';
-import interactions from './modules/interactions';
-import entities from './modules/entities';
 
 const Core = {}
 
@@ -26,6 +27,8 @@ Core.Shared.Items = Items
 init(Core.Config.lang)
 
 Core.Character = character
+
+Core.Inventory = inventory
 
 Core.Entities = entities
 

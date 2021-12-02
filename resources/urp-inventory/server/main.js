@@ -4,12 +4,12 @@ import * as alt from 'alt-server';
 
 alt.onClient('inventory:useItem', (source, item) => {
    console.log('used', item)
-   Core.Character.removeItem(source, item, 1)
+   Core.Inventory.removeItem(source, item, 1)
 })
 
 alt.onClient('inventory:dropItem', (source, item, amount) => {
    console.log('drop', item)
-   Core.Character.removeItem(source, item, amount)
+   Core.Inventory.removeItem(source, item, amount)
 })
 
 
