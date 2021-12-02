@@ -8,7 +8,7 @@ const openInventory = (data) => {
     Core.Browser.open('http://resources/urp-inventory/client/html/ui.html', true, true)
     Core.Browser.on('inventory:useItem', (inventory, item) => {
         alt.log('use')
-        alt.emitServer('inventory:useItem', item.name)
+        alt.emitServer('inventory:useItem', item)
     })
     Core.Browser.on('inventory:Notify', (msg, type) => {
         alt.log('notify', msg, type)

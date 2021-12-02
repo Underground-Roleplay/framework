@@ -3,6 +3,31 @@ import * as alt from 'alt-server';
 import db from 'mysql2-wrapper';
 import Core from '../main';
 
+//  Items
+const useableItems = {}
+
+const createUseableItem = (itemName, eventName, isServer = false) => {
+    if(useableItems[itemName]) throw new Error('Item already registered')
+    useableItems[itemName] = {
+        eventName: eventName,
+        isServer: isServer
+    }
+}
+
+const triggerItemEvent = (source, item) => {
+    if(!useableItems[item.name]) return;
+    if(useableItems[item.name].isServer){
+        alt.emit(useableItems[item.name].eventName, source, item)
+        return;
+    }
+    alt.emitClient(source, useableItems[item.name].eventName, item)
+}
+
+const isUseableItem = (itemName) => {
+    return useableItems[itemName]
+}
+
+//  Inventory
 const getCurrentWeight = (inventory) =>{
     let weight = 0
     if(!inventory) return;
@@ -122,4 +147,4 @@ const saveInventory = async (source) => {
     Core.Functions.emitPlayerData(source, 'inventory', inventory)
 }
 
-export default {getCurrentWeight, getItemSlot, addItem, removeItem, saveInventory}
+export default {getCurrentWeight, getItemSlot, addItem, removeItem, saveInventory, createUseableItem, triggerItemEvent, isUseableItem}

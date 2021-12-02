@@ -3,8 +3,10 @@ import * as alt from 'alt-server';
 
 
 alt.onClient('inventory:useItem', (source, item) => {
-   console.log('used', item)
-   Core.Inventory.removeItem(source, item, 1)
+   if(Core.Inventory.isUseableItem(item.name)){
+      Core.Inventory.triggerItemEvent(source, item)
+   }
+   Core.Inventory.removeItem(source, item.name, 1)
 })
 
 alt.onClient('inventory:dropItem', (source, item, amount) => {

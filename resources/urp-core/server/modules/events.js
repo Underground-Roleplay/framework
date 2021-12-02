@@ -29,6 +29,22 @@ alt.on('playerDeath', (source, killer, weaponHash) => {
     Core.Character.setDeath(source, true)
 })
 
+//Attachment (TEMP)
+alt.onClient('character:addAttachment', (source, hash, hand) => {
+    if (!source) return;
+    const obj = {
+        hash: hash,
+        hand: hand,
+    };
+    source.setStreamSyncedMeta('attachment', JSON.stringify(obj));
+});
+
+alt.onClient('character:destroyAttachment', (source) => {
+    if (!source) return;
+    source.setStreamSyncedMeta('attachment', '');
+});
+
+
 //Interaction
 alt.onClient('interaction:trigger', (source, type) => {
     Core.Interactions.triggerInteraction(source, type)

@@ -211,4 +211,80 @@ alt.onServer(`admin:tpwp`, () => {
     };
 })
 
-export default {startTicks, handleSetplayerData, getPlayerData, handleDeath, RequestModel, getMetaData}
+const loadAnim = (dict) => {
+    return new Promise((res) => {
+        natives.requestAnimDict(dict);
+
+        let count = 0;
+        const inter = alt.setInterval(() => {
+            if (count > 255) {
+                alt.clearInterval(inter);
+                return;
+            }
+            if (natives.hasAnimDictLoaded(dict)) {
+                res(true);
+                alt.clearInterval(inter);
+                return;
+            }
+            count += 1;
+        }, 5);
+    });
+}
+
+const playAnim = (dict, anim, duration, flags, prop = false) => {
+    if (alt.Player.local['objProp']) {
+        natives.setEntityAsMissionEntity(alt.Player.local['objProp'], false, true);
+        natives.detachEntity(alt.Player.local['objProp'], true, true);
+        alt.Player.local['objProp'] = undefined;
+        //Retira o attachment SYNC se for iniciar uma nova anim
+        alt.emitServer('character:destroyAttachment');
+    }
+    if (prop) {
+        if (!alt.Player.local['objProp']) {
+            alt.Player.local['objProp'] = natives.createObject(natives.getHashKey(prop.name), 0, 0, 0, true, true, true);
+            natives.attachEntityToEntity(
+                alt.Player.local['objProp'],
+                alt.Player.local.scriptID,
+                natives.getPedBoneIndex(alt.Player.local.scriptID, prop.hand),
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                false,
+                true,
+                true,
+                false,
+                1,
+                true
+            );
+            natives.setEntityAsMissionEntity(alt.Player.local['objProp'], true, true);
+            //Adiciona o attachment SYNC
+            alt.emitServer('character:addAttachment', natives.getHashKey(prop.name), prop.hand);
+        }
+    }
+    natives.clearPedTasks(alt.Player.local.scriptID);
+    if (natives.hasAnimDictLoaded(dict)) {
+        natives.taskPlayAnim(alt.Player.local.scriptID, dict, anim, 1, -1, duration, flags, 1.0, false, false, false);
+    } else {
+        const load = loadAnim(dict);
+        load.then(() => {
+            natives.taskPlayAnim(alt.Player.local.scriptID, dict, anim, 1, -1, duration, flags, 1.0, false, false, false);
+        }).catch(() => {
+            alt.log('ERROR: Promise returned reject');
+        });
+    }
+}
+
+const stopAnim = () => {
+    if (alt.Player.local['objProp']) {
+        //Retira o attachment SYNC se a animação for parada
+        alt.emitServer('character:destroyAttachment');
+        natives.detachEntity(alt.Player.local['objProp'], true, true);
+        alt.Player.local['objProp'] = undefined;
+    }
+    natives.clearPedTasks(alt.Player.local.scriptID);
+}
+
+export default {startTicks, handleSetplayerData, getPlayerData, handleDeath, RequestModel, getMetaData, playAnim, stopAnim}
