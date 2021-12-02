@@ -137,7 +137,7 @@ const getCurrentWeight = (inventory) =>{
     for (let i = 0; i < inventory.length; i++) {
         weight = !inventory[i] ? weight : weight + (inventory[i].weight * inventory[i].amount)
     }
-    return Number(weight)
+    return parseInt(weight)
 }
 
 const getItemSlot = (inventory, item) => {
@@ -163,8 +163,8 @@ const addItem = (source, item, amount, slot, info) => {
     if(!slot){
         slot = getItemSlot(source.playerData.inventory, item)
     }
-    amount = Number(amount)
-    slot = Number(slot)
+    amount = parseInt(amount)
+    slot = parseInt(slot)
     if(itemInfo.type === 'weapon'){
         info = {
             serie: '99999'
@@ -225,7 +225,7 @@ const addItem = (source, item, amount, slot, info) => {
 }
 
 const removeItem = (source, item, amount) => {
-    amount = Number(amount)
+    amount = parseInt(amount)
 
     const slot = getItemSlot(source.playerData.inventory, item)
     if(!slot) return false;
