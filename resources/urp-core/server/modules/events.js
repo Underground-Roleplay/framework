@@ -61,6 +61,6 @@ alt.onClient('interaction:trigger', (source, type) => {
 })
 
 //  Ticks
-alt.onClient("Core:Server:CharacterTick", (source) => {
+alt.onClient("Core:Server:CharacterTick", async (source) => {
     Core.Character.tickManager(source)
 })

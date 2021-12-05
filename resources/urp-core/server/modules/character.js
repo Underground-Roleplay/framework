@@ -72,7 +72,7 @@ const checkPlayerData = async (source, playerData = undefined) => {
     selectCharacter(source, playerData)
 }
 
-const tickManager = (source) =>{
+const tickManager = async (source) =>{
     if (!source.nextPingTime && !source.timeHungerThirstDec) {
         source.nextPingTime = Date.now() + Core.Config.SaveInterval;
         source.timeHungerThirstDec = Date.now() + Core.Config.HungerThirstTime;
