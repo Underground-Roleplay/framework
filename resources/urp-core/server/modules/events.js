@@ -29,7 +29,17 @@ alt.on('playerDeath', (source, killer, weaponHash) => {
     Core.Character.setDeath(source, true)
 })
 
-//Attachment (TEMP)
+//  Vehicles
+alt.on('playerEnteredVehicle', (source, vehicle, seat) => { 
+    Core.Vehicles.sourceEnteredInVehicle(source, vehicle, seat)
+})
+
+alt.on('playerLeftVehicle', (source, vehicle, seat) => { 
+    Core.Vehicles.sourceLeavesVehicle(source, vehicle, seat)
+})
+
+
+//  Attachment (TEMP)
 alt.onClient('character:addAttachment', (source, hash, hand) => {
     if (!source) return;
     const obj = {
@@ -45,12 +55,12 @@ alt.onClient('character:destroyAttachment', (source) => {
 });
 
 
-//Interaction
+//  Interaction
 alt.onClient('interaction:trigger', (source, type) => {
     Core.Interactions.triggerInteraction(source, type)
 })
 
-//Ticks
+//  Ticks
 alt.onClient("Core:Server:CharacterTick", (source) => {
     Core.Character.tickManager(source)
 })

@@ -39,6 +39,13 @@
     "SYSTEM": {
         "LABEL": "SYSTEM"
     },
+    "VEHICLES": {
+        "LABEL": "VEHICLE",
+        "NO_FUEL": "Your vehicle does not have enough fuel",
+        "ENGINE_ON": "Your vehicle's engine has been started",
+        "ENGINE_OFF": "Your vehicle's engine has been turned off",
+        "NOT_IN_A_VEH": "You need to be in a vehicle to toggle engine"
+    },
     "NO_PLAYERS_NEAR": "No players nearby",
     "WELCOME": "Welcome to {{ serverName }}"
 }

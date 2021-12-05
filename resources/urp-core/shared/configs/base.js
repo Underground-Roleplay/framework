@@ -3,6 +3,11 @@ export const URPConfig = {}
 URPConfig.DefaultSpawn = { x: -1035.71, y: -2731.87, z: 12.86 }
 URPConfig.DefaultModel = `mp_m_freemode_01`
 
+//Vehicle
+URPConfig.VehicleUpdate = 10000
+// URPConfig.VehicleFuelLost = 10
+URPConfig.VehicleFuelLost = 0.01
+
 //CHARACTER
 URPConfig.SaveInterval = 4950
 URPConfig.MaxCharacters = 3

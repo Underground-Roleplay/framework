@@ -17,12 +17,16 @@ alt.onServer('Core:Client:CharacterLoaded', () => {
 alt.setInterval(()=> {
     if(!isLogged) return;
     let hudPos = 'left'
+    let fuelPos = undefined
+    let fuel = undefined
     if(!localPlayer.vehicle){
         natives.displayRadar(false)
         hudPos = 'left'
     }else{
         natives.displayRadar(true)
+        fuelPos = 'right'
         hudPos = 'right'
+        fuel = localPlayer.vehicle.getStreamSyncedMeta('fuel')
     }
     const data = {
         hud: true,
@@ -33,9 +37,9 @@ alt.setInterval(()=> {
         thirst: Core.Functions.getMetaData('thirst'),
         stress: Core.Functions.getMetaData('stress'),
         playerid: undefined,
-        fuel: undefined,
+        fuel: fuel,
         hudPosition: hudPos,
-        fuelPosition: undefined
+        fuelPosition: fuelPos
     }
     hud.emit('hud:Tick', data)
 }, 1000)

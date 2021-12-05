@@ -6,6 +6,12 @@ import Core from '../main';
 alt.onServer('Core:Client:CharacterLoaded',  async () => {
     Core.Functions.startTicks()
     Core.Utils.interactionMode()
+    Core.Functions.disableBehaviours()
+})
+
+//  Respawn Manager
+alt.onServer('Core:Character:Respawned', () => {
+    Core.Functions.disableConfigFlags()
 })
 
 //  Entity sync
@@ -33,6 +39,10 @@ alt.on('connectionComplete', () => {
 alt.on('disconnect', () => {
     Core.Browser.destroyInstance()
     // Core.Entities.destroyEntities()
+})
+
+alt.on('streamSyncedMetaChange', (entity, key, value, oldValue) =>{ 
+  Core.Functions.handleVehicleStates(entity, key, value, oldValue)
 })
 
 //TEMP

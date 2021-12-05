@@ -91,8 +91,12 @@ const tickManager = (source) =>{
     if (source.nextDeathSpawn && Date.now() > source.nextDeathSpawn) {
         setDeath(source, false)
         source.spawn(0, 0, 0, 0)
+        alt.emitClient(source, 'Core:Character:Respawned')
     }
 
+    // if(source.vehicle && source.vehicle.driver === source){
+    //    Fuel logic 
+    // }
    
 }
 

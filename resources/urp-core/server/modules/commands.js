@@ -155,3 +155,11 @@ chat.registerCmd('addcar', (source,[model])=> {
 chat.registerCmd('spawncar', (source,[id])=> {
    Core.Vehicles.spawnById(source, id, source.pos)
 })
+
+chat.registerCmd('toggleEngine', (source)=> {
+   if(!source.vehicle) {
+      alt.emitClient(source,'notify', 'error', Core.Translate('VEHICLES.LABEL'), Core.Translate('VEHICLES.NOT_IN_A_VEH'))
+      return;
+   }
+  Core.Vehicles.handleToggleEngine(source, source.vehicle)
+})

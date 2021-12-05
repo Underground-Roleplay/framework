@@ -287,4 +287,52 @@ const stopAnim = () => {
     natives.clearPedTasks(alt.Player.local.scriptID);
 }
 
-export default {startTicks, handleSetplayerData, getPlayerData, handleDeath, RequestModel, getMetaData, playAnim, stopAnim}
+const disableConfigFlags = () => {
+    natives.setPedConfigFlag(alt.Player.local.scriptID, 184, true)
+    //  Disable engine auto start
+    natives.setPedConfigFlag(alt.Player.local.scriptID, 429, true)
+    //  Keep engine running
+    natives.setPedConfigFlag(alt.Player.local.scriptID, 241, true)
+}
+
+const disableBehaviours = () => {
+    disableConfigFlags()
+    alt.setInterval(() => {
+    //  Disable default weapon switch
+    for (let i = 157; i < 164; i++) {
+    natives.disableControlAction(0, i, true);
+    }
+
+    //  Disable Weapon Wheel
+    natives.disableControlAction(0, 12, true);
+    natives.disableControlAction(0, 13, true);
+    natives.disableControlAction(0, 14, true);
+    natives.disableControlAction(0, 15, true);
+
+    if (natives.isPedTryingToEnterALockedVehicle(alt.Player.local.scriptID)) {
+        natives.clearPedTasks(alt.Player.local.scriptID);
+        natives.clearPedSecondaryTask(alt.Player.local.scriptID);
+    }
+    }, 0)
+}
+
+const setVehicleEngine = (vehicle, state) => {
+    if (!state) {
+        natives.setVehicleEngineOn(vehicle.scriptID, state, true, true);
+    } else {
+        natives.setVehicleEngineOn(vehicle.scriptID, state, false, true);
+    }
+}
+
+const handleVehicleStates = (vehicle, key, value, oldValue) => {
+    if (vehicle instanceof alt.Vehicle) {
+        if (key === 'engine') {
+            setVehicleEngine(vehicle, value);
+            alt.log('ENGINE', value)
+            return;
+        }
+    }      
+}
+
+export default {startTicks, handleSetplayerData, getPlayerData, handleDeath, RequestModel, getMetaData, playAnim, 
+    stopAnim, disableBehaviours, handleVehicleStates, disableConfigFlags}
