@@ -2363,7 +2363,7 @@ var requiredItemOpen = false;
         if (data.other != null && data.other != "") {
             $(".other-inventory").attr("data-inventory", data.other.name);
         } else {
-            $(".other-inventory").attr("data-inventory", 0);
+            $(".other-inventory").attr("data-inventory", 'dropzone');
         }
         // First 5 Slots
         for (i = 1; i < 6; i++) {

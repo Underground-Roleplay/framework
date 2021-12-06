@@ -20,6 +20,9 @@ const openInventory = (data) => {
     Core.Browser.on('inventory:close', () => {
         closeInventory()
     })
+    Core.Browser.on('inventory:setInventoryData', (fromInventory, toInventory, fromSlot, toSlot, fromAmount, toAmount) => {
+        alt.emitServer('inventory:setInventoryData', fromInventory, toInventory, fromSlot, toSlot, fromAmount, toAmount)
+    })
     Core.Browser.on('load', () => {
         Core.Browser.emit('inventory:open', data)
      })
@@ -44,6 +47,8 @@ const updateInventory = (iData, isError) => {
 }
 
 
+const hotKeys = [49, 50, 51, 52, 53]
+
 alt.on('keydown', (key) => {
     if(key === 73 && !isOpen && !alt.Player.local.webViewOpen && !alt.Player.local.isDead && !alt.isMenuOpen() && !chat.isChatOpen()) {
         const inventory = Core.Functions.getPlayerData('inventory')
@@ -59,5 +64,13 @@ alt.on('keydown', (key) => {
     }
     if(key === 27 && isOpen){
         closeInventory()
+    }
+    //Inventory hotkeys setup
+    if(hotKeys.includes(key)){
+        const inventory = Core.Functions.getPlayerData('inventory')
+        const keyIndex = hotKeys.indexOf(key)
+        const item = inventory[keyIndex + 1]
+        if(!item) return;
+        alt.emitServer('inventory:useItem', item)
     }
 })

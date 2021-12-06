@@ -6,6 +6,13 @@ import Core from '../main';
 //  Items
 const useableItems = {}
 
+// TODO
+// const droppedItems = []
+
+// const dropItem = () => {
+//     droppedItems.push()
+// }
+
 const createUseableItem = (itemName, eventName, isServer = false) => {
     if(useableItems[itemName]) throw new Error('Item already registered')
     useableItems[itemName] = {
@@ -140,6 +147,10 @@ const removeItem = (source, item, amount) => {
     return false
 }
 
+const getItemBySlot = (source, slot) => {
+    return source.playerData.inventory[slot]
+}
+
 const saveInventory = async (source) => {
     if(!source) return;
     const { inventory, ssn } = source.playerData;
@@ -147,4 +158,30 @@ const saveInventory = async (source) => {
     Core.Functions.emitPlayerData(source, 'inventory', inventory)
 }
 
-export default {getCurrentWeight, getItemSlot, addItem, removeItem, saveInventory, createUseableItem, triggerItemEvent, isUseableItem}
+const useWeapon = async (source, weaponName) => {
+    const wHash = alt.hash(weaponName)
+    if(!wHash) return;
+
+    if(!source.playerData.lastWeapon){
+        source.playerData.lastWeapon = { equipped: true, weapon: weaponName }
+        source.giveWeapon(wHash, 9999, true);
+        return
+    }
+    
+    if(source.playerData.lastWeapon.weapon !== weaponName){
+        const oldHash = alt.hash(source.playerData.lastWeapon.weapon)
+        source.removeWeapon(oldHash)
+        source.playerData.lastWeapon = { equipped: true, weapon: weaponName }
+        source.giveWeapon(wHash, 9999, true)
+        return
+    }
+
+    if(!source.playerData.lastWeapon.equipped){
+        source.playerData.lastWeapon = { equipped: true, weapon: weaponName }
+        source.giveWeapon(wHash, 9999, true)
+        return
+    }
+}
+
+export default {getCurrentWeight, getItemSlot, addItem, removeItem, saveInventory, createUseableItem, triggerItemEvent, isUseableItem, 
+    useWeapon, getItemBySlot}
