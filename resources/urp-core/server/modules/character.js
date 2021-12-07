@@ -165,6 +165,7 @@ const selectCharacter = async (source, playerData, fromCreation = false) => {
     Core.Functions.emitPlayerData(source, 'charinfo', source.playerData.charinfo)
     Core.Functions.emitPlayerData(source, 'inventory', source.playerData.inventory)
     Core.Functions.emitPlayerData(source, 'metadata', source.playerData.metadata)
+    Core.Functions.emitPlayerData(source, 'money',  source.playerData.money)
     setDeath(source, source.playerData.metadata.isdead)
     source.health = source.playerData.metadata.health
     source.armour = source.playerData.metadata.armour
@@ -392,7 +393,7 @@ const loadCustoms = async (source) => {
     createCustoms(source)
 }
 
-
+//  Bank
 const setMoney = (source, moneytype, amount) => {
     if(source.playerData.money[moneytype]){
         source.playerData.money[moneytype] = parseInt(amount)
@@ -455,8 +456,10 @@ const addMoney = (source, moneytype, amount) => {
 }
 
 const updateMoney = (source) => {
-    db.update('UPDATE characters SET money = ? WHERE ssn = ?', [JSON.stringify(source.playerData.money), source.playerData.ssn], undefined, alt.resourceName)
+    const { money, ssn } = source.playerData
+    db.update('UPDATE characters SET money = ? WHERE ssn = ?', [JSON.stringify(money), ssn], undefined, alt.resourceName)
+    Core.Functions.emitPlayerData(source, 'money', money)
 }
 
-export default { startCharacter,setMoney, addMoney, getPayment, moneyDeposit, moneywithdraw, selectCharacter, tickManager, updateBasicData, loadCustoms, changeCloth,
+export default { startCharacter, setMoney, addMoney, getPayment, moneyDeposit, moneywithdraw, selectCharacter, tickManager, updateBasicData, loadCustoms, changeCloth,
     setDeath }
