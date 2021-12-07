@@ -39,7 +39,7 @@ const createMultipleInteractions = (interactions, maxRadius = 2.5, height = 2.5)
     if(interactions.length <= 0) throw new Error('Use createSingleInteraction instead');
     let currentInteractions = registeredInteractions;
     interactions.forEach(interaction => {
-        if(!interaction.x || !interaction.y || !interaction.z || !interaction.type || !interaction.eventName || !interaction.isServer){
+        if(!interaction.x || !interaction.y || !interaction.z || !interaction.type || !interaction.eventName){
         throw new Error('Wrong parameters are given');
         }
         const vector = new alt.Vector3(interaction.x, interaction.y, interaction.z)
@@ -47,7 +47,7 @@ const createMultipleInteractions = (interactions, maxRadius = 2.5, height = 2.5)
         colshape.playersOnly = true
         colshape['isInteraction'] = true
         colshape['interactionType'] = interaction.type
-        colshape['isServer'] = interaction.isServer
+        colshape['isServer'] = interaction.isServer || false
         colshape['eventName'] = interaction.eventName
         if(interaction.blip){
             const pointBlip = new alt.PointBlip(vector.x, vector.y, vector.z)

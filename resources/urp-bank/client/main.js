@@ -1,10 +1,9 @@
 import Core from 'urp-core';
-import chat from 'urp-chat';
 import * as alt from 'alt-client';
 
 let isOpen = false
 
-const openBank = (data) => {
+const openBank = () => {
     Core.Browser.open('http://resources/urp-bank/client/html/ui.html', true, true)
     Core.Browser.on(`Bank:close`, () => {
         closeBank()
@@ -43,17 +42,13 @@ function RefreshMoney() {
     Core.Browser.emit('Bank:RefreshPage')
 }
 
-
-
-const hotKeys = [49, 50, 51, 52, 53]
+alt.onServer('atm:open' , () => {
+    if(isOpen) return;
+    openBank()
+})
 
 alt.on('keydown', (key) => {
-    if (key === 85) {
-
-        openBank()
-    }
     if (key === 27 && isOpen) {
         closeBank()
     }
-
 })

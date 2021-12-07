@@ -1,6 +1,8 @@
 import Core from 'urp-core';
 import * as alt from 'alt-server';
+import { ATM_LIST } from '../shared/config';
 
+Core.Interactions.createMultipleInteractions(ATM_LIST)
 
 alt.onClient('Bank:transfer', (source, data) => {
     let i = JSON.parse(data)
