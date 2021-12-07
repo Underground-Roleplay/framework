@@ -37,7 +37,9 @@
         "LABEL": "COMMANDS"
     },
     "SYSTEM": {
-        "LABEL": "SYSTEM"
+        "LABEL": "SYSTEM",
+        "TARGET_NEEDED_IDENTIFIER": "You need to give an identifier to TP to Player such as ssn or id",
+        "NO_TARGET_FOUND": "There's no player with that identifier online"
     },
     "VEHICLES": {
         "LABEL": "VEHICLE",

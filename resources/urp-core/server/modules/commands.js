@@ -163,3 +163,36 @@ chat.registerCmd('toggleEngine', (source)=> {
    }
   Core.Vehicles.handleToggleEngine(source, source.vehicle)
 })
+
+chat.registerCmd('tpto', (source, [identifier]) => {
+   if(!identifier){
+      alt.emitClient(source,'notify', 'error', Core.Translate('SYSTEM.LABEL'), Core.Translate('SYSTEM.TARGET_NEEDED_IDENTIFIER'))
+      return
+   }
+   const isAllowed = Core.Functions.hasPermission(source, 'admin')
+   if(!isAllowed){
+     alt.emitClient(source,'notify', 'error', Core.Translate('PERMISSIONS.LABEL'), Core.Translate('PERMISSIONS.DONT_HAVE_PERM'))
+   }
+   const ssnRegex = /[0-9]{6}\-[0-9]{4}/g
+   if(identifier.match(ssnRegex)){
+     const target = alt.Player.all.find(source => 
+      source.playerData.ssn === identifier)
+      if(!target || target === source) return alt.emitClient(source,'notify', 'error', Core.Translate('SYSTEM.LABEL'), Core.Translate('SYSTEM.NO_TARGET_FOUND'))
+      source.pos = target.pos
+      return;
+   }
+   const target = alt.Player.all.find(source => 
+   source.playerData.id === identifier)
+   if(!target || target === source) return alt.emitClient(source,'notify', 'error', Core.Translate('SYSTEM.LABEL'), Core.Translate('SYSTEM.NO_TARGET_FOUND'))
+   source.pos = target.pos
+})
+
+chat.registerCmd('showid', (source) => {
+   if(!source.playerData) return;
+   chat.send(source, `your id is ${source.playerData.id}`);
+})
+
+chat.registerCmd('showssn', (source) => {
+   if(!source.playerData) return;
+   chat.send(source, `your ssn is ${source.playerData.ssn}`);
+})

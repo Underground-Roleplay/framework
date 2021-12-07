@@ -37,7 +37,9 @@
         "LABEL": "COMANDOS"
     },
     "SYSTEM": {
-        "LABEL": "SISTEMA"
+        "LABEL": "SISTEMA",
+        "TARGET_NEEDED_IDENTIFIER": "Você precisa fornecer um identificador para o TP ao jogador, como ssn ou id",
+        "NO_TARGET_FOUND": "Não há nenhum jogador com esse identificador online"
     },
     "VEHICLES": {
         "LABEL": "VEICULO",
