@@ -107,13 +107,16 @@ const addPermission = (source, permission) => {
 }
 
 const hasPermission = (source, perm) => {
-    if(!source || !source.playerData) return;
+    if(!source || !source.playerData) return false;
     const socialID = source.playerData.socialID
     const permission = perm.toLowerCase()
     if (permission === 'user'){
         return true
     }
-    if(Core.PermissionList[socialID] && Core.PermissionList[socialID].socialID === socialID && 
+    if(!Core.PermissionList[socialID]){
+        return false
+    }
+    if(Core.PermissionList[socialID].socialID === socialID && 
     Core.PermissionList[socialID].permission === permission || Core.PermissionList[socialID].permission === 'god'){
         return true
     }
