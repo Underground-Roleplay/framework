@@ -1,0 +1,193 @@
+body {
+    background-color: transparent;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+*,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+label {
+    margin: 0;
+    padding: 0;
+}
+
+#app {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.bank-external {
+    display: flex;
+    width: 525px;
+    height: px;
+    border-radius: 15px;
+}
+
+.box-left {
+    width: 220px;
+    height: 100%;
+    padding: 0 35px 0 15px;
+    border-radius: 15px 0 0 15px;
+    background-color: #285656;
+}
+
+.box-right {
+    width: 325px;
+    height: 100%;
+    margin-left: -20px;
+    border-radius: 15px;
+    background-color: #f0f5f5;
+}
+
+.top-bar {
+    width: 100%;
+    height: 50px;
+}
+
+.box-viwer {
+    padding: 1.2rem;
+    width: 100%;
+    height: 300px;
+}
+
+.main-icon {
+    padding: 20px 0;
+    display: flex;
+    align-items: center;
+    color: #fff;
+    width: 100%;
+}
+
+.main-icon label {
+    font-size: 20px;
+    color: #FF8C00;
+    margin-left: 10px;
+}
+
+.icon-modelo {
+    font-size: 26px;
+    border-radius: 50%;
+    color: #FF8C00;
+}
+
+.card-btn {
+    padding: 8px 8px;
+    display: flex;
+    align-items: center;
+    height: 35px;
+    border-radius: 10px;
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+.card-btn:hover {
+    cursor: pointer;
+    background-color: #103938;
+    transition: 0.2s;
+}
+
+.card-btn p {
+    margin-left: 10px;
+}
+
+
+/**/
+
+.float-right {
+    padding: 0 1.2rem;
+    float: right;
+    height: 100%;
+}
+
+.box-icons {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.box-icons i {
+    color: red;
+    font-size: 18px;
+    margin-left: 10px;
+}
+
+.box-icons i:hover {
+    transform: scale(1.2);
+    transition: .2s;
+}
+
+.user-login {
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+}
+
+.user-login i {
+    font-size: 18px;
+    margin-left: 10px;
+}
+
+
+/**/
+
+.viwer-left {}
+
+.viwer-right {
+    background-color: #ffffff;
+    border-radius: 15px 0 0 15px;
+    height: 440px;
+}
+
+.boxI-deposito {
+    padding: 10px 0;
+}
+
+.amount-deposito {
+    width: 100%;
+}
+
+.full {
+    width: 100%;
+}
+
+.between {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.content-center {
+    display: flex;
+    justify-content: center;
+}
+
+.balance {
+    color: #198754;
+}
+
+.box-btn-deposito {
+    margin-top: 15px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+
+/* 850*530*/
