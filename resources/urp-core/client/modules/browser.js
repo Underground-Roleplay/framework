@@ -120,4 +120,8 @@ const destroyInstance = () => {
     instance.destroy()
 }
 
-export default { createInstance, showCursor, open , on, emit, close, destroyInstance}
+const getCurrentViewState = () => {
+    return alt.Player.local.webViewOpen
+}
+
+export default { createInstance, showCursor, open , on, emit, close, destroyInstance, getCurrentViewState}
