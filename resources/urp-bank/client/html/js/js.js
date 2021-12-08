@@ -5,20 +5,18 @@ alt.on("Bank:RefreshPage", RefreshPage)
 
 let data = {};
 let page = '';
-Acount()
+
 
 function AttBalance(i) {
-    console.log('>--AttBAlance');
     data.money = i
 }
 
 function AttCharinfo(i) {
-    console.log('>--AttCharinfo');
     data.charinfo = i
+    Acount()
 }
 
 function AttSSN(i) {
-    console.log('>--AttSSN');
     data.ssn = i
 
 }
@@ -111,9 +109,11 @@ function Acount() {
             <p>Olá</p>
         </div>
         <div class="full content-center balance mb-3">
-            <h2>DUDUGUDU</h2>
+            <h2>${data.charinfo.firstname} ${data.charinfo.lastname}</h2>
         </div>
     `)
+    document.getElementById('acount-name').innerHTML = data.charinfo.firstname + ' ' + data.charinfo.lastname;
+
     page = 'acount';
 }
 
