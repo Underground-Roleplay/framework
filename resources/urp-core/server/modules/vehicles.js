@@ -5,15 +5,16 @@ import db from 'mysql2-wrapper';
 import Core from '../main';
 
 import { executeSync, insertSync } from '../libs/utils';
+import { emit } from 'alt-shared';
 
 const pool = {}
 
-const generatePlate = async () => {
+const generatePlate = async() => {
     let uniqueFound = false
     let plate = undefined;
-    while(!uniqueFound){
-        plate = `${Math.floor(Math.random() * 1000)}-${ Math.floor(Math.random() * 10000)}` 
-        const result = await executeSync('SELECT COUNT(*) as count from characters_vehicles WHERE plate = ?', [ plate ])
+    while (!uniqueFound) {
+        plate = `${Math.floor(Math.random() * 1000)}-${ Math.floor(Math.random() * 10000)}`
+        const result = await executeSync('SELECT COUNT(*) as count from characters_vehicles WHERE plate = ?', [plate])
         if (result[0]['count'] == 0) {
             uniqueFound = true
         }
@@ -21,37 +22,41 @@ const generatePlate = async () => {
     return plate
 }
 
-const loadSourceGarage = async (source) => {
+const loadSourceGarage = async(source) => {
+
+    const vehList = []
     const result = await executeSync('SELECT * from characters_vehicles WHERE ssn = ?', [source.playerData.ssn])
     for (let i = 0; i < result.length; i++) {
         const vehicleData = result[i]
-        if(vehicleData){
+        if (vehicleData) {
             vehicleData.position = JSON.parse(vehicleData.position)
             vehicleData.status = JSON.parse(vehicleData.status)
             vehicleData.metadata = JSON.parse(vehicleData.metadata)
             vehicleData.customizations = JSON.parse(vehicleData.customizations)
+            vehList.push(vehicleData)
         }
-        alt.log(`id: ${vehicleData.id} model: ${vehicleData.model} plate: ${vehicleData.plate}`)
+        //alt.log(`id: ${vehicleData.id} model: ${vehicleData.model} plate: ${vehicleData.plate}`)
+
     }
-}   
+    alt.emit('loaded', source, vehList)
+}
 
 
-const addToSource = async (source, model, initialPosition = {x:0, y: 0, z:0}, spawn = false) => {
+const addToSource = async(source, model, initialPosition = { x: 0, y: 0, z: 0 }, spawn = false) => {
     const { ssn } = source.playerData
-    //New vehicle DATA
+        //New vehicle DATA
     const newVehicle = {}
     newVehicle.model = model
     newVehicle.position = initialPosition
     newVehicle.plate = await generatePlate()
     newVehicle.status = {}
-    newVehicle.metadata = {fuel: 100}
+    newVehicle.metadata = { fuel: 100 }
     newVehicle.customizations = {}
-    const id = await insertSync('INSERT INTO characters_vehicles (ssn, model, position, plate, status, metadata, customizations) VALUES (?,?,?,?,?,?,?)', 
-    [ssn, newVehicle.model, JSON.stringify(newVehicle.position), newVehicle.plate, JSON.stringify(newVehicle.status), JSON.stringify(newVehicle.metadata), JSON.stringify(newVehicle.customizations)])
+    const id = await insertSync('INSERT INTO characters_vehicles (ssn, model, position, plate, status, metadata, customizations) VALUES (?,?,?,?,?,?,?)', [ssn, newVehicle.model, JSON.stringify(newVehicle.position), newVehicle.plate, JSON.stringify(newVehicle.status), JSON.stringify(newVehicle.metadata), JSON.stringify(newVehicle.customizations)])
 
     newVehicle.id = id
 
-    if(!spawn){
+    if (!spawn) {
         return id
     }
 
@@ -59,7 +64,7 @@ const addToSource = async (source, model, initialPosition = {x:0, y: 0, z:0}, sp
 }
 
 const spawn = (vehicleData, pos) => {
-    if(pool[vehicleData.id]){
+    if (pool[vehicleData.id]) {
         throw new Error('Vehicle already spawned')
     }
 
@@ -85,16 +90,16 @@ const spawn = (vehicleData, pos) => {
 
     vehicle.engineOn = false
 
-    if(vehicleData.customizations.primaryColor && vehicleData.customizations.customSecondaryColor){
+    if (vehicleData.customizations.primaryColor && vehicleData.customizations.customSecondaryColor) {
         vehicle.customPrimaryColor = vehicleData.customizations.primaryColor;
         vehicle.customSecondaryColor = vehicleData.customizations.customSecondaryColor;
     }
 
-    if(vehicleData.status){
+    if (vehicleData.status) {
         // setVehicleStatus(vehicle, vehicleData.status)
     }
 
-    if(vehicleData.metadata.trunk){
+    if (vehicleData.metadata.trunk) {
         vehicle.setStreamSyncedMeta('trunk', vehicleData.trunk)
     }
 
@@ -107,9 +112,9 @@ const spawn = (vehicleData, pos) => {
     return vehicle
 }
 
-const spawnById = async (source, id, pos) => {
+const spawnById = async(source, id, pos) => {
     const vehicleData = await executeSync('SELECT * from characters_vehicles WHERE ssn = ? AND id = ?', [source.playerData.ssn, id])
-    if(!vehicleData[0]) return undefined;
+    if (!vehicleData[0]) return undefined;
     vehicleData[0].position = JSON.parse(vehicleData[0].position)
     vehicleData[0].status = JSON.parse(vehicleData[0].status)
     vehicleData[0].metadata = JSON.parse(vehicleData[0].metadata)
@@ -118,8 +123,8 @@ const spawnById = async (source, id, pos) => {
 }
 
 const sourceEnteredInVehicle = (source, vehicle, seat) => {
-    if(!vehicle.data) return;
-    if(!pool[vehicle.data.id]) return;
+    if (!vehicle.data) return;
+    if (!pool[vehicle.data.id]) return;
     if (seat === 1) {
         if (vehicle.data.ssn === source.playerData.ssn) {
             console.info("(" + source.playerData.ssn + ") entrou do seu veiculo em x:" + vehicle.pos.x + " y:" + vehicle.pos.y + " z:" + vehicle.pos.z);
@@ -131,8 +136,8 @@ const sourceEnteredInVehicle = (source, vehicle, seat) => {
 }
 
 const sourceLeavesVehicle = (source, vehicle, seat) => {
-    if(!vehicle.data) return;
-    if(!pool[vehicle.data.id]) return;
+    if (!vehicle.data) return;
+    if (!pool[vehicle.data.id]) return;
     if (seat === 1) {
         if (vehicle.data.ssn === source.playerData.ssn) {
             console.info("(" + source.playerData.ssn + ") saiu de seu veiculo em x:" + vehicle.pos.x + " y:" + vehicle.pos.y + " z:" + vehicle.pos.z);
@@ -147,7 +152,7 @@ const sourceLeavesVehicle = (source, vehicle, seat) => {
 const vehicleTick = (vehicle) => {
     vehicle.timeoutTicker = setTimeout(() => { vehicleTick(vehicle) }, 10000)
 
-    if(!vehicle.nextUpdate){
+    if (!vehicle.nextUpdate) {
         vehicle.nextUpdate = Date.now() + Core.Config.VehicleUpdate;
     }
 
@@ -162,13 +167,13 @@ const handleToggleEngine = (source, vehicle) => {
         return;
     }
 
-    if(source !== vehicle.driver) return;
+    if (source !== vehicle.driver) return;
 
-    if(vehicle.data.metadata.fuel <= 0){
+    if (vehicle.data.metadata.fuel <= 0) {
         vehicle.engineOn = false;
         vehicle.setStreamSyncedMeta('engine', vehicle.engineOn);
-        if(source){
-            alt.emitClient(source,'notify', 'error', Core.Translate('VEHICLES.LABEL'), Core.Translate('VEHICLES.NO_FUEL'))
+        if (source) {
+            alt.emitClient(source, 'notify', 'error', Core.Translate('VEHICLES.LABEL'), Core.Translate('VEHICLES.NO_FUEL'))
         }
         return;
     }
@@ -176,13 +181,13 @@ const handleToggleEngine = (source, vehicle) => {
     if (vehicle.engineOn) {
         vehicle.engineOn = false;
         if (source) {
-            alt.emitClient(source,'notify', 'success', Core.Translate('VEHICLES.LABEL'), Core.Translate('VEHICLES.ENGINE_OFF'))
+            alt.emitClient(source, 'notify', 'success', Core.Translate('VEHICLES.LABEL'), Core.Translate('VEHICLES.ENGINE_OFF'))
         }
         vehicle.setStreamSyncedMeta('engine', vehicle.engineOn);
     } else {
         vehicle.engineOn = true;
         if (source) {
-            alt.emitClient(source,'notify', 'success', Core.Translate('VEHICLES.LABEL'), Core.Translate('VEHICLES.ENGINE_ON'))
+            alt.emitClient(source, 'notify', 'success', Core.Translate('VEHICLES.LABEL'), Core.Translate('VEHICLES.ENGINE_ON'))
         }
         vehicle.setStreamSyncedMeta('engine', vehicle.engineOn);
     }
@@ -204,8 +209,8 @@ const updateFuel = (vehicle) => {
         if (vehicle.engineOn) {
             vehicle.engineOn = false
             vehicle.setStreamSyncedMeta('engine', vehicle.engineOn);
-            if(vehicle.driver){
-            alt.emitClient(vehicle.driver, 'notify', 'error', Core.Translate('VEHICLES.LABEL'), Core.Translate('VEHICLES.NO_FUEL'))
+            if (vehicle.driver) {
+                alt.emitClient(vehicle.driver, 'notify', 'error', Core.Translate('VEHICLES.LABEL'), Core.Translate('VEHICLES.NO_FUEL'))
             }
         }
     }
@@ -216,7 +221,7 @@ const updateFuel = (vehicle) => {
 }
 
 const saveVehicleMetadata = (vehicle) => {
-    const {metadata, id} = vehicle.data
+    const { metadata, id } = vehicle.data
     db.execute('UPDATE characters_vehicles SET metadata = ? WHERE ssn = ? AND id = ?', [JSON.stringify(metadata), vehicle.data.ssn, id], undefined, alt.resourceName)
 }
 
@@ -225,5 +230,14 @@ const saveVehicleMetadata = (vehicle) => {
 //     db.execute('UPDATE characters_vehicles SET position = ? WHERE ssn = ?', [JSON.stringify(vehicle.data.position), vehicle.data.ssn], undefined, alt.resourceName)
 // }
 
-export default {pool, generatePlate, loadSourceGarage, addToSource, spawn, spawnById, sourceEnteredInVehicle, 
-    sourceLeavesVehicle, handleToggleEngine}
+export default {
+    pool,
+    generatePlate,
+    loadSourceGarage,
+    addToSource,
+    spawn,
+    spawnById,
+    sourceEnteredInVehicle,
+    sourceLeavesVehicle,
+    handleToggleEngine
+}
