@@ -50,7 +50,7 @@ const updateInventory = (iData, isError) => {
 const hotKeys = [49, 50, 51, 52, 53]
 
 alt.on('keydown', (key) => {
-    if(key === 73 && !isOpen && !alt.Player.local.webViewOpen && !alt.Player.local.isDead && !alt.isMenuOpen() && !chat.isChatOpen()) {
+    if(key === 73 && !isOpen && !Core.Browser.getCurrentViewState() && !alt.Player.local.isDead && !alt.isMenuOpen() && !chat.isChatOpen()) {
         const inventory = Core.Functions.getPlayerData('inventory')
         const data = {
             inventory: inventory,

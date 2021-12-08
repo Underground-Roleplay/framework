@@ -159,8 +159,7 @@ const createCharacter = async (source, playerData, select = true) => {
 //  Player creator must be called before selectCharater
 const selectCharacter = async (source, playerData, fromCreation = false) => {
     source.playerData = playerData
-    const { position } = source.playerData
-    const model = source.playerData.charinfo.gender === 0 ? 'mp_m_freemode_01' : 'mp_f_freemode_01'
+    // const model = 'mp_m_freemode_01'
     chat.send(source, `Logado com sucesso!`);
     Core.Functions.emitPlayerData(source, 'charinfo', source.playerData.charinfo)
     Core.Functions.emitPlayerData(source, 'inventory', source.playerData.inventory)
@@ -169,18 +168,14 @@ const selectCharacter = async (source, playerData, fromCreation = false) => {
     setDeath(source, source.playerData.metadata.isdead)
     source.health = source.playerData.metadata.health
     source.armour = source.playerData.metadata.armour
-    Core.Functions.setPosition(source, position.x, position.y, position.z, model)
     loadCustoms(source)
-    // if(fromCreation){
-    //     // Core.Functions.setPosition(source, position.x, position.y, position.z)
-      
-    // }else{
-    //     // Core.Functions.setPosition(source, position.x, position.y, position.z, model)
-    //     loadCustoms(source)
-    // }
     //We can't pass source directly due its complexity
     alt.emit('Core:Server:CharacterLoaded', source.id)
     alt.emitClient(source, 'Core:Client:CharacterLoaded')
+    if(source.playerData.firstTime){
+        alt.emitClient(source, 'Core:Client:UpdateIdentity')
+        source.playerData.firstTime = false
+    }
 }
 
 const getProps = (source) => {
@@ -281,7 +276,7 @@ const updateCustoms = async (source) => {
 
 const createCustoms = (source) => {
     if(!source || !source.playerData) return;
-    const { ssn } = source.playerData
+    const { ssn, position } = source.playerData
     const customizations = {
         "headBlend": source.getHeadBlendData(),
         "componentVariations": getComponentVariations(source),
@@ -293,6 +288,7 @@ const createCustoms = (source) => {
     }
     db.execute('INSERT INTO characters_customs (ssn, model, customizations, cloakroom) VALUES (?,?,?,?)', [ssn, 
     source.model, JSON.stringify(customizations), 0], undefined, alt.resourceName)
+    Core.Functions.setPosition(source, position.x, position.y, position.z)
 }
 
 const setComponentVariations = (source, componentVariations) => {
@@ -313,8 +309,10 @@ const setProps = (source, props) => {
     if(!source || !source.playerData) return;
     for(let i = 0; i < props.length; i++){
         if (i <= 2) {
+            if(props[i].drawable === 255) return;
             source.setProp(i, props[i].drawable, props[i].texture)
         } else {
+            if(props[i].drawable === 255) return;
             source.setProp(i + 3, props[i].drawable, props[i].texture)
         }
         
@@ -365,10 +363,8 @@ const loadCustoms = async (source) => {
         source.playerData.customizations = JSON.parse(result[0].customizations)
         const {headBlend, componentVariations, 
             features, props, eyeColor, hairColor, headOverlays} = source.playerData.customizations
-        if(source.model !== parseInt(result[0].model)){
-            const { position } = source.playerData
-            Core.Functions.setPosition(source, position.x, position.y, position.z, result[0].model)
-        }
+        const { position } = source.playerData
+        Core.Functions.setPosition(source, position.x, position.y, position.z, parseInt(result[0].model))
         source.setHeadBlendData(
             headBlend.shapeFirstID, 
             headBlend.shapeSecondID, 
@@ -389,7 +385,6 @@ const loadCustoms = async (source) => {
         setHeadOverlays(source, headOverlays)
         return
     }
-    console.log('create appearance')
     createCustoms(source)
 }
 

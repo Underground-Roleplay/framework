@@ -3,7 +3,7 @@ import * as chat from 'urp-chat';
 
 import Core from '../main';
 
-import { executeSync, insertSync, hashString, compareHash, getVectorInFrontOfPlayer, getClosestEntity } from '../libs/utils';
+import { executeSync, insertSync, updateSync, hashString, compareHash, getVectorInFrontOfPlayer, getClosestEntity } from '../libs/utils';
 
 // Utils
 const getPlayerIdentifier = (source) => {
@@ -124,7 +124,6 @@ const hasPermission = (source, perm) => {
 }
 
 const updateIdentity = (source, dt) => {
-
     if (!source || !source.playerData) return;
     const ssn = source.playerData.ssn
     let data = JSON.parse(dt)
@@ -133,8 +132,8 @@ const updateIdentity = (source, dt) => {
     source.playerData.charinfo.birthdate = data.brithdate
     source.playerData.charinfo.gender = data.gender
     updateSync('UPDATE characters SET charinfo = ? WHERE ssn = ?', [JSON.stringify(source.playerData.charinfo), ssn], undefined, alt.resourceName)
-
 }
+
 const emitPlayerData = (source, key, value) => {
     alt.nextTick(() => {
         alt.emitClient(source, 'playerData:set', key, value);

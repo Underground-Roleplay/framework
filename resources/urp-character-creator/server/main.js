@@ -3,7 +3,6 @@ import * as alt from 'alt-server';
 
 alt.onClient('Creator:charSetGender', (source, data) => {
     source.model = data === 0 ? 'mp_m_freemode_01' : 'mp_f_freemode_01';
-    source.tempData.charInfo.gender = data;
 });
 
 alt.onClient('Creator:setHeadBlendData', (source, data) => {
@@ -85,5 +84,6 @@ alt.on('Creator:Start', (source, playerData) => {
         0
     )
     source.tempData = playerData;
+    source.tempData.firstTime = true
     alt.emitClient(source, 'Creator:Start')
 })
