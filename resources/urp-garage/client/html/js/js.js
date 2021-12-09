@@ -25,8 +25,8 @@ function MyGarageMap() {
     `)
     vehList.map(veh => {
         $("#viwer-car-car").append(`
-            <div class="card-car mb-2" >
-                <div class="card-car-img" style="background: url('./img/${veh.model}.png')" onclick="setData('${veh.model}')">
+            <div class="card-car mb-2" onclick="setData('${veh.model}')">
+                <div class="card-car-img" style="background: url('./img/${veh.model}.png')">
                 </div>
                 <div class="card-car-info">
                     <label class="full between mb-4">
