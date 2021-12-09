@@ -456,5 +456,13 @@ const updateMoney = (source) => {
     Core.Functions.emitPlayerData(source, 'money', money)
 }
 
+const getMoney = (source, moneytype) => {
+    if(moneytype) {
+        return source.playerData.money[moneytype]
+    } else {
+        return source.playerData.money
+    }
+}
+
 export default { startCharacter, setMoney, addMoney, getPayment, moneyDeposit, moneywithdraw, selectCharacter, tickManager, updateBasicData, loadCustoms, changeCloth,
-    setDeath }
+    setDeath, getMoney }
