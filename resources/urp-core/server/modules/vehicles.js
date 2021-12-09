@@ -63,7 +63,7 @@ const addToSource = async(source, model, initialPosition = { x: 0, y: 0, z: 0 },
     spawn(newVehicle)
 }
 
-const spawn = (vehicleData, pos) => {
+const spawn = (vehicleData, pos, rot) => {
     if (pool[vehicleData.id]) {
         throw new Error('Vehicle already spawned')
     }
@@ -72,14 +72,19 @@ const spawn = (vehicleData, pos) => {
         vehicleData.position = pos;
     }
 
+    if (rot) {
+        vehicleData.rotation = rot;
+    }
+
+
     const vehicle = new alt.Vehicle(
         vehicleData.model,
         vehicleData.position.x,
         vehicleData.position.y,
         vehicleData.position.z,
-        0,
-        0,
-        0
+        vehicleData.rotation.x || 0,
+        vehicleData.rotation.y || 0,
+        vehicleData.rotation.z || 0
     )
 
     pool[vehicleData.id] = vehicle
@@ -112,14 +117,14 @@ const spawn = (vehicleData, pos) => {
     return vehicle
 }
 
-const spawnById = async(source, id, pos) => {
+const spawnById = async(source, id, pos, rot) => {
     const vehicleData = await executeSync('SELECT * from characters_vehicles WHERE ssn = ? AND id = ?', [source.playerData.ssn, id])
     if (!vehicleData[0]) return undefined;
     vehicleData[0].position = JSON.parse(vehicleData[0].position)
     vehicleData[0].status = JSON.parse(vehicleData[0].status)
     vehicleData[0].metadata = JSON.parse(vehicleData[0].metadata)
     vehicleData[0].customizations = JSON.parse(vehicleData[0].customizations)
-    spawn(vehicleData[0], pos)
+    spawn(vehicleData[0], pos, rot)
 }
 
 const sourceEnteredInVehicle = (source, vehicle, seat) => {

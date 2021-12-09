@@ -32,23 +32,22 @@ const createEntity = async (type, pos, data) => {
 }
 
 const createMarker = (pos, data) => {
-    console.log(data)
     if(!data.type && data.type !== 0) throw new Error('Missing parameters');
     const marker = alt.everyTick(() => {
         natives.drawMarker(
             data.type,
             pos.x,
             pos.y,
-            pos.z,
+            pos.z - 1,
             data.dirx || 0,
             data.diry || 0,
             data.dirz || 0,
             data.rotx || 0,
             data.roty || 0,
             data.rotz || 0,
-            data.scalex || 0.25,
-            data.scaley || 0.25,
-            data.scalez || 0.25,
+            data.scalex || 2.5,
+            data.scaley || 2.5,
+            data.scalez || 2.5,
             data.r,
             data.g,
             data.b,

@@ -30,6 +30,10 @@ alt.on('playerDeath', (source, killer, weaponHash) => {
 })
 
 //  Vehicles
+
+alt.on('Core:Garage:Spawn', (source, id, pos, rot) => {
+    Core.Vehicles.spawnById(source, id, pos, rot)
+})
 alt.on('playerEnteredVehicle', (source, vehicle, seat) => { 
     Core.Vehicles.sourceEnteredInVehicle(source, vehicle, seat)
 })

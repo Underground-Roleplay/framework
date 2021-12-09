@@ -19,7 +19,6 @@ const createPed = (pos, dimension, data) => {
 }
 
 const createMarker = (pos, dimension, data) => {
-    console.log(pos, dimension, data)
     if(!data.type && data.type !== 0 || !data.r && data.r !== 0 || 
         !data.g && data.g !== 0 || !data.b && data.b !== 0|| !data.a && data.a !== 0)  throw new Error('Missing parameters')
     addNewEntity(MARKER_TYPE, pos, dimension, data, 250)

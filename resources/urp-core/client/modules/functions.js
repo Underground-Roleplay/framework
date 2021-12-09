@@ -297,7 +297,9 @@ const disableConfigFlags = () => {
 
 const disableBehaviours = () => {
     disableConfigFlags()
-    alt.setInterval(() => {
+    alt.everyTick(() => {
+    // Fix webview
+    natives.drawRect(0, 0, 0, 0, 0, 0, 0, 0, false)
     //  Disable default weapon switch
     for (let i = 157; i < 164; i++) {
     natives.disableControlAction(0, i, true);
@@ -313,7 +315,7 @@ const disableBehaviours = () => {
         natives.clearPedTasks(alt.Player.local.scriptID);
         natives.clearPedSecondaryTask(alt.Player.local.scriptID);
     }
-    }, 0)
+    })
 }
 
 const setVehicleEngine = (vehicle, state) => {

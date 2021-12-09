@@ -39,12 +39,15 @@ const closeGarage = () => {
     isOpen = false
 }
 
-
+alt.onServer('garages:open', () => {
+    // alt.log('is interaction', alt.Player.local.playerData.inInteraction)
+    openGarage()
+})
 
 alt.on('keydown', (key) => {
-    if (key === 75) {
-        openGarage()
-    }
+    // if (key === 75) {
+    //     openGarage()
+    // }
     if (key === 27 && isOpen) {
         closeGarage()
     }
