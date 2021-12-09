@@ -107,6 +107,10 @@ chat.registerCmd('getIdentity', (source) => {
    Core.Functions.getIdentityByProximity(source)
 })
 
+chat.registerCmd('pos', (source) => {
+console.log(source.pos)
+})
+
 chat.registerCmd('createTestInteractions', (source)=>{
    Core.Interactions.createMultipleInteractions(defaultInteractions)
 })
