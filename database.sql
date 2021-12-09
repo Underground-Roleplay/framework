@@ -84,12 +84,13 @@ CREATE TABLE IF NOT EXISTS `characters_vehicles` (
   `ssn` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `model` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `position` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `plate` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `status` longtext CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT '{}',
-  `metadata` longtext CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT '{}',
+  `plate` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `status` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `metadata` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `customizations` longtext NOT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   KEY `ssn` (`ssn`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- Data exporting was unselected.
 
