@@ -4,7 +4,7 @@ import * as natives from 'natives';
 
 const interactionMode = () => {
     let interactionTick;
-    if(interactionTick){
+    if (interactionTick) {
         alt.clearInterval(interactionTick);
         interactionTick = null;
     }
@@ -14,7 +14,7 @@ const interactionMode = () => {
             return;
         }
         helpPrompt(`Aperte ~INPUT_FRONTEND_RB~ para interagir`)
-        // We can use a keymap in the future :D
+            // We can use a keymap in the future :D
         if (natives.isControlJustPressed(0, 206)) {
             alt.emitServer('interaction:trigger', alt.Player.local.playerData.inInteraction.type);
         }
@@ -44,7 +44,7 @@ const drawText2D = (text, pos, scale, color) => {
     natives.endTextCommandDisplayText(pos.x, pos.y, 0);
 }
 
-const drawText = (x, y, width, height, scale, {r, g, b, a}, text) => {
+const drawText = (x, y, width, height, scale, { r, g, b, a }, text) => {
     natives.setTextFont(4)
     natives.setTextProportional(0)
     natives.setTextScale(scale, scale)
@@ -72,5 +72,39 @@ const drawText3D = (x, y, z, text) => {
     natives.drawRect(0.0, 0.0 + 0.0125, 0.017 + factor, 0.03, 0, 0, 0, 75)
     natives.clearDrawOrigin()
 }
+let primaryCamera;
 
-export default {drawText, drawText3D, drawText2D, interactionMode}
+
+const destroyCam = () => {
+    alt.nextTick(() => {
+        natives.destroyCam(primaryCamera, true)
+        natives.setCamActive(primaryCamera, false);
+        natives.renderScriptCams(false, false, 0, false, false, 0);
+        natives.clearFocus()
+    })
+};
+const destroyCamCreat = () => {
+
+    natives.destroyCam(primaryCamera, true)
+    natives.setCamActive(primaryCamera, false);
+    natives.renderScriptCams(false, false, 0, false, false, 0);
+    natives.clearFocus()
+
+};
+
+const createCamera = (camx, camy, camz, rotx, roty, angle, timelapse) => {
+
+    if (primaryCamera) {
+        destroyCamCreat();
+    }
+
+    primaryCamera = natives.createCamWithParams('DEFAULT_SCRIPTED_CAMERA', camx, camy, camz, rotx, roty, angle, 0, 1, 2);
+    natives.setCamActive(primaryCamera, true);
+    natives.setFocusPosAndVel(camx, camy, camz, 0, 0, 0); ////
+    natives.setCamFov(primaryCamera, 55);
+    natives.renderScriptCams(true, true, 0, true, false, 0);
+
+}
+
+
+export default { drawText, drawText3D, drawText2D, interactionMode, destroyCam, createCamera }
