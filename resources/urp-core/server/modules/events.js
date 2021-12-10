@@ -10,6 +10,7 @@ alt.on('playerConnect', async (source) => {
         return;
     }
     console.log(Core.Translate('PLAYER.NEW_CONNECTED', { playerName: source.name }))
+    alt.emit('Core:CreateLog', 'default', 'SERVER', undefined, `A player have been connected ${source.name}`)
     Core.Functions.login(source)
 })
 
@@ -23,6 +24,7 @@ alt.on('entityLeaveColshape', (colshape, source) => {
 
 alt.on('playerDisconnect', async (source) => {
     Core.Character.updateBasicData(source)
+    alt.emit('Core:CreateLog', 'default', 'SERVER', undefined, `A player has disconnect ${source.name}`)
 })
 
 alt.on('playerDeath', (source, killer, weaponHash) => {
