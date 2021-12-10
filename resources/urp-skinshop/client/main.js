@@ -5,7 +5,7 @@ import * as natives from 'natives'
 
 let isOpen = false
 let Aroupa = []
-Core.Browser.close()
+
 const openSkinshop = (data) => {
     natives.freezeEntityPosition(alt.Player.local.scriptID, true);
     alt.emitServer('Skinshop:refresh')
@@ -69,9 +69,9 @@ alt.on('keydown', (key) => {
 
         closeSkinshop()
     }
-    if (key === 66 && !isOpen) {
-        openSkinshop()
-    }
+    // if (key === 66 && !isOpen) {
+    //     openSkinshop()
+    // }
 })
 
 

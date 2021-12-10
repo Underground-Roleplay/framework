@@ -465,4 +465,4 @@ const getMoney = (source, moneytype) => {
 }
 
 export default { startCharacter, setMoney, addMoney, getPayment, moneyDeposit, moneywithdraw, selectCharacter, tickManager, updateBasicData, loadCustoms, changeCloth,
-    setDeath, getMoney }
+    setDeath, getMoney, getComponentVariations }

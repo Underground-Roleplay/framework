@@ -1,15 +1,19 @@
-export const DEALERSHIP_LIST = [{
-    "x": -32.29,
-    "y": -1110.46,
-    "z": 25.45,
-    "type": "DEALERSHIP",
+import * as alt from 'alt'
+export const CLOTH_STORES = [
+    {
+	"x": 11.6,
+	"y": 6514.2,
+    "z": 30.9,
+    "type": "Cloth Store",
     "isServer": false,
-    "eventName": "dealership:open",
-    //   "blip":{
-    //      "sprite":207,
-    //      "color":2
-    //   }
-}];
-
-
-///-32.29 -1110.46 26.42372
+    "eventName": "Skinshop:open",
+      "blip":{
+         "sprite":73,
+         "color":5
+      },
+      marker:{
+        type: 1,
+        color: new alt.RGBA(0, 181, 204, 200)
+    }
+    }
+];
