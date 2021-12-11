@@ -1,10 +1,9 @@
-import db from 'mysql2-wrapper';
 import Core from 'urp-core';
 import * as alt from 'alt-server';
-import * as chat from 'urp-chat';
 
-import { DEALERSHIP_LIST } from '../shared/config';
-Core.Interactions.createMultipleInteractions(DEALERSHIP_LIST)
+import { CLOTH_STORES } from '../shared/config';
+
+Core.Interactions.createMultipleInteractions(CLOTH_STORES)
 
 alt.onClient('Skinshop:refresh', (source, ) => {
     alt.emitClient(source, 'Skinshop:UpdateClothes', JSON.stringify(Core.Character.getComponentVariations(source)))
