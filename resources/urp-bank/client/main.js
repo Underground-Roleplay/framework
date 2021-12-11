@@ -21,7 +21,8 @@ const openBank = () => {
         Core.Browser.emit('Bank:charinfo', Core.Functions.getPlayerData('charinfo'))
         Core.Browser.emit('Bank:ssn', Core.Functions.getPlayerData('ssn'))
     })
-    Core.Browser.on(`Bank:transfer`, (data) => {
+    Core.Browser.on('Bank:transfer', (data) => {
+        alt.log(data)
         alt.emitServer('Bank:transfer', data)
     })
 

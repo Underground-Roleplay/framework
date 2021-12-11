@@ -9,6 +9,7 @@ import interactions from './modules/interactions';
 import entities from './modules/entities';
 import inventory from './modules/inventory';
 import vehicles from './modules/vehicles';
+import money from './modules/money';
 
 import './modules/events';
 import './modules/commands';
@@ -31,6 +32,8 @@ init(Core.Config.lang)
 Core.Character = character
 
 Core.Inventory = inventory
+
+Core.Money = money
 
 Core.Vehicles = vehicles
 

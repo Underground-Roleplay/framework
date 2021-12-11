@@ -39,6 +39,7 @@ alt.onClient('Garage:Withdraw', (source, data) => {
         return;
     }
     Core.Vehicles.spawnById(source, id, garageSlots[freeSlot].position, garageSlots[freeSlot].rotation)
+    alt.emitClient(source,'alert')
 })
 
 // alt.onClient('Garage:Save', (source, data) => {
