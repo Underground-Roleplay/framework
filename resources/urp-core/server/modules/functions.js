@@ -87,6 +87,12 @@ const spawnVehicle = (source, model) => {
         const fwd = getVectorInFrontOfPlayer(source, 5)
         const vehicle = new alt.Vehicle(model, fwd.x, fwd.y, fwd.z, 0, 0, 0)
         vehicle.numberPlateText = 'STAFF'
+        vehicle.engineOn = true
+        vehicle.data = {
+            metadata: {fuel: 100}
+        }
+        vehicle.setStreamSyncedMeta('engine', true);
+        vehicle.setStreamSyncedMeta('fuel', 100);
     } catch (e) {
         console.error(Core.Translate('VEHICLE.INCORRECT_MODEL', { model: model }));
         throw e;
