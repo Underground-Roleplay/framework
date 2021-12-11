@@ -421,22 +421,20 @@ const moneywithdraw = (source, amount) => {
 }
 
 const getPayment = (source, amount) => {
+    if (!source || !source.playerData) return
+    if (!amount || amount == NaN) return
     if (amount < 0) {
         return
     }
     if(source.playerData.money['cash'] > parseInt(amount)){
         source.playerData.money['cash'] = parseInt(source.playerData.money['cash']) - parseInt(amount)
         updateMoney(source)
-        return
-    } else if(source.playerData.money['bank'] > parseInt(amount)){
-        source.playerData.money['bank'] = parseInt(source.playerData.money['bank']) - parseInt(amount)
-        updateMoney(source)
+        alt.log('aqui')
         return
     } else {
-        // TODO
-        alt.log('vai trabalhar vagabundo')
+        // TODO        
+        return alt.emitClient(source,'notify', 'error', 'erro', 'não possui quantia na carteira')
     }
-    return
 }
 
 const addMoney = (source, moneytype, amount) => {
@@ -457,6 +455,8 @@ const updateMoney = (source) => {
 }
 
 const getMoney = (source, moneytype) => {
+    if (!source || !source.playerData) return
+    if (!amount || amount == NaN) return
     if(moneytype) {
         return source.playerData.money[moneytype]
     } else {
@@ -464,5 +464,45 @@ const getMoney = (source, moneytype) => {
     }
 }
 
+const hasFullMoney = (source, amount) => {
+    if (!source || !source.playerData) return
+    if (!amount || amount == NaN) return
+    let all = parseInt(source.playerData.money['bank']) + parseInt(source.playerData.money['cash'])
+    if (all >= amount) {
+        return true
+    } else {
+       return alt.emitClient(source,'notify', 'error', 'erro', 'não possui quantia')
+    }
+}
+
+const hasMoney = (source, amount) => {
+    if (!source || !source.playerData) return
+    if (!amount || amount == NaN) return
+    if (parseInt(source.playerData.money['cash']) >= amount) {
+        return true
+    } else {
+        return alt.emitClient(source,'notify', 'error', 'erro', 'não possui quantia na carteira')
+    }
+}
+const getFullPayment = (source, amount) => {
+    if (!source || !source.playerData) return
+    if (!amount || amount == NaN) return
+    let calculatedAmount = amount - parseInt(source.playerData.money['bank'])
+    if (amount < 0) {
+        return
+    }
+    if (amount <= parseInt(source.playerData.money['bank'])) {
+        setMoney(source, 'bank', parseInt(source.playerData.money['bank']) - amount);
+        return true
+    }
+    if (amount <= parseInt(source.playerData.money['bank']) + parseInt(source.playerData.money['cash'])) {
+        setMoney(source, 'cash', parseInt(source.playerData.money['cash']) - calculatedAmount)
+        setMoney(source, 'bank', 0)
+        return true
+    }
+    return
+}
+
+
 export default { startCharacter, setMoney, addMoney, getPayment, moneyDeposit, moneywithdraw, selectCharacter, tickManager, updateBasicData, loadCustoms, changeCloth,
-    setDeath, getMoney, getComponentVariations }
+    setDeath, getMoney, getComponentVariations, hasFullMoney, getFullPayment,hasMoney }
