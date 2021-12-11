@@ -17,9 +17,7 @@ alt.onClient('Skinshop:Closenobuy', (source, i, component, color) => {
     source.setClothes(i, component, color)
 })
 alt.onClient('Skinshop:Buy', (source, i, component, color) => {
-    let money = Core.Character.getMoney(source)
-
-    if (money.cash > 2750) {
+    if (Core.Money.hasFullMoney(source, 250)) {
         source.setClothes(i, component, color)
         Core.Character.changeCloth(source, i, component, color)
         Core.Character.getPayment(source, 250)
