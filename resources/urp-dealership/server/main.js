@@ -9,19 +9,14 @@ alt.onClient('Dealership:RefreshEstoque', (source) => {
     loadDealership(source)
 })
 
-alt.on('loaded', (source, data) => {
-    alt.emitClient(source, 'Dealership:UpdateVeh', JSON.stringify(data))
-});
 alt.onClient('Dealership:FinishBuy', (source, data) => {
     buyVehicle(source, data.model)
 })
 
 const loadDealership = async(source) => {
     const result = await executeSync('SELECT * from dealership')
-    alt.emit('loaded', source, result)
+    alt.emitClient(source, 'Dealership:UpdateVeh', JSON.stringify(result))
 }
-
-
 
 const buyVehicle = async(source, model) => {
     alt.log(model)
