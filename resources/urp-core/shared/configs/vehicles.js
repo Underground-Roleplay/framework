@@ -1,4 +1,4 @@
-const VehList = {
+export const VehList = {
 	'adder':{
 		'name':'Adder',
 		'brand':'Truffade',

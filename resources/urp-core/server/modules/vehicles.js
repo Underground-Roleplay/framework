@@ -5,7 +5,8 @@ import db from 'mysql2-wrapper';
 import Core from '../main';
 
 import { executeSync, insertSync } from '../libs/utils';
-import { emit } from 'alt-shared';
+
+import { VehList } from '../../shared/configs/vehicles';
 
 const pool = {}
 
@@ -23,7 +24,6 @@ const generatePlate = async() => {
 }
 
 const loadSourceGarage = async(source) => {
-
     const vehList = []
     const result = await executeSync('SELECT * from characters_vehicles WHERE ssn = ?', [source.playerData.ssn])
     for (let i = 0; i < result.length; i++) {
@@ -44,7 +44,10 @@ const loadSourceGarage = async(source) => {
 
 const addToSource = async(source, model, initialPosition = { x: 0, y: 0, z: 0 }, spawn = false) => {
     const { ssn } = source.playerData
-        //New vehicle DATA
+    if(!VehList[model]) return false
+    const hasVehicle = await executeSync('SELECT * FROM characters_vehicles WHERE ssn = ? AND model = ?', [ssn, model])
+    if(hasVehicle[0]) return false
+    //New vehicle DATA
     const newVehicle = {}
     newVehicle.model = model
     newVehicle.position = initialPosition
