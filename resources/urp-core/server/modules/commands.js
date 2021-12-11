@@ -62,44 +62,11 @@ chat.registerCmd('cloth', (source, [component, drawable, texture])=>{
    Core.Character.changeCloth(source, component, drawable, texture)
 })
 
-chat.registerCmd('setmoney', (source, [moneytype, amount])=>{
-   if(amount == NaN){return}
-
-   if(moneytype && amount){
-      Core.Character.setMoney(source, moneytype, amount)
-   }
-})
-
 chat.registerCmd('addmoney', (source, [moneytype, amount])=>{
    if(amount == NaN){return}
 
    if(moneytype && amount){
-      Core.Character.addMoney(source, moneytype, amount)
-   }
-})
-
-chat.registerCmd('getpayment', (source, [amount])=>{
-   if(amount == NaN){return}
-
-   if(amount){
-      Core.Character.getPayment(source, amount)
-   }
-}) 
-
-
-chat.registerCmd('deposit', (source, [amount])=>{
-   if(amount == NaN){return}
-
-   if(amount){
-      Core.Character.moneyDeposit(source, amount)
-   }
-})
-
-chat.registerCmd('withdraw', (source, [amount])=>{
-   if(amount == NaN){return}
-
-   if(amount){
-      Core.Character.moneywithdraw(source, amount)
+      Core.Money.addMoney(source, moneytype, amount)
    }
 })
 
@@ -151,22 +118,14 @@ chat.registerCmd('noclip', (source) => {
 
 
 chat.registerCmd('tpwp', (source) => {   
-   const isAllowed = Core.Functions.hasPermission(source, 'admin')
-   if(isAllowed){
+   //const isAllowed = Core.Functions.hasPermission(source, 'admin')
+   //if(isAllowed){
       alt.emitClient(source, 'admin:tpwp');
-   }
+   //}
 })
-
-chat.registerCmd('garage', (source)=> {
-   Core.Vehicles.loadSourceGarage(source)
-}) 
 
 chat.registerCmd('addcar', (source,[model])=> {
    Core.Vehicles.addToSource(source, model)
-})
-
-chat.registerCmd('spawncar', (source,[id])=> {
-   Core.Vehicles.spawnById(source, id, source.pos)
 })
 
 chat.registerCmd('toggleEngine', (source)=> {
