@@ -16,9 +16,18 @@ alt.onServer('Core:Character:Respawned', () => {
 
 //  Entity sync
 alt.onServer("entitySync:create", async (id, type, pos, data) => {
-    const entity = await Core.Entities.getEntity(id, type, pos, data)
+    Core.Entities.getEntity(id, type, pos, data)
     alt.log(`[ENTITY] Created entity ${id} (Type ${type})`);
-    console.log(entity)
+})
+
+alt.onServer("entitySync:remove", (id, type) => {
+    Core.Entities.destroyEntity(id, type)
+    alt.log(`[ENTITY] Destroyed entity ${id} (Type ${type})`);
+})
+
+alt.onServer("entitySync:updatePosition", (id, type, pos) => {
+  Core.Entities.updatePos(id, type, pos)
+  alt.log(`[ENTITY] Entity position updated ${id} (Type ${type})`);
 })
 
 //  Data manager

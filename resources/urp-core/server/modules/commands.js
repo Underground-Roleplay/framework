@@ -136,6 +136,15 @@ chat.registerCmd('createMarker', (source) => {
    Core.Entities.createMarker(source.pos, 0, {type: 0, r: color.r, g: color.g, b: color.b, a: color.a})
 })
 
+chat.registerCmd('entityPos', (source, [id, type]) => {
+   const isAllowed = Core.Functions.hasPermission(source, 'admin')
+   if(!isAllowed){
+     alt.emitClient(source,'notify', 'error', Core.Translate('PERMISSIONS.LABEL'), Core.Translate('PERMISSIONS.DONT_HAVE_PERM'))
+   }
+   if(!id || !type) return;
+   Core.Entities.setEntityPosition(parseInt(id), parseInt(type), source.pos)
+})
+
 chat.registerCmd('noclip', (source) => {   
    alt.emitClient(source, 'admin:Noclip');
 })

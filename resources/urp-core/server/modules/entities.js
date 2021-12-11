@@ -13,6 +13,10 @@ const addNewEntity = (type, pos, dimension, data, range) => {
     return newEntity;
 }
 
+const setEntityPosition = (id, type, pos) => {
+    Entities.setGameEntityPosition(id, type, pos)
+}
+
 const createPed = (pos, dimension, data) => {
     if(!data.pedType && data.pedType !== 0  || !data.modelHash) throw new Error('Missing parameters')
     addNewEntity(PED_TYPE, pos, dimension, data, 250)
@@ -24,4 +28,4 @@ const createMarker = (pos, dimension, data) => {
     addNewEntity(MARKER_TYPE, pos, dimension, data, 250)
 }
 
-export default { createPed, createMarker }
+export default { createPed, createMarker, setEntityPosition }

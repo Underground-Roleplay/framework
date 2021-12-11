@@ -2,12 +2,11 @@ import * as alt from 'alt-client';
 import * as natives from 'natives';
 import Core from "../main";
 
-const list = {}
-
+const list = []
 
 const getEntity = async (id, type, pos, data) => {
-    const localId = await createEntity(type, pos, data)
     if(!list[`${id}_${type}`]){
+        const localId = await createEntity(type, pos, data)
         list[`${id}_${type}`] = {
             id: id,
             type: type,
@@ -15,6 +14,18 @@ const getEntity = async (id, type, pos, data) => {
             data: data,
             local: localId
         }
+        return list[`${id}_${type}`]
+    }
+    if(!data && !list[`${id}_${type}`].local && pos === list[`${id}_${type}`].pos){
+        list[`${id}_${type}`].local = await createEntity(list[`${id}_${type}`].type, list[`${id}_${type}`].pos, 
+        list[`${id}_${type}`].data)
+        return list[`${id}_${type}`]
+    }
+    if(!list[`${id}_${type}`].local && list[`${id}_${type}`].pos !== pos){
+        console.log(pos)
+        list[`${id}_${type}`].pos = pos
+        list[`${id}_${type}`].local = await createEntity(list[`${id}_${type}`].type, list[`${id}_${type}`].pos, 
+        list[`${id}_${type}`].data)
         return list[`${id}_${type}`]
     }
     return list[`${id}_${type}`]
@@ -29,6 +40,11 @@ const createEntity = async (type, pos, data) => {
         const markerTimer = createMarker(pos, data)
         return markerTimer
     }
+}
+
+const updatePos = async (id, type, pos) => {
+    destroyEntity(id, type)
+    getEntity(id, type, pos)
 }
 
 const createMarker = (pos, data) => {
@@ -75,6 +91,20 @@ const createPed = async (pos, data) => {
     return ped;
 }
 
+const destroyEntity = (id, type) => {
+    if(!list[`${id}_${type}`]) return;
+    if(type === 1){
+        const { local } = list[`${id}_${type}`]
+        natives.deletePed(local)
+        list[`${id}_${type}`].local = undefined
+    }
+    if(type === 2){
+        const { local } = list[`${id}_${type}`]
+        alt.clearEveryTick(local)
+        list[`${id}_${type}`].local = undefined
+    }
+}
+
 // const destroyEntities = () => {
 //     for(let ent in list) {
 //         let entity = list[ent];
@@ -82,4 +112,4 @@ const createPed = async (pos, data) => {
 //     }
 // }
 
-export default {getEntity, createPed}
+export default {getEntity, createPed, destroyEntity, updatePos}
