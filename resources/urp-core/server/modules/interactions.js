@@ -25,6 +25,7 @@ const createSingleInteraction = (position, type, eventName, isServer, blip, ped,
         pointBlip.name = blip.name || type
         pointBlip.sprite = blip.sprite || 1
         pointBlip.color = blip.color || 1
+        pointBlip.shortRange = true
         colshape['blip'] = pointBlip
     }
     if(!List[type]){
@@ -54,6 +55,7 @@ const createMultipleInteractions = (interactions, maxRadius = 2.5, height = 2.5)
             pointBlip.name = interaction.blip.name || interaction.type
             pointBlip.sprite = interaction.blip.sprite || 1
             pointBlip.color = interaction.blip.color || 1
+            pointBlip.shortRange = true
             colshape['blip'] = pointBlip
         }
         if(interaction.ped){
