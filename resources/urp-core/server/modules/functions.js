@@ -71,6 +71,10 @@ const getCurrentInventory = (source) => {
     return source.playerData.inventory
 }
 
+const getPlayerData = (source, key) => {
+    return source.playerData[key]
+}
+
 const getIdentityByProximity = (source) => {
     const closestSource = getClosestEntity(source.pos, source.rot, [...alt.Player.all], 10)
     console.log('DEBUG', closestSource)
@@ -146,4 +150,4 @@ const emitPlayerData = (source, key, value) => {
     });
 }
 
-export default { login, getPlayerIdentifier, setPosition, getMoney, hasPermission, addPermission, getCurrentInventory, spawnVehicle, emitPlayerData, getIdentityByProximity, updateIdentity }
+export default { login, getPlayerIdentifier, setPosition, getMoney, hasPermission, addPermission, getCurrentInventory, spawnVehicle, emitPlayerData, getIdentityByProximity, updateIdentity, getPlayerData }

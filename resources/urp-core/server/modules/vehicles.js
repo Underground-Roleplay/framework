@@ -8,7 +8,11 @@ import { executeSync, insertSync } from '../libs/utils';
 
 import { VehList } from '../../shared/configs/vehicles';
 
-const pool = {}
+const pool = []
+
+const getVehicleData = (veh, key) => {
+    return veh.data[key];
+}
 
 const generatePlate = async() => {
     let uniqueFound = false
@@ -36,9 +40,8 @@ const loadSourceGarage = async(source) => {
             vehList.push(vehicleData)
         }
         //alt.log(`id: ${vehicleData.id} model: ${vehicleData.model} plate: ${vehicleData.plate}`)
-
     }
-    alt.emit('loaded', source, vehList)
+    return vehList
 }
 
 
@@ -64,6 +67,17 @@ const addToSource = async(source, model, initialPosition = { x: 0, y: 0, z: 0 },
     }
 
     spawn(newVehicle)
+}
+
+const putInGarage = (source, vehicle) => {
+    if(!pool[vehicle.data.id]) return;
+    if(source.playerData.ssn !== vehicle.data.ssn) return;
+    if(vehicle.timeoutTicker){
+        alt.clearTimeout(vehicle.timeoutTicker)
+    }
+    saveVehicleMetadata(vehicle)
+    delete pool[vehicle.data.id]
+    vehicle.destroy()
 }
 
 const spawn = (vehicleData, pos, rot) => {
@@ -202,7 +216,7 @@ const handleToggleEngine = (source, vehicle) => {
 }
 
 const updateFuel = (vehicle) => {
-    if (!vehicle.engineOn) return;
+    if (!vehicle  || !vehicle.valid || !vehicle.engineOn) return;
     if (!isNaN(vehicle.data.metadata.fuel)) {
         vehicle.data.metadata.fuel = vehicle.data.metadata.fuel;
     } else {
@@ -247,5 +261,7 @@ export default {
     spawnById,
     sourceEnteredInVehicle,
     sourceLeavesVehicle,
-    handleToggleEngine
+    handleToggleEngine,
+    getVehicleData,
+    putInGarage
 }
