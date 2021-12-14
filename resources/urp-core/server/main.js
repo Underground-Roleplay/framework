@@ -11,6 +11,8 @@ import inventory from './modules/inventory';
 import vehicles from './modules/vehicles';
 import money from './modules/money';
 
+import voice from 'urp-voice';
+
 import './modules/events';
 import './modules/commands';
 
@@ -38,6 +40,8 @@ Core.Money = money
 Core.Vehicles = vehicles
 
 Core.Entities = entities
+
+Core.Voice = voice
 
 Core.PermissionList = {}
 

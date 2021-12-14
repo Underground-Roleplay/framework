@@ -172,6 +172,13 @@ const selectCharacter = async (source, playerData, fromCreation = false) => {
     //We can't pass source directly due its complexity
     alt.emit('Core:Server:CharacterLoaded', source.id)
     alt.emitClient(source, 'Core:Client:CharacterLoaded')
+    if(source.getMeta('voice:rangeIndex') === undefined){
+        Core.Voice.addSourceToChannel(source, 'short')
+        Core.Voice.addSourceToChannel(source, 'medium')
+        Core.Voice.addSourceToChannel(source, 'long')
+        source.setMeta("voice:rangeIndex", 1);
+        Core.Voice.toggleVoiceChannel(1, source);
+    }
     if(source.playerData.firstTime){
         alt.emitClient(source, 'Core:Client:UpdateIdentity')
         source.playerData.firstTime = false
