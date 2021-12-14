@@ -69,7 +69,7 @@ alt.on('keydown', (key) => {
     if(hotKeys.includes(key)){
         const inventory = Core.Functions.getPlayerData('inventory')
         const keyIndex = hotKeys.indexOf(key)
-        const item = inventory[keyIndex + 1]
+        const item = inventory[keyIndex]
         if(!item) return;
         alt.emitServer('inventory:useItem', item)
     }

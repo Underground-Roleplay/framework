@@ -2366,7 +2366,7 @@ var requiredItemOpen = false;
             $(".other-inventory").attr("data-inventory", 'dropzone');
         }
         // First 5 Slots
-        for (i = 1; i < 6; i++) {
+        for (i = 0; i < 6; i++) {
             $(".player-inventory").append(
                 '<div class="item-slot" data-slot="' +
                 i +
@@ -2376,7 +2376,7 @@ var requiredItemOpen = false;
             );
         }
         // Inventory
-        for (i = 6; i < data.slots + 1; i++) {
+        for (i = 7; i < data.slots + 1; i++) {
             if (i == 41) {
                 $(".player-inventory").append(
                     '<div class="item-slot" data-slot="' +
@@ -2393,7 +2393,7 @@ var requiredItemOpen = false;
         }
 
         if (data.other != null && data.other != "") {
-            for (i = 1; i < data.other.slots + 1; i++) {
+            for (i = 0; i < data.other.slots + 1; i++) {
                 $(".other-inventory").append(
                     '<div class="item-slot" data-slot="' +
                     i +
@@ -2401,7 +2401,7 @@ var requiredItemOpen = false;
                 );
             }
         } else {
-            for (i = 1; i < Inventory.dropslots + 1; i++) {
+            for (i = 0; i < Inventory.dropslots + 1; i++) {
                 $(".other-inventory").append(
                     '<div class="item-slot" data-slot="' +
                     i +
@@ -2657,7 +2657,7 @@ var requiredItemOpen = false;
         if (data.error) {
             Inventory.Error();
         }
-        for (i = 1; i < data.slots + 1; i++) {
+        for (i = 0; i < data.slots + 1; i++) {
             if (i == 41) {
                 $(".player-inventory").append(
                     '<div class="item-slot" data-slot="' +
@@ -2761,7 +2761,7 @@ var requiredItemOpen = false;
     Inventory.ToggleHotbar = function(data) {
         if (data.open) {
             $(".z-hotbar-inventory").html("");
-            for (i = 1; i < 6; i++) {
+            for (i = 0; i < 6; i++) {
                 var elem =
                     '<div class="z-hotbar-item-slot" data-zhotbarslot="' +
                     i +
@@ -2805,7 +2805,7 @@ var requiredItemOpen = false;
                             .find("[data-zhotbarslot=" + item.slot + "]")
                             .html(
                                 '<div class="z-hotbar-item-slot-key"><p>' +
-                                item.slot +
+                                (item.slot + 1) +
                                 '</p></div><div class="z-hotbar-item-slot-img"><img src="images/' +
                                 item.image +
                                 '" alt="' +

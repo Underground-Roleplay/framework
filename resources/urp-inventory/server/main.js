@@ -18,7 +18,23 @@ alt.onClient('inventory:setInventoryData', (source, fromInventory, toInventory, 
    fromAmount, toAmount) => {
       //Change Slot from same inventory
       if(fromInventory === toInventory && toInventory !== 'dropzone'){
-
+         console.log(fromSlot, toSlot)
+         const fromItem = Core.Inventory.getItemBySlot(source, fromSlot)
+         const toItem =  Core.Inventory.getItemBySlot(source, toSlot)
+         // console.log(fromItem, toItem)
+         if(toItem){
+            // Remove item from target slot
+            Core.Inventory.removeItem(source, toItem.name, toItem.amount)
+            // Adds item to target slot
+            Core.Inventory.addItem(source, fromItem.name, fromItem.amount, toSlot, fromItem.info)
+            // Remove to from slot
+            Core.Inventory.removeItem(source, fromItem.name, fromItem.amount)
+            // Adds item to from slot
+            Core.Inventory.addItem(source, toItem.name, toItem.amount, fromSlot, toItem.info)
+            return;
+        }
+       Core.Inventory.removeItem(source, fromItem.name, fromItem.amount)
+       Core.Inventory.addItem(source, fromItem.name, fromItem.amount, toSlot, fromItem.info)
       }
       // multiple inventory types such as = player, dropzone, stash
       // if from = to, only removeAdd in same place

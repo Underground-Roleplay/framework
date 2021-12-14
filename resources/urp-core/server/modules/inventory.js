@@ -95,11 +95,6 @@ const addItem = (source, item, amount, slot, info) => {
             saveInventory(source)
             return true
         }
-        if(slot || slot === 0 && source.playerData.inventory[slot] && source.playerData.inventory[slot].name.toLowerCase() === item.toLowerCase() && itemInfo.type === 'item' && !itemInfo.unique){
-            source.playerData.inventory[slot].amount = source.playerData.inventory[slot].amount + amount
-            saveInventory(source)
-            return true
-        }
         if(itemInfo.unique || !slot && slot !== 0 || itemInfo.type === 'weapon'){
             for(let i = 0; i < Core.Config.MaxInvSlots; i++){
                 if(!source.playerData.inventory[i]){
@@ -123,6 +118,11 @@ const addItem = (source, item, amount, slot, info) => {
                 }
             }
         }
+        if(slot || slot === 0 && source.playerData.inventory[slot] && source.playerData.inventory[slot].name.toLowerCase() === item.toLowerCase() && itemInfo.type === 'item' && !itemInfo.unique){
+            source.playerData.inventory[slot].amount = source.playerData.inventory[slot].amount + amount
+            saveInventory(source)
+            return true
+        }
     }
     alt.emitClient(source,'notify', 'error', Core.Translate('INVENTORY.LABEL'), Core.Translate('INVENTORY.FULL'))
     return false
@@ -132,7 +132,7 @@ const removeItem = (source, item, amount) => {
     amount = parseInt(amount)
 
     const slot = getItemSlot(source.playerData.inventory, item)
-    if(!slot) return false;
+    if(slot === undefined) return false;
 
     if(source.playerData.inventory[slot].amount > amount){
         source.playerData.inventory[slot].amount = source.playerData.inventory[slot].amount - amount
