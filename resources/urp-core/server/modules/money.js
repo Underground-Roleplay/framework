@@ -126,6 +126,10 @@ const transferMoney = async (source, ssn, amount) => {
             target.money = JSON.parse(target.money)
             target.money['bank'] = parseInt(target.money['bank']) + parseInt(amount)
             db.update('UPDATE characters SET money = ? WHERE ssn = ?', [JSON.stringify(target.money), ssn], undefined, alt.resourceName)
+            const targetSource = alt.Player.all.find((s) => s.playerData.ssn === ssn)
+            if(targetSource){
+                Core.Functions.emitPlayerData(targetSource, 'money', (targetSource.playerData.money['bank'] + parseInt(amount)))
+            }
             setMoney(source, 'bank', parseInt(source.playerData.money['bank']) - amount)
         }
     } else {
