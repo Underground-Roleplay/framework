@@ -52,6 +52,10 @@ alt.onClient('Garage:Withdraw', (source, data) => {
         alt.emitClient(source,'notify', 'error', 'GARAGE', 'THIS GARAGE DONT HAVE MORE SLOTS')
         return;
     }
+    if(Core.Vehicles.pool[id]){
+        alt.emitClient(source,'notify', 'error', 'GARAGE', 'VEHICLE ALREADY SPAWNED')
+        return;
+    }
     Core.Vehicles.spawnById(source, id, garageSlots[freeSlot].position, garageSlots[freeSlot].rotation)
     alt.emitClient(source,'alert')
 })
