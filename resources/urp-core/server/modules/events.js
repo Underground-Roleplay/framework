@@ -3,11 +3,11 @@ import Core from '../main';
 
 // alt:V default events
 alt.on('playerConnect', async (source) => {
-    if(!Core.DBReady) {
-        return source.kick();
-    }
     if (!source || !source.valid) {
         return;
+    }
+    if(!Core.DBReady) {
+        return source.kick();
     }
     console.log(Core.Translate('PLAYER.NEW_CONNECTED', { playerName: source.name }))
     alt.emit('Core:CreateLog', 'default', 'SERVER', undefined, `A player have been connected ${source.name}`)
@@ -23,7 +23,9 @@ alt.on('entityLeaveColshape', (colshape, source) => {
 })
 
 alt.on('playerDisconnect', async (source) => {
-    Core.Character.updateBasicData(source)
+    if(source.playerData){
+        Core.Character.updateBasicData(source)
+    }
     alt.emit('Core:CreateLog', 'default', 'SERVER', undefined, `A player has disconnect ${source.name}`)
 })
 
@@ -59,7 +61,6 @@ alt.onClient('character:destroyAttachment', (source) => {
     if (!source) return;
     source.setStreamSyncedMeta('attachment', '');
 });
-
 
 //  Interaction
 alt.onClient('interaction:trigger', (source, type) => {
