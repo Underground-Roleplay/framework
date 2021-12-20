@@ -155,13 +155,13 @@ chat.registerCmd('kick', (source, [identifier, reason]) => {
      const target = alt.Player.all.find(source => 
       source.playerData.ssn === identifier)
       if(!target || target === source) return alt.emitClient(source,'notify', 'error', Core.Translate('SYSTEM.LABEL'), Core.Translate('SYSTEM.NO_TARGET_FOUND'))
-      source.kick(reason)
+      target.kick(reason)
       return;
    }
    const target = alt.Player.all.find(source => 
       source.playerData.id === identifier)
       if(!target || target === source) return alt.emitClient(source,'notify', 'error', Core.Translate('SYSTEM.LABEL'), Core.Translate('SYSTEM.NO_TARGET_FOUND'))
-      source.kick(reason)
+      target.kick(reason)
 })
 
 
