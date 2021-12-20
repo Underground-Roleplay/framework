@@ -34,7 +34,6 @@ alt.on('playerDeath', (source, killer, weaponHash) => {
 })
 
 //  Vehicles
-
 alt.on('Core:Garage:Spawn', (source, id, pos, rot) => {
     Core.Vehicles.spawnById(source, id, pos, rot)
 })
@@ -46,6 +45,10 @@ alt.on('playerLeftVehicle', (source, vehicle, seat) => {
     Core.Vehicles.sourceLeavesVehicle(source, vehicle, seat)
 })
 
+//Visible
+alt.onClient('Core:Server:toggleSourceVisible', (source, isVisible) => {
+    source.visible = isVisible
+})
 
 //  Attachment (TEMP)
 alt.onClient('character:addAttachment', (source, hash, hand) => {

@@ -126,8 +126,8 @@ var loop;
 alt.onServer('admin:Noclip', () => {
   if ( isNoclip == false ) {
     isNoclip = true;
+    alt.emitServer('Core:Server:toggleSourceVisible', false)
     natives.freezeEntityPosition(alt.Player.local.scriptID, true);
-    natives.setEntityVisible(alt.Player.local.scriptID, false,0);
     natives.setEntityCollision(alt.Player.local.scriptID, false, false);
     loop = alt.everyTick(()=>{
       if (isNoclip) {
@@ -158,9 +158,9 @@ alt.onServer('admin:Noclip', () => {
     })
   } else {
     isNoclip = false;
+    alt.emitServer('Core:Server:toggleSourceVisible', true)
     natives.setEntityInvincible(alt.Player.local.scriptID, false);
     natives.freezeEntityPosition(alt.Player.local.scriptID, false);
-    natives.setEntityVisible(alt.Player.local.scriptID, true, 0);
     natives.setEntityCollision(alt.Player.local.scriptID, true, true);
     alt.clearEveryTick(loop);
   } 
