@@ -116,6 +116,10 @@ chat.registerCmd('noclip', (source) => {
    alt.emitClient(source, 'admin:Noclip');
 })
 
+chat.registerCmd('god', (source) => {
+   source.invincible = !source.invincible
+   alt.emitClient(source,'notify', 'error', Core.Translate('SYSTEM.LABEL'),`${source.invincible ? 'GOD MODE ON' : 'GODE MODE OFF'}`)
+})
 
 chat.registerCmd('tpwp', (source) => {   
    //const isAllowed = Core.Functions.hasPermission(source, 'admin')
@@ -136,6 +140,31 @@ chat.registerCmd('toggleEngine', (source)=> {
   Core.Vehicles.handleToggleEngine(source, source.vehicle)
 })
 
+chat.registerCmd('kick', (source, [identifier, reason]) => {
+   if(!identifier){
+      alt.emitClient(source,'notify', 'error', Core.Translate('SYSTEM.LABEL'), Core.Translate('SYSTEM.TARGET_NEEDED_IDENTIFIER'))
+      return
+   }
+   const isAllowed = Core.Functions.hasPermission(source, 'admin')
+   if(!isAllowed){
+     alt.emitClient(source,'notify', 'error', Core.Translate('PERMISSIONS.LABEL'), Core.Translate('PERMISSIONS.DONT_HAVE_PERM'))
+     return;
+   }
+   const ssnRegex = /[0-9]{6}\-[0-9]{4}/g
+   if(identifier.match(ssnRegex)){
+     const target = alt.Player.all.find(source => 
+      source.playerData.ssn === identifier)
+      if(!target || target === source) return alt.emitClient(source,'notify', 'error', Core.Translate('SYSTEM.LABEL'), Core.Translate('SYSTEM.NO_TARGET_FOUND'))
+      source.kick(reason)
+      return;
+   }
+   const target = alt.Player.all.find(source => 
+      source.playerData.id === identifier)
+      if(!target || target === source) return alt.emitClient(source,'notify', 'error', Core.Translate('SYSTEM.LABEL'), Core.Translate('SYSTEM.NO_TARGET_FOUND'))
+      source.kick(reason)
+})
+
+
 chat.registerCmd('tpto', (source, [identifier]) => {
    if(!identifier){
       alt.emitClient(source,'notify', 'error', Core.Translate('SYSTEM.LABEL'), Core.Translate('SYSTEM.TARGET_NEEDED_IDENTIFIER'))
@@ -144,6 +173,7 @@ chat.registerCmd('tpto', (source, [identifier]) => {
    const isAllowed = Core.Functions.hasPermission(source, 'admin')
    if(!isAllowed){
      alt.emitClient(source,'notify', 'error', Core.Translate('PERMISSIONS.LABEL'), Core.Translate('PERMISSIONS.DONT_HAVE_PERM'))
+     return;
    }
    const ssnRegex = /[0-9]{6}\-[0-9]{4}/g
    if(identifier.match(ssnRegex)){
