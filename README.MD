@@ -10,3 +10,4 @@ In order to run this framework you will need .NET SDK 5.0, you can find it here:
 - altV-Chat-Extended (https://github.com/Stuyk/altV-Chat-Extended) [Archived]
 - altv-csharp-entity-sync-to-js-wrapper (https://github.com/Kudze/altv-csharp-entity-sync-to-js-wrapper)
 - altv-os-missing-interiors (https://github.com/jovanivanovic/altv-os-missing-interiors)
+- altv-os-context-menu (https://github.com/Stuyk/altv-os-context-menu)

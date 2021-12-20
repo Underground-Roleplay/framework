@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Context Menu</title>
+        <link rel="stylesheet/less" type="text/css" href="./style.less" />
+    </head>
+
+    <body>
+        <div id="app">
+            <div class="contextMenu" v-if="show && menu" :style="getPosition">
+                <div class="title">{{ menu.title }}</div>
+                <div class="options">
+                    <div class="option" v-for="(option, index) in menu.options" :key="index" @click="select(option)">
+                        <div class="name">{{ option.name }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="./vue.min.js"></script>
+        <script src="./less.min.js"></script>
+        <script src="./app.js" type="text/javascript"></script>
+    </body>
+</html>
