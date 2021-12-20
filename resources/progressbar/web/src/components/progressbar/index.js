@@ -1,19 +1,18 @@
 import { useEffect, useState } from "react";
 import { ProgressContainer, ProgressLabel, Label, ProgressBarContainer, ProgressBarFill } from "./styles";
 
-let timer = undefined;
-
 const Progressbar = () => {
     
-    const [progressbarActive, setActive] = useState(false) 
+    // const [progressbarActive, setActive] = useState(false) 
     const [progressLabel, setLabel] = useState('Desconhecido') 
     const [percentProgress, setProgress] = useState('0') 
     
     useEffect(() => {
+        let timer = undefined;
         const createProgress = (label, duration = 5000) => {
+            console.log('test', label, duration)
             let currentTime = 0;
             setLabel(label)
-            setActive(true)
             timer = setInterval(() => {
                 currentTime += 10;
                 const fillPerTick = (10 * 100) / duration
@@ -22,7 +21,6 @@ const Progressbar = () => {
                 if(currentTime >= duration){
                     if (timer) {
                         setProgress(`${0}`)
-                        setActive(false)
                         clearInterval(timer);
                         if('alt' in window){
                             // eslint-disable-next-line no-undef
@@ -34,12 +32,14 @@ const Progressbar = () => {
             }, 10)
         } 
         if('alt' in window){
+             // eslint-disable-next-line no-undef
+            alt.emit('ready')
             // eslint-disable-next-line no-undef
             alt.on('progressBar:start', createProgress)
         }
     }, [])
     return (
-    progressbarActive && <ProgressContainer>
+ <ProgressContainer>
         <ProgressLabel>
             <Label>{progressLabel}</Label>
         </ProgressLabel>

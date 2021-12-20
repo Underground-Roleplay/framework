@@ -11,6 +11,7 @@ alt.onServer('consumables:drink', (item) => {
             break;
     }
     Core.Functions.playAnim(dict, anim, 5000, 49, { name: prop, hand: 28422 })
+    alt.emit('progressBar:start', 'drinking', 5000)
     alt.setTimeout(()=>{Core.Functions.stopAnim()}, 5000)
 })
 
@@ -24,5 +25,6 @@ alt.onServer('consumables:eat', (item) => {
             break;
     }
     Core.Functions.playAnim(dict, anim, 5000, 49, { name: prop, hand: 28422 })
+    alt.emit('progressBar:start', 'eating', 5000)
     alt.setTimeout(()=>{Core.Functions.stopAnim()}, 5000)
 })
