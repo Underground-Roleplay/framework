@@ -35,18 +35,27 @@ debug: 'true'
 resources: [
     'mysql2-wrapper',
     'entity-sync',
+    'altv-os-missing-interiors',
+    'altv-os-context-menu',
+    'progressbar'
+    'urp-voice',
     # 'urp-logs',
     'urp-notify',
     'urp-chat',
     'urp-hud',
     'urp-core',
+    'urp-bank',
     'urp-character-creator',
     'time-weather-sync',
-    # 'test-resource',
+    'urp-identity',
+    'urp-garage',
+    'urp-dealership',
+    'urp-skinshop',
     'urp-inventory',
     'urp-consumables-example'
 ]
 mysql_connection_string: 'mysql://user:password@localhost/database?charset=utf8mb4'
 mysql_debug: 'false'
+voice: {}
 ```
 If you have any questions please meet us in <a href="https://discord.gg/aJmSz8v9w4">Discord</a>
