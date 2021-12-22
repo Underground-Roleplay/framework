@@ -1,9 +1,13 @@
-# TODO
+# uRP Framework
 
-In order to run this framework you will need .NET SDK 5.0, you can find it here: https://dotnet.microsoft.com/download/dotnet/5.0
+<a href="https://underground-roleplay.github.io/framework/"><h2 style="text-align: center">Getting Started</h2></a>
+___
+### Useful links
 
+- .NET 5.0 SDK (https://dotnet.microsoft.com/download/dotnet/5.0)
+- Node.JS (https://nodejs.org/en/)
+- Uniform Server (https://www.uniformserver.com/) [This can be used to run a MySQL server in your windows machine, but you can use MySQL Community Server or XAMPP (it's all about preferences)]
 
-> If there's any doubt about this framework contact us in discord https://discord.gg/aJmSz8v9w4
 ### Standalone resources (Already packed - non optional):
 
 - mysql2-wrapper (https://github.com/nickplayz/mysql2-wrapper)
@@ -11,3 +15,5 @@ In order to run this framework you will need .NET SDK 5.0, you can find it here:
 - altv-csharp-entity-sync-to-js-wrapper (https://github.com/Kudze/altv-csharp-entity-sync-to-js-wrapper)
 - altv-os-missing-interiors (https://github.com/jovanivanovic/altv-os-missing-interiors)
 - altv-os-context-menu (https://github.com/Stuyk/altv-os-context-menu)
+
+> If there's any doubt about this framework contact us in discord https://discord.gg/aJmSz8v9w4
