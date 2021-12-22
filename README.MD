@@ -1,7 +1,7 @@
 # uRP Framework
 
-<a href="https://underground-roleplay.github.io/framework/"><h2 style="text-align: center">Getting Started</h2></a>
-___
+<a href="https://underground-roleplay.github.io/framework/"><h2 align="center">Getting Started</h2></a>
+
 ### Useful links
 
 - .NET 5.0 SDK (https://dotnet.microsoft.com/download/dotnet/5.0)
