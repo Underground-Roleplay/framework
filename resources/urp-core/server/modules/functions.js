@@ -149,5 +149,96 @@ const emitPlayerData = (source, key, value) => {
         alt.emitClient(source, 'playerData:set', key, value);
     });
 }
+const GetSsn = (source, dt) => {
+    if (!source || !source.playerData) return;
+    const ssn = source.playerData.ssn;
+   
+    return ssn
+  }
+  const GetNumber = (source, dt) => {
+    if (!source || !source.playerData) return;
+    const phone = source.playerData.phone;
+   
+    return phone
+  }
+  const createCallPhone = (source, phone) => {
+    const target = alt.Player.all.find(s => s.playerData.phone === parseInt(phone))
+    if (source.getMeta('inCall') == true || target.getMeta('inCall') == true) return;
+    if (!target) return;
+    
+    alt.emitClient(target, 'Phone:inCall')
+    setTimeout(() => {
+        Core.Voice.createVoiceChannel(phone, 999999, false)
+        Core.Voice.addSourceToChannel(source, phone)
+        Core.Voice.addSourceToChannel(target, phone)
+        source.setMeta('inCall', true);
+        target.setMeta('inCall', true)
+    }, 100);
+    
+  
+  }
+  
+  const inviteCallRequest = (source, phone) => {
+   
+    if (!source.getMeta('inCall')) {
+        const target = alt.Player.all.find(s => s.playerData.phone === parseInt(phone))
+        
+     
+        if (!target) {
+            alt.log(`fora da area de cobertura ou o numero esta errado`)
+        } else {
+            if (!target.getMeta('inCall')) {
+                alt.emitClient(target, 'Phone:inviteCallRequest',source.playerData.phone)
+            } else(
+                alt.log(`ocupado`)
+            )
+        }
+    }
+  }
+  
+  const PhoneTunel = (source,targtEvent,dataRvent,phone)=>{
+    const target = alt.Player.all.find(s => s.playerData.phone === parseInt(phone))
+    if (target) {
+        alt.emitClient(target,targtEvent,target,dataRvent)
+    }
+  }
+  
+  //  alt.emitClient(source, 'Phone:GetAllMessageId',result)
+  
+  
+  const endCall = (source, phone) => {
+    console.log(phone);
+    const target = alt.Player.all.find(s => s.playerData.phone == parseInt(phone))
+    if (!target) return
+    alt.emitClient(target, 'Phone:endCall')
+    alt.emitClient(source, 'Phone:endCall')
+    Core.Voice.removeSourceFromChannel(source, phone)
+    Core.Voice.removeSourceFromChannel(target, phone)
+    Core.Voice.destroyVoiceChannel(phone)
+    source.setMeta('inCall', false)  
+    target.setMeta('inCall', false)
+    console.log(source.getSyncedMeta('inCall'));
+    console.log(target.getSyncedMeta('inCall'));
+    console.log("close chanel");
+  
+  }
 
-export default { login, getPlayerIdentifier, setPosition, getMoney, hasPermission, addPermission, getCurrentInventory, spawnVehicle, emitPlayerData, getIdentityByProximity, updateIdentity, getPlayerData }
+export default { login,
+    getPlayerIdentifier,
+    setPosition,
+    getMoney,
+    hasPermission,
+    addPermission,
+    getCurrentInventory,
+    spawnVehicle,
+    emitPlayerData,
+    getIdentityByProximity,
+    updateIdentity,
+    getPlayerData,
+    GetSsn,
+    createCallPhone,
+    inviteCallRequest,
+    endCall,
+    PhoneTunel,
+    GetNumber
+}
