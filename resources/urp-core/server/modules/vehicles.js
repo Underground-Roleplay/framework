@@ -6,7 +6,7 @@ import Core from '../main';
 
 import { executeSync, insertSync } from '../libs/utils';
 
-import { VehList } from '../../shared/configs/vehicles';
+import { VehList, modType } from '../../shared/configs/vehicles';
 
 const pool = []
 
@@ -34,6 +34,7 @@ const loadSourceGarage = async(source) => {
         const vehicleData = result[i]
         if (vehicleData) {
             vehicleData.position = JSON.parse(vehicleData.position)
+            vehicleData.model = JSON.parse(vehicleData.model)
             vehicleData.status = JSON.parse(vehicleData.status)
             vehicleData.metadata = JSON.parse(vehicleData.metadata)
             vehicleData.customizations = JSON.parse(vehicleData.customizations)
@@ -76,6 +77,7 @@ const putInGarage = (source, vehicle) => {
         alt.clearTimeout(vehicle.timeoutTicker)
     }
     saveVehicleMetadata(vehicle)
+    saveMods(vehicle)
     delete pool[vehicle.data.id]
     vehicle.destroy()
 }
@@ -112,14 +114,20 @@ const spawn = (vehicleData, pos, rot) => {
 
     vehicle.engineOn = false
 
-    if (vehicleData.customizations.primaryColor && vehicleData.customizations.customSecondaryColor) {
-        vehicle.customPrimaryColor = vehicleData.customizations.primaryColor;
-        vehicle.customSecondaryColor = vehicleData.customizations.customSecondaryColor;
-    }
+    // if (vehicleData.customizations.primaryColor && vehicleData.customizations.customSecondaryColor) {
+    //     vehicle.customPrimaryColor = vehicleData.customizations.primaryColor;
+    //     vehicle.customSecondaryColor = vehicleData.customizations.customSecondaryColor;
+    // }
 
     if (vehicleData.status) {
         // setVehicleStatus(vehicle, vehicleData.status)
     }
+
+    if (vehicleData.customizations) {
+        loadMods(vehicle, vehicleData.customizations, vehicleData.model)
+        alt.log(`load customizations`)
+    }
+    
 
     if (vehicleData.metadata.trunk) {
         vehicle.setStreamSyncedMeta('trunk', vehicleData.trunk)
@@ -128,7 +136,6 @@ const spawn = (vehicleData, pos, rot) => {
     vehicle.setStreamSyncedMeta('fuel', vehicleData.metadata.fuel)
     vehicle.setStreamSyncedMeta('owner', vehicleData.ssn)
     vehicle.setStreamSyncedMeta('engine', false)
-
     vehicleTick(vehicle)
 
     return vehicle
@@ -140,6 +147,7 @@ const spawnById = async(source, id, pos, rot) => {
     vehicleData[0].position = JSON.parse(vehicleData[0].position)
     vehicleData[0].status = JSON.parse(vehicleData[0].status)
     vehicleData[0].metadata = JSON.parse(vehicleData[0].metadata)
+    vehicleData[0].model = vehicleData[0].model
     vehicleData[0].customizations = JSON.parse(vehicleData[0].customizations)
     spawn(vehicleData[0], pos, rot)
 }
@@ -166,6 +174,7 @@ const sourceLeavesVehicle = (source, vehicle, seat) => {
         } else {
             console.info("(" + source.playerData.ssn + ") saiu de um veiculo registrado para o ssn" + vehicle.data.ssn + " em x:" + vehicle.pos.x + " y:" + vehicle.pos.y + " z:" + vehicle.pos.z);
         }
+
         // If car in future will stay spawned
         // updateVehiclePosition(vehicle)
     }
@@ -247,6 +256,129 @@ const saveVehicleMetadata = (vehicle) => {
     db.execute('UPDATE characters_vehicles SET metadata = ? WHERE ssn = ? AND id = ?', [JSON.stringify(metadata), vehicle.data.ssn, id], undefined, alt.resourceName)
 }
 
+const setMod = (source,index, id) => {
+    if (source.vehicle === null) return;
+    if (source.vehicle.modKit != 1 || source.vehicle.modKit == 1 ) {
+        
+        source.vehicle.modKit = 1;        
+        source.vehicle.setMod(parseInt(index), parseInt(id));
+        alt.log(source.vehicle.getModsCount(parseInt(index)) )
+
+    }
+}
+
+const setColor = (source, index, r, g, b, a) => {
+    if (source.vehicle === null) return;
+
+    if(index == `color1`) {
+        source.vehicle.customPrimaryColor = r,g,b,a
+    }
+    if (index == `color2`) {
+        source.vehicle.customSecondaryColor = r,g,b,a
+    }
+}
+
+const saveMods = (vehicle) => {
+    if (!vehicle.data) return;
+    vehicle.data.customizations = getMods(vehicle, vehicle.data.model);
+    db.execute('UPDATE characters_vehicles SET customizations = ? WHERE ssn = ? AND id = ?', [JSON.stringify(vehicle.data.customizations), vehicle.data.ssn, vehicle.data.id], undefined, alt.resourceName)    
+}
+
+const getMods = (vehicle) => {
+    const data = {
+        primaryColor: vehicle.customPrimaryColor,
+        secondaryColor: vehicle.customSecondaryColor,
+        Back_Wheels: vehicle.getMod(modType.Back_Wheels), // only for motorcycles
+        Spoilers: vehicle.getMod(modType.Spoilers),
+        Front_Bumper: vehicle.getMod(modType.Front_Bumper),
+        Rear_Bumper: vehicle.getMod(modType.Rear_Bumper),
+        Side_Skirt: vehicle.getMod(modType.Side_Skirt),
+        Exhaust: vehicle.getMod(modType.Exhaust),
+        Frame: vehicle.getMod(modType.Frame),
+        Grille: vehicle.getMod(modType.Grille),
+        Hood: vehicle.getMod(modType.Hood),
+        Fender: vehicle.getMod(modType.Fender),
+        Right_Fender: vehicle.getMod(modType.Right_Fender),
+        Roof: vehicle.getMod(modType.Roof),
+        Engine: vehicle.getMod(modType.Engine),
+        Brakes: vehicle.getMod(modType.Brakes),
+        Transmission: vehicle.getMod(modType.Transmission),
+        Horns: vehicle.getMod(modType.Horns),
+        Suspension: vehicle.getMod(modType.Suspension),
+        Armor: vehicle.getMod(modType.Armor),
+        Turbo: vehicle.getMod(modType.Turbo),
+        Xenon: vehicle.getMod(modType.Xenon),
+        Front_Wheels: vehicle.getMod(modType.Front_Wheels),
+        Util_Shadow_Silver: vehicle.getMod(modType.Util_Shadow_Silver),
+        Plate_holders: vehicle.getMod(modType.Plate_holders),
+        Trim_Design: vehicle.getMod(modType.Trim_Design),
+        Ornaments: vehicle.getMod(modType.Ornaments),
+        Dial_Design: vehicle.getMod(modType.Dial_Design),
+        Steering_Wheel: vehicle.getMod(modType.Steering_Wheel),
+        Shift_Lever: vehicle.getMod(modType.Shift_Lever),
+        Plaques: vehicle.getMod(modType.Plaques),
+        Hydraulics: vehicle.getMod(modType.Hydraulics),
+        Boost: vehicle.getMod(modType.Boost),
+        Window_Tint: vehicle.getMod(modType.Window_Tint),
+        Livery: vehicle.getMod(modType.Livery),
+        Plate: vehicle.getMod(modType.Plate),
+        Colour1: vehicle.getMod(modType.Colour1),
+        Colour2: vehicle.getMod(modType.Colour2),
+    }
+    return data
+}
+
+
+const loadMods = (vehicle, data, model) => {
+    if (vehicle.modKit != 1) vehicle.modKit = 1;        
+
+    alt.nextTick(() => {
+        vehicle.customPrimaryColor = data.primaryColor
+        vehicle.customSecondaryColor = data.secondaryColor
+        
+        if(VehList[model].category == `motorcycles`){
+            vehicle.setMod(modType.Back_Wheels, data.Back_Wheels)
+        }
+
+        vehicle.setMod(modType.Spoilers, data.Spoilers),
+        vehicle.setMod(modType.Front_Bumper, data.Front_Bumper),
+        vehicle.setMod(modType.Rear_Bumper, data.Rear_Bumper),
+        vehicle.setMod(modType.Side_Skirt, data.Side_Skirt),
+        vehicle.setMod(modType.Exhaust, data.Exhaust),
+        vehicle.setMod(modType.Frame, data.Frame),
+        vehicle.setMod(modType.Grille, data.Grille),
+        vehicle.setMod(modType.Hood, data.Hood),
+        vehicle.setMod(modType.Fender, data.Fender),
+        vehicle.setMod(modType.Right_Fender, data.Right_Fender),
+        vehicle.setMod(modType.Roof, data.Roof),
+        vehicle.setMod(modType.Engine, data.Engine),
+        vehicle.setMod(modType.Brakes, data.Brakes),
+        vehicle.setMod(modType.Transmission, data.Transmission),
+        vehicle.setMod(modType.Horns, data.Horns),
+        vehicle.setMod(modType.Suspension, data.Suspension),
+        vehicle.setMod(modType.Armor, data.Armor),
+        vehicle.setMod(modType.Turbo, data.Turbo),
+        vehicle.setMod(modType.Xenon, data.Xenon),
+        vehicle.setMod(modType.Front_Wheels, data.Front_Wheels),
+        vehicle.setMod(modType.Util_Shadow_Silver, data.Util_Shadow_Silver),
+        vehicle.setMod(modType.Plate_holders, data.Plate_holders),
+        vehicle.setMod(modType.Trim_Design, data.Trim_Design),
+        vehicle.setMod(modType.Ornaments, data.Ornaments),
+        vehicle.setMod(modType.Dial_Design, data.Dial_Design),
+        vehicle.setMod(modType.Steering_Wheel, data.Steering_Wheel),
+        vehicle.setMod(modType.Shift_Lever, data.Shift_Lever),
+        vehicle.setMod(modType.Plaques, data.Plaques),
+        vehicle.setMod(modType.Hydraulics, data.Hydraulics),
+        vehicle.setMod(modType.Boost, data.Boost),
+        vehicle.setMod(modType.Window_Tint, data.Window_Tint),
+        vehicle.setMod(modType.Livery, data.Livery),
+        vehicle.setMod(modType.Plate, data.Plate),
+        vehicle.setMod(modType.Colour1, data.Colour1),
+        vehicle.setMod(modType.Colour2, data.Colour2)
+    })
+}
+
+
 // const updateVehiclePosition = (vehicle) => {
 //     vehicle.data.position = vehicle.pos
 //     db.execute('UPDATE characters_vehicles SET position = ? WHERE ssn = ?', [JSON.stringify(vehicle.data.position), vehicle.data.ssn], undefined, alt.resourceName)
@@ -263,5 +395,8 @@ export default {
     sourceLeavesVehicle,
     handleToggleEngine,
     getVehicleData,
-    putInGarage
+    putInGarage,
+    setMod,
+    saveMods,
+    setColor
 }
