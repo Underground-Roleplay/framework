@@ -34,25 +34,19 @@ function InputRange(i) {
     console.log(JSON.stringify(compra))
 
 }
+function InputColor(i) {
+    color = $('#color-' + i).val();
 
-function LeftClick(i) {
-    if (color > 1) {
-        color = color - 1;
-        document.getElementById('txt-' + i).innerHTML = `${i} , ${component} , ${color}`;
-        alt.emit('Skinshop:att', i, component, color)
-        compra = { id: i, variable: { drawable: component, texture: color } }
-        console.log(JSON.stringify(compra))
-    }
-}
-
-function RightClick(i) {
-    color = color + 1;
     document.getElementById('txt-' + i).innerHTML = `${i} , ${component} , ${color}`;
+    AttColor(i)
     alt.emit('Skinshop:att', i, component, color)
-    compra['id'] = { variable: { drawable: component, texture: color } }
+    compra[i] = { drawable: component, texture: color }
+
     console.log(JSON.stringify(compra))
 
 }
+
+
 
 function InputRotate() {
     component = $('#rotate').val();
@@ -66,6 +60,47 @@ function camPosition(pos) {
 function Finish() {
     alt.emit('Skinshop:FinishBuy', compra)
 
+}
+Component('mask')
+function Component(type) {
+    let label = ''
+    let id = 0
+    if (type == 'mask') {
+      id = 1
+      label = 'Mask'
+    }else  if (type == 'tshirt') {
+        id = 8
+        label = 'T-shirt'
+    }else  if (type == 'jacket') {
+        id = 11
+        label = 'Jacket'
+    }else  if (type == 'gloves') {
+        id = 3
+        label = 'Gloves'
+    }else  if (type == 'shorts') {
+        id = 4
+        label = 'Shorts'
+    }else  if (type == 'shoes') {
+        id = 6
+        label = 'Shoes'
+    }else if (type == 'bag') {
+        id = 5
+        label = 'Bag'
+    }else  if (type == 'vest') {
+        id = 9
+        label = 'Vest'
+    }
+
+    $('#component-cloth').empty().append(`
+        <h3 class='txt-title-component'>${label}</h3>
+        <div class="grup-input">
+            <p id="txt-${id}">1 , 4</p>
+            <label for="customRange3" class="form-label">Modelo</label>
+            <input type="range" class="form-range" min="0" max="100" step="1" id="${id}" oninput="InputRange('${id}')">
+            <label for="customRange3" class="form-label">Color</label>
+            <input type="range" class="form-range" min="0" max="20" step="1" id="color-${id}" oninput="InputColor('${id}')">
+        </div>
+    `)
 }
 
 function AttColor(i) {
