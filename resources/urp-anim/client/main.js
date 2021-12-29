@@ -140,8 +140,8 @@ const playAnim = async(data) => {
             natives.taskPlayAnim(scriptID, animations[data].dict, animations[data].anim, 3.0, -3.0, -1, animations[data].flag, 0, 0, 0, 0);
             return true;
         } else if (animations[data].type == 'scenario' && !natives.isPedInAnyVehicle(scriptID, true)) {
-            let pedpos = natives.getEntityCoords(scriptID,true)
-            natives.taskStartScenarioAtPosition(scriptID,animations[data].dict,pedpos.x,pedpos.y,pedpos.z-1,natives.getEntityHeading(scriptID),0,0,false)
+            let pedpos = natives.getEntityCoords(alt.Player.local,true)
+            natives.taskStartScenarioAtPosition(scripalt.Player.localtID,animations[data].dict,pedpos.x,pedpos.y,pedpos.z-1,natives.getEntityHeading(alt.Player.local),0,0,false)
             return true;
         }
         else if (animations[data].type == 'prop' && !natives.isPedInAnyVehicle(scriptID, true)) {
@@ -152,7 +152,8 @@ const playAnim = async(data) => {
                 natives.networkFadeOutEntity(alt.Player.local.animObject,false)
                 
                 while ( natives.networkIsEntityFading(alt.Player.local.animObject) ) {
-                    await utils.Wait(100)
+                     alt.setTimeout(() => {  }, 100)
+                    
                 }
                 
                 natives.deleteObject(alt.Player.local.animObject)
@@ -160,15 +161,15 @@ const playAnim = async(data) => {
             }
 
             let coords = natives.getOffsetFromEntityInWorldCoords(scriptID,0.0,0.0,-5.0);
-            this.animObject = natives.createObject(natives.getHashKey(animations[data].prop),coords.x,coords.y,coords.z,true,true,true);
-            natives.setEntityCollision(this.animObject,false,false);
+            alt.Player.local.animObject = natives.createObject(natives.getHashKey(animations[data].prop),coords.x,coords.y,coords.z,true,true,true);
+            natives.setEntityCollision(alt.Player.local.animObject,false,false);
             if (animations[data].height){
-                natives.attachEntityToEntity(this.animObject,scriptID,natives.getPedBoneIndex(scriptID,animations[data].bone),animations[data].height,animations[data].pos1,animations[data].pos2,animations[data].pos3,animations[data].pos4,animations[data].pos5,true,false,false,true,1,true);
+                natives.attachEntityToEntity(alt.Player.local.animObject,scriptID,natives.getPedBoneIndex(scriptID,animations[data].bone),animations[data].height,animations[data].pos1,animations[data].pos2,animations[data].pos3,animations[data].pos4,animations[data].pos5,true,false,false,true,1,true);
             } else {
-                natives.attachEntityToEntity(this.animObject,scriptID,natives.getPedBoneIndex(scriptID,animations[data].bone),0.0,0.0,0.0,0.0,0.0,0.0,false,false,false,false,2,true);
+                natives.attachEntityToEntity(alt.Player.local.animObject,scriptID,natives.getPedBoneIndex(scriptID,animations[data].bone),0.0,0.0,0.0,0.0,0.0,0.0,false,false,false,false,2,true);
             }
             natives.taskPlayAnim(scriptID, animations[data].dict, animations[data].anim,3.0,3.0,-1,animations[data].flag,0,0,0,0);
-            natives.setEntityAsMissionEntity(this.animObject,true,true);
+            natives.setEntityAsMissionEntity(alt.Player.local.animObject,true,true);
             return true;
         }
     } else {

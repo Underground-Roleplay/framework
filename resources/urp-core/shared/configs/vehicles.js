@@ -3709,3 +3709,84 @@ export const VehList = {
 		'shop':'pdm',
 	},
 }
+
+export const modType = {
+	Spoilers : 0,
+	Front_Bumper: 1,
+	Rear_Bumper: 2,
+	Side_Skirt: 3,
+	Exhaust: 4,
+	Frame: 5,
+	Grille: 6,
+	Hood: 7,
+	Fender: 8,
+	Right_Fender: 9,
+	Roof: 10,
+	Engine: 11,
+	Brakes: 12,
+	Transmission: 13,
+	Horns: 14,
+	Suspension: 15,
+	Armor: 16,
+	Turbo: 18,
+	Xenon: 22,
+	Front_Wheels: 23,
+	Util_Shadow_Silver: 20,
+	Back_Wheels: 24, // only for motorcycles
+	Plate_holders: 25,
+	Trim_Design: 27,
+	Ornaments: 28,
+	Dial_Design: 30,
+	Steering_Wheel: 33,
+	Shift_Lever: 34,
+	Plaques: 35,
+	Hydraulics: 38,
+	Boost: 40,
+	Window_Tint: 55,
+	Livery: 48,
+	Plate: 62,
+	Colour1: 66,
+	Colour2: 67
+}
+
+export const wheelsTypes = {
+	Sport : 0,
+	Muscle : 1,
+	Lowrider : 2,
+	SUV : 3,
+	Offroad : 4,
+	Tuner : 5,
+	Bike_Wheels : 6,
+	High_End : 7
+}
+
+export const indexVehicle = {
+    weels_FrontLeft: 0,
+	weels_FrontRight: 1,
+    weels_MiddleLeft: 2,
+    weels_MiddleRight: 3,
+    weels_RearLeft: 4,
+    weels_RearRight: 5,
+
+    weels_middleLeftTrailer: 45,
+    weels_middleRightTrailer: 46,
+
+	windows_CREEN: 0,
+    windows_CREEN_R: 1,
+    windows_LF: 2,
+    windows_RF: 3,
+    windows_LR: 4,
+    windows_RR: 5,
+    windows_LM: 6,
+    windows_RM: 7,
+
+	bumper_FRONT: 0,
+    bumper_REAR: 1,
+
+	partId_FrontLeft: 0,
+    partId_FrontRight: 1,
+    partId_MiddleLeft: 2,
+    partId_MiddleRight: 3,
+    partId_RearLeft: 4,
+    partId_RearRight: 5,
+}
