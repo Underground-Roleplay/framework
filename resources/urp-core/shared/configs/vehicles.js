@@ -3759,3 +3759,34 @@ export const wheelsTypes = {
 	Bike_Wheels : 6,
 	High_End : 7
 }
+
+export const indexVehicle = {
+    weels_FrontLeft: 0,
+	weels_FrontRight: 1,
+    weels_MiddleLeft: 2,
+    weels_MiddleRight: 3,
+    weels_RearLeft: 4,
+    weels_RearRight: 5,
+
+    weels_middleLeftTrailer: 45,
+    weels_middleRightTrailer: 46,
+
+	windows_CREEN: 0,
+    windows_CREEN_R: 1,
+    windows_LF: 2,
+    windows_RF: 3,
+    windows_LR: 4,
+    windows_RR: 5,
+    windows_LM: 6,
+    windows_RM: 7,
+
+	bumper_FRONT: 0,
+    bumper_REAR: 1,
+
+	partId_FrontLeft: 0,
+    partId_FrontRight: 1,
+    partId_MiddleLeft: 2,
+    partId_MiddleRight: 3,
+    partId_RearLeft: 4,
+    partId_RearRight: 5,
+}
