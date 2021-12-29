@@ -1,0 +1,31 @@
+{
+  "files": {
+    "main.css": "./static/css/main.4a6ed544.chunk.css",
+    "main.js": "./static/js/main.96f93845.chunk.js",
+    "main.js.map": "./static/js/main.96f93845.chunk.js.map",
+    "runtime-main.js": "./static/js/runtime-main.6e1a8290.js",
+    "runtime-main.js.map": "./static/js/runtime-main.6e1a8290.js.map",
+    "static/js/2.b01545f0.chunk.js": "./static/js/2.b01545f0.chunk.js",
+    "static/js/2.b01545f0.chunk.js.map": "./static/js/2.b01545f0.chunk.js.map",
+    "index.html": "./index.html",
+    "static/css/main.4a6ed544.chunk.css.map": "./static/css/main.4a6ed544.chunk.css.map",
+    "static/js/2.b01545f0.chunk.js.LICENSE.txt": "./static/js/2.b01545f0.chunk.js.LICENSE.txt",
+    "static/media/calculator.e98e3762.png": "./static/media/calculator.e98e3762.png",
+    "static/media/call.5fa04bf1.png": "./static/media/call.5fa04bf1.png",
+    "static/media/chamada.876b287b.mp3": "./static/media/chamada.876b287b.mp3",
+    "static/media/chamando.8164bc4f.mp3": "./static/media/chamando.8164bc4f.mp3",
+    "static/media/contacts.4b1d9045.png": "./static/media/contacts.4b1d9045.png",
+    "static/media/index.css": "./static/media/fa-light-300.aa75aa34.woff",
+    "static/media/iphone.c4d3c4e3.png": "./static/media/iphone.c4d3c4e3.png",
+    "static/media/messages.a425e1c2.png": "./static/media/messages.a425e1c2.png",
+    "static/media/notify.33e17d57.mp3": "./static/media/notify.33e17d57.mp3",
+    "static/media/perfil.08e05437.png": "./static/media/perfil.08e05437.png",
+    "static/media/App.css": "./static/media/walpaper.04f956eb.jpg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.6e1a8290.js",
+    "static/js/2.b01545f0.chunk.js",
+    "static/css/main.4a6ed544.chunk.css",
+    "static/js/main.96f93845.chunk.js"
+  ]
+}
