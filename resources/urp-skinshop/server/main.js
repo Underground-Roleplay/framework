@@ -20,7 +20,7 @@ alt.onClient('Skinshop:Buy', (source, i, component, color) => {
     if (Core.Money.hasFullMoney(source, 250)) {
         source.setClothes(i, component, color)
         Core.Character.changeCloth(source, i, component, color)
-        Core.Character.getPayment(source, 250)
+        Core.Money.getPayment(source, 250)
         alt.emitClient(source, 'Skinshop:UpdateClothes', JSON.stringify(Core.Character.getComponentVariations(source)))
         alt.emitClient(source, 'Skinshop:close')
 
