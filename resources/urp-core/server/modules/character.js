@@ -21,7 +21,7 @@ const startCharacter = async (source, newCharacter = undefined) => {
         playerData.position = JSON.parse(playerData.position)
         playerData.metadata = JSON.parse(playerData.metadata)
         playerData.charinfo = JSON.parse(playerData.charinfo)
-        playerData.phone = charinfo.phone
+        playerData.phone =  playerData.charinfo.phone
         playerData.inventory = playerData.inventory ? JSON.parse(playerData.inventory) : []
         checkPlayerData(source, playerData)
         return;
