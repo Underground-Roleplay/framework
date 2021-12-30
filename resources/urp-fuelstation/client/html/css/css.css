@@ -1,0 +1,172 @@
+#app{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    background-color: aqua;
+}
+*,p,label,h1,h2,h3,h4,h5,span{
+    margin: 0 ;
+    padding: 0 ;
+}
+.extermo-fuel{
+    padding: 15px;
+    width: 500px;
+    height: 500px;
+    background-color: #fff;
+    border-radius: 20px;
+}
+.box-viwer{
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    height: 120px;
+}
+.box-viwer-2{
+    padding: 10px 10px;
+    width: 50%;
+    height: 100%;
+    font-weight: 500;
+    color: grey;
+}
+.felx-vertical{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+.card-combustivel{
+    cursor: pointer;
+    padding: 10px 0;
+    color: #ffa704;
+    width: 120px;
+    height: 100%;
+    justify-content: space-evenly;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 15px;
+}
+.card-combustivel:hover{
+    background-color: rgba(255, 167, 4, 0.302);
+    
+}
+.card-combustivel img{
+    margin-top: 10px !important;
+    height: 45px;
+}
+.card-combustivel label{
+   font-size: 18px;
+   font-weight: 500;
+}
+.card-combustivel p{
+  color: black;
+}
+
+
+
+
+.px18,
+.px14,
+.px20{
+    line-height: 28px;
+}
+.px18{
+    font-size: 18px;
+}
+.px14{
+    font-size: 14px;
+}
+.px20{
+    font-size: 20px;
+}
+
+.card-combustivel-oil{
+    
+    cursor: pointer;
+    padding: 10px 0;
+    color: black;
+    width: 120px;
+    height: 100%;
+    justify-content: space-evenly;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 15px;
+}
+.card-combustivel-oil:hover{
+    background-color:rgba(0, 0, 0, 0.432) ;
+    
+}
+
+
+.card-combustivel-oil img{
+    margin-top: 10px !important;
+    height: 45px;
+}
+.card-combustivel-oil label{
+   font-size: 18px;
+   font-weight: 500;
+}
+.card-combustivel-oil p{
+  color: black;
+}
+
+
+
+.line-between{
+    width: 100%;
+    justify-content: space-between;
+    display: flex;
+}
+.line-separator{
+    width: 100%;
+    border-bottom: 2px solid grey;
+}
+
+
+.Btn{
+    width: 100%;
+    height: 34px;
+    background-color: #285656;
+    border: transparent;
+    border-radius: 5px;
+    font-size: 18px;
+    color: #fff;
+    font-weight: 600
+}
+
+.input{
+    
+    width: 100%;
+    height: 34px;
+}
+.topbar{
+    font-size: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 65px;
+}
+.fa-times-circle{
+    cursor: pointer;
+    font-size: 30px;
+    color: red;
+    margin-left: 440px;
+    position: absolute;
+}
+input[type=number]::-webkit-inner-spin-button { 
+    -webkit-appearance: none;
+    
+}
+input[type=number] { 
+   -moz-appearance: textfield;
+   appearance: textfield;
+ 
+
+}
+input{
+    padding: 0 5px;
+}
