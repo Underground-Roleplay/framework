@@ -48,7 +48,7 @@ const getPayment = (source, amount) => {
     if(source.playerData.money['cash'] > parseInt(amount)){
         source.playerData.money['cash'] = parseInt(source.playerData.money['cash']) - parseInt(amount)
         updateMoney(source)
-        alt.log('aqui')
+      
         return
     } else {
         // TODO        

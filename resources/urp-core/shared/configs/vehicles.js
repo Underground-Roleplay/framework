@@ -3789,4 +3789,11 @@ export const indexVehicle = {
     partId_MiddleRight: 3,
     partId_RearLeft: 4,
     partId_RearRight: 5,
+
+	light_UNKNOWN1: 0,
+    light_UNKNOWN1: 1,
+    light_BACK_LEFT: 2,
+    light_BACK_RIGHT: 3,
+    light_LEFT_FRONT: 4,
+    light_RIGHT_FRONT: 5,
 }
