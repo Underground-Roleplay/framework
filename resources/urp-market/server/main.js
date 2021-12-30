@@ -35,16 +35,23 @@ const data = [
 ]
 
 
+
 alt.onClient('Market:purchase', (source, quantidade,i,value) => {
-    let total = quantidade * value;
-    if (Core.Money.hasFullMoney(source, total)) {
-        Core.Money.getPayment(source, total)
-        ///set drop item
-    } else {
-        alt.emitClient(source, 'Market:close')
-        alt.emitClient(source, 'notify', 'error', 'erro', 'don`t money')
+    if (Core.Inventory.isItem(source,i)) {
+        let total = quantidade * value;
+        if (Core.Money.hasFullMoney(source, total)) {
+            Core.Money.getPayment(source, total)
+            Core.Inventory.addItem(source,i,quantidade)
+            alt.emitClient(source, 'notify', 'error', 'erro', 'comprou')
+        } else {
+            alt.emitClient(source, 'Market:close')
+            alt.emitClient(source, 'notify', 'error', 'erro', 'don`t money')
+        }
+    }else{
+        alt.emitClient(source, 'notify', 'error', 'erro', 'item nao existe')
     }
 })
+
 alt.onClient('Market:updateData', (source) => {
   alt.emitClient(source,'Market:updateData',data)
 })
