@@ -419,6 +419,11 @@ const getStatus = vehicle => {
     return data
 }
 
+const reloadMods = (source) => {
+    const vehicle = source.vehicle
+    loadMods(vehicle, vehicle.data.customizations, vehicle.data.model)
+}
+
 const loadStatus = (vehicle, data) => {
     alt.nextTick(() => {
         vehicle.doesWheelHasTire(data.weels_FrontLeft)
@@ -466,5 +471,7 @@ export default {
     putInGarage,
     setMod,
     saveMods,
-    setColor
+    setColor,
+    loadMods,
+    reloadMods
 }

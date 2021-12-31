@@ -183,5 +183,14 @@ const useWeapon = async (source, weaponName) => {
     }
 }
 
+const isItem = (source, item) => {
+    const itemInfo = Core.Shared.Items[item.toLowerCase()]
+    if(itemInfo){  
+        return true
+    } else {
+        return false
+    }
+}
+
 export default {getCurrentWeight, getItemSlot, addItem, removeItem, saveInventory, createUseableItem, triggerItemEvent, isUseableItem, 
-    useWeapon, getItemBySlot}
+    useWeapon, getItemBySlot,isItem}
