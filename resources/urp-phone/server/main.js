@@ -33,10 +33,9 @@ import db from 'mysql2-wrapper'
 
 //> FIRST SPAWN THE PLAYER
 
-    alt.on('Phone:CreateSQL', async(source) => {
-        await insertSync('INSERT INTO phone_contact (ssn,contact) VALUES (?,?)', [Core.Functions.GetNumber(source),[]])
-        await insertSync('INSERT INTO phone_recent (ssn,recent) VALUES (?,?)', [Core.Functions.GetNumber(source), []])
-        await insertSync('INSERT INTO phone_history_message (ssn,phone,history_message) VALUES (?,?,?)', [Core.Functions.GetNumber(source),Core.Functions.GetSsn(source),[]])
+    alt.on('Core:Phone:CreateSQL', async(source) => {
+        await insertSync('INSERT INTO phone_contact (ssn,contact) VALUES (?,?)', [Core.Functions.GetSsn(source),'[]'])
+        await insertSync('INSERT INTO phone_recent (ssn,recent) VALUES (?,?)', [Core.Functions.GetSsn(source), '[]'])
     })
 
 
