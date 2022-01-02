@@ -47,10 +47,29 @@ const login = async(source) => {
             source.kick(Core.Translate('ACCOUNT.BANNED'))
             return;
         }
+        if (!account[0].whitelisted) {
+            source.kick(Core.Translate('ACCOUNT.NOT_ALLOW_LISTED', {socialID: account[0].id}))
+            return;
+        }
         console.log(Core.Translate('ACCOUNT.LOGIN', { playerName: `${source.name}`, sID: `${source.socialID}` }))
         Core.Character.startCharacter(source)
             // Now we start the character
     }
+}
+
+//  Player whitelist status
+const whiteliststatus = async(source, id) => {
+    const result = await executeSync('SELECT whitelisted from users WHERE id = ?', [id])
+    if (result.length <= 0) {
+       alt.emitClient(source,'notify', 'error', Core.Translate('COMMANDS.LABEL'), Core.Translate('COMMANDS.USER_ID_NOT_FOUND'))
+       return;
+       }else if (result[0].whitelisted) {
+       alt.emitClient(source,'notify', 'error', Core.Translate('COMMANDS.LABEL'), Core.Translate('COMMANDS.USER_ID_ALLREADY_WHITELISTED'))
+       return;
+       }else{
+    updateSync('UPDATE users SET whitelisted = ? WHERE id = ?', [1, id], undefined, alt.resourceName)
+    alt.emitClient(source,'notify', 'sucess', Core.Translate('COMMANDS.LABEL'), Core.Translate('COMMANDS.USER_ID_WHITELISTED'))
+       }
 }
 
 // Player utils
@@ -239,6 +258,7 @@ const GetSsn = (source, dt) => {
 
 
 export default { login,
+    whiteliststatus,
     getPlayerIdentifier,
     setPosition,
     getMoney,

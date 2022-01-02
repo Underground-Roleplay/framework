@@ -3,6 +3,7 @@ import * as chat from 'urp-chat';
 import { defaultInteractions } from '../../shared/configs/examples/interactions';
 import Core from '../main';
 
+
 chat.registerCmd('addItem', (source, args) => {
    const [ item, amount, slot ] = args
    if(!item || !amount){
@@ -73,10 +74,16 @@ chat.registerCmd('dv', (source) => {
 
 // TODO
 chat.registerCmd('whitelist', (source, [id])=>{
+   const isAllowed = Core.Functions.hasPermission(source, 'admin')
+   if(isAllowed){
    if(!id){
-      alt.emitClient(source,'notify', 'error', Core.Translate('COMMANDS.LABEL'), 'Especifique um id para adicionar a whitelist')
-      return;
-   }
+         alt.emitClient(source,'notify', 'error', Core.Translate('COMMANDS.LABEL'), 'Especifique um id para adicionar a whitelist')
+         return;
+      }
+      Core.Functions.whiteliststatus(source, id)
+}else{
+      alt.emitClient(source,'notify', 'error', Core.Translate('PERMISSIONS.LABEL'), Core.Translate('PERMISSIONS.DONT_HAVE_PERM'))
+     }
 })
 
 
