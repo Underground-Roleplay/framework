@@ -71,7 +71,7 @@ const addToSource = async(source, model, initialPosition = { x: 0, y: 0, z: 0 },
 }
 
 const putInGarage = (source, vehicle) => {
-    if(!pool[vehicle.data.id]) return;
+    if(!pool[vehicle.data.id]) {vehicle.destroy(); return;}
     if(source.playerData.ssn !== vehicle.data.ssn) return;
     if(vehicle.timeoutTicker){
         alt.clearTimeout(vehicle.timeoutTicker)
@@ -83,11 +83,8 @@ const putInGarage = (source, vehicle) => {
     vehicle.destroy()
 }
 
-const spawn = (vehicleData, pos, rot) => {
-    if (pool[vehicleData.id]) {
-        throw new Error('Vehicle already spawned')
-    }
-
+const spawn = (source, vehicleData, pos, rot) => {
+    if (pool[vehicleData.id]) {alt.emitClient(source,'notify', 'error', 'GARAGE', 'VEHICLE ALREADY SPAWNED'); return;}
     if (pos) {
         vehicleData.position = pos;
     }
@@ -143,7 +140,7 @@ const spawnById = async(source, id, pos, rot) => {
     vehicleData[0].metadata = JSON.parse(vehicleData[0].metadata)
     vehicleData[0].model = vehicleData[0].model
     vehicleData[0].customizations = JSON.parse(vehicleData[0].customizations)
-    spawn(vehicleData[0], pos, rot)
+    spawn(source, vehicleData[0], pos, rot)
 }
 
 const sourceEnteredInVehicle = (source, vehicle, seat) => {

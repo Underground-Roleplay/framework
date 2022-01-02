@@ -3,6 +3,7 @@ import * as chat from 'urp-chat';
 import { defaultInteractions } from '../../shared/configs/examples/interactions';
 import Core from '../main';
 
+
 chat.registerCmd('addItem', (source, args) => {
    const [ item, amount, slot ] = args
    if(!item || !amount){
@@ -30,6 +31,15 @@ chat.registerCmd('tpcds', (source, [x, y, z]) => {
    }
 })
 
+chat.registerCmd('tpm', (source) => {
+   const isAllowed = Core.Functions.hasPermission(source, 'admin')
+   if(isAllowed){
+      alt.emitClient(source,'tpto');
+   }else{
+      alt.emitClient(source,'notify', 'error', Core.Translate('PERMISSIONS.LABEL'), Core.Translate('PERMISSIONS.DONT_HAVE_PERM'))
+   }
+ })  
+
 
 chat.registerCmd('c', (source, [model]) => {
    if(!model){
@@ -45,12 +55,35 @@ chat.registerCmd('c', (source, [model]) => {
  // }
 })
 
+//Delete Spawn Vehicle or store player vehicle to garrage
+chat.registerCmd('dv', (source) => {
+  const isAllowed = Core.Functions.hasPermission(source, 'admin')
+  if(isAllowed){
+   const closestVeh = alt.Vehicle.all.find((v) => source.pos.distanceTo(v.pos) < 50)
+   if(!closestVeh){
+       alt.emitClient(source,'notify', 'error', 'GARAGE', 'YOU DONT HAVE ANY VEHICLE OF YOURS CLOSE TO YOU')
+       return;
+   }
+   //Destroy veh now
+   Core.Vehicles.putInGarage(source, closestVeh)
+  }else{
+  alt.emitClient(source,'notify', 'error', Core.Translate('PERMISSIONS.LABEL'), Core.Translate('PERMISSIONS.DONT_HAVE_PERM'))
+ }
+})
+
+
 // TODO
 chat.registerCmd('whitelist', (source, [id])=>{
+   const isAllowed = Core.Functions.hasPermission(source, 'admin')
+   if(isAllowed){
    if(!id){
-      alt.emitClient(source,'notify', 'error', Core.Translate('COMMANDS.LABEL'), 'Especifique um id para adicionar a whitelist')
-      return;
-   }
+         alt.emitClient(source,'notify', 'error', Core.Translate('COMMANDS.LABEL'), 'Especifique um id para adicionar a whitelist')
+         return;
+      }
+      Core.Functions.whiteliststatus(source, id)
+}else{
+      alt.emitClient(source,'notify', 'error', Core.Translate('PERMISSIONS.LABEL'), Core.Translate('PERMISSIONS.DONT_HAVE_PERM'))
+     }
 })
 
 
