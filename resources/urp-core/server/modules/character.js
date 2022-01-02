@@ -182,6 +182,7 @@ const selectCharacter = async (source, playerData, fromCreation = false) => {
     }
     if(source.playerData.firstTime){
         alt.emitClient(source, 'Core:Client:UpdateIdentity')
+        alt.emit('Core:Phone:CreateSQL', source)
         source.playerData.firstTime = false
     }
 }
