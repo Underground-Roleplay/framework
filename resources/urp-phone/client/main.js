@@ -147,7 +147,7 @@ const closeCellPhone = () => {
 
  alt.on('keydown', (key) => {
     if (key === 75) {
-        if (!isOpen) {
+        if (!isOpen && alt.gameControlsEnabled()) {
             openCellPhone()
         
         }else{

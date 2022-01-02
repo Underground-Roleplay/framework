@@ -65,6 +65,7 @@ alt.onClient('Garage:Save', (source) => {
     const closestVeh = alt.Vehicle.all.find((v) => source.pos.distanceTo(v.pos) < 50 && Core.Vehicles.getVehicleData(v, 'ssn') === ssn)
     if(!closestVeh){
         alt.emitClient(source,'notify', 'error', 'GARAGE', 'YOU DONT HAVE ANY VEHICLE OF YOURS CLOSE TO YOU')
+        return;
     }
     //Destroy veh now
     Core.Vehicles.putInGarage(source, closestVeh)

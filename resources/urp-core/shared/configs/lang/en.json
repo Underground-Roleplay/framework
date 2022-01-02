@@ -12,7 +12,7 @@
     },
     "ACCOUNT": {
         "REGISTER_ERROR": "We had a problem registering your account, try again later",
-        "LOGIN_ERROR": "There's a problem with your login, try contact an administrator",
+        "LOGIN_ERROR": "ER101 : There's a problem with your login, try contact an administrator",
         "NEW_CREATED": "A new account has been created for a player with socialID: {{ sID }}",
         "BANNED": "You are banned from our servers",
         "LOGIN": "The player {{ playerName }} has been logged into the account with socialID: {{ sID }}"

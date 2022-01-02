@@ -35,6 +35,34 @@ alt.onServer('playerData:set', (key, value) => {
     Core.Functions.handleSetplayerData(key, value)
 })
 
+// Player teloprt
+alt.onServer('tpto', ()=> {
+  let waypoint = natives.getFirstBlipInfoId(8);
+  if (natives.doesBlipExist(waypoint))
+   {
+    let coords = natives.getBlipInfoIdCoord(waypoint);
+    let res = natives.getGroundZFor3dCoord(coords.x, coords.y, coords.z, undefined, undefined)[0];
+    let Gz =coords.z;
+        setTimeout(() => { while (!res) {
+        Gz=Gz+0.1;
+        res=natives.getGroundZFor3dCoord(coords.x, coords.y, Gz, undefined, undefined)[0];
+         if (Gz>800) {
+           break;
+         }
+      }
+},1000);
+      if (!res){ 
+        console.log('failed to load ground,Don t worry i will handle that!');//if the player spawned before the texture 
+          setTimeout(() => {                                                //this will help out
+            natives.setPedCoordsKeepVehicle(alt.Player.local, coords.x, coords.y,Gz);  //if textures already loaded then nothing to worry about :)         
+
+        }, 1000); 
+      };
+      natives.setPedCoordsKeepVehicle(alt.Player.local, coords.x, coords.y,Gz);  //if textures already loaded then nothing to worry about :)         
+  }
+})
+
+
 alt.on('playerData:changed', (key, value, old) => {
     if(key === 'isDead'){
     Core.Functions.handleDeath(value)
