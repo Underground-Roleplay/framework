@@ -10,7 +10,42 @@ let hud;
 const localPlayer = alt.Player.local;
 
 alt.onServer('Core:Client:CharacterLoaded', () => {
+    const playerPed = alt.Player.local.scriptID;
+    const playerCoords = natives.getEntityCoords(playerPed, true);
+    const playerRotation = natives.getEntityRotation(playerPed, 2);
+    const cameraDecendTime = 4000;
+    natives.destroyAllCams(true);
+    natives.renderScriptCams(false, false, 0, false, true, 0);
+    natives.doScreenFadeIn(300);
+
+    let cam1 = natives.createCamWithParams("DEFAULT_SCRIPTED_CAMERA", playerCoords.x, playerCoords.y, playerCoords.z + 200.0, 270.00, 0.00, 0.00, 80.00, 0, 0)
+    let cam2 = natives.createCamWithParams("DEFAULT_SCRIPTED_CAMERA", playerCoords.x, playerCoords.y, playerCoords.z, 270.00, 0.00, 0.00, 80.00, 0, 0)
+    natives.setCamActive(cam1, true);
+    
+    natives.setCamRot(cam2, playerRotation.x, playerRotation.y, playerRotation.z, 2);
+    natives.renderScriptCams(true, true, 0, true, true, 0);
+    natives.setCamActiveWithInterp(cam2, cam1, cameraDecendTime, 0, 0); 
+    natives.freezeEntityPosition(playerPed, true);
+    natives.setEntityVisible(playerPed, true, true);
+    alt.setTimeout(() => {
+        natives.doScreenFadeOut(300);
+    }, cameraDecendTime - 300);
+    natives.setEntityHeading(alt.Player.local.scriptID, alt.Player.local.rot.z)
+    alt.setTimeout(() => {
+        natives.renderScriptCams(false, false, 0, true, true, 0)
+        natives.setCamActive(cam1, false);
+        natives.destroyCam(cam1, true);
+        natives.setCamActive(cam2, false);
+        natives.destroyCam(cam2, true);
+        natives.switchInPlayer(playerPed);
+        natives.doScreenFadeIn(300);
+        natives.freezeEntityPosition(playerPed, false);
+        natives.clearFocus();
+        
+    }, cameraDecendTime);
+    
     hud = new alt.WebView('http://resource/client/html/ui.html');
+    natives.freezeEntityPosition(localPlayer, false);
     isLogged = true;
 })
 
