@@ -107,8 +107,9 @@ const getIdentityByProximity = (source) => {
 // Vehicles
 const spawnVehicle = (source, model) => {
     try {
-        const fwd = getVectorInFrontOfPlayer(source, 5)
+        const fwd = getVectorInFrontOfPlayer(source, 1)
         const vehicle = new alt.Vehicle(model, fwd.x, fwd.y, fwd.z, 0, 0, 0)
+        source.setIntoVehicle(vehicle, 1)
         vehicle.numberPlateText = 'STAFF'
         vehicle.engineOn = true
         vehicle.data = {
