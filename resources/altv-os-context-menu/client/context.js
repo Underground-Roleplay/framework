@@ -142,7 +142,7 @@ function useMenu() {
         if (!interactionTypes[rayCastInfo.entityType]) {
             return;
         }
-
+    
         if (rayCastInfo.entity === alt.Player.local.scriptID) {
             alt.emit('context:ParseInteraction', 'self', rayCastInfo.entity, model, rayCastInfo.endCoords);
             return;

@@ -3,7 +3,8 @@ import * as context from '/client/context';
 import * as contextInteractionBuilder from '/client/interactionBuilder';
 
 alt.on('context:Ready', () => { 
-    alt.emit('context:CreateMenu', 1437508529, 'Trash Can');
-    alt.emit('context:AppendToMenu', 1437508529, 'Look in Trash', 'trashcan:Look', false);
-    alt.emit('context:AppendToMenu', 1437508529, 'Dig in Trash', 'trashcan:Dig', true);
+    alt.emit('context:CreateMenu', 2287735495, 'Gas Station');
+    alt.emit('context:AppendToMenu', 2287735495, 'buy gas', 'Station:open', false);
 });
+
+

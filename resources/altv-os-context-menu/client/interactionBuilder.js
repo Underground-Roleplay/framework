@@ -16,7 +16,16 @@ if (!view) {
     view = new alt.WebView(url);
     view.on('context:Select', handleSelect);
 }
-
+const vehicleMenu = {
+    identifier: 'vehicle Menu',
+        options: [
+            { eventName: 'trashcan:Look', isServer: true, name: 'Ligar Motor' },
+            { eventName: 'trashcan:Dig', isServer: true, name: 'Tancar' },
+            { eventName: 'trashcan:Dig', isServer: true, name: 'Abrir porta-malas' },
+        ],
+        title: 'Vehicle Options'
+            
+}
 function handleInteraction(type, entity, model, coords) {
     alt.log(`[CONTEXT-INFO] Type: ${type} | ID: ${entity} | Model: ${model} | Coords: ${JSON.stringify(coords)}`);
 
@@ -26,11 +35,19 @@ function handleInteraction(type, entity, model, coords) {
         model,
         coords
     };
+    if(type === "vehicle"){
+        view.focus();
+        showCursor(true);
+        const cursor = alt.getCursorPos();
+        view.emit('context:Mount', vehicleMenu, cursor.x, cursor.y)
+        return;
+    }
 
     if (!menus[model]) {
         return;
     }
-
+    
+    
     view.focus();
     showCursor(true);
     const cursor = alt.getCursorPos();
