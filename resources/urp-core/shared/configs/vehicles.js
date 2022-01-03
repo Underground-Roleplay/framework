@@ -3796,4 +3796,11 @@ export const indexVehicle = {
     light_BACK_RIGHT: 3,
     light_LEFT_FRONT: 4,
     light_RIGHT_FRONT: 5,
+
+	door_DriverFront: 0,
+    door_PassengerFront: 1,
+    door_DriverRear: 2,
+    door_PassengerRear: 3,
+    door_Hood: 4,
+    door_Trunk: 5
 }
