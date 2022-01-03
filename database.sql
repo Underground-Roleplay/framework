@@ -76,6 +76,17 @@ CREATE TABLE IF NOT EXISTS `characters_vehicles` (
   KEY `ssn` (`ssn`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=1;
 
+-- Dumping structure for table urp.characters_homes
+CREATE TABLE IF NOT EXISTS `characters_homes`(
+  `id` int NOT NULL AUTO_INCREMENT,
+  `ssn` varchar(255) NOT NULL,
+  `home` VARCHAR(100),
+  `number` INTEGER,
+  UNIQUE(home,number),
+  PRIMARY KEY (`id`) USING BTREE,
+  KEY `ssn` (`ssn`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=1;
+
 -- Data exporting was unselected.
 
 CREATE TABLE IF NOT EXISTS dealership (
