@@ -397,4 +397,4 @@ const loadCustoms = async (source) => {
     createCustoms(source)
 }
 
-export default { startCharacter, selectCharacter, tickManager, updateBasicData, loadCustoms, changeCloth, setDeath, getComponentVariations }
+export default { startCharacter, selectCharacter, tickManager, updateBasicData, loadCustoms, changeCloth, setDeath, getComponentVariations, saveMetadata }

@@ -10,6 +10,7 @@ import entities from './modules/entities';
 import inventory from './modules/inventory';
 import vehicles from './modules/vehicles';
 import money from './modules/money';
+import license from './modules/license';
 
 import voice from 'urp-voice';
 
@@ -50,6 +51,8 @@ Core.Translate = translate
 Core.Interactions = interactions
 
 Core.Functions = functions
+
+Core.License = license
 
 Core.DBReady = false
 

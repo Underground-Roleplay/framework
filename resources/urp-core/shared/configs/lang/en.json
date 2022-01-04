@@ -52,6 +52,11 @@
         "ENGINE_OFF": "Your vehicle's engine has been turned off",
         "NOT_IN_A_VEH": "You need to be in a vehicle to toggle engine"
     },
+    "LICENSE": {
+        "LABEL": "LICENSE",
+        "LICENSE_ISSUED": "{{ licenseType }} has been successfully issued!",
+        "LICENSE_REVOKED": "{{ licenseType }} has been revoked!"
+    },
     "NO_PLAYERS_NEAR": "No players nearby",
     "WELCOME": "Welcome to {{ serverName }}"
 }
