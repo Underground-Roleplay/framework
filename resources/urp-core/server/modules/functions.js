@@ -35,8 +35,8 @@ const login = async(source) => {
             return
         }
         console.log(Core.Translate('ACCOUNT.NEW_CREATED ', { sID: source.socialID }))
-        Core.Character.startCharacter(source)
-            // Now we start the character
+        source.kick(Core.Translate('ACCOUNT.NOT_ALLOW_LISTED', {socialID: source.socialID}))
+        return;
     } else {
         const dataMatch = compareHash(uID, account[0].identifier);
         if (!dataMatch) {
@@ -50,10 +50,11 @@ const login = async(source) => {
         if (!account[0].whitelisted) {
             source.kick(Core.Translate('ACCOUNT.NOT_ALLOW_LISTED', {socialID: account[0].id}))
             return;
+        } else {
+            console.log(Core.Translate('ACCOUNT.LOGIN', { playerName: `${source.name}`, sID: `${source.socialID}` }))
+            Core.Character.startCharacter(source)
+                // Now we start the character
         }
-        console.log(Core.Translate('ACCOUNT.LOGIN', { playerName: `${source.name}`, sID: `${source.socialID}` }))
-        Core.Character.startCharacter(source)
-            // Now we start the character
     }
 }
 
