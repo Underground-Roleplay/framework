@@ -47,6 +47,11 @@
         "ENGINE_ON": "O motor do seu veiculo foi ligado",
         "ENGINE_OFF": "O motor do seu veiculo foi desligado",
         "NOT_IN_A_VEH": "Você precisa estar em um veículo para ligar o motor"
+    }, 
+    "LICENSE": {
+        "LABEL": "LICENÇA",
+        "LICENSE_ISSUED": "{{ licenseType }} foi emitido com sucesso!",
+        "LICENSE_REVOKED": "{{ licenseType }} foi revogado!"
     },
     "NO_PLAYERS_NEAR": "Nenhum player próximo",
     "WELCOME": "Bem vindo ao {{ serverName }}"

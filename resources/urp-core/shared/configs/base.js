@@ -43,7 +43,12 @@ URPConfig.DefaultMeta = {
     licences: {
         business: false,
         weapon: false,
-        driver: true
+        driver: true,
+        dmv: false,
+        bike: false,
+        truck: false,
+        boat: false,
+        pilot: false
     },
     ishandcuffed: false,
     isdead: false,

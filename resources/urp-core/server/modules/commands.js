@@ -41,6 +41,35 @@ chat.registerCmd('tpm', (source) => {
  })  
 
 
+/**
+ * This function will add a license to a player.
+ * @param source - The player that executed the command.
+ * @param undefined - The first parameter is the source, which is the player who executed the
+command.
+ * @returns The license is being returned to the player.
+ */
+ chat.registerCmd('glicense', (source, [identifier,type]) => {
+   const target = alt.Player.all.find(source => 
+      source.playerData.id === identifier)
+      if(!target || target === source) return alt.emitClient(source,'notify', 'error', Core.Translate('SYSTEM.LABEL'), Core.Translate('SYSTEM.NO_TARGET_FOUND'))
+   alt.emit('License:addLicense', target, type)
+   alt.emitClient(source,'notify', 'success', Core.Translate('LICENSE.LABEL'), Core.Translate('LICENSE.LICENSE_ISSUED', { licenseType: type }))
+ }) 
+
+/**
+ * This function will remove a license from a player.
+ * @param source - The player who executed the command.
+ * @param undefined - The first parameter is the source player.
+ * @returns The license type.
+ */
+ chat.registerCmd('rlicense', (source, [identifier,type]) => {
+   const target = alt.Player.all.find(source => 
+      source.playerData.id === identifier)
+      if(!target || target === source) return alt.emitClient(source,'notify', 'error', Core.Translate('SYSTEM.LABEL'), Core.Translate('SYSTEM.NO_TARGET_FOUND'))
+   alt.emit('License:removeLicense', target, type)
+   alt.emitClient(source,'notify', 'success', Core.Translate('LICENSE.LABEL'), Core.Translate('LICENSE.LICENSE_REVOKED', { licenseType: type }))
+ }) 
+
 chat.registerCmd('c', (source, [model]) => {
    if(!model){
       alt.emitClient(source,'notify', 'error', Core.Translate('COMMANDS.LABEL'), '/c (model)')
