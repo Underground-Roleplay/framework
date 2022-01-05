@@ -7,6 +7,7 @@ let isLogged = false;
 
 let hud;
 
+let tank = 0 
 const localPlayer = alt.Player.local;
 
 const cameraTransition = () => {
@@ -60,11 +61,14 @@ alt.setInterval(()=> {
         natives.displayRadar(false)
         hudPos = 'left'
     }else{
+        alt.emitServer('porcentagemCombustivel')
         natives.displayRadar(true)
         fuelPos = 'right'
         hudPos = 'right'
         fuel = localPlayer.vehicle.getStreamSyncedMeta('fuel')
     }
+    alt.onServer('UpdateValues', (e)=>{tank = e})
+
     const data = {
         hud: true,
         pauseMenu: natives.isPauseMenuActive(),
@@ -74,7 +78,7 @@ alt.setInterval(()=> {
         thirst: Core.Functions.getMetaData('thirst'),
         stress: Core.Functions.getMetaData('stress'),
         playerid: undefined,
-        fuel: fuel,
+        fuel: tank,
         hudPosition: hudPos,
         fuelPosition: fuelPos
     }
