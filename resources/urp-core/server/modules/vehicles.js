@@ -56,8 +56,8 @@ const addToSource = async(source, model, initialPosition = { x: 0, y: 0, z: 0 },
     newVehicle.model = model
     newVehicle.position = initialPosition
     newVehicle.plate = await generatePlate()
-    newVehicle.status = {}
-    newVehicle.metadata = { fuel: 100 }
+    newVehicle.status = { bodyHealth: 1000 }
+    newVehicle.metadata = { fuel: 15 }
     newVehicle.customizations = {}
     const id = await insertSync('INSERT INTO characters_vehicles (ssn, model, position, plate, status, metadata, customizations) VALUES (?,?,?,?,?,?,?)', [ssn, newVehicle.model, JSON.stringify(newVehicle.position), newVehicle.plate, JSON.stringify(newVehicle.status), JSON.stringify(newVehicle.metadata), JSON.stringify(newVehicle.customizations)])
 
@@ -271,6 +271,28 @@ const setColor = (source, index, r, g, b, a) => {
     }
 }
 
+const hasFuel = (source) => {
+    const closestVeh = alt.Vehicle.all.find((targetVehicle) => source.pos.distanceTo(targetVehicle.pos) < 3.5)
+    if (!closestVeh) return alt.log(`nao tem carro perto`)
+    if (!closestVeh.data) return; 
+    return closestVeh.data.metadata.fuel
+}
+const fuelTankSize = (source) => {
+    const closestVeh = alt.Vehicle.all.find((targetVehicle) => source.pos.distanceTo(targetVehicle.pos) < 3.5)
+    if (!closestVeh) return alt.log(`nao tem carro perto`)
+    if (!closestVeh.data) return; 
+    let model = closestVeh.data.model
+    return VehList[model].fuelTank
+}
+
+const reFuel = (source, value) => {
+    const closestVeh = alt.Vehicle.all.find((targetVehicle) => source.pos.distanceTo(targetVehicle.pos) < 3.5)
+    if (!closestVeh) return alt.log(`nao tem carro perto`)
+    if (!closestVeh.data) return; 
+    closestVeh.data.metadata.fuel = parseInt(closestVeh.data.metadata.fuel) + parseInt(value)
+    db.execute('UPDATE characters_vehicles SET metadata = ? WHERE ssn = ? AND id = ?', [JSON.stringify(closestVeh.data.metadata), closestVeh.data.ssn, closestVeh.data.id], undefined, alt.resourceName)    
+}
+
 const saveMods = (vehicle) => {
     if (!vehicle.data) return;
     vehicle.data.customizations = getMods(vehicle, vehicle.data.model);
@@ -285,6 +307,7 @@ const saveStatus = (vehicle) => {
 
 const getMods = (vehicle) => {
     const data = {
+        modKit: vehicle.modKit = 1,
         primaryColor: vehicle.customPrimaryColor,
         secondaryColor: vehicle.customSecondaryColor,
         neon: vehicle.neon,
@@ -334,15 +357,16 @@ const getMods = (vehicle) => {
 
 
 const loadMods = (vehicle, data) => {
-    if (vehicle.modKit != 1) vehicle.modKit = 1;        
-    alt.nextTick(() => {           
-        vehicle.setMod(modType.Back_Wheels, data.Back_Wheels)
-        vehicle.neon = data.neon,
+    vehicle.modKit = 1;        
+    alt.nextTick(() => {
+        vehicle.modKit = data.modKit
+        vehicle.neon = data.neon
         vehicle.neonColor = data.neonColor
         vehicle.interiorColor = data.interiorColor
         vehicle.dashboardColor = data.dashboardColor
         vehicle.windowTint = data.windowTint
-
+        
+        vehicle.setMod(modType.Back_Wheels, data.Back_Wheels) // only for motorcycles
         vehicle.setMod(modType.Spoilers, data.Spoilers)
         vehicle.setMod(modType.Front_Bumper, data.Front_Bumper)
         vehicle.setMod(modType.Rear_Bumper, data.Rear_Bumper)
