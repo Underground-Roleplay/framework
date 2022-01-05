@@ -347,3 +347,18 @@ label {
     border-radius: 15px;
     font-size: 20px;
 }
+
+@media ( max-height: 900px) and ( min-height: 0px) {
+    .bank-external {
+        height: 700px;
+    }
+    .bank-external-right {
+        height: 700px;
+    }
+    .box-right {
+        overflow: auto;
+    }
+    .box-I-right {
+        margin-bottom: calc(700px - 140px);
+    }
+}
