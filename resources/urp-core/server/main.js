@@ -20,6 +20,7 @@ import './modules/commands';
 import { init, translate } from './libs/locale';
 import { Items } from '../shared/configs/items';
 import { executeSync } from './libs/utils';
+import { Jobs } from '../shared/configs/jobs';
 
 
 const Core = {}
@@ -29,6 +30,8 @@ Core.Config = URPConfig
 Core.Shared = {}
 
 Core.Shared.Items = Items
+
+Core.Shared.Jobs = Jobs
 
 init(Core.Config.lang)
 

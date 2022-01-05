@@ -219,7 +219,7 @@ const GetSsn = (source, dt) => {
     alt.emitClient(target, 'Phone:inviteCallRequest', source.playerData.phone)
   }
   
-  const createCallPhone = (source, phone) => {
+const createCallPhone = (source, phone) => {
     console.log(`[createCallPhone] caller ${source.playerData.phone} target ${phone}`)
     const target = getSourceTargetByPhone(phone)
     console.log(target)
@@ -231,9 +231,9 @@ const GetSsn = (source, dt) => {
     source.playerData.inCall = {state: true, voiceChannel: phone}
     target.playerData.inCall = {state: true, voiceChannel: phone}
     alt.emitClient(target, 'Phone:inCall')
-  }
+}
   
-  const endCall = (source, phone) => {
+const endCall = (source, phone) => {
     console.log(`[endCall] caller ${source.playerData.phone} target ${phone}`)
     const target = getSourceTargetByPhone(phone)
     if (!target) return
@@ -247,19 +247,49 @@ const GetSsn = (source, dt) => {
     alt.emitClient(target, 'Phone:endCall')
     alt.emitClient(source, 'Phone:endCall')
     console.log("close chanel");
-  }
+}
   
   
-  const PhoneTunel = (source,targtEvent,dataRvent,phone)=>{
+const PhoneTunel = (source,targtEvent,dataRvent,phone)=>{
     const target = alt.Player.all.find(s => s.playerData.phone === parseInt(phone))
     if (target) {
         alt.emitClient(target,targtEvent,target,dataRvent)
     }
-  }
+}
+
+const setJob = (source, job, grade) => {
+    const jobName = job.toLowerCase()
+    if(!Core.Shared.Jobs[jobName]) return;
+    const jobgrade = Core.Shared.Jobs[jobName].grades[grade]
+    if(jobgrade){
+        source.playerData.job.name = job
+        source.playerData.job.grade = {}
+        source.playerData.job.grade.name = jobgrade.name
+        source.playerData.job.grade.level = parseInt(grade)
+        source.playerData.job.payment = jobgrade.payment || 30
+        source.playerData.job.isboss = jobgrade.isboss || false
+    }else{
+        source.playerData.job.name = job
+        source.playerData.job.grade = {}
+        source.playerData.job.grade.name = 'No grades'
+        source.playerData.job.grade.level = 0
+        source.playerData.job.payment = 30
+        source.playerData.job.isboss = false
+    }
+
+    const { job , ssn } = source.playerData
+    db.execute('UPDATE characters SET job = ? WHERE ssn = ?', [JSON.stringify(job), ssn], undefined, alt.resourceName)
+    Core.Functions.emitPlayerData(source, 'job', source.playerData.job)
+    alt.emitClient(source,'notify', 'error', 'JOB SYSTEM', `You are now a ${job}`)
+}
   
+const getJob = (source) => {
+    if(!source || !source.playerData.job) return undefined;
+    return source.playerData.job
+}
 
-
-export default { login,
+export default { 
+    login,
     whiteliststatus,
     getPlayerIdentifier,
     setPosition,
@@ -277,5 +307,7 @@ export default { login,
     inviteCallRequest,
     endCall,
     PhoneTunel,
-    GetNumber
+    GetNumber,
+    setJob,
+    getJob
 }

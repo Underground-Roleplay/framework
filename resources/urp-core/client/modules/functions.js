@@ -33,6 +33,11 @@ const getPlayerData = (key) => {
     return alt.Player.local.playerData[key]
 }
 
+const getJob = () => {
+    if(!alt.Player.local.playerData.job) return undefined;
+    return alt.Player.local.playerData.job
+}
+
 const handleDeath = (value) => {
     if(value){
         if (!deathInterval) {
@@ -337,4 +342,4 @@ const handleVehicleStates = (vehicle, key, value, oldValue) => {
 }
 
 export default {startTicks, handleSetplayerData, getPlayerData, handleDeath, RequestModel, getMetaData, playAnim, 
-    stopAnim, disableBehaviours, handleVehicleStates, disableConfigFlags}
+    stopAnim, disableBehaviours, handleVehicleStates, disableConfigFlags, getJob}

@@ -260,3 +260,13 @@ chat.registerCmd('showssn', (source) => {
    if(!source.playerData) return;
    chat.send(source, `your ssn is ${source.playerData.ssn}`);
 })
+
+chat.registerCmd('setJob', (source, [job, grade]) => {
+   if(!source) return;
+   const isAllowed = Core.Functions.hasPermission(source, 'admin')
+   if(!isAllowed){
+     alt.emitClient(source,'notify', 'error', Core.Translate('PERMISSIONS.LABEL'), Core.Translate('PERMISSIONS.DONT_HAVE_PERM'))
+     return;
+   }
+   Core.Functions.setJob(source, job, grade)
+})

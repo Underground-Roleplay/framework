@@ -163,6 +163,7 @@ const selectCharacter = async (source, playerData, fromCreation = false) => {
     // const model = 'mp_m_freemode_01'
     chat.send(source, `Logado com sucesso!`);
     Core.Functions.emitPlayerData(source, 'charinfo', source.playerData.charinfo)
+    Core.Functions.emitPlayerData(source, 'job', source.playerData.job)
     Core.Functions.emitPlayerData(source, 'inventory', source.playerData.inventory)
     Core.Functions.emitPlayerData(source, 'metadata', source.playerData.metadata)
     Core.Functions.emitPlayerData(source, 'money',  source.playerData.money)
