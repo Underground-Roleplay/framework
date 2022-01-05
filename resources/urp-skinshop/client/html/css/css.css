@@ -23,22 +23,22 @@ label {
 }
 
 .box-main {
-    width: 490px;
+    width: auto;
     height: 100%;
     margin-left: 20px;
 }
 
 .bank-external {
     display: flex;
-    width: 490px;
-    height: auto;
+    width: auto;
+    max-height: 500px;
     border-radius: 15px;
 }
 
 .bank-external-right {
     display: flex;
     width: 165px;
-    height: 900px;
+    height: 84vh;
     border-radius: 15px;
 }
 
@@ -67,7 +67,7 @@ label {
     padding: 0 25px;
     border-radius: 15px 0 0 15px;
     background-color: #285656;
-    margin-bottom: calc(900px - 140px);
+    margin-bottom: calc(84vh - 140px);
 }
 
 .box-I-right i {
@@ -333,3 +333,4 @@ label {
     text-align: center;
     color: #FF8C00;
 }
+
