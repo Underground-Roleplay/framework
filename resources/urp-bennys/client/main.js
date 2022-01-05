@@ -20,7 +20,6 @@ const openbennys = (data) => {
     })
     
     Core.Browser.on('Bennys:reload', () => {
-        console.log('pedindo relod');
         alt.emitServer('Bennys:reload')
     })
     
@@ -41,16 +40,15 @@ const closebennys = () => {
     isOpen = false
 }
 
+alt.onServer('Bennys:open', openbennys)
 
 
 alt.on('keydown', (key) => {
-
     if (key === 27 && isOpen) {
-
         closebennys()
     }
      if (key === 187 && !isOpen) {
-         openbennys()
-     }
+        openbennys()
+    }
 })
 
