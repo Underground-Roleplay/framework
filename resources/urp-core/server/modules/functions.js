@@ -47,6 +47,11 @@ const login = async(source) => {
             source.kick(Core.Translate('ACCOUNT.BANNED'))
             return;
         }
+        if(!Core.Config.WhitelistOn){
+            console.log(Core.Translate('ACCOUNT.LOGIN', { playerName: `${source.name}`, sID: `${source.socialID}` }))
+            Core.Character.startCharacter(source)
+            return;
+        }
         if (!account[0].whitelisted) {
             source.kick(Core.Translate('ACCOUNT.NOT_ALLOW_LISTED', {socialID: account[0].id}))
             return;

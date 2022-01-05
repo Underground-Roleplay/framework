@@ -3,6 +3,8 @@ export const URPConfig = {}
 URPConfig.DefaultSpawn = { x: -1035.71, y: -2731.87, z: 12.86 }
 URPConfig.DefaultModel = `mp_m_freemode_01`
 
+URPConfig.WhitelistOn = false
+
 //Vehicle
 URPConfig.VehicleUpdate = 10000
 // URPConfig.VehicleFuelLost = 10
