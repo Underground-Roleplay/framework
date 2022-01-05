@@ -15,7 +15,6 @@ const openMarket = () => {
         alt.emitServer('Market:updateData')
     })
    
-
     alt.toggleGameControls(false)
     isOpen = true
 }
@@ -32,20 +31,12 @@ function RefreshData(data) {
     Core.Browser.emit('Market:updateData', data)
 }
 
-alt.onServer('Market:open' , () => {
+alt.onServer('Market:close' , () => {
     if(!isOpen) return;
     closeMarket()
 })
-alt.onServer('Market:close' , () => {
+
+alt.onServer('Market:open' , () => {
     if(isOpen) return;
     openMarket()
-})
-
-alt.on('keydown', (key) => {
-    if (key === 27 && isOpen) {
-        closeMarket()
-    }
-    if (key === 192 && !isOpen) {
-        openMarket()
-    }
 })
