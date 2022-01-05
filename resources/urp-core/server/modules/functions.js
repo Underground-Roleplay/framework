@@ -262,14 +262,14 @@ const setJob = (source, job, grade) => {
     if(!Core.Shared.Jobs[jobName]) return;
     const jobgrade = Core.Shared.Jobs[jobName].grades[grade]
     if(jobgrade){
-        source.playerData.job.name = job
+        source.playerData.job.name = jobName
         source.playerData.job.grade = {}
         source.playerData.job.grade.name = jobgrade.name
         source.playerData.job.grade.level = parseInt(grade)
         source.playerData.job.payment = jobgrade.payment || 30
         source.playerData.job.isboss = jobgrade.isboss || false
     }else{
-        source.playerData.job.name = job
+        source.playerData.job.name = jobName
         source.playerData.job.grade = {}
         source.playerData.job.grade.name = 'No grades'
         source.playerData.job.grade.level = 0
@@ -277,8 +277,8 @@ const setJob = (source, job, grade) => {
         source.playerData.job.isboss = false
     }
 
-    const { job , ssn } = source.playerData
-    db.execute('UPDATE characters SET job = ? WHERE ssn = ?', [JSON.stringify(job), ssn], undefined, alt.resourceName)
+    const { ssn } = source.playerData
+    db.execute('UPDATE characters SET job = ? WHERE ssn = ?', [JSON.stringify(source.playerData.job), ssn], undefined, alt.resourceName)
     Core.Functions.emitPlayerData(source, 'job', source.playerData.job)
     alt.emitClient(source,'notify', 'error', 'JOB SYSTEM', `You are now a ${job}`)
 }
