@@ -1,6 +1,8 @@
 import * as alt from 'alt-server';
 import * as chat from 'urp-chat';
 
+import db from 'mysql2-wrapper';
+
 import Core from '../main';
 
 import { executeSync, insertSync, updateSync, hashString, compareHash, getVectorInFrontOfPlayer, getClosestEntity } from '../libs/utils';

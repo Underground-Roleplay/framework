@@ -115,7 +115,7 @@ const spawn = (source, vehicleData, pos, rot) => {
     vehicle.engineOn = false
 
     if (vehicleData.customizations.primaryColor && vehicleData.customizations.secondaryColor) {
-        loadMods(vehicle, vehicleData.customizations, vehicleData.model)
+        loadMods(vehicle, vehicleData.customizations)
     }
 
     if (vehicleData.status) {
@@ -333,13 +333,10 @@ const getMods = (vehicle) => {
 }
 
 
-const loadMods = (vehicle, data, model) => {
+const loadMods = (vehicle, data) => {
     if (vehicle.modKit != 1) vehicle.modKit = 1;        
     alt.nextTick(() => {           
-        if(VehList[model].category == `motorcycles`){
-            vehicle.setMod(modType.Back_Wheels, data.Back_Wheels)
-        }
-
+        vehicle.setMod(modType.Back_Wheels, data.Back_Wheels)
         vehicle.neon = data.neon,
         vehicle.neonColor = data.neonColor
         vehicle.interiorColor = data.interiorColor
@@ -439,7 +436,8 @@ const getStatus = vehicle => {
 
 const reloadMods = (source) => {
     const vehicle = source.vehicle
-    loadMods(vehicle, vehicle.data.customizations, vehicle.data.model)
+    if(!vehicle.data.customizations) return;
+    loadMods(vehicle, vehicle.data.customizations)
 }
 
 const loadStatus = (vehicle, data) => {

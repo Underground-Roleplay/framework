@@ -1,4 +1,6 @@
-alt.on('Bennys:loadMod', creatBennys)
+if('alt' in window){
+    alt.on('Bennys:loadMod', creatBennys)
+}
 
 let componnet;
 let id = 0;
@@ -28,8 +30,7 @@ function setComponent(comp) {
 }
 
 function attCar() {
-    alt.emit('Bennys:att', componnet,id)
-
+    alt.emit('Bennys:att', componnet,id) 
 }
 
 
@@ -47,9 +48,25 @@ function setIdandLimit(i,value) {
 
 }
 
-function creatBennys(data) {
-    let mods = data;
-    console.log(mods);
-    $("#BennysMain").empty().append(`<div id="boxBennys"></div>`)
-    mods.map(obj => $("#boxBennys").append(`<div onclick="setIdandLimit(${obj.id},${obj.value})" class="Btn-class">${obj.name}</div>`) )
+function hexToRGB(hex) {
+    let h = "0123456789ABCDEF";
+    let r = h.indexOf(hex[1]) * 16 + h.indexOf(hex[2]);
+    let g = h.indexOf(hex[3]) * 16 + h.indexOf(hex[4]);
+    let b = h.indexOf(hex[5]) * 16 + h.indexOf(hex[6]);
+    return `rgba(${r}, ${g}, ${b})`;
+}
+
+function creatBennys(mods) {
+    $("#BennysMain").empty().append(`<div id="boxBennys">
+    <input type="color" id="body" name="body" value="#f6b73c">
+    <label for="body">Primary Color</label>
+    <input type="color" id="body" name="body" value="#f6b73c">
+    <label for="body">Secundary Color</label>
+    </div>`)
+    mods.map(obj => {
+        console.log(obj)
+     if(obj.value > 0) {
+        $("#boxBennys").append(`<div onclick="setIdandLimit(${obj.id},${obj.value})" class="Btn-class">${obj.name}</div>`)
+     }
+    })
 }
