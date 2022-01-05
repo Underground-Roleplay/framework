@@ -294,8 +294,6 @@ const stopAnim = () => {
 
 const disableConfigFlags = () => {
     natives.setPedConfigFlag(alt.Player.local.scriptID, 184, true)
-    //  Disable engine auto start
-    natives.setPedConfigFlag(alt.Player.local.scriptID, 429, true)
     //  Keep engine running
     natives.setPedConfigFlag(alt.Player.local.scriptID, 241, true)
 }
@@ -303,6 +301,8 @@ const disableConfigFlags = () => {
 const disableBehaviours = () => {
     disableConfigFlags()
     alt.everyTick(() => {
+    //  Disable engine auto start
+    natives.setPedConfigFlag(alt.Player.local.scriptID, 429, true)
     // Fix webview
     natives.drawRect(0, 0, 0, 0, 0, 0, 0, 0, false)
     //  Disable default weapon switch
