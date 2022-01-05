@@ -83,6 +83,10 @@ chat.registerCmd('c', (source, [model]) => {
   // alt.emitClient(source,'notify', 'error', Core.Translate('PERMISSIONS.LABEL'), Core.Translate('PERMISSIONS.DONT_HAVE_PERM'))
  // }
 })
+chat.registerCmd('anuncio', (source, [model]) => {
+   if (!source) return
+   alt.emitClient(source,'notifyCenter', 'comunicado', model)
+})
 
 //Delete Spawn Vehicle or store player vehicle to garrage
 chat.registerCmd('dv', (source) => {
