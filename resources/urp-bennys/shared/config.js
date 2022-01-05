@@ -1,4 +1,10 @@
 
+export const bennysCoords = {
+    x: -208.41758728027344,
+    y: -1320.764892578125,
+    z: 30.880615234375
+}
+
 export const modTypes = {
 	Spoilers : 0,
 	Front_Bumper: 1,

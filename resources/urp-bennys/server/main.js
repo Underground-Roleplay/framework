@@ -3,36 +3,34 @@ import * as alt from 'alt-server';
 
 import { modTypes } from '../shared/config';
 
-
-
 alt.onClient('Bennys:att', (source,index, id) => {
-    if (source.vehicle === null) return;
-    if (source.vehicle.modKit != 1 || source.vehicle.modKit == 1 ) {
-        source.vehicle.modKit = 1;        
-        source.vehicle.setMod(index, id);
-    }
-})
-alt.onClient('Bennys:instalar', (source) => {
-	if (Core.Money.hasMoney(source,'cash', 1250)) {		
-		if (source.vehicle) {
-			Core.Money.getPayment(source, 1250)
-			Core.Vehicles.saveMods(source.vehicle)
-			setTimeout(() => {
-				Core.Vehicles.reloadMods(source)
-			}, 50);
-		}
-		alt.emitClient(source, 'notify', 'error', 'erro', 'comprou')
-	} else {
-		alt.emitClient(source, 'Bennys:close')
-		alt.emitClient(source, 'notify', 'error', 'erro', 'don`t money')
-	}
-   
-})
-alt.onClient('Bennys:reload', (source) => {
-		Core.Vehicles.reloadMods(source)
+    if (!source.vehicle) return; 
+    source.vehicle.setMod(index, id);
 })
 
-const getModsCount = (source) => {
+alt.onClient('Bennys:install', (source) => {
+	if (!source.vehicle) return;
+	if (!Core.Money.hasMoney(source,'cash', 1250)){
+		alt.emitClient(source, 'notify', 'error', 'erro', `You don't have enough money`)
+		alt.emitClient(source, 'Bennys:close')
+		return;
+	}
+	Core.Money.getPayment(source, 1250)
+	Core.Vehicles.saveMods(source.vehicle)
+	setTimeout(() => {
+		Core.Vehicles.reloadMods(source)
+	}, 50);
+})
+
+alt.onClient('Bennys:reload', (source) => {
+	Core.Vehicles.reloadMods(source)
+})
+
+const getAllModsCount = (source) => {
+	if(!source.vehicle) return;
+	if(!source.vehicle.modKit){
+		source.vehicle.modKit = 1
+	}
 	let data = [
 		{id: modTypes.Spoilers, name:'Spoilers', value: source.vehicle.getModsCount(modTypes.Spoilers)}, 
 		{id: modTypes.Front_Bumper, name:'Front Bumper', value: source.vehicle.getModsCount(modTypes.Front_Bumper)}, 
@@ -73,5 +71,6 @@ const getModsCount = (source) => {
 }
 
 alt.onClient('Bennys:load', (source) => {
-    alt.emitClient(source,'Bennys:loadMod',getModsCount(source))
+	const mods = getAllModsCount(source)
+    alt.emitClient(source,'Bennys:loadMod', mods)
 })
