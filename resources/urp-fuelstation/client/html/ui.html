@@ -21,17 +21,8 @@
             <div class="topbar">
                 <p>Posto</p>
             </div>
-            <div class="box-viwer">
-                <div class="card-combustivel" onclick="PriceSelect('gasoil',2.1)">
-                    <img src="./img/drops.png" alt="" >
-                    <label >Gasoil</label>
-                    <p >2.1 $/L</p>
-                </div>
-                <div class="card-combustivel-oil" onclick="PriceSelect('oil',1.52)">
-                    <img src="./img/drop.png" alt="">
-                    <label >Oil</label>
-                    <p >1.52 $/L</p>
-                </div>
+            <div class="box-viwer" id="combustivel" >
+              
 
             </div>
             <div style="display: flex; height: 280px;">
@@ -69,8 +60,8 @@
                     </div>
                 </div>
                 <div class="box-viwer-2 felx-vertical">
-                    <input class="input" onkeyup="OnchangeLiters()" id="liters" placeholder="Valor em Litros" type="number">
-                    <input class="input" onkeyup="OnchangePrice()" id="price" placeholder="Valor em $" type="number">
+                    <input class="input" onkeypress="OnchangeLiters()" id="liters" placeholder="Valor em Litros" type="number">
+                    <input class="input" onkeypress="OnchangePrice()" id="price" placeholder="Valor em $" type="number">
                     <button class="Btn" onclick="completar()">Completar</button>
                     <button class="Btn" onclick="abastecer()">Abastecer</button>
                 </div>

@@ -1,4 +1,4 @@
-//alt.on("Station:UpdateValues", SetValues)
+alt.on("Station:UpdateValues", SetValues)
 
 
 let oilPrice = 0;
@@ -8,30 +8,48 @@ let wallet = 1000;
 let tank = 0;
 let tankFull = 30;
 let priceSelect = 0;
+let fuelType = '';
+
 
 function SetValues(wl,dataTank,dataPrices,porcen) {
-    wallet = wl;
+    wallet = wl.cash;
     oilPrice = dataPrices.oil;
     gasolinePrice = dataPrices.gasoil;
     porcentagem = porcen;
     tank = dataTank.tank;
     tankFull = dataTank.full;
+
+    $("#combustivel").empty().append(`
+        <div class="card-combustivel" onclick="PriceSelect('gasoline',${gasolinePrice})">
+            <img src="./img/drops.png" alt="" >
+            <label >Gasoil</label>
+            <p >${gasolinePrice}$/L</p>
+        </div>
+        <div class="card-combustivel-oil" onclick="PriceSelect('diesel',${oilPrice})">
+            <img src="./img/drop.png" alt="">
+            <label >Oil</label>
+            <p >${oilPrice} $/L</p>
+        </div>
+    `)
+
+
+   
 }
 
 setTimeout(() => {
     document.getElementById('wallet').innerHTML = `$ ${wallet}`;
-    
 }, 100);
 
 
 function PriceSelect(type,price) {
     priceSelect  = price
+    fuelType = type;
     switch (type) {
-        case 'oil':
+        case 'diesel':
             $(".card-combustivel").css("background-color", "transparent");
             $(".card-combustivel-oil").css("background-color", "rgba(0, 0, 0, 0.432)");
             break;
-        case 'gasoil':
+        case 'gasoline':
             $(".card-combustivel").css("background-color", "rgba(255, 167, 4, 0.302)");
             $(".card-combustivel-oil").css("background-color", "transparent");
             break;
@@ -45,12 +63,14 @@ function PriceSelect(type,price) {
 function OnchangeLiters() {
     let value = $( "#liters" ).val();
     if (priceSelect > 0) {
-        if ( value * priceSelect > wallet ) {
-            console.log('aki');
-            $('#liters').val( parseFloat(wallet / priceSelect).toFixed(2));
-           
-            $('#price').val(wallet);
-
+        if ( value * priceSelect > wallet || value >= tankFull - tank) {
+            if (value >= tankFull - tank) {
+                $('#liters').val( parseFloat(tankFull-tank).toFixed(2));
+                $('#price').val(priceSelect * (tankFull-tank));
+            }else{
+                $('#liters').val( parseFloat(wallet / priceSelect).toFixed(2));
+                $('#price').val(wallet);
+            }
         }else{
             $('#price').val(parseFloat(value * priceSelect).toFixed(2));
         }
@@ -58,15 +78,20 @@ function OnchangeLiters() {
     }else{
         console.log('seleciona um tipo de combustivel');
     }
-    
 }
 function OnchangePrice() {
     let value = $( "#price" ).val();
     if (priceSelect > 0) {  
         if (wallet >0) {
-            if (value >= wallet) {
-                $('#price').val(wallet);
-                $('#liters').val( parseFloat(wallet / priceSelect).toFixed(2));
+            if (value >= wallet || value / priceSelect >= tankFull - tank ) {
+                if (value / priceSelect >= tankFull - tank) {
+                    $('#price').val(priceSelect * (tankFull-tank));
+                    $('#liters').val(parseFloat(tankFull-tank).toFixed(2));
+                }else{
+                    $('#price').val(wallet);
+                    $('#liters').val( parseFloat(wallet / priceSelect).toFixed(2));
+                }
+               
             }else{
                 $('#liters').val( parseFloat(value / priceSelect).toFixed(2));
             }
@@ -112,10 +137,10 @@ function attPrices() {
 function abastecer() {
     let liters = parseFloat($('#liters').val()).toFixed(2);
     let price = parseFloat($('#price').val()).toFixed(2);
-    //alt.emit('Station:abastecer',liters,price)
+    alt.emit('Station:abastecer',liters,price,fuelType)
 }
 
 function Close() {
-    alert('fechando')
-    //alt.emit('Station:close')
+    
+    alt.emit('Station:close')
 }

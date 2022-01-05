@@ -284,7 +284,13 @@ const fuelTankSize = (source) => {
     let model = closestVeh.data.model
     return VehList[model].fuelTank
 }
-
+const fuelType = (source) => {
+    const closestVeh = alt.Vehicle.all.find((targetVehicle) => source.pos.distanceTo(targetVehicle.pos) < 3.5)
+    if (!closestVeh) return alt.log(`nao tem carro perto`)
+    if (!closestVeh.data) return; 
+    let model = closestVeh.data.model
+    return VehList[model].fuelType
+}
 const reFuel = (source, value) => {
     const closestVeh = alt.Vehicle.all.find((targetVehicle) => source.pos.distanceTo(targetVehicle.pos) < 3.5)
     if (!closestVeh) return alt.log(`nao tem carro perto`)
@@ -532,5 +538,9 @@ export default {
     saveMods,
     setColor,
     loadMods,
-    reloadMods
+    reloadMods,
+    hasFuel,
+    fuelTankSize,
+    reFuel,
+    fuelType
 }

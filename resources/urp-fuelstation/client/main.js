@@ -5,17 +5,17 @@ let isOpen = false
 
 const openStation = () => {
     Core.Browser.open('http://resources/urp-fuelstation/client/html/ui.html', true, true)
-    Core.Browser.on(`Station:close`, () => {
+    Core.Browser.on('Station:close', () => {
         closeStation()
     })
-    Core.Browser.on(`Station:abastecer`, (liters, price) => {
-        alt.emitServer('Station:abastecer', liters, price)
-        
+    Core.Browser.on('Station:abastecer', (liters, price,fuelType) => {
+        alt.emitServer('Station:abastecer', liters, price,fuelType)
+
     })
     Core.Browser.on('load', () => {
         alt.emitServer('Station:UpdateValues')
     })
-  
+
 
     alt.toggleGameControls(false)
     isOpen = true
@@ -34,6 +34,11 @@ function RefreshInfo(dataTank,dataPrice,porcentagem) {
 }
 
 alt.onServer('Station:open' , () => {
+    if(isOpen) return;
+    openStation()
+})
+
+alt.on('Station:open' , () => {
     if(isOpen) return;
     openStation()
 })

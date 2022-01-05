@@ -1,10 +1,13 @@
+body{
+    
+    background-color: transparent;
+}
 #app{
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100vw;
     height: 100vh;
-    background-color: aqua;
 }
 *,p,label,h1,h2,h3,h4,h5,span{
     margin: 0 ;
