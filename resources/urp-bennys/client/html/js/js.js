@@ -68,7 +68,6 @@ function coloratt(type) {
     console.log(type,JSON.stringify(hexToRGB(Primary)))
 }
 
-//alt.emit('Bennys:color') alt.emit('Bennys:InstallColor')
 
 function creatBennys(mods) {
     $("#BennysMain").empty().append(`<div id="boxBennys"></div>`)

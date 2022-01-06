@@ -28,12 +28,12 @@ alt.onClient('Bennys:InstallColor', (source,index, id) => {
 alt.onClient('Bennys:install', (source) => {
 	if (!source.vehicle) return;
 	console.log('benys instal',source.vehicle);
-	if (!Core.Money.hasMoney(source,'cash', 50)){
+	if (!Core.Money.hasMoney(source,'cash', 1250)){
 		alt.emitClient(source, 'notify', 'error', 'erro', `You don't have enough money`)
 		alt.emitClient(source, 'Bennys:close')
 		return;
 	}
-	Core.Money.getPayment(source, 50)
+	Core.Money.getPayment(source, 1250)
 	Core.Vehicles.saveMods(source.vehicle)
 	setTimeout(() => {
 		Core.Vehicles.reloadMods(source)

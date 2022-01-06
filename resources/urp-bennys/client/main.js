@@ -80,9 +80,7 @@ alt.on('keydown', (key) => {
     if (key === 27 && isOpen) {
         closebennys()
     }
-    if (key === 187 && !isOpen ) {
+    if (key === 187 && !isOpen && localPlayer.vehicle && isSourceAMechanic() && isSourceAtBennys()) {
         openbennys()
     }
 })
-
-///&& localPlayer.vehicle && isSourceAMechanic() && isSourceAtBennys()
