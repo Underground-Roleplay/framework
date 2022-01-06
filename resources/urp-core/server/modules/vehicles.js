@@ -250,6 +250,8 @@ const saveVehicleMetadata = (vehicle) => {
 }
 
 const setMod = (source,index, id) => {
+    
+	console.log(source.vehicle);
     if (source.vehicle === null) return;
     if (source.vehicle.modKit != 1 || source.vehicle.modKit == 1 ) {
         
@@ -262,13 +264,28 @@ const setMod = (source,index, id) => {
 
 const setColor = (source, index, r, g, b, a) => {
     if (source.vehicle === null) return;
-
-    if(index == `color1`) {
+    if(index == `primary`) {
         source.vehicle.customPrimaryColor = {r,g,b,a}
     }
-    if (index == `color2`) {
+    if (index == `secondary`) {
         source.vehicle.customSecondaryColor = {r,g,b,a}
     }
+}
+
+const setNeon = (source, r, g, b) => {
+    if (source.vehicle === null) return;
+    source.vehicle.neon = {
+        front: true,
+        back: true,
+        left: true,
+        right: true
+    };
+    source.vehicle.neonColor = {
+        r: r,
+        g: g,
+        b: b,
+        a: 255
+    };
 }
 
 const hasFuel = (source) => {
@@ -282,6 +299,7 @@ const fuelTankSize = (source) => {
     if (!closestVeh) return alt.log(`nao tem carro perto`)
     if (!closestVeh.data) return; 
     let model = closestVeh.data.model
+    if (!VehList[model]) return 50
     return VehList[model].fuelTank
 }
 const fuelType = (source) => {
@@ -301,9 +319,11 @@ const reFuel = (source, value) => {
 
 const saveMods = (vehicle) => {
     if (!vehicle.data) return;
+    console.log(vehicle.data);
     vehicle.data.customizations = getMods(vehicle, vehicle.data.model);
     db.execute('UPDATE characters_vehicles SET customizations = ? WHERE ssn = ? AND id = ?', [JSON.stringify(vehicle.data.customizations), vehicle.data.ssn, vehicle.data.id], undefined, alt.resourceName)    
 }
+
 
 const saveStatus = (vehicle) => {
     if (!vehicle.data) return;
@@ -314,8 +334,8 @@ const saveStatus = (vehicle) => {
 const getMods = (vehicle) => {
     const data = {
         modKit: vehicle.modKit = 1,
-        primaryColor: vehicle.customPrimaryColor,
-        secondaryColor: vehicle.customSecondaryColor,
+        customPrimaryColor: vehicle.customPrimaryColor,
+        customSecondaryColor: vehicle.customSecondaryColor,
         neon: vehicle.neon,
         neonColor: vehicle.neonColor,
         interiorColor: vehicle.interiorColor,
@@ -368,10 +388,13 @@ const loadMods = (vehicle, data) => {
         vehicle.modKit = data.modKit
         vehicle.neon = data.neon
         vehicle.neonColor = data.neonColor
+        
+        vehicle.customPrimaryColor = data.customPrimaryColor
+        vehicle.customSecondaryColor = data.customSecondaryColor
+
         vehicle.interiorColor = data.interiorColor
         vehicle.dashboardColor = data.dashboardColor
         vehicle.windowTint = data.windowTint
-        
         vehicle.setMod(modType.Back_Wheels, data.Back_Wheels) // only for motorcycles
         vehicle.setMod(modType.Spoilers, data.Spoilers)
         vehicle.setMod(modType.Front_Bumper, data.Front_Bumper)
@@ -542,5 +565,6 @@ export default {
     hasFuel,
     fuelTankSize,
     reFuel,
-    fuelType
+    fuelType,
+    setNeon
 }

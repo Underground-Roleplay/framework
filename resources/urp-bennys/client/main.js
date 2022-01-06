@@ -30,12 +30,21 @@ const openbennys = () => {
     Core.Browser.on('Bennys:reload', () => {
         alt.emitServer('Bennys:reload')
     })
+    Core.Browser.on('Bennys:color', (type,color) => {
+        alt.emitServer('Bennys:color',type,color)
+    })
+    Core.Browser.on('Bennys:InstallColor', () => {
+        alt.emitServer('Bennys:InstallColor')
+    })
     
     alt.toggleGameControls(false)
     isOpen = true
 }
 
 alt.onServer('Bennys:loadMod', RefreshMod)
+
+
+
 
 const closebennys = () => {
     alt.emitServer('Bennys:reload')
@@ -71,8 +80,9 @@ alt.on('keydown', (key) => {
     if (key === 27 && isOpen) {
         closebennys()
     }
-    if (key === 187 && !isOpen && localPlayer.vehicle && isSourceAMechanic() && isSourceAtBennys()) {
+    if (key === 187 && !isOpen ) {
         openbennys()
     }
 })
 
+///&& localPlayer.vehicle && isSourceAMechanic() && isSourceAtBennys()

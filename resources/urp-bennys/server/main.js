@@ -5,17 +5,35 @@ import { modTypes } from '../shared/config';
 
 alt.onClient('Bennys:att', (source,index, id) => {
     if (!source.vehicle) return; 
-    source.vehicle.setMod(index, id);
+		if (source.vehicle.modKit != 1 || source.vehicle.modKit == 1 ) {
+			source.vehicle.modKit = 1;        
+			source.vehicle.setMod(index, id);
+		}
 })
+
+alt.onClient('Bennys:color', (source,type, color) => {
+	if(type !== 'xenon'){
+		Core.Vehicles.setColor(source,type,color.r,color.g,color.b,1)
+		return
+	}
+	Core.Vehicles.setNeon(source,color.r,color.g,color.b)
+})
+
+alt.onClient('Bennys:InstallColor', (source,index, id) => {
+
+})
+
+
 
 alt.onClient('Bennys:install', (source) => {
 	if (!source.vehicle) return;
-	if (!Core.Money.hasMoney(source,'cash', 1250)){
+	console.log('benys instal',source.vehicle);
+	if (!Core.Money.hasMoney(source,'cash', 50)){
 		alt.emitClient(source, 'notify', 'error', 'erro', `You don't have enough money`)
 		alt.emitClient(source, 'Bennys:close')
 		return;
 	}
-	Core.Money.getPayment(source, 1250)
+	Core.Money.getPayment(source, 50)
 	Core.Vehicles.saveMods(source.vehicle)
 	setTimeout(() => {
 		Core.Vehicles.reloadMods(source)
@@ -66,6 +84,9 @@ const getAllModsCount = (source) => {
 		{id: modTypes.Window_Tint, name:'Window Tint', value: source.vehicle.getModsCount(modTypes.Window_Tint)}, 
 		{id: modTypes.Livery, name:'Livery', value: source.vehicle.getModsCount(modTypes.Livery)}, 
 		{id: modTypes.Plate, name:'Plate', value: source.vehicle.getModsCount(modTypes.Plate)}, 
+		{id: 'primary', name:'Primary Color', value: 1}, 
+		{id: 'secondary', name:'Secondary Color', value: 1}, 
+		{id: 'xenon', name:'Xenon Color', value: 1}, 
     ]
 	return data
 }

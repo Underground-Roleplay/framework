@@ -104,7 +104,14 @@ label {
     border-radius: 15px;
     z-index: 9999;
 }
-
+.box-right-color{
+    position: absolute;
+    overflow: auto;
+    padding: 1rem;
+    width: 300px;
+    border-radius: 15px;
+    z-index: 9999;
+}
 .main-icon {
     padding: 10px 0;
     display: flex;
