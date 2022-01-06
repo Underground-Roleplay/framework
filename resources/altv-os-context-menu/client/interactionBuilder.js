@@ -19,7 +19,7 @@ if (!view) {
 const vehicleMenu = {
     identifier: 'vehicle Menu',
         options: [
-            { eventName: 'trashcan:Look', isServer: true, name: 'Ligar Motor' },
+            { eventName: 'trashcan:engine', isServer: true, name: 'Ligar Motor' },
             { eventName: 'trashcan:Dig', isServer: true, name: 'Tancar' },
             { eventName: 'trashcan:Dig', isServer: true, name: 'Abrir porta-malas' },
         ],
