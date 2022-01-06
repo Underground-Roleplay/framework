@@ -114,7 +114,7 @@ const spawn = (source, vehicleData, pos, rot) => {
 
     vehicle.engineOn = false
 
-    if (vehicleData.customizations.primaryColor && vehicleData.customizations.secondaryColor) {
+    if (vehicleData.customizations.customPrimaryColor && vehicleData.customizations.customSecondaryColor) {
         loadMods(vehicle, vehicleData.customizations)
     }
 
@@ -383,6 +383,7 @@ const getMods = (vehicle) => {
 
 
 const loadMods = (vehicle, data) => {
+    console.log(data);
     vehicle.modKit = 1;        
     alt.nextTick(() => {
         vehicle.modKit = data.modKit
