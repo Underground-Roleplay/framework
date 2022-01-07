@@ -18,6 +18,35 @@ chat.registerCmd('addItem', (source, args) => {
    }
 })
 
+/**
+ * This function adds the specified amount of hunger and thirst to the player.
+ * @param source - The player who executed the command.
+ * @param undefined - The first parameter is the name of the command.
+ * @returns The new hunger/thirst value.
+ */
+chat.registerCmd('heal', (source, [identifier]) => {
+   const isAllowed = Core.Functions.hasPermission(source, 'admin')
+   if(isAllowed){
+      if(!identifier) return
+      const ssnRegex = /[0-9]{6}\-[0-9]{4}/g
+      if(identifier.match(ssnRegex)){
+      const target = alt.Player.all.find(source => 
+      source.playerData.ssn === identifier)
+      if(!target) return alt.emitClient(source,'notify', 'error', Core.Translate('SYSTEM.LABEL'), Core.Translate('SYSTEM.NO_TARGET_FOUND'))
+      Core.Character.adminHeal(target)
+      alt.emitClient(source,'notify', 'success', Core.Translate('HOSPITAL.LABEL'), Core.Translate('HOSPITAL.HEALLER', { targetplayer: identifier }))
+   }else{
+      const target = alt.Player.all.find(source => 
+       source.playerData.id === identifier)
+       if(!target) return alt.emitClient(source,'notify', 'error', Core.Translate('SYSTEM.LABEL'), Core.Translate('SYSTEM.NO_TARGET_FOUND'))
+       Core.Character.adminHeal(target)
+       alt.emitClient(source,'notify', 'success', Core.Translate('HOSPITAL.LABEL'), Core.Translate('HOSPITAL.HEALLER', { targetplayer: identifier }))
+   }
+   }else{
+      alt.emitClient(source,'notify', 'error', Core.Translate('PERMISSIONS.LABEL'), Core.Translate('PERMISSIONS.DONT_HAVE_PERM'))
+   }
+})
+
 chat.registerCmd('tpcds', (source, [x, y, z]) => {
    if(!x || !y || !z){
       alt.emitClient(source,'notify', 'error', Core.Translate('COMMANDS.LABEL'), '/tpcds x y z')
@@ -30,15 +59,6 @@ chat.registerCmd('tpcds', (source, [x, y, z]) => {
       alt.emitClient(source,'notify', 'error', Core.Translate('PERMISSIONS.LABEL'), Core.Translate('PERMISSIONS.DONT_HAVE_PERM'))
    }
 })
-
-chat.registerCmd('tpm', (source) => {
-   const isAllowed = Core.Functions.hasPermission(source, 'admin')
-   if(isAllowed){
-      alt.emitClient(source,'tpto');
-   }else{
-      alt.emitClient(source,'notify', 'error', Core.Translate('PERMISSIONS.LABEL'), Core.Translate('PERMISSIONS.DONT_HAVE_PERM'))
-   }
- })  
 
 
 /**

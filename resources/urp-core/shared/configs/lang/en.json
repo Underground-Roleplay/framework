@@ -57,6 +57,14 @@
         "LICENSE_ISSUED": "{{ licenseType }} license has been successfully issued!",
         "LICENSE_REVOKED": "{{ licenseType }} license has been revoked!"
     },
+    "HOSPITAL": {
+        "LABEL": "DOCTOR",
+        "HEAL": "Heald you",
+        "HEALLER": "{{ targetplayer }} has been healed.",
+        "REVIE": "Revied you",
+        "REVIVER": "{{ targetplayer }} has been revived."
+    },
     "NO_PLAYERS_NEAR": "No players nearby",
     "WELCOME": "Welcome to {{ serverName }}"
+
 }
