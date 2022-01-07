@@ -76,7 +76,7 @@ const whiteliststatus = async(source, id) => {
        return;
        }else{
     updateSync('UPDATE users SET whitelisted = ? WHERE id = ?', [1, id], undefined, alt.resourceName)
-    alt.emitClient(source,'notify', 'sucess', Core.Translate('COMMANDS.LABEL'), Core.Translate('COMMANDS.USER_ID_WHITELISTED'))
+    alt.emitClient(source,'notify', 'success', Core.Translate('COMMANDS.LABEL'), Core.Translate('COMMANDS.USER_ID_WHITELISTED'))
        }
 }
 

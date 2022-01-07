@@ -50,8 +50,8 @@
     }, 
     "LICENSE": {
         "LABEL": "LICENÇA",
-        "LICENSE_ISSUED": "{{ licenseType }} foi emitido com sucesso!",
-        "LICENSE_REVOKED": "{{ licenseType }} foi revogado!"
+        "LICENSE_ISSUED": "{{ licenseType }} licença foi emitida com sucesso!",
+        "LICENSE_REVOKED": "{{ licenseType }} licença foi revogada!"
     },
     "NO_PLAYERS_NEAR": "Nenhum player próximo",
     "WELCOME": "Bem vindo ao {{ serverName }}"

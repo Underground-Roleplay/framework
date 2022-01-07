@@ -54,8 +54,8 @@
     },
     "LICENSE": {
         "LABEL": "LICENSE",
-        "LICENSE_ISSUED": "{{ licenseType }} has been successfully issued!",
-        "LICENSE_REVOKED": "{{ licenseType }} has been revoked!"
+        "LICENSE_ISSUED": "{{ licenseType }} license has been successfully issued!",
+        "LICENSE_REVOKED": "{{ licenseType }} license has been revoked!"
     },
     "NO_PLAYERS_NEAR": "No players nearby",
     "WELCOME": "Welcome to {{ serverName }}"
