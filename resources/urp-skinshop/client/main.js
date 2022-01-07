@@ -7,14 +7,18 @@ let isOpen = false
 let Aroupa = []
 
 const openSkinshop = (data) => {
+    
     natives.freezeEntityPosition(alt.Player.local.scriptID, true);
     alt.emitServer('Skinshop:refresh')
     Core.Browser.open('http://resources/urp-skinshop/client/html/ui.html', true, false)
     Core.Browser.on('Skinshop:close', () => {
         closeSkinshop()
     })
-    Core.Browser.on('Skinshop:att', (i, component, color) => {
-        alt.emitServer('Skinshop:att', i, component, color)
+    Core.Browser.on('load', () => {
+        Core.Browser.emit('Skinshop:updateSex', alt.Player.local.model === alt.hash('mp_m_freemode_01') ? 0 : 1)
+    })
+    Core.Browser.on('Skinshop:att', (i, component, color,type) => {
+        alt.emitServer('Skinshop:att', i, component, color,type)
     })
     Core.Browser.on('Skinshop:CamPos', (pos) => {
         CamPos(pos)
@@ -36,7 +40,7 @@ function Finish(dt) {
     let data = dt
     for (let index = 0; index < Aroupa.length; index++) {
         if (data[index]) {
-            alt.emitServer('Skinshop:Buy', index, data[index].drawable, data[index].texture);
+            alt.emitServer('Skinshop:Buy', index, data[index].drawable, data[index].texture,data[index].type);
         }
     }
 
@@ -60,6 +64,7 @@ const closeSkinshop = () => {
 alt.onServer('Skinshop:open', () => {
     if (isOpen) return;
     openSkinshop()
+   
 })
 
 

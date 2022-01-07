@@ -364,6 +364,13 @@ const changeCloth = (source, component, drawable, texture) => {
     source.playerData.customizations.componentVariations[component].texture = texture
     updateCustoms(source)
 }
+const changeProps = (source, component, drawable, texture) => {
+    if(!source || !source.playerData) return;
+    source.setProp(component, drawable, texture)
+    source.playerData.customizations.props[component].drawable = drawable
+    source.playerData.customizations.props[component].texture = texture
+    updateCustoms(source)
+}
 
 const loadCustoms = async (source) => {
     if(!source || !source.playerData) return;
@@ -398,4 +405,4 @@ const loadCustoms = async (source) => {
     createCustoms(source)
 }
 
-export default { startCharacter, selectCharacter, tickManager, updateBasicData, loadCustoms, changeCloth, setDeath, getComponentVariations, saveMetadata }
+export default { startCharacter, selectCharacter, tickManager, updateBasicData, loadCustoms, changeCloth, setDeath, getComponentVariations, saveMetadata,changeProps }
