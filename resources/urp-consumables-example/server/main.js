@@ -9,3 +9,7 @@ Core.Inventory.createUseableItem('armor', 'consumables:useArmor', true)
 alt.on('consumables:useArmor', (source, item) => {
     source.armour = 100
 })
+
+alt.onClient('consumable:addHungerThirst', (source, itemtype, value) => {
+    Core.Character.addHungerThirst(source, itemtype, value)
+})

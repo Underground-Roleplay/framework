@@ -19,10 +19,13 @@ chat.registerCmd('addItem', (source, args) => {
 })
 
 /**
- * This function adds the specified amount of hunger and thirst to the player.
+ * It checks if the player has the permission to use the command, if they do, it checks if the
+identifier is a SSN or an ID, if it's a SSN, it finds the player with that SSN, if it's an ID, it
+finds the player with that ID, then it heals the player.
  * @param source - The player who executed the command.
- * @param undefined - The first parameter is the name of the command.
- * @returns The new hunger/thirst value.
+ * @param undefined - The first parameter is the source, which is the player who executed the
+command.
+ * @returns The player's health.
  */
 chat.registerCmd('heal', (source, [identifier]) => {
    const isAllowed = Core.Functions.hasPermission(source, 'admin')
