@@ -310,9 +310,14 @@ const setJob = (source, job, grade) => {
     alt.emitClient(source,'notify', 'error', 'JOB SYSTEM', `You are now a ${job}`)
 }
   
-const getJob = (source) => {
+const getJobInfo = (source, key) => {
     if(!source || !source.playerData.job) return undefined;
-    return source.playerData.job
+    if(key === "job") return source.playerData.job;
+    if(!source.playerData.job[key]) {
+        return undefined;
+    } else {
+        return source.playerData.job[key];
+    }
 }
 
 export default { 
@@ -336,5 +341,5 @@ export default {
     PhoneTunel,
     GetNumber,
     setJob,
-    getJob
+    getJobInfo
 }
