@@ -15,6 +15,7 @@
         "LOGIN_ERROR": "ER101 : There's a problem with your login, try contact an administrator",
         "NEW_CREATED": "A new account has been created for a player with socialID: {{ sID }}",
         "BANNED": "You are banned from our servers",
+        "BAN": "You are banned from our servers. Reason: {{ reason }}",
         "LOGIN": "The player {{ playerName }} has been logged into the account with socialID: {{ sID }}",
         "NOT_ALLOW_LISTED": "Your [Player ID = {{ socialID }}] is not allow listed in this server, try contact an administrator"
     },
@@ -37,8 +38,12 @@
     "COMMANDS":{
         "LABEL": "COMMANDS",
         "USER_ID_NOT_FOUND": "User Id not found",
-        "USER_ID_WHITELISTED": "User Id has been Whitelisted",
-        "USER_ID_ALLREADY_WHITELISTED": "User id already whitelisted"
+        "USER_ID_WHITELISTED": "Social Id has been Whitelisted",
+        "USER_ID_ALLREADY_WHITELISTED": "Social id already whitelisted",
+        "USER_ID_ALLREADY_BANNED": "Social id already banned",
+        "USER_ID_BANNED": "Social id banned",
+        "USER_ID_NOT_BANNED": "Social id not banned yet",
+        "USER_ID_UNBANNED": "Social id unbanned successfully!"
     },
     "SYSTEM": {
         "LABEL": "SYSTEM",

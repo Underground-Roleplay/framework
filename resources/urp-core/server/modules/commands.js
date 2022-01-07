@@ -157,19 +157,50 @@ chat.registerCmd('dv', (source) => {
 
 
 // TODO
-chat.registerCmd('whitelist', (source, [id])=>{
+chat.registerCmd('whitelist', (source, [socialID])=>{
    const isAllowed = Core.Functions.hasPermission(source, 'admin')
    if(isAllowed){
-   if(!id){
+   if(!socialID){
          alt.emitClient(source,'notify', 'error', Core.Translate('COMMANDS.LABEL'), 'Especifique um id para adicionar a whitelist')
          return;
       }
-      Core.Functions.whiteliststatus(source, id)
+      Core.Functions.whitelistBanStatus(source, socialID, 'whitelist')
 }else{
       alt.emitClient(source,'notify', 'error', Core.Translate('PERMISSIONS.LABEL'), Core.Translate('PERMISSIONS.DONT_HAVE_PERM'))
      }
 })
 
+chat.registerCmd('ban', (source, [socialID, reason])=>{
+   const isAllowed = Core.Functions.hasPermission(source, 'admin')
+   if(isAllowed){
+      
+   if(!socialID || !reason){
+         alt.emitClient(source,'notify', 'error', Core.Translate('COMMANDS.LABEL'), 'Type /ban social ID reason')
+         return;
+      }
+      const target = alt.Player.all.find(source => 
+         source.playerData.socialID === socialID)
+         if(!target || target === source) return alt.emitClient(source,'notify', 'error', Core.Translate('SYSTEM.LABEL'), Core.Translate('SYSTEM.NO_TARGET_FOUND'))
+         Core.Functions.whitelistBanStatus(source, socialID, 'ban')
+         target.kick(Core.Translate('ACCOUNT.BAN', { reason: reason }))
+}else{
+      alt.emitClient(source,'notify', 'error', Core.Translate('PERMISSIONS.LABEL'), Core.Translate('PERMISSIONS.DONT_HAVE_PERM'))
+     }
+})
+
+chat.registerCmd('unban', (source, [socialID])=>{
+   const isAllowed = Core.Functions.hasPermission(source, 'admin')
+   if(isAllowed){
+      
+   if(!socialID){
+         alt.emitClient(source,'notify', 'error', Core.Translate('COMMANDS.LABEL'), 'Type /ban social ID reason')
+         return;
+      }
+         Core.Functions.whitelistBanStatus(source, socialID, 'unban')
+}else{
+      alt.emitClient(source,'notify', 'error', Core.Translate('PERMISSIONS.LABEL'), Core.Translate('PERMISSIONS.DONT_HAVE_PERM'))
+     }
+})
 
 chat.registerCmd('cloth', (source, [component, drawable, texture])=>{
    if(!component || !drawable || !texture){

@@ -65,20 +65,40 @@ const login = async(source) => {
     }
 }
 
-//  Player whitelist status
-const whiteliststatus = async(source, id) => {
-    const result = await executeSync('SELECT whitelisted from users WHERE id = ?', [id])
+//  Player whitelist & BAN status
+const whitelistBanStatus = async(source, socialID, type) => {
+    const result = await executeSync('SELECT banned, whitelisted from users WHERE socialID = ?', [socialID])
     if (result.length <= 0) {
        alt.emitClient(source,'notify', 'error', Core.Translate('COMMANDS.LABEL'), Core.Translate('COMMANDS.USER_ID_NOT_FOUND'))
        return;
-       }else if (result[0].whitelisted) {
+       }
+    if (type === 'whitelist') {
+    if (result[0].whitelisted) {
        alt.emitClient(source,'notify', 'error', Core.Translate('COMMANDS.LABEL'), Core.Translate('COMMANDS.USER_ID_ALLREADY_WHITELISTED'))
        return;
-       }else{
-    updateSync('UPDATE users SET whitelisted = ? WHERE id = ?', [1, id], undefined, alt.resourceName)
-    alt.emitClient(source,'notify', 'success', Core.Translate('COMMANDS.LABEL'), Core.Translate('COMMANDS.USER_ID_WHITELISTED'))
+       } else {
+        updateSync('UPDATE users SET whitelisted = ? WHERE socialID = ?', [1, socialID], undefined, alt.resourceName)
+        alt.emitClient(source,'notify', 'success', Core.Translate('COMMANDS.LABEL'), Core.Translate('COMMANDS.USER_ID_WHITELISTED'))
        }
+    } else if(type === 'ban') {
+        if (result[0].banned) {
+            alt.emitClient(source,'notify', 'error', Core.Translate('COMMANDS.LABEL'), Core.Translate('COMMANDS.USER_ID_ALLREADY_BANNED'))
+            return;
+            } else {
+             updateSync('UPDATE users SET banned = ? WHERE socialID = ?', [1, socialID], undefined, alt.resourceName)
+             alt.emitClient(source,'notify', 'success', Core.Translate('COMMANDS.LABEL'), Core.Translate('COMMANDS.USER_ID_BANNED'))
+            }
+    } else if(type === 'unban') {
+        if (!result[0].banned) {
+            alt.emitClient(source,'notify', 'error', Core.Translate('COMMANDS.LABEL'), Core.Translate('COMMANDS.USER_ID_NOT_BANNED'))
+            return;
+            } else {
+             updateSync('UPDATE users SET banned = ? WHERE socialID = ?', [0, socialID], undefined, alt.resourceName)
+             alt.emitClient(source,'notify', 'success', Core.Translate('COMMANDS.LABEL'), Core.Translate('COMMANDS.USER_ID_UNBANNED'))
+            }
+    }
 }
+
 
 // Player utils
 const setPosition = (source, x, y, z, model = undefined) => {
@@ -297,7 +317,7 @@ const getJob = (source) => {
 
 export default { 
     login,
-    whiteliststatus,
+    whitelistBanStatus,
     getPlayerIdentifier,
     setPosition,
     getMoney,
