@@ -35,7 +35,6 @@ const getPlayerData = (key) => {
 
 const getJobInfo = (key) => {
     if(!alt.Player.local.playerData.job) return undefined;
-    if(key === "job") return alt.Player.local.playerData.job;
     if(!alt.Player.local.playerData.job[key]) {
         return undefined;
     } else {

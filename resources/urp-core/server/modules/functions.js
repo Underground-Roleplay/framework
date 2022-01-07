@@ -312,7 +312,6 @@ const setJob = (source, job, grade) => {
   
 const getJobInfo = (source, key) => {
     if(!source || !source.playerData.job) return undefined;
-    if(key === "job") return source.playerData.job;
     if(!source.playerData.job[key]) {
         return undefined;
     } else {
