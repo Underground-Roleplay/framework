@@ -354,5 +354,10 @@ chat.registerCmd('setJob', (source, [job, grade]) => {
      alt.emitClient(source,'notify', 'error', Core.Translate('PERMISSIONS.LABEL'), Core.Translate('PERMISSIONS.DONT_HAVE_PERM'))
      return;
    }
-   Core.Functions.setJob(source, job, grade)
+   Core.Job.setJob(source, job, grade)
+})
+
+chat.registerCmd('duty', (source) => {
+   if(!source) return;
+   Core.Job.setDuty(source)
 })

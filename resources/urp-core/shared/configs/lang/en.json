@@ -69,6 +69,11 @@
         "REVIE": "Revied you",
         "REVIVER": "{{ targetplayer }} has been revived."
     },
+    "JOB": {
+        "LABEL": "{{ jobname }}",
+        "JOB_STARTED": "Welcome back to work!",
+        "JOB_ENDED": "Thanks for your todays work!."
+    },
     "NO_PLAYERS_NEAR": "No players nearby",
     "WELCOME": "Welcome to {{ serverName }}"
 

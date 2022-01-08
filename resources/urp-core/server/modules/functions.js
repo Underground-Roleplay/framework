@@ -284,41 +284,6 @@ const PhoneTunel = (source,targtEvent,dataRvent,phone)=>{
     }
 }
 
-const setJob = (source, job, grade) => {
-    const jobName = job.toLowerCase()
-    if(!Core.Shared.Jobs[jobName]) return;
-    const jobgrade = Core.Shared.Jobs[jobName].grades[grade]
-    if(jobgrade){
-        source.playerData.job.name = jobName
-        source.playerData.job.grade = {}
-        source.playerData.job.grade.name = jobgrade.name
-        source.playerData.job.grade.level = parseInt(grade)
-        source.playerData.job.payment = jobgrade.payment || 30
-        source.playerData.job.isboss = jobgrade.isboss || false
-    }else{
-        source.playerData.job.name = jobName
-        source.playerData.job.grade = {}
-        source.playerData.job.grade.name = 'No grades'
-        source.playerData.job.grade.level = 0
-        source.playerData.job.payment = 30
-        source.playerData.job.isboss = false
-    }
-
-    const { ssn } = source.playerData
-    db.execute('UPDATE characters SET job = ? WHERE ssn = ?', [JSON.stringify(source.playerData.job), ssn], undefined, alt.resourceName)
-    Core.Functions.emitPlayerData(source, 'job', source.playerData.job)
-    alt.emitClient(source,'notify', 'error', 'JOB SYSTEM', `You are now a ${job}`)
-}
-  
-const getJobInfo = (source, key) => {
-    if(!source || !source.playerData.job) return undefined;
-    if(!source.playerData.job[key]) {
-        return undefined;
-    } else {
-        return source.playerData.job[key];
-    }
-}
-
 export default { 
     login,
     whitelistBanStatus,
@@ -338,7 +303,5 @@ export default {
     inviteCallRequest,
     endCall,
     PhoneTunel,
-    GetNumber,
-    setJob,
-    getJobInfo
+    GetNumber
 }
