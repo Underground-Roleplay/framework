@@ -83,7 +83,7 @@ const createMarker = (pos, data) => {
 const createPed = async (pos, data) => {
     if(!data.pedType || !data.modelHash) return;
     await Core.Functions.RequestModel(data.modelHash)
-    const ped = natives.createPed(data.pedType, data.modelHash, pos.x, pos.y, pos.z, 0, false, false)
+    const ped = natives.createPed(data.pedType, data.modelHash, pos.x, pos.y, pos.z, data.pedHeading, false, false)
     natives.clearPedTasksImmediately(ped);
     natives.setEntityInvincible(ped, true);
     natives.setBlockingOfNonTemporaryEvents(ped, true);
