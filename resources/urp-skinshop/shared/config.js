@@ -81,22 +81,6 @@ export const CLOTH_STORES = [
         }
     },
     {
-        "x": 1.76308,
-        "y": 6510.57,
-        "z": 30.879,
-        "type": "Cloth Store",
-        "isServer": false,
-        "eventName": "Skinshop:open",
-          "blip":{
-             "sprite":73,
-             "color":5
-          },
-          marker:{
-            type: 1,
-            color: new alt.RGBA(0, 181, 204, 200)
-        }
-    },
-    {
         "x": -818.628,
         "y": -1073.01,
         "z": 10.3281,

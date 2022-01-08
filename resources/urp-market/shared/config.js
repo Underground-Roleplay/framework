@@ -38,7 +38,7 @@ export const MARKET_LIST = [
 	{
 		"x": -1222.44,
 		"y": -908.663,
-		"z": 10.312,
+		"z": 11.312,
 		"type": "market",
 		"isServer": false,
 		"eventName": "Market:open",
@@ -140,7 +140,7 @@ export const MARKET_LIST = [
 	{
 		"x": -2966.52,
 		"y": 390.435,
-		"z": 13.041,
+		"z": 14.041,
 		"type": "market",
 		"isServer": false,
 		"eventName": "Market:open",
@@ -157,7 +157,7 @@ export const MARKET_LIST = [
 	{
 		"x": -3040.58,
 		"y": 583.938,
-		"z": 5.897,
+		"z": 6.897,
 		"type": "market",
 		"isServer": false,
 		"eventName": "Market:open",
@@ -174,7 +174,7 @@ export const MARKET_LIST = [
 	{
 		"x": -3244.03,
 		"y": 1000.13,
-		"z": 10.817,
+		"z": 11.817,
 		"type": "market",
 		"isServer": false,
 		"eventName": "Market:open",
@@ -242,7 +242,7 @@ export const MARKET_LIST = [
 	{
 		"x": 1392.18,
 		"y": 3606.2,
-		"z": 32.975,
+		"z": 33.975,
 		"type": "market",
 		"isServer": false,
 		"eventName": "Market:open",
@@ -259,7 +259,7 @@ export const MARKET_LIST = [
 	{
 		"x": 2676.45,
 		"y": 3280.27,
-		"z": 53.228,
+		"z": 54.228,
 		"type": "market",
 		"isServer": false,
 		"eventName": "Market:open",
@@ -276,7 +276,7 @@ export const MARKET_LIST = [
 	{
 		"x": 1166.47,
 		"y": 2710.79,
-		"z": 36.142,
+		"z": 37.142,
 		"type": "market",
 		"isServer": false,
 		"eventName": "Market:open",
@@ -293,7 +293,7 @@ export const MARKET_LIST = [
 	{
 		"x": 549.257,
 		"y": 2669.63,
-		"z": 40.153,
+		"z": 41.153,
 		"type": "market",
 		"isServer": false,
 		"eventName": "Market:open",
@@ -310,7 +310,7 @@ export const MARKET_LIST = [
 	{
 		"x": 2555.49,
 		"y": 380.874,
-		"z": 106.608,
+		"z": 108.608,
 		"type": "market",
 		"isServer": false,
 		"eventName": "Market:open",
