@@ -2,9 +2,9 @@ import * as alt from 'alt-server';
 
 export const MARKET_LIST = [
   {
-		"x": 25.65,
-		"y": -1346.58,
-		"z": 29.49,
+		"x": -46.2593,
+		"y": -1757.91,
+		"z": 28.4147,
 		"type": "market",
 		"isServer": false,
 		"eventName": "Market:open",
@@ -14,13 +14,14 @@ export const MARKET_LIST = [
 		},
 		"ped": {
 			pedType: 3,
-			modelHash: alt.hash('csb_isldj_04')
+			modelHash: alt.hash('csb_isldj_04'),
+			pedHeading: 52.1867
 		}
 	},
 	{
-		"x": 2556.75,
-		"y": 382.01,
-		"z": 108.62,
+		"x": 372.857,
+		"y": 328.021,
+		"z": 102.553,
 		"type": "market",
 		"isServer": false,
 		"eventName": "Market:open",
@@ -30,13 +31,14 @@ export const MARKET_LIST = [
 		},
 		"ped": {
 			pedType: 3,
-			modelHash: alt.hash('csb_isldj_04')
+			modelHash: alt.hash('csb_isldj_04'),
+			pedHeading: -109.819
 		}
 	},
 	{
-		"x": 1163.54,
-		"y": -323.04,
-		"z": 69.20,
+		"x": -1222.44,
+		"y": -908.663,
+		"z": 11.312,
 		"type": "market",
 		"isServer": false,
 		"eventName": "Market:open",
@@ -46,13 +48,14 @@ export const MARKET_LIST = [
 		},
 		"ped": {
 			pedType: 3,
-			modelHash: alt.hash('csb_isldj_04')
+			modelHash: alt.hash('csb_isldj_04'),
+			pedHeading: 30.291
 		}
 	},
 	{
-		"x": -707.37,
-		"y": -913.68,
-		"z": 19.21,
+		"x": -705.626,
+		"y": -914.611,
+		"z": 18.2036,
 		"type": "market",
 		"isServer": false,
 		"eventName": "Market:open",
@@ -62,13 +65,14 @@ export const MARKET_LIST = [
 		},
 		"ped": {
 			pedType: 3,
-			modelHash: alt.hash('csb_isldj_04')
+			modelHash: alt.hash('csb_isldj_04'),
+			pedHeading: 85.726
 		}
 	},
 	{
-		"x": -47.73,
-		"y": -1757.25,
-		"z": 29.42,
+		"x": 24.2505,
+		"y": -1345.08,
+		"z": 28.4821,
 		"type": "market",
 		"isServer": false,
 		"eventName": "Market:open",
@@ -78,13 +82,14 @@ export const MARKET_LIST = [
 		},
 		"ped": {
 			pedType: 3,
-			modelHash: alt.hash('csb_isldj_04')
+			modelHash: alt.hash('csb_isldj_04'),
+			pedHeading: -93.251
 		}
 	},
 	{
-		"x": 373.90,
-		"y": 326.91,
-		"z": 103.56,
+		"x": 1134.06,
+		"y": -981.811,
+		"z": 45.399,
 		"type": "market",
 		"isServer": false,
 		"eventName": "Market:open",
@@ -94,13 +99,14 @@ export const MARKET_LIST = [
 		},
 		"ped": {
 			pedType: 3,
-			modelHash: alt.hash('csb_isldj_04')
+			modelHash: alt.hash('csb_isldj_04'),
+			pedHeading: -86.032
 		}
 	},
 	{
-		"x": -3243.10,
-		"y": 1001.23,
-		"z": 12.83,
+		"x": 1164.83,
+		"y": -323.617,
+		"z": 68.197,
 		"type": "market",
 		"isServer": false,
 		"eventName": "Market:open",
@@ -110,13 +116,14 @@ export const MARKET_LIST = [
 		},
 		"ped": {
 			pedType: 3,
-			modelHash: alt.hash('csb_isldj_04')
+			modelHash: alt.hash('csb_isldj_04'),
+			pedHeading: 92.38
 		}
 	},
 	{
-		"x": 1729.38,
-		"y": 6415.54,
-		"z": 35.03,
+		"x": -1485.96,
+		"y": -377.96,
+		"z": 39.1479,
 		"type": "market",
 		"isServer": false,
 		"eventName": "Market:open",
@@ -126,13 +133,14 @@ export const MARKET_LIST = [
 		},
 		"ped": {
 			pedType: 3,
-			modelHash: alt.hash('csb_isldj_04')
+			modelHash: alt.hash('csb_isldj_04'),
+			pedHeading: 129.749
 		}
 	},
 	{
-		"x": 547.90,
-		"y": 2670.36,
-		"z": 42.15,
+		"x": -2966.52,
+		"y": 390.435,
+		"z": 14.041,
 		"type": "market",
 		"isServer": false,
 		"eventName": "Market:open",
@@ -142,13 +150,14 @@ export const MARKET_LIST = [
 		},
 		"ped": {
 			pedType: 3,
-			modelHash: alt.hash('csb_isldj_04')
+			modelHash: alt.hash('csb_isldj_04'),
+			pedHeading: 88.193
 		}
 	},
 	{
-		"x": 1960.75,
-		"y": 3741.33,
-		"z": 32.34,
+		"x": -3040.58,
+		"y": 583.938,
+		"z": 6.897,
 		"type": "market",
 		"isServer": false,
 		"eventName": "Market:open",
@@ -158,13 +167,14 @@ export const MARKET_LIST = [
 		},
 		"ped": {
 			pedType: 3,
-			modelHash: alt.hash('csb_isldj_04')
+			modelHash: alt.hash('csb_isldj_04'),
+			pedHeading: 16.129
 		}
 	},
 	{
-		"x": 2677.90,
-		"y": 3280.88,
-		"z": 55.24,
+		"x": -3244.03,
+		"y": 1000.13,
+		"z": 11.817,
 		"type": "market",
 		"isServer": false,
 		"eventName": "Market:open",
@@ -174,13 +184,14 @@ export const MARKET_LIST = [
 		},
 		"ped": {
 			pedType: 3,
-			modelHash: alt.hash('csb_isldj_04')
+			modelHash: alt.hash('csb_isldj_04'),
+			pedHeading: 10.731
 		}
 	},
 	{
-		"x": 1698.45,
-		"y": 4924.15,
-		"z": 42.06,
+		"x": 1728.7,
+		"y": 6417.34,
+		"z": 34.0256,
 		"type": "market",
 		"isServer": false,
 		"eventName": "Market:open",
@@ -190,13 +201,14 @@ export const MARKET_LIST = [
 		},
 		"ped": {
 			pedType: 3,
-			modelHash: alt.hash('csb_isldj_04')
+			modelHash: alt.hash('csb_isldj_04'),
+			pedHeading: -119.807
 		}
 	},
 	{
-		"x": -1820.93,
-		"y": 793.18,
-		"z": 138.11,
+		"x": 1697.05,
+		"y": 4922.95,
+		"z": 41.052,
 		"type": "market",
 		"isServer": false,
 		"eventName": "Market:open",
@@ -206,13 +218,14 @@ export const MARKET_LIST = [
 		},
 		"ped": {
 			pedType: 3,
-			modelHash: alt.hash('csb_isldj_04')
+			modelHash: alt.hash('csb_isldj_04'),
+			pedHeading: -41.935
 		}
 	},
 	{
-		"x": 1392.46,
-		"y": 3604.95,
-		"z": 34.98,
+		"x": 1959.18,
+		"y": 3741.01,
+		"z": 31.3297,
 		"type": "market",
 		"isServer": false,
 		"eventName": "Market:open",
@@ -222,13 +235,14 @@ export const MARKET_LIST = [
 		},
 		"ped": {
 			pedType: 3,
-			modelHash: alt.hash('csb_isldj_04')
+			modelHash: alt.hash('csb_isldj_04'),
+			pedHeading: -63.105
 		}
 	},
 	{
-		"x": -2967.82,
-		"y": 390.93,
-		"z": 15.04,
+		"x": 1392.18,
+		"y": 3606.2,
+		"z": 33.975,
 		"type": "market",
 		"isServer": false,
 		"eventName": "Market:open",
@@ -238,13 +252,14 @@ export const MARKET_LIST = [
 		},
 		"ped": {
 			pedType: 3,
-			modelHash: alt.hash('csb_isldj_04')
+			modelHash: alt.hash('csb_isldj_04'),
+			pedHeading: -164.534
 		}
 	},
 	{
-		"x": -3040.10,
-		"y": 585.44,
-		"z": 7.90,
+		"x": 2676.45,
+		"y": 3280.27,
+		"z": 54.228,
 		"type": "market",
 		"isServer": false,
 		"eventName": "Market:open",
@@ -254,13 +269,14 @@ export const MARKET_LIST = [
 		},
 		"ped": {
 			pedType: 3,
-			modelHash: alt.hash('csb_isldj_04')
+			modelHash: alt.hash('csb_isldj_04'),
+			pedHeading: -29.164
 		}
 	},
 	{
-		"x": 1135.56,
-		"y": -982.20,
-		"z": 46.41,
+		"x": 1166.47,
+		"y": 2710.79,
+		"z": 37.142,
 		"type": "market",
 		"isServer": false,
 		"eventName": "Market:open",
@@ -270,13 +286,14 @@ export const MARKET_LIST = [
 		},
 		"ped": {
 			pedType: 3,
-			modelHash: alt.hash('csb_isldj_04')
+			modelHash: alt.hash('csb_isldj_04'),
+			pedHeading: 173.485
 		}
 	},
 	{
-		"x": 1165.91,
-		"y": 2709.41,
-		"z": 38.15,
+		"x": 549.257,
+		"y": 2669.63,
+		"z": 41.153,
 		"type": "market",
 		"isServer": false,
 		"eventName": "Market:open",
@@ -286,13 +303,14 @@ export const MARKET_LIST = [
 		},
 		"ped": {
 			pedType: 3,
-			modelHash: alt.hash('csb_isldj_04')
+			modelHash: alt.hash('csb_isldj_04'),
+			pedHeading: 96.043
 		}
 	},
 	{
-		"x": -1487.18,
-		"y": -379.02,
-		"z": 40.16,
+		"x": 2555.49,
+		"y": 380.874,
+		"z": 108.608,
 		"type": "market",
 		"isServer": false,
 		"eventName": "Market:open",
@@ -302,13 +320,14 @@ export const MARKET_LIST = [
 		},
 		"ped": {
 			pedType: 3,
-			modelHash: alt.hash('csb_isldj_04')
+			modelHash: alt.hash('csb_isldj_04'),
+			pedHeading: -5.194
 		}
 	},
 	{
-		"x": -1222.78,
-		"y": -907.22,
-		"z": 12.32,
+		"x": -1819.52,
+		"y": 793.609,
+		"z": 137.096,
 		"type": "market",
 		"isServer": false,
 		"eventName": "Market:open",
@@ -318,55 +337,8 @@ export const MARKET_LIST = [
 		},
 		"ped": {
 			pedType: 3,
-			modelHash: alt.hash('csb_isldj_04')
-		}
-	},
-	{
-		"x": 162.34,
-		"y": 6641.48,
-		"z": 31.71,
-		"type": "market",
-		"isServer": false,
-		"eventName": "Market:open",
-		"blip": {
-			"sprite": 52,
-			"color": 2
-		},
-		"ped": {
-			pedType: 3,
-			modelHash: alt.hash('csb_isldj_04')
-		}
-	},
-	{
-		"x": 387.15,
-		"y": -1681.04,
-		"z": 27.29,
-		"type": "market",
-		"isServer": false,
-		"eventName": "Market:open",
-		"blip": {
-			"sprite": 52,
-			"color": 2
-		},
-		"ped": {
-			pedType: 3,
-			modelHash: alt.hash('csb_isldj_04')
-		}
-	},
-	{
-		"x": -1836.71,
-		"y": -1208.40,
-		"z": 14.30,
-		"type": "market",
-		"isServer": false,
-		"eventName": "Market:open",
-		"blip": {
-			"sprite": 52,
-			"color": 2
-		},
-		"ped": {
-			pedType: 3,
-			modelHash: alt.hash('csb_isldj_04')
+			modelHash: alt.hash('csb_isldj_04'),
+			pedHeading: 126.524
 		}
 	}
 ]

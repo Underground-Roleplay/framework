@@ -34,7 +34,14 @@
         "DONT_HAVE_PERM": "Você NÃO tem as permissões necessarias!"
     },
     "COMMANDS":{
-        "LABEL": "COMANDOS"
+        "LABEL": "COMANDOS",
+        "USER_ID_NOT_FOUND": "ID do usuário não encontrado",
+        "USER_ID_WHITELISTED": "O ID social foi colocado na lista de permissões",
+        "USER_ID_ALLREADY_WHITELISTED": "O ID social já está na lista de permissões",
+        "USER_ID_ALLREADY_BANNED": "ID social já banido",
+        "USER_ID_BANNED": "ID social banido",
+        "USER_ID_NOT_BANNED": "ID social ainda não banido",
+        "USER_ID_UNBANNED": "ID social desbanido com sucesso!"
     },
     "SYSTEM": {
         "LABEL": "SISTEMA",
@@ -50,8 +57,20 @@
     }, 
     "LICENSE": {
         "LABEL": "LICENÇA",
-        "LICENSE_ISSUED": "{{ licenseType }} foi emitido com sucesso!",
-        "LICENSE_REVOKED": "{{ licenseType }} foi revogado!"
+        "LICENSE_ISSUED": "{{ licenseType }} licença foi emitida com sucesso!",
+        "LICENSE_REVOKED": "{{ licenseType }} licença foi revogada!"
+    },
+    "HOSPITAL": {
+        "LABEL": "MÉDICA",
+        "HEAL": "Te curei",
+        "HEALLER": "{{ targetplayer }} foi curado.",
+        "REVIE": "Avalie você",
+        "REVIVER": "{{ targetplayer }} foi revivido."
+    },
+    "JOB": {
+        "LABEL": "{{ jobname }}",
+        "JOB_STARTED": "Bem-vindo de volta ao trabalho!",
+        "JOB_ENDED": "Obrigado pelo seu trabalho de hoje!."
     },
     "NO_PLAYERS_NEAR": "Nenhum player próximo",
     "WELCOME": "Bem vindo ao {{ serverName }}"

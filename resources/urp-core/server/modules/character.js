@@ -126,6 +126,45 @@ const addHungerThirstDecay = (source) => {
     Core.Functions.emitPlayerData(source, 'metadata', source.playerData.metadata)
 }
 
+
+/**
+ * This function adds the value of the itemtype to the player's hunger or thirst.
+ * @param source - The player who is consuming the item
+ * @param itemtype - The type of item being used. This can be either 'eating' or 'drinking'
+ * @param value - The amount of hunger/thirst to add
+ * @returns The player's hunger and thirst.
+ */
+const addHungerThirst = (source, itemtype, value) => {
+    if(!source) return;
+
+    if(itemtype === 'drinking' && source.playerData.metadata.thirst <=200){
+        source.playerData.metadata.thirst += value
+        if(source.playerData.metadata.thirst >= 200) source.playerData.metadata.thirst = 200
+    }
+
+    
+    if(itemtype === 'eating' && source.playerData.metadata.hunger <= 200){
+        source.playerData.metadata.hunger += value
+        if (source.playerData.metadata.hunger >= 200) source.playerData.metadata.hunger = 200
+    }
+
+    saveMetadata(source)
+    Core.Functions.emitPlayerData(source, 'metadata', source.playerData.metadata)
+}
+
+const adminHeal = (source) => {
+    if(!source) return;
+
+    source.playerData.metadata.thirst = 200
+
+    source.playerData.metadata.hunger = 200
+
+    source.playerData.metadata.health = 200
+
+    saveMetadata(source)
+    Core.Functions.emitPlayerData(source, 'metadata', source.playerData.metadata)
+}
+
 const updateBasicData = async (source) => {
     if(!source) return;
     source.playerData.position = source.pos
@@ -405,4 +444,5 @@ const loadCustoms = async (source) => {
     createCustoms(source)
 }
 
-export default { startCharacter, selectCharacter, tickManager, updateBasicData, loadCustoms, changeCloth, setDeath, getComponentVariations, saveMetadata,changeProps }
+
+export default { startCharacter, adminHeal, selectCharacter, tickManager, updateBasicData, loadCustoms, changeCloth, setDeath, getComponentVariations, saveMetadata, addHungerThirst, changeProps }

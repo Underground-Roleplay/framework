@@ -11,6 +11,7 @@ import inventory from './modules/inventory';
 import vehicles from './modules/vehicles';
 import money from './modules/money';
 import license from './modules/license';
+import job from './modules/job';
 
 import voice from 'urp-voice';
 
@@ -56,6 +57,8 @@ Core.Interactions = interactions
 Core.Functions = functions
 
 Core.License = license
+
+Core.Job = job
 
 Core.DBReady = false
 
