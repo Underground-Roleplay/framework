@@ -38,4 +38,4 @@ update the database with database.sql
 
 ./altv-server.exe
 
-4. Click on <a href="https://underground-roleplay.github.io/framework/"><h2 align="center">Getting Started</h2></a> to know more
+4. Click on <a href="https://underground-roleplay.github.io/framework/">Getting Started</a> to know more
