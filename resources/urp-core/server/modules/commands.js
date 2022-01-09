@@ -75,19 +75,24 @@ command.
    const isAllowed = Core.Functions.hasPermission(source, 'admin')
    if(isAllowed){
       if(!identifier || !type) return
+      
       const ssnRegex = /[0-9]{6}\-[0-9]{4}/g
+      
       if(identifier.match(ssnRegex)){
-      const target = alt.Player.all.find(source => 
-      source.playerData.ssn === identifier)
-      if(!target) return alt.emitClient(source,'notify', 'error', Core.Translate('SYSTEM.LABEL'), Core.Translate('SYSTEM.NO_TARGET_FOUND'))
-      Core.License.addLicense(target, type)
-   }else{
-      const target = alt.Player.all.find(source => 
-       source.playerData.id === identifier)
-       if(!target) return alt.emitClient(source,'notify', 'error', Core.Translate('SYSTEM.LABEL'), Core.Translate('SYSTEM.NO_TARGET_FOUND'))
-       Core.License.addLicense(target, type)
-   }
-   alt.emitClient(source,'notify', 'success', Core.Translate('LICENSE.LABEL'), Core.Translate('LICENSE.LICENSE_ISSUED', { licenseType: type }))
+         const target = alt.Player.all.find(source => 
+         source.playerData.ssn === identifier)
+         if(!target) return alt.emitClient(source,'notify', 'error', Core.Translate('SYSTEM.LABEL'), Core.Translate('SYSTEM.NO_TARGET_FOUND'))
+         Core.License.addLicense(target, type)
+         alt.emitClient(source,'notify', 'success', Core.Translate('LICENSE.LABEL'), Core.Translate('LICENSE.LICENSE_ISSUED', { licenseType: type }))
+         return
+      }else{
+         const target = alt.Player.all.find(source => 
+         source.playerData.id === identifier)
+         if(!target) return alt.emitClient(source,'notify', 'error', Core.Translate('SYSTEM.LABEL'), Core.Translate('SYSTEM.NO_TARGET_FOUND'))
+         Core.License.addLicense(target, type)
+         alt.emitClient(source,'notify', 'success', Core.Translate('LICENSE.LABEL'), Core.Translate('LICENSE.LICENSE_ISSUED', { licenseType: type }))
+         return
+      }
    }else{
       alt.emitClient(source,'notify', 'error', Core.Translate('PERMISSIONS.LABEL'), Core.Translate('PERMISSIONS.DONT_HAVE_PERM'))
    }
@@ -103,19 +108,24 @@ command.
    const isAllowed = Core.Functions.hasPermission(source, 'admin')
    if(isAllowed){
       if(!identifier || !type) return
+      
       const ssnRegex = /[0-9]{6}\-[0-9]{4}/g
+      
       if(identifier.match(ssnRegex)){
-      const target = alt.Player.all.find(source => 
-      source.playerData.ssn === identifier)
-      if(!target) return alt.emitClient(source,'notify', 'error', Core.Translate('SYSTEM.LABEL'), Core.Translate('SYSTEM.NO_TARGET_FOUND'))
-      Core.License.removeLicense(target, type)
-   }else{
-      const target = alt.Player.all.find(source => 
-      source.playerData.id === identifier)
-      if(!target) return alt.emitClient(source,'notify', 'error', Core.Translate('SYSTEM.LABEL'), Core.Translate('SYSTEM.NO_TARGET_FOUND'))
-      Core.License.removeLicense(target, type)
-   }
-      alt.emitClient(source,'notify', 'success', Core.Translate('LICENSE.LABEL'), Core.Translate('LICENSE.LICENSE_REVOKED', { licenseType: type }))
+         const target = alt.Player.all.find(source => 
+         source.playerData.ssn === identifier)
+         if(!target) return alt.emitClient(source,'notify', 'error', Core.Translate('SYSTEM.LABEL'), Core.Translate('SYSTEM.NO_TARGET_FOUND'))
+         Core.License.removeLicense(target, type)
+         alt.emitClient(source,'notify', 'success', Core.Translate('LICENSE.LABEL'), Core.Translate('LICENSE.LICENSE_REVOKED', { licenseType: type }))
+         return
+      }else{
+         const target = alt.Player.all.find(source => 
+         source.playerData.id === identifier)
+         if(!target) return alt.emitClient(source,'notify', 'error', Core.Translate('SYSTEM.LABEL'), Core.Translate('SYSTEM.NO_TARGET_FOUND'))
+         Core.License.removeLicense(target, type)
+         alt.emitClient(source,'notify', 'success', Core.Translate('LICENSE.LABEL'), Core.Translate('LICENSE.LICENSE_REVOKED', { licenseType: type }))
+         return
+      }
    }else{
       alt.emitClient(source,'notify', 'error', Core.Translate('PERMISSIONS.LABEL'), Core.Translate('PERMISSIONS.DONT_HAVE_PERM'))
    }
