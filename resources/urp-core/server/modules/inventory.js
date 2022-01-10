@@ -6,12 +6,43 @@ import Core from '../main';
 //  Items
 const useableItems = {}
 
-// TODO
-// const droppedItems = []
 
-// const dropItem = () => {
-//     droppedItems.push()
-// }
+const dropItem = (source, item, amount = 1) => {
+    Core.Inventory.removeItem(source, item.name, amount)
+    item.amount = amount
+    const itemPosition = new alt.Vector3(source.pos.x, source.pos.y, source.pos.z)
+    const droppedItem = Core.Entities.createDropItem(itemPosition, source.dimension, item)
+    return droppedItem
+}
+
+const pickupItem = (source, item, slot = undefined, amount) => {
+    amount = parseInt(amount)
+    let avaliableAmount = getDroppedItemAmountById(item.entityID)
+    if(!avaliableAmount) return;
+
+    if(amount > avaliableAmount){
+        return;
+    }
+
+    if(avaliableAmount === amount){
+        Core.Entities.removeEntity(item.entityID, 3)
+        Core.Inventory.addItem(source, item.name, amount, slot)
+        return;
+    }
+
+    if(amount < avaliableAmount){
+        avaliableAmount -= amount
+        Core.Entities.updateEntityData(item.entityID, 3, 'amount', avaliableAmount)
+        Core.Inventory.addItem(source, item.name, amount, slot)
+        return;
+    }
+    
+}
+
+const getDroppedItemAmountById = (id) => {
+    const amount = Core.Entities.getEntityData(id, 3, 'amount') 
+    return amount;
+}
 
 const createUseableItem = (itemName, eventName, isServer = false) => {
     if(useableItems[itemName]) throw new Error('Item already registered')
@@ -192,5 +223,5 @@ const isItem = (source, item) => {
     }
 }
 
-export default {getCurrentWeight, getItemSlot, addItem, removeItem, saveInventory, createUseableItem, triggerItemEvent, isUseableItem, 
-    useWeapon, getItemBySlot,isItem}
+export default {getCurrentWeight, getItemSlot, addItem, dropItem, removeItem, saveInventory, createUseableItem, triggerItemEvent, isUseableItem, 
+    useWeapon, getItemBySlot, isItem, pickupItem}
