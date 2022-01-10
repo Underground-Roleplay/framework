@@ -18,6 +18,38 @@ chat.registerCmd('addItem', (source, args) => {
    }
 })
 
+/**
+ * It checks if the player has the permission to use the command, if they do, it checks if the
+identifier is a SSN or an ID, if it's a SSN, it finds the player with that SSN, if it's an ID, it
+finds the player with that ID, then it heals the player.
+ * @param source - The player who executed the command.
+ * @param undefined - The first parameter is the source, which is the player who executed the
+command.
+ * @returns The player's health.
+ */
+chat.registerCmd('heal', (source, [identifier]) => {
+   const isAllowed = Core.Functions.hasPermission(source, 'admin')
+   if(isAllowed){
+      if(!identifier) return
+      const ssnRegex = /[0-9]{6}\-[0-9]{4}/g
+      if(identifier.match(ssnRegex)){
+      const target = alt.Player.all.find(source => 
+      source.playerData.ssn === identifier)
+      if(!target) return alt.emitClient(source,'notify', 'error', Core.Translate('SYSTEM.LABEL'), Core.Translate('SYSTEM.NO_TARGET_FOUND'))
+      Core.Character.adminHeal(target)
+      alt.emitClient(source,'notify', 'success', Core.Translate('HOSPITAL.LABEL'), Core.Translate('HOSPITAL.HEALLER', { targetplayer: identifier }))
+   }else{
+      const target = alt.Player.all.find(source => 
+       source.playerData.id === identifier)
+       if(!target) return alt.emitClient(source,'notify', 'error', Core.Translate('SYSTEM.LABEL'), Core.Translate('SYSTEM.NO_TARGET_FOUND'))
+       Core.Character.adminHeal(target)
+       alt.emitClient(source,'notify', 'success', Core.Translate('HOSPITAL.LABEL'), Core.Translate('HOSPITAL.HEALLER', { targetplayer: identifier }))
+   }
+   }else{
+      alt.emitClient(source,'notify', 'error', Core.Translate('PERMISSIONS.LABEL'), Core.Translate('PERMISSIONS.DONT_HAVE_PERM'))
+   }
+})
+
 chat.registerCmd('tpcds', (source, [x, y, z]) => {
    if(!x || !y || !z){
       alt.emitClient(source,'notify', 'error', Core.Translate('COMMANDS.LABEL'), '/tpcds x y z')
@@ -31,15 +63,6 @@ chat.registerCmd('tpcds', (source, [x, y, z]) => {
    }
 })
 
-chat.registerCmd('tpm', (source) => {
-   const isAllowed = Core.Functions.hasPermission(source, 'admin')
-   if(isAllowed){
-      alt.emitClient(source,'tpto');
-   }else{
-      alt.emitClient(source,'notify', 'error', Core.Translate('PERMISSIONS.LABEL'), Core.Translate('PERMISSIONS.DONT_HAVE_PERM'))
-   }
- })  
-
 
 /**
  * This function will add a license to a player.
@@ -49,11 +72,30 @@ command.
  * @returns The license is being returned to the player.
  */
  chat.registerCmd('glicense', (source, [identifier,type]) => {
-   const target = alt.Player.all.find(source => 
-      source.playerData.id === identifier)
-      if(!target || target === source) return alt.emitClient(source,'notify', 'error', Core.Translate('SYSTEM.LABEL'), Core.Translate('SYSTEM.NO_TARGET_FOUND'))
-   alt.emit('License:addLicense', target, type)
-   alt.emitClient(source,'notify', 'success', Core.Translate('LICENSE.LABEL'), Core.Translate('LICENSE.LICENSE_ISSUED', { licenseType: type }))
+   const isAllowed = Core.Functions.hasPermission(source, 'admin')
+   if(isAllowed){
+      if(!identifier || !type) return
+      
+      const ssnRegex = /[0-9]{6}\-[0-9]{4}/g
+      
+      if(identifier.match(ssnRegex)){
+         const target = alt.Player.all.find(source => 
+         source.playerData.ssn === identifier)
+         if(!target) return alt.emitClient(source,'notify', 'error', Core.Translate('SYSTEM.LABEL'), Core.Translate('SYSTEM.NO_TARGET_FOUND'))
+         Core.License.addLicense(target, type)
+         alt.emitClient(source,'notify', 'success', Core.Translate('LICENSE.LABEL'), Core.Translate('LICENSE.LICENSE_ISSUED', { licenseType: type }))
+         return
+      }else{
+         const target = alt.Player.all.find(source => 
+         source.playerData.id === identifier)
+         if(!target) return alt.emitClient(source,'notify', 'error', Core.Translate('SYSTEM.LABEL'), Core.Translate('SYSTEM.NO_TARGET_FOUND'))
+         Core.License.addLicense(target, type)
+         alt.emitClient(source,'notify', 'success', Core.Translate('LICENSE.LABEL'), Core.Translate('LICENSE.LICENSE_ISSUED', { licenseType: type }))
+         return
+      }
+   }else{
+      alt.emitClient(source,'notify', 'error', Core.Translate('PERMISSIONS.LABEL'), Core.Translate('PERMISSIONS.DONT_HAVE_PERM'))
+   }
  }) 
 
 /**
@@ -63,11 +105,30 @@ command.
  * @returns The license type.
  */
  chat.registerCmd('rlicense', (source, [identifier,type]) => {
-   const target = alt.Player.all.find(source => 
-      source.playerData.id === identifier)
-      if(!target || target === source) return alt.emitClient(source,'notify', 'error', Core.Translate('SYSTEM.LABEL'), Core.Translate('SYSTEM.NO_TARGET_FOUND'))
-   alt.emit('License:removeLicense', target, type)
-   alt.emitClient(source,'notify', 'success', Core.Translate('LICENSE.LABEL'), Core.Translate('LICENSE.LICENSE_REVOKED', { licenseType: type }))
+   const isAllowed = Core.Functions.hasPermission(source, 'admin')
+   if(isAllowed){
+      if(!identifier || !type) return
+      
+      const ssnRegex = /[0-9]{6}\-[0-9]{4}/g
+      
+      if(identifier.match(ssnRegex)){
+         const target = alt.Player.all.find(source => 
+         source.playerData.ssn === identifier)
+         if(!target) return alt.emitClient(source,'notify', 'error', Core.Translate('SYSTEM.LABEL'), Core.Translate('SYSTEM.NO_TARGET_FOUND'))
+         Core.License.removeLicense(target, type)
+         alt.emitClient(source,'notify', 'success', Core.Translate('LICENSE.LABEL'), Core.Translate('LICENSE.LICENSE_REVOKED', { licenseType: type }))
+         return
+      }else{
+         const target = alt.Player.all.find(source => 
+         source.playerData.id === identifier)
+         if(!target) return alt.emitClient(source,'notify', 'error', Core.Translate('SYSTEM.LABEL'), Core.Translate('SYSTEM.NO_TARGET_FOUND'))
+         Core.License.removeLicense(target, type)
+         alt.emitClient(source,'notify', 'success', Core.Translate('LICENSE.LABEL'), Core.Translate('LICENSE.LICENSE_REVOKED', { licenseType: type }))
+         return
+      }
+   }else{
+      alt.emitClient(source,'notify', 'error', Core.Translate('PERMISSIONS.LABEL'), Core.Translate('PERMISSIONS.DONT_HAVE_PERM'))
+   }
  }) 
 
 chat.registerCmd('c', (source, [model]) => {
@@ -78,7 +139,7 @@ chat.registerCmd('c', (source, [model]) => {
   //const isAllowed = Core.Functions.hasPermission(source, 'admin')
   //if(isAllowed){
      Core.Functions.spawnVehicle(source, model)
-     alt.emitClient(source,'notify', 'sucess', Core.Translate('SYSTEM.LABEL'),  `${model} SPAWNED`)
+     alt.emitClient(source,'notify', 'success', Core.Translate('SYSTEM.LABEL'),  `${model} SPAWNED`)
   //}else{
   // alt.emitClient(source,'notify', 'error', Core.Translate('PERMISSIONS.LABEL'), Core.Translate('PERMISSIONS.DONT_HAVE_PERM'))
  // }
@@ -106,19 +167,50 @@ chat.registerCmd('dv', (source) => {
 
 
 // TODO
-chat.registerCmd('whitelist', (source, [id])=>{
+chat.registerCmd('whitelist', (source, [socialID])=>{
    const isAllowed = Core.Functions.hasPermission(source, 'admin')
    if(isAllowed){
-   if(!id){
+   if(!socialID){
          alt.emitClient(source,'notify', 'error', Core.Translate('COMMANDS.LABEL'), 'Especifique um id para adicionar a whitelist')
          return;
       }
-      Core.Functions.whiteliststatus(source, id)
+      Core.Functions.whitelistBanStatus(source, socialID, 'whitelist')
 }else{
       alt.emitClient(source,'notify', 'error', Core.Translate('PERMISSIONS.LABEL'), Core.Translate('PERMISSIONS.DONT_HAVE_PERM'))
      }
 })
 
+chat.registerCmd('ban', (source, [socialID, reason])=>{
+   const isAllowed = Core.Functions.hasPermission(source, 'admin')
+   if(isAllowed){
+      
+   if(!socialID || !reason){
+         alt.emitClient(source,'notify', 'error', Core.Translate('COMMANDS.LABEL'), 'Type /ban social ID reason')
+         return;
+      }
+      const target = alt.Player.all.find(source => 
+         source.playerData.socialID === socialID)
+         if(!target || target === source) return alt.emitClient(source,'notify', 'error', Core.Translate('SYSTEM.LABEL'), Core.Translate('SYSTEM.NO_TARGET_FOUND'))
+         Core.Functions.whitelistBanStatus(source, socialID, 'ban')
+         target.kick(Core.Translate('ACCOUNT.BAN', { reason: reason }))
+}else{
+      alt.emitClient(source,'notify', 'error', Core.Translate('PERMISSIONS.LABEL'), Core.Translate('PERMISSIONS.DONT_HAVE_PERM'))
+     }
+})
+
+chat.registerCmd('unban', (source, [socialID])=>{
+   const isAllowed = Core.Functions.hasPermission(source, 'admin')
+   if(isAllowed){
+      
+   if(!socialID){
+         alt.emitClient(source,'notify', 'error', Core.Translate('COMMANDS.LABEL'), 'Type /ban social ID reason')
+         return;
+      }
+         Core.Functions.whitelistBanStatus(source, socialID, 'unban')
+}else{
+      alt.emitClient(source,'notify', 'error', Core.Translate('PERMISSIONS.LABEL'), Core.Translate('PERMISSIONS.DONT_HAVE_PERM'))
+     }
+})
 
 chat.registerCmd('cloth', (source, [component, drawable, texture])=>{
    if(!component || !drawable || !texture){
@@ -272,5 +364,10 @@ chat.registerCmd('setJob', (source, [job, grade]) => {
      alt.emitClient(source,'notify', 'error', Core.Translate('PERMISSIONS.LABEL'), Core.Translate('PERMISSIONS.DONT_HAVE_PERM'))
      return;
    }
-   Core.Functions.setJob(source, job, grade)
+   Core.Job.setJob(source, job, grade)
+})
+
+chat.registerCmd('duty', (source) => {
+   if(!source) return;
+   Core.Job.setDuty(source)
 })

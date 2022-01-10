@@ -59,7 +59,7 @@ const createMultipleInteractions = (interactions, maxRadius = 2.5, height = 2.5)
             colshape['blip'] = pointBlip
         }
         if(interaction.ped){
-            Core.Entities.createPed(vector, 0, {pedType: interaction.ped.pedType, modelHash: interaction.ped.modelHash})
+            Core.Entities.createPed(vector, 0, {pedType: interaction.ped.pedType, modelHash: interaction.ped.modelHash, pedHeading: interaction.ped.pedHeading})
         }
         if(interaction.marker){
             Core.Entities.createMarker(vector, 0, {type: interaction.marker.type, r: interaction.marker.color.r, g: interaction.marker.color.g, b: interaction.marker.color.b, a: interaction.marker.color.a})

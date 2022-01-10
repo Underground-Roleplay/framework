@@ -68,11 +68,16 @@ const isSourceAtBennys = () => {
 }
 
 const isSourceAMechanic = () => {
-   const currentJob = Core.Functions.getJob().name.toLowerCase()
+   const currentJob = Core.Functions.getJobInfo('name')
+   const onDuty = Core.Functions.getJobInfo('onDuty')
    if(currentJob !== 'mechanic') {
        alt.emit('notify',  'error', `Benny's`, `You need to be a mechanic`)
        return false;
     }
+    if(!onDuty) {
+        alt.emit('notify',  'error', `Benny's`, `You need to be on duty`)
+        return false
+    } 
    return true
 }
 

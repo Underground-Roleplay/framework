@@ -65,20 +65,40 @@ const login = async(source) => {
     }
 }
 
-//  Player whitelist status
-const whiteliststatus = async(source, id) => {
-    const result = await executeSync('SELECT whitelisted from users WHERE id = ?', [id])
+//  Player whitelist & BAN status
+const whitelistBanStatus = async(source, socialID, type) => {
+    const result = await executeSync('SELECT banned, whitelisted from users WHERE socialID = ?', [socialID])
     if (result.length <= 0) {
        alt.emitClient(source,'notify', 'error', Core.Translate('COMMANDS.LABEL'), Core.Translate('COMMANDS.USER_ID_NOT_FOUND'))
        return;
-       }else if (result[0].whitelisted) {
+       }
+    if (type === 'whitelist') {
+    if (result[0].whitelisted) {
        alt.emitClient(source,'notify', 'error', Core.Translate('COMMANDS.LABEL'), Core.Translate('COMMANDS.USER_ID_ALLREADY_WHITELISTED'))
        return;
-       }else{
-    updateSync('UPDATE users SET whitelisted = ? WHERE id = ?', [1, id], undefined, alt.resourceName)
-    alt.emitClient(source,'notify', 'sucess', Core.Translate('COMMANDS.LABEL'), Core.Translate('COMMANDS.USER_ID_WHITELISTED'))
+       } else {
+        updateSync('UPDATE users SET whitelisted = ? WHERE socialID = ?', [1, socialID], undefined, alt.resourceName)
+        alt.emitClient(source,'notify', 'success', Core.Translate('COMMANDS.LABEL'), Core.Translate('COMMANDS.USER_ID_WHITELISTED'))
        }
+    } else if(type === 'ban') {
+        if (result[0].banned) {
+            alt.emitClient(source,'notify', 'error', Core.Translate('COMMANDS.LABEL'), Core.Translate('COMMANDS.USER_ID_ALLREADY_BANNED'))
+            return;
+            } else {
+             updateSync('UPDATE users SET banned = ? WHERE socialID = ?', [1, socialID], undefined, alt.resourceName)
+             alt.emitClient(source,'notify', 'success', Core.Translate('COMMANDS.LABEL'), Core.Translate('COMMANDS.USER_ID_BANNED'))
+            }
+    } else if(type === 'unban') {
+        if (!result[0].banned) {
+            alt.emitClient(source,'notify', 'error', Core.Translate('COMMANDS.LABEL'), Core.Translate('COMMANDS.USER_ID_NOT_BANNED'))
+            return;
+            } else {
+             updateSync('UPDATE users SET banned = ? WHERE socialID = ?', [0, socialID], undefined, alt.resourceName)
+             alt.emitClient(source,'notify', 'success', Core.Translate('COMMANDS.LABEL'), Core.Translate('COMMANDS.USER_ID_UNBANNED'))
+            }
+    }
 }
+
 
 // Player utils
 const setPosition = (source, x, y, z, model = undefined) => {
@@ -264,40 +284,9 @@ const PhoneTunel = (source,targtEvent,dataRvent,phone)=>{
     }
 }
 
-const setJob = (source, job, grade) => {
-    const jobName = job.toLowerCase()
-    if(!Core.Shared.Jobs[jobName]) return;
-    const jobgrade = Core.Shared.Jobs[jobName].grades[grade]
-    if(jobgrade){
-        source.playerData.job.name = jobName
-        source.playerData.job.grade = {}
-        source.playerData.job.grade.name = jobgrade.name
-        source.playerData.job.grade.level = parseInt(grade)
-        source.playerData.job.payment = jobgrade.payment || 30
-        source.playerData.job.isboss = jobgrade.isboss || false
-    }else{
-        source.playerData.job.name = jobName
-        source.playerData.job.grade = {}
-        source.playerData.job.grade.name = 'No grades'
-        source.playerData.job.grade.level = 0
-        source.playerData.job.payment = 30
-        source.playerData.job.isboss = false
-    }
-
-    const { ssn } = source.playerData
-    db.execute('UPDATE characters SET job = ? WHERE ssn = ?', [JSON.stringify(source.playerData.job), ssn], undefined, alt.resourceName)
-    Core.Functions.emitPlayerData(source, 'job', source.playerData.job)
-    alt.emitClient(source,'notify', 'error', 'JOB SYSTEM', `You are now a ${job}`)
-}
-  
-const getJob = (source) => {
-    if(!source || !source.playerData.job) return undefined;
-    return source.playerData.job
-}
-
 export default { 
     login,
-    whiteliststatus,
+    whitelistBanStatus,
     getPlayerIdentifier,
     setPosition,
     getMoney,
@@ -314,7 +303,5 @@ export default {
     inviteCallRequest,
     endCall,
     PhoneTunel,
-    GetNumber,
-    setJob,
-    getJob
+    GetNumber
 }
