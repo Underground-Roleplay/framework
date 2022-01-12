@@ -16,11 +16,10 @@ alt.onClient('inventory:useItem', (source, item) => {
 // TODO
 alt.onClient('inventory:setInventoryData', (source, fromInventory, toInventory, fromSlot, toSlot, 
    fromAmount, toAmount) => {
+      const fromItem = Core.Inventory.getItemBySlot(source, fromSlot)
+      const toItem =  Core.Inventory.getItemBySlot(source, toSlot)
       //Change Slot from same inventory
       if(fromInventory === toInventory && toInventory !== 'dropzone'){
-         console.log(fromSlot, toSlot)
-         const fromItem = Core.Inventory.getItemBySlot(source, fromSlot)
-         const toItem =  Core.Inventory.getItemBySlot(source, toSlot)
          // console.log(fromItem, toItem)
          if(toItem){
             // Remove item from target slot
@@ -35,14 +34,18 @@ alt.onClient('inventory:setInventoryData', (source, fromInventory, toInventory, 
         }
        Core.Inventory.removeItem(source, fromItem.name, fromItem.amount)
        Core.Inventory.addItem(source, fromItem.name, fromItem.amount, toSlot, fromItem.info)
+       return;
+      }
+      //Drop item
+      if(fromInventory !== toInventory && toInventory === 'dropzone'){
+         Core.Inventory.dropItem(source, fromItem, fromAmount)
       }
       // multiple inventory types such as = player, dropzone, stash
       // if from = to, only removeAdd in same place
 })
 
-alt.onClient('inventory:dropItem', (source, item, amount) => {
-   console.log('drop', item)
-   Core.Inventory.removeItem(source, item, amount)
+alt.onClient('inventory:pickupItem', (source, droppedItem, toSlot, fromAmount) => {
+   Core.Inventory.pickupItem(source, droppedItem, toSlot, fromAmount)
 })
 
 alt.onClient('inventory:getInventoryData', (source) => {

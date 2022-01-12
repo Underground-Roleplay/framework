@@ -2,11 +2,13 @@ import * as alt from 'alt-client';
 import * as natives from 'natives';
 import Core from "../main";
 
+const nearItems = [];
+
 const list = []
 
 const getEntity = async (id, type, pos, data) => {
     if(!list[`${id}_${type}`]){
-        const localId = await createEntity(type, pos, data)
+        const localId = await createEntity(type, pos, data, id)
         list[`${id}_${type}`] = {
             id: id,
             type: type,
@@ -31,7 +33,7 @@ const getEntity = async (id, type, pos, data) => {
     return list[`${id}_${type}`]
 }
 
-const createEntity = async (type, pos, data) => {
+const createEntity = async (type, pos, data, id = undefined) => {
     if(type === 1){
         const pedId = await createPed(pos, data)
         return pedId
@@ -40,11 +42,41 @@ const createEntity = async (type, pos, data) => {
         const markerTimer = createMarker(pos, data)
         return markerTimer
     }
+    if(type === 3){
+        const itemID = createDroppedItem(id, pos, data)
+        return itemID
+    }
 }
 
 const updatePos = async (id, type, pos) => {
     destroyEntity(id, type)
     getEntity(id, type, pos)
+}
+
+const createDroppedItem = (id, pos, data) => {
+    const defaultMarker = {
+        type: 0,
+        scalex: 1,
+        scaley: 1,
+        scalez: 1,
+        ...new alt.RGBA(0,181,204,200)
+    }
+    const marker = createMarker(pos, defaultMarker)
+    data.marker = marker
+    if(nearItems.length > 0){
+        for(let i = 0; i < nearItems.length; i++){
+            if(!nearItems[i]){
+                nearItems[i] = data
+                nearItems[i].slot = i
+                nearItems[i].entityID = id
+                return i;
+            }
+        }
+    }
+    const idx = nearItems.push(data) - 1
+    nearItems[idx].slot = idx
+    nearItems[idx].entityID = id
+    return idx
 }
 
 const createMarker = (pos, data) => {
@@ -103,6 +135,14 @@ const destroyEntity = (id, type) => {
         alt.clearEveryTick(local)
         list[`${id}_${type}`].local = undefined
     }
+    if(type === 3){
+        const { local } = list[`${id}_${type}`]
+        if(nearItems[local] && nearItems[local].marker){
+            alt.clearEveryTick(nearItems[local].marker)
+        }
+        nearItems[local] = undefined;
+        list[`${id}_${type}`].local = undefined
+    }
 }
 
 // const destroyEntities = () => {
@@ -112,4 +152,4 @@ const destroyEntity = (id, type) => {
 //     }
 // }
 
-export default {getEntity, createPed, destroyEntity, updatePos}
+export default {getEntity, createPed, destroyEntity, updatePos, nearItems}

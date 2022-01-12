@@ -1,6 +1,7 @@
 import * as alt from 'alt-client';
 import * as natives from 'natives';
 import utils from './utils';
+import Core from '../main';
 
 let deathInterval;
 let deathTime;
@@ -341,5 +342,16 @@ const handleVehicleStates = (vehicle, key, value, oldValue) => {
     }      
 }
 
+const getCloseItems = () => {
+    if(Core.Entities.nearItems.length <= 0) return undefined;
+    return {
+        name: 'dropzone',
+        label: 'Drop',
+        slots: 30,
+        inventory: Core.Entities.nearItems
+    }
+}
+
+
 export default {startTicks, handleSetplayerData, getPlayerData, handleDeath, RequestModel, getMetaData, playAnim, 
-    stopAnim, disableBehaviours, handleVehicleStates, disableConfigFlags, getJobInfo}
+    stopAnim, disableBehaviours, handleVehicleStates, disableConfigFlags, getJobInfo, getCloseItems}

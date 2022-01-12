@@ -21,6 +21,13 @@ const openInventory = (data) => {
         closeInventory()
     })
     Core.Browser.on('inventory:setInventoryData', (fromInventory, toInventory, fromSlot, toSlot, fromAmount, toAmount) => {
+        if(fromInventory === 'dropzone'){
+            const nearItems = Core.Functions.getCloseItems()
+            const droppedItem = nearItems.inventory.find(i => i.slot === parseInt(fromSlot))
+            if(!droppedItem) return;
+            alt.emitServer('inventory:pickupItem', droppedItem, toSlot, fromAmount)
+            return;
+        }
         alt.emitServer('inventory:setInventoryData', fromInventory, toInventory, fromSlot, toSlot, fromAmount, toAmount)
     })
     Core.Browser.on('load', () => {
@@ -52,10 +59,12 @@ const hotKeys = [49, 50, 51, 52, 53]
 alt.on('keydown', (key) => {
     if(key === 73 && !isOpen && !Core.Browser.getCurrentViewState() && !alt.Player.local.isDead && !alt.isMenuOpen() && !chat.isChatOpen()) {
         const inventory = Core.Functions.getPlayerData('inventory')
+        const nearItems = Core.Functions.getCloseItems()
+        console.log('dropped???', nearItems)
         const data = {
             inventory: inventory,
             slots: Core.Config.MaxInvSlots,
-            other: undefined,
+            other: nearItems,
             maxWeight: Core.Config.MaxWeight,
             ammo: {},
             maxAmmo: 100

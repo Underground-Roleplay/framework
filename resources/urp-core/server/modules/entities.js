@@ -3,6 +3,7 @@ import * as Entities from 'entity-sync';
 
 const PED_TYPE = 1
 const MARKER_TYPE = 2
+const ITEM_TYPE = 3
 
 const addNewEntity = (type, pos, dimension, data, range) => {
     const newEntity = Entities.createGameEntity(type, pos, dimension, range)
@@ -11,6 +12,10 @@ const addNewEntity = (type, pos, dimension, data, range) => {
     }
     alt.log(`Created entity ${newEntity} with type ${type}`);
     return newEntity;
+}
+
+const removeEntity = (id, type) => {
+    Entities.removeGameEntity(id, type)
 }
 
 const setEntityPosition = (id, type, pos) => {
@@ -28,4 +33,17 @@ const createMarker = (pos, dimension, data) => {
     addNewEntity(MARKER_TYPE, pos, dimension, data, 250)
 }
 
-export default { createPed, createMarker, setEntityPosition }
+const createDropItem = (pos, dimension, item) => {
+    const entity = addNewEntity(ITEM_TYPE, pos, dimension, item, 5)
+    return entity
+}
+
+const updateEntityData = (id, type, key, data) => {
+    return Entities.setGameEntityData(id, type, key, data);
+}
+
+const getEntityData = (id, type, key) => {
+    return Entities.getGameEntityData(id, type, key);
+}
+
+export default { createPed, createMarker, setEntityPosition, createDropItem, removeEntity, updateEntityData, getEntityData }
