@@ -124,7 +124,6 @@ const getPlayerData = (source, key) => {
 
 const getIdentityByProximity = (source) => {
     const closestSource = getClosestEntity(source.pos, source.rot, [...alt.Player.all], 10)
-    console.log('DEBUG', closestSource)
     if (!closestSource || closestSource === source) {
         alt.emitClient(source, 'notify', 'error', Core.Translate('SYSTEM.LABEL'), Core.Translate('NO_PLAYERS_NEAR'))
         return;
@@ -249,7 +248,6 @@ const GetSsn = (source, dt) => {
 const createCallPhone = (source, phone) => {
     console.log(`[createCallPhone] caller ${source.playerData.phone} target ${phone}`)
     const target = getSourceTargetByPhone(phone)
-    console.log(target)
     if (!target) return;
     if (source.playerData.inCall || target.playerData.inCall) return;
     Core.Voice.createVoiceChannel(phone, 999999, false)
@@ -267,13 +265,10 @@ const endCall = (source, phone) => {
     Core.Voice.removeSourceFromChannel(source, source.playerData.inCall.voiceChannel)
     Core.Voice.removeSourceFromChannel(target, target.playerData.inCall.voiceChannel)
     Core.Voice.destroyVoiceChannel(source.playerData.inCall.voiceChannel)
-    console.log(target.playerData.inCall)
     target.playerData.inCall = false
     source.playerData.inCall = false
-    console.log(target.playerData.inCall)
     alt.emitClient(target, 'Phone:endCall')
     alt.emitClient(source, 'Phone:endCall')
-    console.log("close chanel");
 }
   
   
