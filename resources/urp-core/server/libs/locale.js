@@ -1,6 +1,6 @@
-import i18n from 'i18n'
-import br from '../../shared/configs/lang/pt-br.json'
-import en from '../../shared/configs/lang/en.json'
+import i18n from 'i18n';
+import br from '../../shared/configs/lang/pt-br.json';
+import en from '../../shared/configs/lang/en.json';
 
 let provider;
 
@@ -10,30 +10,29 @@ const init = (lang) => {
         defaultLocale: 'pt-br',
         objectNotation: true,
         staticCatalog: {
-            "pt-br": br,
-            "en": en
+            'pt-br': br,
+            en: en,
         },
         api: {
-            '__': 'translate',
-        }
+            __: 'translate',
+        },
     });
-    provider = i18n
-    setLocale(lang)
-}
+    provider = i18n;
+    setLocale(lang);
+};
 
-const getLocales = () =>{ 
-    return provider.getLocales() || undefined
-}
+const getLocales = () => {
+    return provider.getLocales() || undefined;
+};
 
 const setLocale = (lang) => {
     if (getLocales().indexOf(lang) !== -1) {
-        provider.setLocale(lang)
+        provider.setLocale(lang);
     }
-}
+};
 
 const translate = (str, args) => {
-    return provider.__(str, args)
-}
+    return provider.__(str, args);
+};
 
-
-export { init, translate }
+export { init, translate };

@@ -47,19 +47,19 @@ alt.onClient('chatmessage', (player, msg) => {
 
         if (rangedChat) {
             var playersInRange = alt.Player.all.filter(
-                x => Distance(player.pos, x.pos) <= rangeOfChat
+                (x) => Distance(player.pos, x.pos) <= rangeOfChat
             );
 
             if (playersInRange.length <= 0) return;
 
             var closePlayers = playersInRange.filter(
-                x => Distance(player.pos, x.pos) <= rangeOfChat / 2
+                (x) => Distance(player.pos, x.pos) <= rangeOfChat / 2
             );
             var farPlayers = playersInRange.filter(
-                x => Distance(player.pos, x.pos) >= rangeOfChat / 2
+                (x) => Distance(player.pos, x.pos) >= rangeOfChat / 2
             );
 
-            closePlayers.forEach(target => {
+            closePlayers.forEach((target) => {
                 alt.emitClient(
                     target,
                     'chatmessage',
@@ -71,7 +71,7 @@ alt.onClient('chatmessage', (player, msg) => {
                 );
             });
 
-            farPlayers.forEach(target => {
+            farPlayers.forEach((target) => {
                 alt.emitClient(
                     target,
                     'chatmessage',
@@ -153,11 +153,11 @@ export function debug(message) {
 
 // Used in an onConnect function to add functions to the player entity for a seperate resource.
 export function setupPlayer(player) {
-    player.sendMessage = msg => {
+    player.sendMessage = (msg) => {
         send(player, msg);
     };
 
-    player.mute = state => {
+    player.mute = (state) => {
         if (state) {
             send(player, '{FF0000} You were muted.');
         } else {
@@ -173,7 +173,7 @@ alt.on('sendChatMessage', (player, msg) => {
     send(player, msg);
 });
 
-alt.on('broadcastMessage', msg => {
+alt.on('broadcastMessage', (msg) => {
     send(null, msg);
 });
 
@@ -186,5 +186,5 @@ export default {
     info,
     warning,
     error,
-    debug
+    debug,
 };

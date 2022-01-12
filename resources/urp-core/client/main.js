@@ -2,29 +2,28 @@
 /// <reference types="@altv/types-webview" />
 /// <reference types="@altv/types-natives" />
 
-import { URPConfig } from '../shared/configs/base'
+import { URPConfig } from '../shared/configs/base';
 
-import functions from './modules/functions'
+import functions from './modules/functions';
 
-import utils from './modules/utils'
+import utils from './modules/utils';
 
-import browser from './modules/browser'
+import browser from './modules/browser';
 
-import entities from './modules/entities'
+import entities from './modules/entities';
 
-import './modules/events'
+import './modules/events';
 
+const Core = {};
 
-const Core = {}
+Core.Config = URPConfig;
 
-Core.Config = URPConfig
+Core.Browser = browser;
 
-Core.Browser = browser
+Core.Functions = functions;
 
-Core.Functions = functions
+Core.Utils = utils;
 
-Core.Utils = utils
-
-Core.Entities = entities
+Core.Entities = entities;
 
 export default Core;

@@ -1,15 +1,15 @@
 import * as alt from 'alt-server';
 import Core from 'urp-core';
 
-Core.Inventory.createUseableItem('water_bottle', 'consumables:drink', false)
-Core.Inventory.createUseableItem('sandwich', 'consumables:eat', false)
+Core.Inventory.createUseableItem('water_bottle', 'consumables:drink', false);
+Core.Inventory.createUseableItem('sandwich', 'consumables:eat', false);
 
-Core.Inventory.createUseableItem('armor', 'consumables:useArmor', true)
+Core.Inventory.createUseableItem('armor', 'consumables:useArmor', true);
 
 alt.on('consumables:useArmor', (source, item) => {
-    source.armour = 100
-})
+    source.armour = 100;
+});
 
 alt.onClient('consumable:addHungerThirst', (source, itemtype, value) => {
-    Core.Character.addHungerThirst(source, itemtype, value)
-})
+    Core.Character.addHungerThirst(source, itemtype, value);
+});
