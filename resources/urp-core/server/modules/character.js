@@ -497,10 +497,10 @@ const changeCloth = (source, component, drawable, texture) => {
 };
 const changeProps = (source, component, drawable, texture) => {
     if (!source || !source.playerData) return;
-    source.setProp(component, drawable, texture)
-    source.playerData.customizations.props[component].drawable = drawable
-    source.playerData.customizations.props[component].texture = texture
-    updateCustoms(source)
+    source.setProp(component, drawable, texture);
+    source.playerData.customizations.props[component].drawable = drawable;
+    source.playerData.customizations.props[component].texture = texture;
+    updateCustoms(source);
 };
 
 const loadCustoms = async (source) => {
