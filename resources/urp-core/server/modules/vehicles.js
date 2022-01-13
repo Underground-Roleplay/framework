@@ -159,6 +159,9 @@ const spawn = (source, vehicleData, pos, rot) => {
 
     vehicle.engineOn = false;
 
+    vehicle.customPrimaryColor = { r: 0, g: 0, b: 0, a: 255 };
+    vehicle.customSecondaryColor = { r: 0, g: 0, b: 0, a: 255 };
+
     if (
         vehicleData.customizations.customPrimaryColor &&
         vehicleData.customizations.customSecondaryColor
@@ -178,7 +181,8 @@ const spawn = (source, vehicleData, pos, rot) => {
     vehicle.setStreamSyncedMeta('owner', vehicleData.ssn);
     vehicle.setStreamSyncedMeta('engine', false);
     vehicleTick(vehicle);
-
+    saveMods(vehicle);
+    saveStatus(vehicle);
     return vehicle;
 };
 
@@ -372,12 +376,10 @@ const saveVehicleMetadata = (vehicle) => {
 };
 
 const setMod = (source, index, id) => {
-    console.log(source.vehicle);
     if (source.vehicle === null) return;
     if (source.vehicle.modKit != 1 || source.vehicle.modKit == 1) {
         source.vehicle.modKit = 1;
         source.vehicle.setMod(parseInt(index), parseInt(id));
-        alt.log(source.vehicle.getModsCount(parseInt(index)));
     }
 };
 
@@ -456,7 +458,6 @@ const reFuel = (source, value) => {
 
 const saveMods = (vehicle) => {
     if (!vehicle.data) return;
-    console.log(vehicle.data);
     vehicle.data.customizations = getMods(vehicle, vehicle.data.model);
     db.execute(
         'UPDATE characters_vehicles SET customizations = ? WHERE ssn = ? AND id = ?',
@@ -536,7 +537,6 @@ const getMods = (vehicle) => {
 };
 
 const loadMods = (vehicle, data) => {
-    console.log(data);
     vehicle.modKit = 1;
     alt.nextTick(() => {
         vehicle.modKit = data.modKit;
