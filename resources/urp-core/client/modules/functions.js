@@ -462,6 +462,7 @@ export default {
     getMetaData,
     playAnim,
     stopAnim,
+    loadAnim,
     disableBehaviours,
     handleVehicleStates,
     disableConfigFlags,
