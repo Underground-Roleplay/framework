@@ -1,0 +1,125 @@
+@font-face {
+	font-family: 'Oswald-Regular';
+	src: url('../fonts/Oswald-Regular.eot');
+	src: url('../fonts/Oswald-Regular.eot#iefix') format('embedded-opentype'),
+		 url('../fonts/Oswald-Regular.woff') format('woff'),
+		 url('../fonts/Oswald-Regular.woff2') format('woff2'),
+		 url('../fonts/Oswald-Regular.ttf') format('truetype'),
+		 url('../fonts/Oswald-Regular.svg#webfont34M5alKg') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'Oswald-Light';
+	src: url('../fonts/Oswald-Light.eot');
+	src: url('../fonts/Oswald-Light.eot#iefix') format('embedded-opentype'),
+		 url('../fonts/Oswald-Light.woff') format('woff'),
+		 url('../fonts/Oswald-Light.woff2') format('woff2'),
+		 url('../fonts/Oswald-Light.ttf') format('truetype'),
+		 url('../fonts/Oswald-Light.svg#webfont34M5alKg') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+.gauge-title {
+	font-size: 14px;
+	fill: #FFFFFF;
+}
+.gauge-value {
+	font-size: 24px;
+	fill: #FFFFFF;
+}
+.gauge-unity {
+	font-size: 14px;
+	fill: #FFFFFF;
+}
+#container {
+	display: none;
+}
+#rpmshow {
+	position: fixed;
+	bottom: 64px;
+	right: 64px;
+	filter: drop-shadow(0px 0px 1px rgba(0,0,0,0.6));
+}
+.speedcircle {
+	width: 40px;
+	height: 40px;
+	position: fixed;
+	bottom: 103px;
+	right: 103px;
+}
+.geardisplay {
+	text-align: center;
+	font-family: 'Oswald-Regular';
+	font-size: 16px;
+	width: 25px;
+	height: 25px;
+	position: fixed;
+	bottom: 107px;
+	right: 107px;
+	color: rgb(63,249,165);
+	border: 3px solid rgb(63,249,165);
+	border-radius: 50%;
+	font-style: italic;
+	font-weight: bold;
+}
+.geardisplay span {
+	margin-left: -10px;
+}
+.speeddisplay {
+	font-size: 25px;
+    position: fixed;
+    bottom: 50px;    
+    font-family: 'Oswald-Light';
+    font-style: italic;
+    font-weight: 100;
+    color: #FFF;
+}
+.gray {
+	color: rgba(255,255,255,0.5);
+}
+.int1 {
+	position: fixed;
+	bottom: 50px;
+	right: 120px;
+}
+.int2 {
+	position: fixed;
+	bottom: 50px;
+	right: 100px;
+}
+.int3 {
+	position: fixed;
+	bottom: 50px;
+	right: 80px;
+}
+.unitdisplay {
+	position: fixed;
+	bottom: 98px;
+	right: 75px;
+	color: rgba(255,255,255,0.6);
+	font-family: 'Oswald-Regular';
+	font-style: italic;
+	font-weight: 100;
+	font-size: 18px;
+}
+.abs {
+	position: fixed;
+	bottom: 225px;
+	right: 295px;
+	color: rgba(255,255,255,1);
+	font-family: 'Oswald-Regular';
+	font-style: normal;
+	font-weight: 100;
+	font-size: 18px;
+}
+.handbrake {
+	position: fixed;
+	bottom: 200px;
+	right: 293px;
+	color: rgba(255,255,255,1);
+	font-family: 'Oswald-Regular';
+	font-style: normal;
+	font-weight: 100;
+	font-size: 18px;
+}
