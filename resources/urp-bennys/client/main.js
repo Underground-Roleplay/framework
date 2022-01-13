@@ -4,88 +4,99 @@ import * as alt from 'alt-client';
 
 import { bennysCoords } from '../shared/config';
 
-const localPlayer = alt.Player.local
+const localPlayer = alt.Player.local;
 
-let isOpen = false
+let isOpen = false;
 
 const RefreshMod = (i) => {
-    Core.Browser.emit('Bennys:loadMod',i)
-}
+    Core.Browser.emit('Bennys:loadMod', i);
+};
 
 const openbennys = () => {
-    Core.Browser.open('http://resources/urp-bennys/client/html/ui.html', true, false)
+    Core.Browser.open(
+        'http://resources/urp-bennys/client/html/ui.html',
+        true,
+        false
+    );
     Core.Browser.on('Bennys:close', () => {
-        closeSkinshop()
-    })
+        closeSkinshop();
+    });
     Core.Browser.on('load', () => {
-        console.log('webview loaded')
-        alt.emitServer('Bennys:load')
-    })
+        console.log('webview loaded');
+        alt.emitServer('Bennys:load');
+    });
     Core.Browser.on('Bennys:att', (index, id) => {
-        alt.emitServer('Bennys:att', index, id)
-    })
+        alt.emitServer('Bennys:att', index, id);
+    });
     Core.Browser.on('Bennys:instalar', () => {
-        alt.emitServer('Bennys:install')
-    })
+        alt.emitServer('Bennys:install');
+    });
     Core.Browser.on('Bennys:reload', () => {
-        alt.emitServer('Bennys:reload')
-    })
-    Core.Browser.on('Bennys:color', (type,color) => {
-        alt.emitServer('Bennys:color',type,color)
-    })
+        alt.emitServer('Bennys:reload');
+    });
+    Core.Browser.on('Bennys:color', (type, color) => {
+        alt.emitServer('Bennys:color', type, color);
+    });
     Core.Browser.on('Bennys:InstallColor', () => {
-        alt.emitServer('Bennys:InstallColor')
-    })
-    
-    alt.toggleGameControls(false)
-    isOpen = true
-}
+        alt.emitServer('Bennys:InstallColor');
+    });
 
-alt.onServer('Bennys:loadMod', RefreshMod)
+    alt.toggleGameControls(false);
+    isOpen = true;
+};
 
-
-
+alt.onServer('Bennys:loadMod', RefreshMod);
 
 const closebennys = () => {
-    alt.emitServer('Bennys:reload')
-    Core.Browser.close()
-    alt.toggleGameControls(true)
-    isOpen = false
-}
+    alt.emitServer('Bennys:reload');
+    Core.Browser.close();
+    alt.toggleGameControls(true);
+    isOpen = false;
+};
 
 const isSourceAtBennys = () => {
-   const playerInterior = natives.getInteriorFromEntity(localPlayer.scriptID)
-   if(!playerInterior) {
-        alt.emit('notify',  'error', `Benny's`, `You need to be at benny's`)
+    const playerInterior = natives.getInteriorFromEntity(localPlayer.scriptID);
+    if (!playerInterior) {
+        alt.emit('notify', 'error', `Benny's`, `You need to be at benny's`);
         return false;
-   };
-   const bennysInterior = natives.getInteriorAtCoords(bennysCoords.x, bennysCoords.y, bennysCoords.z)
-   if(bennysInterior !== playerInterior) {
-        alt.emit('notify',  'error', `Benny's`, `You need to be at benny's`)
+    }
+    const bennysInterior = natives.getInteriorAtCoords(
+        bennysCoords.x,
+        bennysCoords.y,
+        bennysCoords.z
+    );
+    if (bennysInterior !== playerInterior) {
+        alt.emit('notify', 'error', `Benny's`, `You need to be at benny's`);
         return false;
-   }
-   return true
-}
+    }
+    return true;
+};
 
 const isSourceAMechanic = () => {
-   const currentJob = Core.Functions.getJobInfo('name')
-   const onDuty = Core.Functions.getJobInfo('onDuty')
-   if(currentJob !== 'mechanic') {
-       alt.emit('notify',  'error', `Benny's`, `You need to be a mechanic`)
-       return false;
+    const currentJob = Core.Functions.getJobInfo('name');
+    const onDuty = Core.Functions.getJobInfo('onDuty');
+    if (currentJob !== 'mechanic') {
+        alt.emit('notify', 'error', `Benny's`, `You need to be a mechanic`);
+        return false;
     }
-    if(!onDuty) {
-        alt.emit('notify',  'error', `Benny's`, `You need to be on duty`)
-        return false
-    } 
-   return true
-}
+    if (!onDuty) {
+        alt.emit('notify', 'error', `Benny's`, `You need to be on duty`);
+        return false;
+    }
+    return true;
+};
 
 alt.on('keydown', (key) => {
     if (key === 27 && isOpen) {
-        closebennys()
+        closebennys();
     }
-    if (key === 187 && !isOpen && localPlayer.vehicle && isSourceAMechanic() && isSourceAtBennys()) {
-        openbennys()
+    if (
+        key === 187 &&
+        !isOpen &&
+        localPlayer.vehicle &&
+        isSourceAMechanic() &&
+        isSourceAtBennys()
+    ) {
+        openbennys();
     }
-})
+});

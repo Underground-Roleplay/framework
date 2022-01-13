@@ -18,36 +18,42 @@ if (!view) {
 }
 const vehicleMenu = {
     identifier: 'vehicle Menu',
-        options: [
-            { eventName: 'trashcan:engine', isServer: true, name: 'Ligar Motor' },
-            { eventName: 'trashcan:Dig', isServer: true, name: 'Tancar' },
-            { eventName: 'trashcan:Dig', isServer: true, name: 'Abrir porta-malas' },
-        ],
-        title: 'Vehicle Options'
-            
-}
+    options: [
+        { eventName: 'trashcan:engine', isServer: true, name: 'Ligar Motor' },
+        { eventName: 'trashcan:Dig', isServer: true, name: 'Tancar' },
+        {
+            eventName: 'trashcan:Dig',
+            isServer: true,
+            name: 'Abrir porta-malas',
+        },
+    ],
+    title: 'Vehicle Options',
+};
 function handleInteraction(type, entity, model, coords) {
-    alt.log(`[CONTEXT-INFO] Type: ${type} | ID: ${entity} | Model: ${model} | Coords: ${JSON.stringify(coords)}`);
+    alt.log(
+        `[CONTEXT-INFO] Type: ${type} | ID: ${entity} | Model: ${model} | Coords: ${JSON.stringify(
+            coords
+        )}`
+    );
 
     data = {
         type,
         entity,
         model,
-        coords
+        coords,
     };
-    if(type === "vehicle"){
+    if (type === 'vehicle') {
         view.focus();
         showCursor(true);
         const cursor = alt.getCursorPos();
-        view.emit('context:Mount', vehicleMenu, cursor.x, cursor.y)
+        view.emit('context:Mount', vehicleMenu, cursor.x, cursor.y);
         return;
     }
 
     if (!menus[model]) {
         return;
     }
-    
-    
+
     view.focus();
     showCursor(true);
     const cursor = alt.getCursorPos();
@@ -57,25 +63,38 @@ function handleInteraction(type, entity, model, coords) {
 
 function handleCreateMenu(model, title) {
     if (menus[model]) {
-        alt.log(`[CONTEXT-ERROR] Model ${model} is already in use for entity/model ${model}.`);
+        alt.log(
+            `[CONTEXT-ERROR] Model ${model} is already in use for entity/model ${model}.`
+        );
         return;
     }
 
     alt.log(`[CONTEXT-SUCCESS] Model ${model} is now bound. Title: ${title}`);
     menus[model] = {
         title,
-        options: []
+        options: [],
     };
 }
 
-function handleAppendToMenu(model, contextOptionName, eventCallbackName, isServer = false) {
+function handleAppendToMenu(
+    model,
+    contextOptionName,
+    eventCallbackName,
+    isServer = false
+) {
     if (!menus[model]) {
         alt.log(`[CONTEXT-ERROR] Identifier ${identifier} not found.`);
         return;
     }
 
-    alt.log(`[CONTEXT-SUCCESS] Appended ${contextOptionName} to model ${model}.`);
-    menus[model].options.push({ name: contextOptionName, eventName: eventCallbackName, isServer });
+    alt.log(
+        `[CONTEXT-SUCCESS] Appended ${contextOptionName} to model ${model}.`
+    );
+    menus[model].options.push({
+        name: contextOptionName,
+        eventName: eventCallbackName,
+        isServer,
+    });
 }
 
 function showCursor(state) {

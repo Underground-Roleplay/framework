@@ -1,7 +1,7 @@
 /// <reference types="@altv/types-server" />
 import * as alt from 'alt-server';
 
-import { URPConfig } from '../shared/configs/base'; 
+import { URPConfig } from '../shared/configs/base';
 
 import functions from './modules/functions';
 import character from './modules/character';
@@ -23,58 +23,57 @@ import { Items } from '../shared/configs/items';
 import { executeSync } from './libs/utils';
 import { Jobs } from '../shared/configs/jobs';
 
+const Core = {};
 
-const Core = {}
+Core.Config = URPConfig;
 
-Core.Config = URPConfig
+Core.Shared = {};
 
-Core.Shared = {}
+Core.Shared.Items = Items;
 
-Core.Shared.Items = Items
+Core.Shared.Jobs = Jobs;
 
-Core.Shared.Jobs = Jobs
+init(Core.Config.lang);
 
-init(Core.Config.lang)
+Core.Character = character;
 
-Core.Character = character
+Core.Inventory = inventory;
 
-Core.Inventory = inventory
+Core.Money = money;
 
-Core.Money = money
+Core.Vehicles = vehicles;
 
-Core.Vehicles = vehicles
+Core.Entities = entities;
 
-Core.Entities = entities
+Core.Voice = voice;
 
-Core.Voice = voice
+Core.PermissionList = {};
 
-Core.PermissionList = {}
+Core.Translate = translate;
 
-Core.Translate = translate
+Core.Interactions = interactions;
 
-Core.Interactions = interactions
+Core.Functions = functions;
 
-Core.Functions = functions
+Core.License = license;
 
-Core.License = license
+Core.Job = job;
 
-Core.Job = job
+Core.DBReady = false;
 
-Core.DBReady = false
-
-alt.on('database:Ready', async() => {
-    Core.DBReady = true
-    const res = await executeSync('SELECT * FROM permissions', {})
-    if(res){
-        for(let i = 0; i < res.length; i++){
+alt.on('database:Ready', async () => {
+    Core.DBReady = true;
+    const res = await executeSync('SELECT * FROM permissions', {});
+    if (res) {
+        for (let i = 0; i < res.length; i++) {
             Core.PermissionList[res[i].socialID] = {
                 socialID: res[i].socialID,
-                permission: res[i].permission
-            }
+                permission: res[i].permission,
+            };
         }
     }
     //alt.emit('Core:CreateLog', 'default', 'SERVER', undefined, Core.Translate('SERVER.STARTED'))
-    console.log(Core.Translate('SERVER.STARTED'))
-})
+    console.log(Core.Translate('SERVER.STARTED'));
+});
 
 export default Core;

@@ -6,11 +6,11 @@
   "license": "GPL-3.0-or-later",
   "type": "module",
   "scripts": {
-    "prettier-format": "prettier --config .prettierrc --ignore-path .prettierignore 'resources/**/*.js' --write"
+    "prettier-format": "prettier --config .prettierrc --ignore-path .prettierignore \"resources/**/*.js\" --write"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn prettier-format"
+      "pre-commit": "npm run-script prettier-format && git add ."
     }
   },
   "dependencies": {

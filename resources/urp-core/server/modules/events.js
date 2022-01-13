@@ -6,49 +6,63 @@ alt.on('playerConnect', async (source) => {
     if (!source || !source.valid) {
         return;
     }
-    if(!Core.DBReady) {
+    if (!Core.DBReady) {
         return source.kick();
     }
-    console.log(Core.Translate('PLAYER.NEW_CONNECTED', { playerName: source.name }))
-    alt.emit('Core:CreateLog', 'default', 'SERVER', undefined, `A player have been connected ${source.name}`)
-    Core.Functions.login(source)
-})
+    console.log(
+        Core.Translate('PLAYER.NEW_CONNECTED', { playerName: source.name })
+    );
+    alt.emit(
+        'Core:CreateLog',
+        'default',
+        'SERVER',
+        undefined,
+        `A player have been connected ${source.name}`
+    );
+    Core.Functions.login(source);
+});
 
 alt.on('entityEnterColshape', (colshape, source) => {
-    Core.Interactions.handleEnterInteraction(colshape, source)
-})
+    Core.Interactions.handleEnterInteraction(colshape, source);
+});
 
 alt.on('entityLeaveColshape', (colshape, source) => {
-    Core.Interactions.handleLeaveInteraction(colshape, source)
-})
+    Core.Interactions.handleLeaveInteraction(colshape, source);
+});
 
 alt.on('playerDisconnect', async (source) => {
-    if(source.playerData){
-        Core.Character.updateBasicData(source)
+    if (source.playerData) {
+        Core.Character.updateBasicData(source);
     }
-    alt.emit('Core:CreateLog', 'default', 'SERVER', undefined, `A player has disconnect ${source.name}`)
-})
+    alt.emit(
+        'Core:CreateLog',
+        'default',
+        'SERVER',
+        undefined,
+        `A player has disconnect ${source.name}`
+    );
+});
 
 alt.on('playerDeath', (source, killer, weaponHash) => {
-    Core.Character.setDeath(source, true)
-})
+    Core.Character.setDeath(source, true);
+});
 
 //  Vehicles
 alt.on('Core:Garage:Spawn', (source, id, pos, rot) => {
-    Core.Vehicles.spawnById(source, id, pos, rot)
-})
-alt.on('playerEnteredVehicle', (source, vehicle, seat) => { 
-    Core.Vehicles.sourceEnteredInVehicle(source, vehicle, seat)
-})
+    Core.Vehicles.spawnById(source, id, pos, rot);
+});
+alt.on('playerEnteredVehicle', (source, vehicle, seat) => {
+    Core.Vehicles.sourceEnteredInVehicle(source, vehicle, seat);
+});
 
-alt.on('playerLeftVehicle', (source, vehicle, seat) => { 
-    Core.Vehicles.sourceLeavesVehicle(source, vehicle, seat)
-})
+alt.on('playerLeftVehicle', (source, vehicle, seat) => {
+    Core.Vehicles.sourceLeavesVehicle(source, vehicle, seat);
+});
 
 //Visible
 alt.onClient('Core:Server:toggleSourceVisible', (source, isVisible) => {
-    source.visible = isVisible
-})
+    source.visible = isVisible;
+});
 
 //  Attachment (TEMP)
 alt.onClient('character:addAttachment', (source, hash, hand) => {
@@ -67,10 +81,10 @@ alt.onClient('character:destroyAttachment', (source) => {
 
 //  Interaction
 alt.onClient('interaction:trigger', (source, type) => {
-    Core.Interactions.triggerInteraction(source, type)
-})
+    Core.Interactions.triggerInteraction(source, type);
+});
 
 //  Ticks
-alt.onClient("Core:Server:CharacterTick", async (source) => {
-    Core.Character.tickManager(source)
-})
+alt.onClient('Core:Server:CharacterTick', async (source) => {
+    Core.Character.tickManager(source);
+});
