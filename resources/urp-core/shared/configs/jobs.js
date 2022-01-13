@@ -1,252 +1,252 @@
 export const Jobs = {
     unemployed: {
-		label : 'Civilian',
-		defaultDuty : true,
-		offDutyPay : false,
-		grades : {
+        label: 'Civilian',
+        defaultDuty: true,
+        offDutyPay: false,
+        grades: {
             0: {
-                name : 'Freelancer',
-                payment : 10
+                name: 'Freelancer',
+                payment: 10,
             },
         },
-	},
-	police: {
-		label : 'Law Enforcement',
-		defaultDuty : true,
-		offDutyPay : false,
-		grades : {
+    },
+    police: {
+        label: 'Law Enforcement',
+        defaultDuty: true,
+        offDutyPay: false,
+        grades: {
             0: {
-                name : 'Recruit',
-                payment : 50
+                name: 'Recruit',
+                payment: 50,
             },
-			1: {
-                name : 'Officer',
-                payment : 75
+            1: {
+                name: 'Officer',
+                payment: 75,
             },
-			2: {
-                name : 'Sergeant',
-                payment : 100
+            2: {
+                name: 'Sergeant',
+                payment: 100,
             },
-			3: {
-                name : 'Lieutenant',
-                payment : 125
+            3: {
+                name: 'Lieutenant',
+                payment: 125,
             },
-			4: {
-                name : 'Chief',
-				isboss : true,
-                payment : 150
+            4: {
+                name: 'Chief',
+                isboss: true,
+                payment: 150,
             },
         },
-	},
-	ambulance: {
-		label : 'EMS',
-		defaultDuty : true,
-		offDutyPay : false,
-		grades : {
+    },
+    ambulance: {
+        label: 'EMS',
+        defaultDuty: true,
+        offDutyPay: false,
+        grades: {
             0: {
-                name : 'Recruit',
-                payment : 50
+                name: 'Recruit',
+                payment: 50,
             },
-			1: {
-                name : 'Paramedic',
-                payment : 75
+            1: {
+                name: 'Paramedic',
+                payment: 75,
             },
-			2: {
-                name : 'Doctor',
-                payment : 100
+            2: {
+                name: 'Doctor',
+                payment: 100,
             },
-			3: {
-                name : 'Surgeon',
-                payment : 125
+            3: {
+                name: 'Surgeon',
+                payment: 125,
             },
-			4: {
-                name : 'Chief',
-				isboss : true,
-                payment : 150
+            4: {
+                name: 'Chief',
+                isboss: true,
+                payment: 150,
             },
         },
-	},
-	realestate: {
-		label : 'Real Estate',
-		defaultDuty : true,
-		offDutyPay : false,
-		grades : {
+    },
+    realestate: {
+        label: 'Real Estate',
+        defaultDuty: true,
+        offDutyPay: false,
+        grades: {
             0: {
-                name : 'Recruit',
-                payment : 50
+                name: 'Recruit',
+                payment: 50,
             },
-			1: {
-                name : 'House Sales',
-                payment : 75
+            1: {
+                name: 'House Sales',
+                payment: 75,
             },
-			2: {
-                name : 'Business Sales',
-                payment : 100
+            2: {
+                name: 'Business Sales',
+                payment: 100,
             },
-			3: {
-                name : 'Broker',
-                payment : 125
+            3: {
+                name: 'Broker',
+                payment: 125,
             },
-			4: {
-                name : 'Manager',
-				isboss : true,
-                payment : 150
+            4: {
+                name: 'Manager',
+                isboss: true,
+                payment: 150,
             },
         },
-	},
-	taxi: {
-		label : 'Taxi',
-		defaultDuty : true,
-		offDutyPay : false,
-		grades : {
+    },
+    taxi: {
+        label: 'Taxi',
+        defaultDuty: true,
+        offDutyPay: false,
+        grades: {
             0: {
-                name : 'Recruit',
-                payment : 50
+                name: 'Recruit',
+                payment: 50,
             },
-			1: {
-                name : 'Driver',
-                payment : 75
+            1: {
+                name: 'Driver',
+                payment: 75,
             },
-			2: {
-                name : 'Event Driver',
-                payment : 100
+            2: {
+                name: 'Event Driver',
+                payment: 100,
             },
-			3: {
-                name : 'Sales',
-                payment : 125
+            3: {
+                name: 'Sales',
+                payment: 125,
             },
-			4: {
-                name : 'Manager',
-				isboss : true,
-                payment : 150
+            4: {
+                name: 'Manager',
+                isboss: true,
+                payment: 150,
             },
         },
-	},
-     bus: {
-		label : 'Bus',
-		defaultDuty : true,
-		offDutyPay : false,
-		grades : {
+    },
+    bus: {
+        label: 'Bus',
+        defaultDuty: true,
+        offDutyPay: false,
+        grades: {
             0: {
-                name : 'Driver',
-                payment : 50
-            },
-		},
-	},
-	mechanic: {
-		label : 'Mechanic',
-		defaultDuty : true,
-		offDutyPay : false,
-		grades : {
-            0: {
-                name : 'Recruit',
-                payment : 50
-            },
-			1: {
-                name : 'Novice',
-                payment : 75
-            },
-			2: {
-                name : 'Experienced',
-                payment : 100
-            },
-			3: {
-                name : 'Advanced',
-                payment : 125
-            },
-			4: {
-                name : 'Manager',
-				isboss : true,
-                payment : 150
+                name: 'Driver',
+                payment: 50,
             },
         },
-	},
-	judge: {
-		label : 'Honorary',
-		defaultDuty : true,
-		offDutyPay : false,
-		grades : {
+    },
+    mechanic: {
+        label: 'Mechanic',
+        defaultDuty: true,
+        offDutyPay: false,
+        grades: {
             0: {
-                name : 'Judge',
-                payment : 100
+                name: 'Recruit',
+                payment: 50,
+            },
+            1: {
+                name: 'Novice',
+                payment: 75,
+            },
+            2: {
+                name: 'Experienced',
+                payment: 100,
+            },
+            3: {
+                name: 'Advanced',
+                payment: 125,
+            },
+            4: {
+                name: 'Manager',
+                isboss: true,
+                payment: 150,
             },
         },
-	},
-	lawyer: {
-		label : 'Law Firm',
-		defaultDuty : true,
-		offDutyPay : false,
-		grades : {
+    },
+    judge: {
+        label: 'Honorary',
+        defaultDuty: true,
+        offDutyPay: false,
+        grades: {
             0: {
-                name : 'Associate',
-                payment : 50
+                name: 'Judge',
+                payment: 100,
             },
         },
-	},
-	reporter: {
-		label : 'Reporter',
-		defaultDuty : true,
-		offDutyPay : false,
-		grades : {
+    },
+    lawyer: {
+        label: 'Law Firm',
+        defaultDuty: true,
+        offDutyPay: false,
+        grades: {
             0: {
-                name : 'Journalist',
-                payment : 50
+                name: 'Associate',
+                payment: 50,
             },
         },
-	},
-	trucker: {
-		label : 'Trucker',
-		defaultDuty : true,
-		offDutyPay : false,
-		grades : {
+    },
+    reporter: {
+        label: 'Reporter',
+        defaultDuty: true,
+        offDutyPay: false,
+        grades: {
             0: {
-                name : 'Driver',
-                payment : 50
+                name: 'Journalist',
+                payment: 50,
             },
         },
-	},
-	tow: {
-		label : 'Towing',
-		defaultDuty : true,
-		offDutyPay : false,
-		grades : {
+    },
+    trucker: {
+        label: 'Trucker',
+        defaultDuty: true,
+        offDutyPay: false,
+        grades: {
             0: {
-                name : 'Driver',
-                payment : 50
+                name: 'Driver',
+                payment: 50,
             },
         },
-	},
-	garbage: {
-		label : 'Garbage',
-		defaultDuty : true,
-		offDutyPay : false,
-		grades : {
+    },
+    tow: {
+        label: 'Towing',
+        defaultDuty: true,
+        offDutyPay: false,
+        grades: {
             0: {
-                name : 'Collector',
-                payment : 50
+                name: 'Driver',
+                payment: 50,
             },
         },
-	},
-	vineyard: {
-		label : 'Vineyard',
-		defaultDuty : true,
-		offDutyPay : false,
-		grades : {
+    },
+    garbage: {
+        label: 'Garbage',
+        defaultDuty: true,
+        offDutyPay: false,
+        grades: {
             0: {
-                name : 'Picker',
-                payment : 50
+                name: 'Collector',
+                payment: 50,
             },
         },
-	},
-	hotdog: {
-		label : 'Hotdog',
-		defaultDuty : true,
-		offDutyPay : false,
-		grades : {
+    },
+    vineyard: {
+        label: 'Vineyard',
+        defaultDuty: true,
+        offDutyPay: false,
+        grades: {
             0: {
-                name : 'Sales',
-                payment : 50
+                name: 'Picker',
+                payment: 50,
             },
         },
-	},
-}
+    },
+    hotdog: {
+        label: 'Hotdog',
+        defaultDuty: true,
+        offDutyPay: false,
+        grades: {
+            0: {
+                name: 'Sales',
+                payment: 50,
+            },
+        },
+    },
+};

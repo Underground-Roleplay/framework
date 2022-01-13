@@ -16,7 +16,7 @@ let interactionTypes = {
     0: () => {},
     1: 'player',
     2: 'vehicle',
-    3: 'object'
+    3: 'object',
 };
 
 alt.setInterval(useMenu, 0);
@@ -77,14 +77,15 @@ function useMenu() {
 
     if (Date.now() > lastRayCast) {
         lastRayCast = Date.now() + 25;
-        const [_, hit, endCoords, surfaceNormal, entity] = utilityScreen2World.screenToWorld(raycastFlags, -1);
+        const [_, hit, endCoords, surfaceNormal, entity] =
+            utilityScreen2World.screenToWorld(raycastFlags, -1);
 
         if (!hit) {
             rayCastInfo = null;
             endPoint = null;
             return;
         }
-        
+
         const entityType = native.getEntityType(entity);
 
         if (entityType === 0) {
@@ -98,7 +99,7 @@ function useMenu() {
             endCoords,
             surfaceNormal,
             entity,
-            entityType
+            entityType,
         };
 
         endPoint = endCoords;
@@ -108,11 +109,14 @@ function useMenu() {
         return;
     }
 
-    const playerPos = alt.Player.local.vehicle ? alt.Player.local.vehicle.pos : alt.Player.local.pos;
+    const playerPos = alt.Player.local.vehicle
+        ? alt.Player.local.vehicle.pos
+        : alt.Player.local.pos;
 
     if (endPoint && !hasSelected) {
         const dist = distance(playerPos, rayCastInfo.endCoords);
-        const color = dist <= 5 ? { r: 255, g: 255, b: 255 } : { r: 255, g: 0, b: 0 };
+        const color =
+            dist <= 5 ? { r: 255, g: 255, b: 255 } : { r: 255, g: 0, b: 0 };
         native.drawLine(
             playerPos.x,
             playerPos.y,
@@ -142,15 +146,27 @@ function useMenu() {
         if (!interactionTypes[rayCastInfo.entityType]) {
             return;
         }
-    
+
         if (rayCastInfo.entity === alt.Player.local.scriptID) {
-            alt.emit('context:ParseInteraction', 'self', rayCastInfo.entity, model, rayCastInfo.endCoords);
+            alt.emit(
+                'context:ParseInteraction',
+                'self',
+                rayCastInfo.entity,
+                model,
+                rayCastInfo.endCoords
+            );
             return;
         }
 
         const interactionType = interactionTypes[rayCastInfo.entityType];
         alt.emit('context:Dismount');
-        alt.emit('context:ParseInteraction', interactionType, rayCastInfo.entity, model, rayCastInfo.endCoords);
+        alt.emit(
+            'context:ParseInteraction',
+            interactionType,
+            rayCastInfo.entity,
+            model,
+            rayCastInfo.endCoords
+        );
 
         hasSelected = true;
         rayCastInfo = null;

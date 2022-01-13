@@ -1,4 +1,4 @@
-import * as alt from 'alt'
+import * as alt from 'alt';
 
 export const GARAGE_INTERACTIONS = [
     //La puerta
@@ -290,7 +290,7 @@ export const GARAGE_INTERACTIONS = [
             color: new alt.RGBA(0, 181, 204, 200),
         },
     },
-]
+];
 
 export const GARAGE_SLOTS = [
     [
@@ -2219,4 +2219,4 @@ export const GARAGE_SLOTS = [
             },
         },
     ],
-]
+];

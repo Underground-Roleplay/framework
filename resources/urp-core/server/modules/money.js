@@ -6,141 +6,224 @@ import Core from '../main';
 
 import { executeSync } from '../libs/utils';
 
-
 //  Bank
 const setMoney = (source, moneytype, amount) => {
-    if(source.playerData.money[moneytype]){
-        source.playerData.money[moneytype] = parseInt(amount)
-        updateMoney(source)
+    if (source.playerData.money[moneytype]) {
+        source.playerData.money[moneytype] = parseInt(amount);
+        updateMoney(source);
     }
-    return
-}
+    return;
+};
 
 const moneyDeposit = (source, amount) => {
-    if(source.playerData.money['cash'] >= amount){
-        source.playerData.money['cash'] = parseInt(source.playerData.money['cash']) - parseInt(amount)
-        source.playerData.money['bank'] = parseInt(source.playerData.money['bank']) + parseInt(amount)
-        updateMoney(source)
+    if (source.playerData.money['cash'] >= amount) {
+        source.playerData.money['cash'] =
+            parseInt(source.playerData.money['cash']) - parseInt(amount);
+        source.playerData.money['bank'] =
+            parseInt(source.playerData.money['bank']) + parseInt(amount);
+        updateMoney(source);
     } else {
         // TODO
-        alt.log('Não possui a quantia na carteira')
+        alt.log('Não possui a quantia na carteira');
     }
-    return
-}
+    return;
+};
 const moneywithdraw = (source, amount) => {
-    if(source.playerData.money['bank'] >= amount){
-        source.playerData.money['bank'] = parseInt(source.playerData.money['bank']) - parseInt(amount)
-        source.playerData.money['cash'] = parseInt(source.playerData.money['cash']) + parseInt(amount)
-        updateMoney(source)
+    if (source.playerData.money['bank'] >= amount) {
+        source.playerData.money['bank'] =
+            parseInt(source.playerData.money['bank']) - parseInt(amount);
+        source.playerData.money['cash'] =
+            parseInt(source.playerData.money['cash']) + parseInt(amount);
+        updateMoney(source);
     } else {
         // TODO
-        alt.log('Não possui a quantia no banco')
+        alt.log('Não possui a quantia no banco');
     }
-    return
-}
+    return;
+};
 
 const getPayment = (source, amount) => {
-    if (!source || !source.playerData) return
-    if (!amount || amount == NaN) return
+    if (!source || !source.playerData) return;
+    if (!amount || amount == NaN) return;
     if (amount < 0) {
-        return
+        return;
     }
-    if(source.playerData.money['cash'] > parseInt(amount)){
-        source.playerData.money['cash'] = parseInt(source.playerData.money['cash']) - parseInt(amount)
-        updateMoney(source)
-      
-        return
+    if (source.playerData.money['cash'] > parseInt(amount)) {
+        source.playerData.money['cash'] =
+            parseInt(source.playerData.money['cash']) - parseInt(amount);
+        updateMoney(source);
+
+        return;
     } else {
-        // TODO        
-        return alt.emitClient(source,'notify', 'error', 'erro', 'não possui quantia na carteira')
+        // TODO
+        return alt.emitClient(
+            source,
+            'notify',
+            'error',
+            'erro',
+            'não possui quantia na carteira'
+        );
     }
-}
+};
 
 const addMoney = (source, moneytype, amount) => {
     if (amount < 0) {
-        return
+        return;
     }
-    if(source.playerData.money[moneytype]){
-        source.playerData.money[moneytype] = parseInt(source.playerData.money[moneytype]) + parseInt(amount)
-        updateMoney(source)
+    if (source.playerData.money[moneytype]) {
+        source.playerData.money[moneytype] =
+            parseInt(source.playerData.money[moneytype]) + parseInt(amount);
+        updateMoney(source);
     }
-    return
-}
+    return;
+};
 
 const getMoney = (source, moneytype) => {
-    if (!source || !source.playerData) return
-    if (!amount || amount == NaN) return
-    if(moneytype) {
-        return source.playerData.money[moneytype]
+    if (!source || !source.playerData) return;
+    if (!amount || amount == NaN) return;
+    if (moneytype) {
+        return source.playerData.money[moneytype];
     } else {
-        return source.playerData.money
+        return source.playerData.money;
     }
-}
+};
 
 const hasFullMoney = (source, amount) => {
-    if (!source || !source.playerData) return
-    if (!amount || amount == NaN) return
-    let all = parseInt(source.playerData.money['bank']) + parseInt(source.playerData.money['cash'])
+    if (!source || !source.playerData) return;
+    if (!amount || amount == NaN) return;
+    let all =
+        parseInt(source.playerData.money['bank']) +
+        parseInt(source.playerData.money['cash']);
     if (all >= amount) {
-        return true
+        return true;
     } else {
-       return alt.emitClient(source,'notify', 'error', 'erro', 'não possui quantia')
+        return alt.emitClient(
+            source,
+            'notify',
+            'error',
+            'erro',
+            'não possui quantia'
+        );
     }
-}
+};
 
 const hasMoney = (source, moneytype, amount) => {
-    if (!source || !source.playerData) return
-    if (!amount || amount == NaN) return
-    if(moneytype == 'bank' && parseInt(source.playerData.money['bank']) >= amount){
-        return true
-    }else if (moneytype == 'cash' && parseInt(source.playerData.money['cash']) >= amount) {
-        return true
+    if (!source || !source.playerData) return;
+    if (!amount || amount == NaN) return;
+    if (
+        moneytype == 'bank' &&
+        parseInt(source.playerData.money['bank']) >= amount
+    ) {
+        return true;
+    } else if (
+        moneytype == 'cash' &&
+        parseInt(source.playerData.money['cash']) >= amount
+    ) {
+        return true;
     } else {
-        return alt.emitClient(source,'notify', 'error', 'erro', 'não possui quantia na carteira')
+        return alt.emitClient(
+            source,
+            'notify',
+            'error',
+            'erro',
+            'não possui quantia na carteira'
+        );
     }
-}
+};
 const getFullPayment = (source, amount) => {
-    if (!source || !source.playerData) return
-    if (!amount || amount == NaN) return
-    let calculatedAmount = amount - parseInt(source.playerData.money['bank'])
+    if (!source || !source.playerData) return;
+    if (!amount || amount == NaN) return;
+    let calculatedAmount = amount - parseInt(source.playerData.money['bank']);
     if (amount < 0) {
-        return
+        return;
     }
     if (amount <= parseInt(source.playerData.money['bank'])) {
-        setMoney(source, 'bank', parseInt(source.playerData.money['bank']) - amount);
-        return true
+        setMoney(
+            source,
+            'bank',
+            parseInt(source.playerData.money['bank']) - amount
+        );
+        return true;
     }
-    if (amount <= parseInt(source.playerData.money['bank']) + parseInt(source.playerData.money['cash'])) {
-        setMoney(source, 'cash', parseInt(source.playerData.money['cash']) - calculatedAmount)
-        setMoney(source, 'bank', 0)
-        return true
+    if (
+        amount <=
+        parseInt(source.playerData.money['bank']) +
+            parseInt(source.playerData.money['cash'])
+    ) {
+        setMoney(
+            source,
+            'cash',
+            parseInt(source.playerData.money['cash']) - calculatedAmount
+        );
+        setMoney(source, 'bank', 0);
+        return true;
     }
-    return
-}
+    return;
+};
 
 const transferMoney = async (source, ssn, amount) => {
-    const result = await executeSync('SELECT * from characters WHERE ssn = ?', [ssn])
-    const target = result[0]
+    const result = await executeSync('SELECT * from characters WHERE ssn = ?', [
+        ssn,
+    ]);
+    const target = result[0];
     if (target) {
-        if(hasMoney(source, 'bank', amount)) {
-            target.money = JSON.parse(target.money)
-            target.money['bank'] = parseInt(target.money['bank']) + parseInt(amount)
-            db.update('UPDATE characters SET money = ? WHERE ssn = ?', [JSON.stringify(target.money), ssn], undefined, alt.resourceName)
-            const targetSource = alt.Player.all.find((s) => s.playerData.ssn === ssn)
-            if(targetSource){
-                Core.Functions.emitPlayerData(targetSource, 'money', (targetSource.playerData.money['bank'] + parseInt(amount)))
+        if (hasMoney(source, 'bank', amount)) {
+            target.money = JSON.parse(target.money);
+            target.money['bank'] =
+                parseInt(target.money['bank']) + parseInt(amount);
+            db.update(
+                'UPDATE characters SET money = ? WHERE ssn = ?',
+                [JSON.stringify(target.money), ssn],
+                undefined,
+                alt.resourceName
+            );
+            const targetSource = alt.Player.all.find(
+                (s) => s.playerData.ssn === ssn
+            );
+            if (targetSource) {
+                Core.Functions.emitPlayerData(
+                    targetSource,
+                    'money',
+                    targetSource.playerData.money['bank'] + parseInt(amount)
+                );
             }
-            setMoney(source, 'bank', parseInt(source.playerData.money['bank']) - amount)
+            setMoney(
+                source,
+                'bank',
+                parseInt(source.playerData.money['bank']) - amount
+            );
         }
     } else {
-        return alt.emitClient(source,'notify', 'error', 'erro', 'SSN não encontrado.')
+        return alt.emitClient(
+            source,
+            'notify',
+            'error',
+            'erro',
+            'SSN não encontrado.'
+        );
     }
-}
+};
 
 const updateMoney = (source) => {
-    const { money, ssn } = source.playerData
-    db.update('UPDATE characters SET money = ? WHERE ssn = ?', [JSON.stringify(money), ssn], undefined, alt.resourceName)
-    Core.Functions.emitPlayerData(source, 'money', money)
-}
+    const { money, ssn } = source.playerData;
+    db.update(
+        'UPDATE characters SET money = ? WHERE ssn = ?',
+        [JSON.stringify(money), ssn],
+        undefined,
+        alt.resourceName
+    );
+    Core.Functions.emitPlayerData(source, 'money', money);
+};
 
-export default { setMoney, addMoney, getPayment, moneyDeposit, moneywithdraw, getMoney, hasFullMoney, getFullPayment,hasMoney, transferMoney }
+export default {
+    setMoney,
+    addMoney,
+    getPayment,
+    moneyDeposit,
+    moneywithdraw,
+    getMoney,
+    hasFullMoney,
+    getFullPayment,
+    hasMoney,
+    transferMoney,
+};
