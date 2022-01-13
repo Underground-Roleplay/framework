@@ -1,0 +1,51 @@
+/** General Selectors*/
+body {
+    width: 100%;
+    overflow: hidden;
+    font-family: 'Oswald', sans-serif;
+}
+/** General Selectors*/
+
+/*? ID Selector */
+#StatusHud 
+{
+    position: absolute;
+    bottom: 0.7vh;
+    left: 0.7vh;
+}
+/*? ID Selectors */
+
+
+/*! Class Selectors */
+.statback 
+{
+    background-color: rgba(0, 0, 0, 0.767);
+    color: white;
+    padding: 0.7vh;
+    text-align: center;
+    margin-top: 0.2vh;
+    border-radius: 0.4vh;
+}
+.fas 
+{
+    font-size: 0.7rem;
+    vertical-align: middle;
+}
+.textstat 
+{
+    width: 2vh;
+    float: right;
+    text-align: right;
+    font-size: 1.0vh;
+    margin-top: -0.25vh;
+}
+.red 
+{
+    width: 2.2vh;
+    float: right;
+    padding-left: 0.5vh;
+    text-align: right;
+    font-size: 1.0vh;
+    color: red;
+}
+/*! Class Selectors */
