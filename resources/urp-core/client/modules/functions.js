@@ -453,6 +453,31 @@ const getCloseItems = () => {
     };
 };
 
+const setHandcuffs = () => {
+    const targetPed = alt.Player.all.find(
+        (targetPed) => alt.Player.local.pos.distanceTo(targetPed.pos) < 1.5
+    );
+    if (!targetPed) return;
+    natives.setEnableHandcuffs(targetPed, true);
+};
+
+const removeHandcuffs = () => {
+    const hasCuff = hasHandcuffs();
+    const targetPed = alt.Player.all.find(
+        (targetPed) => alt.Player.local.pos.distanceTo(targetPed.pos) < 1.5
+    );
+    if (!targetPed) return;
+    if (hasCuff) natives.uncuffPed(targetPed);
+};
+
+const hasHandcuffs = () => {
+    const targetPed = alt.Player.all.find(
+        (targetPed) => alt.Player.local.pos.distanceTo(targetPed.pos) < 1.5
+    );
+    if (!targetPed) return;
+    return natives.isPedCuffed(targetPed);
+};
+
 export default {
     startTicks,
     handleSetplayerData,
@@ -468,4 +493,7 @@ export default {
     disableConfigFlags,
     getJobInfo,
     getCloseItems,
+    setHandcuffs,
+    removeHandcuffs,
+    hasHandcuffs,
 };
