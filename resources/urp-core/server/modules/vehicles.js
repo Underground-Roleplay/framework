@@ -73,12 +73,7 @@ const addToSource = async (
     newVehicle.plate = await generatePlate();
     newVehicle.status = { bodyHealth: 1000 };
     newVehicle.metadata = { fuel: 15 };
-    newVehicle.customizations = {
-        customPrimaryColor: { r: 0, g: 0, b: 0, a: 255 },
-        customSecondaryColor: { r: 0, g: 0, b: 0, a: 255 },
-        neon: { front: false, back: false, left: false, right: false },
-        neonColor: { r: 255, g: 255, b: 255, a: 255 },
-    };
+    newVehicle.customizations = {};
     const id = await insertSync(
         'INSERT INTO characters_vehicles (ssn, model, position, plate, status, metadata, customizations) VALUES (?,?,?,?,?,?,?)',
         [
