@@ -4,7 +4,13 @@ import Core from 'urp-core';
 
 const url = 'http://resource/client/html/index.html';
 const menus = {};
-import { VEHICLE_MENU, POLICE_MENU, PLAYER_MENU } from '../shared/config';
+import {
+    VEHICLE_MENU,
+    POLICE_MENU,
+    PLAYER_MENU,
+    PERSONAL_MENU,
+    AMBULANCE_MENU,
+} from '../shared/config';
 
 let view;
 let data;
@@ -40,13 +46,28 @@ function handleInteraction(type, entity, model, coords) {
         view.emit('context:Mount', VEHICLE_MENU, cursor.x, cursor.y);
         return;
     }
-    if (type === 'self') {
+    if (type === 'player') {
         view.focus();
         showCursor(true);
         const cursor = alt.getCursorPos();
         if (job == 'police')
             return view.emit('context:Mount', POLICE_MENU, cursor.x, cursor.y);
+        if (job == 'ambulance')
+            return view.emit(
+                'context:Mount',
+                AMBULANCE_MENU,
+                cursor.x,
+                cursor.y
+            );
         view.emit('context:Mount', PLAYER_MENU, cursor.x, cursor.y);
+        return;
+    }
+
+    if (type === 'self') {
+        view.focus();
+        showCursor(true);
+        const cursor = alt.getCursorPos();
+        view.emit('context:Mount', PERSONAL_MENU, cursor.x, cursor.y);
         return;
     }
 

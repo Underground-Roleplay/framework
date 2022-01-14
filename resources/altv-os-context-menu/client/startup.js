@@ -1,6 +1,8 @@
 import * as alt from 'alt-client';
 import * as context from '/client/context';
 import * as contextInteractionBuilder from '/client/interactionBuilder';
+import Core from 'urp-core';
+import chat from 'urp-chat';
 
 ///////////////////////////////////////////////////////////////////////////
 // gas pumps
@@ -116,3 +118,13 @@ alt.on('context:Ready', () => {
 ///////////////////////////////////////////////////////////////////////////
 // gas pumps
 //////////////////////////////////////////////////////////////////////////
+
+alt.on('context:player:showssn', () => {
+    const ssn = Core.Functions.getPlayerData('ssn');
+    alt.log(ssn);
+});
+
+alt.on('context:player:showid', () => {
+    const id = Core.Functions.getPlayerData('id');
+    alt.log(id);
+});
