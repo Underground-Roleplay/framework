@@ -399,8 +399,8 @@ const disableConfigFlags = () => {
 };
 
 const disableBehaviours = () => {
-    disableConfigFlags();
     alt.everyTick(() => {
+        disableConfigFlags();
         //  Disable engine auto start
         natives.setPedConfigFlag(alt.Player.local.scriptID, 429, true);
         // Fix webview
