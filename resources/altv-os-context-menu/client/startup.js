@@ -118,13 +118,3 @@ alt.on('context:Ready', () => {
 ///////////////////////////////////////////////////////////////////////////
 // gas pumps
 //////////////////////////////////////////////////////////////////////////
-
-alt.on('context:player:showssn', () => {
-    const ssn = Core.Functions.getPlayerData('ssn');
-    alt.log(ssn);
-});
-
-alt.on('context:player:showid', () => {
-    const id = Core.Functions.getPlayerData('id');
-    alt.log(id);
-});
