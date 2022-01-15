@@ -2,6 +2,9 @@ import * as alt from 'alt-client';
 import * as context from '/client/context';
 import * as contextInteractionBuilder from '/client/interactionBuilder';
 import Core from 'urp-core';
+import * as natives from 'natives';
+import './events';
+
 import chat from 'urp-chat';
 
 ///////////////////////////////////////////////////////////////////////////

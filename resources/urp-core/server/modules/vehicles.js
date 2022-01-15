@@ -73,7 +73,10 @@ const addToSource = async (
     newVehicle.plate = await generatePlate();
     newVehicle.status = { bodyHealth: 1000 };
     newVehicle.metadata = { fuel: 15 };
-    newVehicle.customizations = {};
+    newVehicle.customizations = {
+        customPrimaryColor: { r: 0, g: 0, b: 0, a: 255 },
+        customSecondaryColor: { r: 0, g: 0, b: 0, a: 255 },
+    };
     const id = await insertSync(
         'INSERT INTO characters_vehicles (ssn, model, position, plate, status, metadata, customizations) VALUES (?,?,?,?,?,?,?)',
         [
@@ -163,7 +166,12 @@ const spawn = (source, vehicleData, pos, rot) => {
         vehicleData.customizations.customPrimaryColor &&
         vehicleData.customizations.customSecondaryColor
     ) {
-        loadMods(vehicle, vehicleData.customizations);
+        if (vehicleData.customizations.neon)
+            return loadMods(vehicle, vehicleData.customizations);
+        vehicle.customPrimaryColor =
+            vehicleData.customizations.customPrimaryColor;
+        vehicle.customSecondaryColor =
+            vehicleData.customizations.customSecondaryColor;
     }
 
     if (vehicleData.status) {

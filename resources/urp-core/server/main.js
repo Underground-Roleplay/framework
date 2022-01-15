@@ -12,6 +12,7 @@ import vehicles from './modules/vehicles';
 import money from './modules/money';
 import license from './modules/license';
 import job from './modules/job';
+import police from './modules/police';
 
 import voice from 'urp-voice';
 
@@ -58,6 +59,8 @@ Core.Functions = functions;
 Core.License = license;
 
 Core.Job = job;
+
+Core.Police = police;
 
 Core.DBReady = false;
 

@@ -415,6 +415,17 @@ const PhoneTunel = (source, targtEvent, dataRvent, phone) => {
     }
 };
 
+const repairVehicle = (source) => {
+    let targetVehicle = getClosestEntity(
+        source.pos,
+        source.rot,
+        [...alt.Vehicle.all],
+        3
+    );
+    if (!targetVehicle) return;
+    targetVehicle.repair();
+};
+
 export default {
     login,
     whitelistBanStatus,
@@ -435,4 +446,5 @@ export default {
     endCall,
     PhoneTunel,
     GetNumber,
+    repairVehicle,
 };

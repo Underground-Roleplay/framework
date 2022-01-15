@@ -270,6 +270,8 @@ const selectCharacter = async (source, playerData, fromCreation = false) => {
     Core.Functions.emitPlayerData(source, 'money', source.playerData.money);
     Core.Functions.emitPlayerData(source, 'ssn', source.playerData.ssn);
     Core.Functions.emitPlayerData(source, 'id', source.playerData.id);
+    source.setMeta('ssn', source.playerData.ssn);
+    source.setMeta('id', source.playerData.id);
     setDeath(source, source.playerData.metadata.isdead);
     source.health = source.playerData.metadata.health;
     source.armour = source.playerData.metadata.armour;

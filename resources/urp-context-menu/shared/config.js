@@ -59,12 +59,12 @@ export const PERSONAL_MENU = {
     options: [
         {
             eventName: 'context:player:showid',
-            isServer: false,
+            isServer: true,
             name: 'Show ID',
         },
         {
             eventName: 'context:player:showssn',
-            isServer: false,
+            isServer: true,
             name: 'Show SSN',
         },
         {
@@ -86,4 +86,16 @@ export const AMBULANCE_MENU = {
         },
     ],
     title: 'Ambulance Options',
+};
+
+export const MECHANIC_MENU = {
+    identifier: 'Mechanic Menu',
+    options: [
+        {
+            eventName: 'context:mechanic:repair',
+            isServer: true,
+            name: 'Repair Vehicle',
+        },
+    ],
+    title: 'Mechanic Options',
 };
