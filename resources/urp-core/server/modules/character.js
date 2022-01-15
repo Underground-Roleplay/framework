@@ -188,7 +188,9 @@ const adminHeal = (source) => {
 
     source.playerData.metadata.hunger = 200;
 
-    source.playerData.metadata.health = 200;
+    source.health = 200;
+    source.armour = 100;
+
 
     saveMetadata(source);
     Core.Functions.emitPlayerData(
