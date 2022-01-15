@@ -10,6 +10,7 @@ import {
     PLAYER_MENU,
     PERSONAL_MENU,
     AMBULANCE_MENU,
+    MECHANIC_MENU,
 } from '../shared/config';
 
 let view;
@@ -27,6 +28,7 @@ if (!view) {
 
 function handleInteraction(type, entity, model, coords) {
     let job = Core.Functions.getJobInfo('name');
+
     alt.log(
         `[CONTEXT-INFO] Type: ${type} | ID: ${entity} | Model: ${model} | Coords: ${JSON.stringify(
             coords
@@ -43,6 +45,13 @@ function handleInteraction(type, entity, model, coords) {
         view.focus();
         showCursor(true);
         const cursor = alt.getCursorPos();
+        if (job === 'mechanic')
+            return view.emit(
+                'context:Mount',
+                MECHANIC_MENU,
+                cursor.x,
+                cursor.y
+            );
         view.emit('context:Mount', VEHICLE_MENU, cursor.x, cursor.y);
         return;
     }
@@ -50,9 +59,9 @@ function handleInteraction(type, entity, model, coords) {
         view.focus();
         showCursor(true);
         const cursor = alt.getCursorPos();
-        if (job == 'police')
+        if (job === 'police')
             return view.emit('context:Mount', POLICE_MENU, cursor.x, cursor.y);
-        if (job == 'ambulance')
+        if (job === 'ambulance')
             return view.emit(
                 'context:Mount',
                 AMBULANCE_MENU,
@@ -134,10 +143,12 @@ function handleDismount() {
     view.emit('context:Dismount');
     view.unfocus();
     showCursor(false);
+    alt.toggleGameControls(true);
 }
 
 function handleSelect(eventName, isServer) {
     handleDismount();
+
     if (isServer) {
         alt.emitServer(eventName, data);
         return;
