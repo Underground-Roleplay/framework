@@ -69,16 +69,25 @@ const drawText = (x, y, width, height, scale, { r, g, b, a }, text) => {
 const drawText3D = (x, y, z, text) => {
     natives.setTextScale(0.35, 0.35);
     natives.setTextFont(4);
-    natives.setTextProportional(1);
+    natives.setTextProportional(true);
     natives.setTextColour(255, 255, 255, 215);
-    natives.setTextEntry('STRING');
+    natives.beginTextCommandDisplayText('STRING');
     natives.setTextCentre(true);
-    natives.addTextComponentString(text);
+    natives.addTextComponentSubstringPlayerName(text);
     natives.setDrawOrigin(x, y, z, 0);
-    natives.drawText(0.0, 0.0);
     const factor = text.length / 370;
-    natives.drawRect(0.0, 0.0 + 0.0125, 0.017 + factor, 0.03, 0, 0, 0, 75);
-    natives.clearDrawOrigin();
+    natives.drawRect(
+        0.0,
+        0.0 + 0.0125,
+        0.017 + factor,
+        0.03,
+        0,
+        0,
+        0,
+        75,
+        false
+    );
+    natives.endTextCommandDisplayText(0, 0, 0);
 };
 
 function drawTextHelper(text, x, y) {
