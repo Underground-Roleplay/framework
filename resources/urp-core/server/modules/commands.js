@@ -685,3 +685,17 @@ chat.registerCmd('duty', (source) => {
     if (!source) return;
     Core.Job.setDuty(source);
 });
+
+chat.registerCmd('repair', (source) => {
+    if (!source) return;
+    const isAllowed = Core.Functions.hasPermission(source, 'admin');
+    if (!isAllowed)
+        return alt.emitClient(
+            source,
+            'notify',
+            'error',
+            Core.Translate('PERMISSIONS.LABEL'),
+            Core.Translate('PERMISSIONS.DONT_HAVE_PERM')
+        );
+    Core.Functions.repairVehicle(source);
+});
