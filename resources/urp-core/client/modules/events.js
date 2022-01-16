@@ -109,3 +109,68 @@ alt.on('gameEntityDestroy', (entity) => {
     if (!myObjects[entity.id]) return;
     myObjects[entity.id] = natives.deleteObject(myObjects[entity.id]);
 });
+
+alt.onServer('police:setHandsCuff', () => {
+    natives.setEnableHandcuffs(alt.Player.local.scriptID, true);
+    alt.log(natives.isPedCuffed(alt.Player.local.scriptID));
+    Core.Functions.loadAnim('mp_arresting');
+    natives.taskPlayAnim(
+        alt.Player.local.scriptID,
+        'mp_arresting',
+        'idle',
+        3.0,
+        -3.0,
+        -1,
+        63,
+        0,
+        0,
+        0,
+        0
+    );
+});
+
+alt.everyTick(() => {
+    if (!alt.Player.local.hasSyncedMeta('HasHandcuffs')) return;
+    if (alt.Player.local.getSyncedMeta('HasHandcuffs')) {
+        natives.disableControlAction(0, 24, true);
+        natives.disableControlAction(0, 25, true);
+        natives.disableControlAction(0, 12, true);
+        natives.disableControlAction(0, 13, true);
+        natives.disableControlAction(0, 14, true);
+        natives.disableControlAction(0, 15, true);
+        natives.disableControlAction(0, 16, true);
+        natives.disableControlAction(0, 17, true);
+        natives.disableControlAction(0, 37, true);
+        natives.disableControlAction(0, 44, true);
+        natives.disableControlAction(0, 45, true);
+        natives.disableControlAction(0, 263, true);
+        natives.disableControlAction(0, 264, true);
+        natives.disableControlAction(0, 140, true);
+        natives.disableControlAction(0, 141, true);
+        natives.disableControlAction(0, 257, true);
+        natives.disableControlAction(0, 345, true);
+    } else {
+        natives.enableControlAction(0, 24, true);
+        natives.enableControlAction(0, 25, true);
+        natives.enableControlAction(0, 12, true);
+        natives.enableControlAction(0, 13, true);
+        natives.enableControlAction(0, 14, true);
+        natives.enableControlAction(0, 15, true);
+        natives.enableControlAction(0, 16, true);
+        natives.enableControlAction(0, 17, true);
+        natives.enableControlAction(0, 37, true);
+        natives.enableControlAction(0, 44, true);
+        natives.enableControlAction(0, 45, true);
+        natives.enableControlAction(0, 263, true);
+        natives.enableControlAction(0, 264, true);
+        natives.enableControlAction(0, 140, true);
+        natives.enableControlAction(0, 141, true);
+        natives.enableControlAction(0, 257, true);
+        natives.enableControlAction(0, 345, true);
+    }
+});
+
+alt.onServer('police:uncuff', () => {
+    natives.uncuffPed(alt.Player.local.scriptID, true);
+    Core.Functions.stopAnim();
+});

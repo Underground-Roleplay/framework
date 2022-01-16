@@ -78,22 +78,20 @@ alt.onServer('Core:Client:CharacterLoaded', () => {
     natives.freezeEntityPosition(localPlayer, false);
     isLogged = true;
 });
-let belt = false;
+
 alt.setInterval(() => {
     if (!isLogged) return;
-    let isVehicle = false;
     let hudPos = 'left';
     let fuelPos = undefined;
     let fuel = undefined;
-    let hours = natives.getClockHours();
-    let minutes = natives.getClockMinutes();
     if (!localPlayer.vehicle) {
-        isVehicle = false;
         natives.displayRadar(false);
+        hudPos = 'left';
     } else {
-        isVehicle = true;
-        alt.emitServer('fuel:Percents');
+        alt.emitServer('porcentagemCombustivel');
         natives.displayRadar(true);
+        fuelPos = 'right';
+        hudPos = 'right';
         fuel = localPlayer.vehicle.getStreamSyncedMeta('fuel');
     }
     alt.onServer('UpdateValues', (e) => {
@@ -105,55 +103,13 @@ alt.setInterval(() => {
         pauseMenu: natives.isPauseMenuActive(),
         armour: localPlayer.armour,
         health: localPlayer.health,
-        hunger: Core.Functions.getMetaData('hunger'),
+        food: Core.Functions.getMetaData('hunger'),
         thirst: Core.Functions.getMetaData('thirst'),
         stress: Core.Functions.getMetaData('stress'),
-        money: Core.Functions.getPlayerData('money'),
         playerid: undefined,
         fuel: tank,
         hudPosition: hudPos,
         fuelPosition: fuelPos,
-        vehicle: isVehicle,
-        hour: hours,
-        minute: minutes,
-        belt: belt,
     };
     hud.emit('hud:Tick', data);
 }, 1000);
-
-alt.everyTick(() => {
-    natives.hideHudComponentThisFrame(1); // Wanted Stars
-    natives.hideHudComponentThisFrame(2); // Weapon Icon
-    natives.hideHudComponentThisFrame(3); // Cash
-    natives.hideHudComponentThisFrame(4); // MP Cash
-    natives.hideHudComponentThisFrame(6); // Vehicle Name
-    natives.hideHudComponentThisFrame(7); // Area Name
-    natives.hideHudComponentThisFrame(8); // Vehicle Class
-    natives.hideHudComponentThisFrame(9); // Street Name
-    natives.hideHudComponentThisFrame(13); // Cash Change
-    natives.hideHudComponentThisFrame(17); // Save Game
-    natives.hideHudComponentThisFrame(20); // Weapon Stats
-});
-
-/**
- * The code above is adding a watermark to the top right corner of the image.
- */
-alt.setWatermarkPosition(3);
-// set belt
-/**
- * If the player presses G, toggle the seatbelt on or off.
- * @param key - The key that was pressed.
- * @returns The value of the flag.
- */
-alt.on('keydown', (key) => {
-    if (key === 71) {
-        if (!localPlayer.vehicle) return;
-        if (!belt) {
-            natives.setPedConfigFlag(alt.Player.local.scriptID, 32, false);
-            belt = true;
-        } else {
-            natives.setPedConfigFlag(alt.Player.local.scriptID, 32, true);
-            belt = false;
-        }
-    }
-});

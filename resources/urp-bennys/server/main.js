@@ -23,7 +23,6 @@ alt.onClient('Bennys:InstallColor', (source, index, id) => {});
 
 alt.onClient('Bennys:install', (source) => {
     if (!source.vehicle) return;
-    console.log('benys instal', source.vehicle);
     if (!Core.Money.hasMoney(source, 'cash', 1250)) {
         alt.emitClient(
             source,
@@ -222,9 +221,17 @@ const getAllModsCount = (source) => {
             name: 'Plate',
             value: source.vehicle.getModsCount(modTypes.Plate),
         },
-        { id: 'primary', name: 'Primary Color', value: 1 },
-        { id: 'secondary', name: 'Secondary Color', value: 1 },
-        { id: 'xenon', name: 'Xenon Color', value: 1 },
+        {
+            id: 'primary',
+            name: 'Primary Color',
+            value: source.vehicle.customPrimaryColor,
+        },
+        {
+            id: 'secondary',
+            name: 'Secondary Color',
+            value: source.vehicle.customSecondaryColor,
+        },
+        { id: 'neon', name: 'Neon Color', value: source.vehicle.neonColor },
     ];
     return data;
 };
