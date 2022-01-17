@@ -183,12 +183,9 @@ const addHungerThirst = (source, itemtype, value) => {
 
 const adminHeal = (source) => {
     if (!source) return;
-
     source.playerData.metadata.thirst = 200;
-
     source.playerData.metadata.hunger = 200;
-
-    source.playerData.metadata.health = 200;
+    source.health = 200;
 
     saveMetadata(source);
     Core.Functions.emitPlayerData(
@@ -270,11 +267,12 @@ const selectCharacter = async (source, playerData, fromCreation = false) => {
     Core.Functions.emitPlayerData(source, 'money', source.playerData.money);
     Core.Functions.emitPlayerData(source, 'ssn', source.playerData.ssn);
     Core.Functions.emitPlayerData(source, 'id', source.playerData.id);
-    source.setMeta('ssn', source.playerData.ssn);
-    source.setMeta('id', source.playerData.id);
+    source.setMeta('playerData', source.playerData);
     setDeath(source, source.playerData.metadata.isdead);
-    source.health = source.playerData.metadata.health;
-    source.armour = source.playerData.metadata.armour;
+    alt.setTimeout(() => {
+        source.health = source.playerData.metadata.health;
+        source.armour = source.playerData.metadata.armour;
+    }, 500);
     loadCustoms(source);
     //We can't pass source directly due its complexity
     alt.emit('Core:Server:CharacterLoaded', source.id);
@@ -481,10 +479,9 @@ const setDeath = (source, isDead) => {
 
 const saveMetadata = (source) => {
     if (!source) return;
-    const { metadata, ssn } = source.playerData;
     db.execute(
         'UPDATE characters SET metadata = ? WHERE ssn = ?',
-        [JSON.stringify(metadata), ssn],
+        [JSON.stringify(source.playerData.metadata), source.playerData.ssn],
         undefined,
         alt.resourceName
     );
