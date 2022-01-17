@@ -69,7 +69,7 @@ export const PERSONAL_MENU = {
         },
         {
             eventName: 'context:player:status',
-            isServer: false,
+            isServer: true,
             name: 'Status',
         },
     ],
@@ -91,6 +91,21 @@ export const AMBULANCE_MENU = {
 export const MECHANIC_MENU = {
     identifier: 'Mechanic Menu',
     options: [
+        {
+            eventName: 'context:vehicle:engine',
+            isServer: true,
+            name: 'Start/Stop Engine',
+        },
+        {
+            eventName: 'context:vehicle:lock',
+            isServer: true,
+            name: 'Lock/Unlock',
+        },
+        {
+            eventName: 'context:vehicle:trunk',
+            isServer: true,
+            name: 'Trunk',
+        },
         {
             eventName: 'context:mechanic:repair',
             isServer: true,
