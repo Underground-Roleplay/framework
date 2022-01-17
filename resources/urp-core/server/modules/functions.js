@@ -349,24 +349,18 @@ const getSourceTargetByPhone = (phone) => {
 //OK
 const inviteCallRequest = (source, phone) => {
     const isSourceInCall = source.playerData.inCall;
-    alt.log(`[DEBUG] source is in call? ${isSourceInCall}`);
-    if (isSourceInCall) {
-        alt.log('The source is already in a call');
-        return;
-    }
+    if (isSourceInCall) return;
 
-    //This phone is in string
     const target = getSourceTargetByPhone(phone);
-    alt.log(`[DEBUG] target is ${target}`);
+
     if (!target) {
         alt.log(`fora da area de cobertura ou o numero esta errado`);
         return;
     }
 
     const isTargetInCall = target.playerData.inCall;
-    alt.log(`[DEBUG] target is in call? ${isTargetInCall}`);
+
     if (isTargetInCall) {
-        alt.log(`ocupado`);
         return;
     }
 
@@ -374,9 +368,6 @@ const inviteCallRequest = (source, phone) => {
 };
 
 const createCallPhone = (source, phone) => {
-    console.log(
-        `[createCallPhone] caller ${source.playerData.phone} target ${phone}`
-    );
     const target = getSourceTargetByPhone(phone);
     if (!target) return;
     if (source.playerData.inCall || target.playerData.inCall) return;
@@ -389,7 +380,6 @@ const createCallPhone = (source, phone) => {
 };
 
 const endCall = (source, phone) => {
-    console.log(`[endCall] caller ${source.playerData.phone} target ${phone}`);
     const target = getSourceTargetByPhone(phone);
     if (!target) return;
     Core.Voice.removeSourceFromChannel(

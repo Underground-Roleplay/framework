@@ -59,7 +59,7 @@ const createSingleInteraction = (
     }
     registeredInteractions += 1;
     List[type].push(colshape);
-    alt.log('Uma nova interação foi criada');
+    alt.log(Core.Translate('INTERACTION.NEW'));
 };
 
 const createMultipleInteractions = (
@@ -128,9 +128,9 @@ const createMultipleInteractions = (
         List[interaction.type].push(colshape);
     });
     alt.log(
-        `Foram criadas ${
-            registeredInteractions - currentInteractions
-        } interações`
+        Core.Translate('INTERACTION.MULTIPLE_NEW', {
+            interactions: `${registeredInteractions - currentInteractions}`,
+        })
     );
 };
 

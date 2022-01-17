@@ -69,8 +69,27 @@
     },
     "JOB": {
         "LABEL": "{{ jobname }}",
+        "UPDATED": "Você agora é um {{ jobname }}",
         "JOB_STARTED": "Bem-vindo de volta ao trabalho!",
         "JOB_ENDED": "Obrigado pelo seu trabalho de hoje!."
+    },
+    "HOMES": {
+        "LABEL": "SISTEMA DE MORADIA",
+        "ALREADY_HAVE": "Você já possui uma moradia",
+        "NO_VACANCY": "Não existem vagas disponiveis nessa moradia",
+        "NO_HOME": "Você não possui nenhuma residencia",
+        "NOT_HERE": "Você não possui nenhuma residencia nesta localização",
+        "NOT_AVAILABLE": "O dono não se encontra na residencia",
+        "REFUSED": "Sua entrada foi recusada",
+        "REQUEST": "{{ name }} Está solicitando a entrada em sua residencia, deseja autorizar?",
+        "SUCCESS_PURCHASE": "Você comprou sua residencia com sucesso!"
+    },
+    "MONEY": {
+        "DONT_HAVE_ENOUGH": "Você não tem dinheiro suficiente"
+    },
+    "INTERACTION": {
+        "NEW": "Uma nova interação foi criada",
+        "MULTIPLE_NEW": "Foram criadas {{ interactions }} novas interações"
     },
     "NO_PLAYERS_NEAR": "Nenhum player próximo",
     "WELCOME": "Bem vindo ao {{ serverName }}"

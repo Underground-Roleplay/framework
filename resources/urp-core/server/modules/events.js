@@ -17,7 +17,7 @@ alt.on('playerConnect', async (source) => {
         'default',
         'SERVER',
         undefined,
-        `A player have been connected ${source.name}`
+        Core.Translate('PLAYER.NEW_CONNECTED', { playerName: source.name })
     );
     Core.Functions.login(source);
 });

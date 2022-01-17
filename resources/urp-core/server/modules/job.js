@@ -42,7 +42,7 @@ const setJob = (source, job, grade) => {
         'notify',
         'error',
         'JOB SYSTEM',
-        `You are now a ${job}`
+        Core.Translate('JOB.UPDATED', { jobName: job })
     );
 };
 

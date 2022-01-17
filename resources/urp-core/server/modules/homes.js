@@ -18,8 +18,8 @@ const enterHome = async (source, home, entry) => {
             source,
             'notify',
             'error',
-            `HOME SYSTEM`,
-            `You don't have an home`
+            Core.Translate('HOMES.LABEL'),
+            Core.Translate('HOMES.NO_HOME')
         );
         return false;
     }
@@ -29,8 +29,8 @@ const enterHome = async (source, home, entry) => {
             source,
             'notify',
             'error',
-            `HOME SYSTEM`,
-            `You home ain't here fella`
+            Core.Translate('HOMES.LABEL'),
+            Core.Translate('HOMES.NOT_HERE')
         );
         return false;
     }
@@ -58,15 +58,17 @@ const requestAccess = async (source, home, slot, entry) => {
             source,
             'notify',
             'error',
-            `HOME SYSTEM`,
-            `There's no one at home`
+            Core.Translate('HOMES.LABEL'),
+            Core.Translate('HOMES.NOT_AVAILABLE')
         );
         return false;
     }
 
     const res = await requestPrompt(
         targetPlayer,
-        `${source.playerData.charinfo.firstname} ${source.playerData.charinfo.lastname} wants to enter at your house! Do you want to allow it?`,
+        Core.Translate('HOMES.REQUEST', {
+            name: `${source.playerData.charinfo.firstname} ${source.playerData.charinfo.lastname}`,
+        }),
         5000
     );
 
@@ -75,8 +77,8 @@ const requestAccess = async (source, home, slot, entry) => {
             source,
             'notify',
             'error',
-            `HOME SYSTEM`,
-            `You're not authorizated to enter`
+            Core.Translate('HOMES.LABEL'),
+            Core.Translate('HOMES.REFUSED')
         );
         return false;
     }
@@ -121,8 +123,8 @@ const buyHome = async (source, home, maxSlots, price) => {
             source,
             'notify',
             'error',
-            `HOME SYSTEM`,
-            `There's no slots avaliable`
+            Core.Translate('HOMES.LABEL'),
+            Core.Translate('HOMES.NO_VACANCY')
         );
         return false;
     }
@@ -133,8 +135,8 @@ const buyHome = async (source, home, maxSlots, price) => {
             source,
             'notify',
             'error',
-            `HOME SYSTEM`,
-            `You have an house already`
+            Core.Translate('HOMES.LABEL'),
+            Core.Translate('HOMES.ALREADY_HAVE')
         );
         return false;
     }
@@ -144,8 +146,8 @@ const buyHome = async (source, home, maxSlots, price) => {
             source,
             'notify',
             'error',
-            `HOME SYSTEM`,
-            `You don't have enought money`
+            Core.Translate('HOMES.LABEL'),
+            Core.Translate('MONEY.DONT_HAVE_ENOUGH')
         );
         return false;
     }
@@ -158,8 +160,8 @@ const buyHome = async (source, home, maxSlots, price) => {
         source,
         'notify',
         'success',
-        `HOME SYSTEM`,
-        `You have buyed a house`
+        Core.Translate('HOMES.LABEL'),
+        Core.Translate('HOMES.SUCCESS_PURCHASE')
     );
     return createHome;
 };

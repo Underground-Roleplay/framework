@@ -71,8 +71,27 @@
     },
     "JOB": {
         "LABEL": "{{ jobname }}",
+        "UPDATED": "You are now a {{ jobname }}",
         "JOB_STARTED": "Welcome back to work!",
         "JOB_ENDED": "Thanks for your todays work!."
+    },
+    "HOMES": {
+        "LABEL": "HOMES SYSTEM",
+        "ALREADY_HAVE": "You already own an home",
+        "NO_VACANCY": "There are no vacancies available at this location.",
+        "NO_HOME": "You do not own any residence",
+        "NOT_HERE": "You do not own any residence in this location",
+        "NOT_AVAILABLE": "The owner is not at home",
+        "REFUSED": "Your entry has been refused",
+        "REQUEST": "{{ name }} Is asking permission to enters into your residence, do you want to authorize?",
+        "SUCCESS_PURCHASE": "You have successfully purchased your home!"
+    },
+    "MONEY": {
+        "DONT_HAVE_ENOUGH": "You do not have enough money"
+    },
+    "INTERACTION": {
+        "NEW": "A new interaction has been created",
+        "MULTIPLE_NEW": "A total of {{ interactions }} new interactions has been created"
     },
     "NO_PLAYERS_NEAR": "No players nearby",
     "WELCOME": "Welcome to {{ serverName }}"
