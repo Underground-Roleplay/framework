@@ -41,7 +41,17 @@ command.
 chat.registerCmd('heal', (source, [identifier]) => {
     const isAllowed = Core.Functions.hasPermission(source, 'admin');
     if (isAllowed) {
-        if (!identifier) return;
+        if (!identifier) {
+            Core.Character.adminHeal(source);
+            alt.emitClient(
+                source,
+                'notify',
+                'success',
+                Core.Translate('HOSPITAL.LABEL'),
+                Core.Translate('HOSPITAL.HEALLER', { targetplayer: identifier })
+            );
+            return;
+        }
         const ssnRegex = /[0-9]{6}\-[0-9]{4}/g;
         if (identifier.match(ssnRegex)) {
             const target = alt.Player.all.find(
