@@ -1,17 +1,8 @@
 /// <reference types="@altv/types-client" />
 import alt from 'alt';
-import Core from 'urp-core';
 
 const url = 'http://resource/client/html/index.html';
 const menus = {};
-import {
-    VEHICLE_MENU,
-    POLICE_MENU,
-    PLAYER_MENU,
-    PERSONAL_MENU,
-    AMBULANCE_MENU,
-    MECHANIC_MENU,
-} from '../shared/config';
 
 let view;
 let data;
@@ -25,10 +16,20 @@ if (!view) {
     view = new alt.WebView(url);
     view.on('context:Select', handleSelect);
 }
-
+const vehicleMenu = {
+    identifier: 'vehicle Menu',
+    options: [
+        { eventName: 'trashcan:engine', isServer: true, name: 'Ligar Motor' },
+        { eventName: 'trashcan:Dig', isServer: true, name: 'Tancar' },
+        {
+            eventName: 'trashcan:Dig',
+            isServer: true,
+            name: 'Abrir porta-malas',
+        },
+    ],
+    title: 'Vehicle Options',
+};
 function handleInteraction(type, entity, model, coords) {
-    let job = Core.Functions.getJobInfo('name');
-
     alt.log(
         `[CONTEXT-INFO] Type: ${type} | ID: ${entity} | Model: ${model} | Coords: ${JSON.stringify(
             coords
@@ -45,38 +46,7 @@ function handleInteraction(type, entity, model, coords) {
         view.focus();
         showCursor(true);
         const cursor = alt.getCursorPos();
-        if (job === 'mechanic')
-            return view.emit(
-                'context:Mount',
-                MECHANIC_MENU,
-                cursor.x,
-                cursor.y
-            );
-        view.emit('context:Mount', VEHICLE_MENU, cursor.x, cursor.y);
-        return;
-    }
-    if (type === 'player') {
-        view.focus();
-        showCursor(true);
-        const cursor = alt.getCursorPos();
-        if (job === 'police')
-            return view.emit('context:Mount', POLICE_MENU, cursor.x, cursor.y);
-        if (job === 'ambulance')
-            return view.emit(
-                'context:Mount',
-                AMBULANCE_MENU,
-                cursor.x,
-                cursor.y
-            );
-        view.emit('context:Mount', PLAYER_MENU, cursor.x, cursor.y);
-        return;
-    }
-
-    if (type === 'self') {
-        view.focus();
-        showCursor(true);
-        const cursor = alt.getCursorPos();
-        view.emit('context:Mount', PERSONAL_MENU, cursor.x, cursor.y);
+        view.emit('context:Mount', vehicleMenu, cursor.x, cursor.y);
         return;
     }
 
@@ -143,12 +113,10 @@ function handleDismount() {
     view.emit('context:Dismount');
     view.unfocus();
     showCursor(false);
-    alt.toggleGameControls(true);
 }
 
 function handleSelect(eventName, isServer) {
     handleDismount();
-
     if (isServer) {
         alt.emitServer(eventName, data);
         return;

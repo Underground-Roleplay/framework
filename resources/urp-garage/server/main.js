@@ -106,6 +106,9 @@ alt.onClient('Garage:Save', (source) => {
     //Destroy veh now
     Core.Vehicles.putInGarage(source, closestVeh);
 });
+alt.onClient('trashcan:engine', (source) => {
+    Core.Vehicles.handleToggleEngine(source, source.vehicle);
+});
 
 const executeSync = (query, parameters) => {
     return new Promise((resolve, reject) => {

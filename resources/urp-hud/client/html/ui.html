@@ -1,49 +1,42 @@
 <html>
-
 <head>
+    <link rel="stylesheet" href="main.css">
+    <script src="https://kit.fontawesome.com/a412d17519.js" crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" 
     crossorigin="anonymous"></script>
-    
-    <link href="ui.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-    <!-- <div class="logoserver"></div> -->
-    <div class="huds">
-        <div class="money">
-            <p class="wallet"><font></font></p>
-            <p class="bank"><font></font></p>
+    <div id="StatusHud">
+        <div id="playerid" class="statback">
+            <i class="fas fa-user" style="color:rgb(230, 230, 230); font-size:0.7rem;"></i>
+            <div id="playeridlevel" class="textstat">N/A</div>
         </div>
-        <div class="hud dashboard">
-            <div class="player" style="position: absolute;right: 55px;">
-                <div class="hunger">
-                    <div class="vprogress"></div>
-                    <img src="food.png">
-                </div>
-                <div class="health">
-                    <div class="vprogress"></div>
-                    <img src="heartbeat.png">
-                </div>
-                <div class="thirst">
-                    <div class="vprogress"></div>
-                    <img src="drink.png">
-                </div>
-                <div class="armor">
-                    <div class="vprogress"></div>
-                    <img src="armor.png">
-                </div>       
-                <p class="date"><font></font></p>        
-            </div>
-            <div class="vehicle" style="display: none;">
-                <div class="belt" style="margin-left: -8px;margin-top: 7px;">
-                    <img src="belt.png">
-                </div>
-                <div class="fuel">
-                    <font>0%</font>
-                </div>
-                
-            </div>
+        <div id="healt" class="statback">
+            <i class="fas fa-heart-broken" style="color:red;"></i>
+            <div id="healtlevel" class="textstat">100</div>
+        </div>
+        <div id="shield" class="statback">
+            <i class="fas fa-shield-alt" style="color:royalblue;"></i>
+            <div id="shieldval" class="textstat">100</div>
+        </div>
+        <div id="hunger" class="statback">
+            <i class="fas fa-hamburger" style="color: orange;"></i>
+            <div id="hungerlevel" class="textstat">100</div>
+        </div>
+        <div id="water" class="statback">
+            <i class="fas fa-glass-whiskey" style="color:rgb(72, 72, 216)"></i>
+            <div id="waterlevel" class="textstat" style=" margin-top: -0.10vh;">9</div>
+        </div>
+        <div id="stress" class="statback">
+            <i class="fas fa-brain" style="color:rgb(162, 53, 224); font-size:0.7rem;"></i>
+            <div id="stresslevel" class="textstat">100</div>
+        </div>
+        <div id="fuel" class="statback">
+            <i class="fas fa-gas-pump" style="color:rgb(53, 224, 53); font-size:0.7rem;"></i>
+            <div id="fuellevel" class="textstat">FUEL</div>
         </div>
     </div>
-    <script src="script.js" type="text/javascript"></script>
 </body>
+<script type="text/javascript" src="script.js"></script>
 </html>

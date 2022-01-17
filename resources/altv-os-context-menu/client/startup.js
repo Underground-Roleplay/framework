@@ -1,15 +1,7 @@
 import * as alt from 'alt-client';
 import * as context from '/client/context';
 import * as contextInteractionBuilder from '/client/interactionBuilder';
-import Core from 'urp-core';
-import * as natives from 'natives';
-import './events';
 
-import chat from 'urp-chat';
-
-///////////////////////////////////////////////////////////////////////////
-// gas pumps
-//////////////////////////////////////////////////////////////////////////
 alt.on('context:Ready', () => {
     alt.emit('context:CreateMenu', 2287735495, 'Gas Station');
     alt.emit(
@@ -118,6 +110,3 @@ alt.on('context:Ready', () => {
         false
     );
 });
-///////////////////////////////////////////////////////////////////////////
-// gas pumps
-//////////////////////////////////////////////////////////////////////////

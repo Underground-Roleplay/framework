@@ -25,7 +25,6 @@ const app = new Vue({
             this.y = y;
             this.menu = menu;
             this.show = true;
-
         },
         dismount() {
             this.show = false;

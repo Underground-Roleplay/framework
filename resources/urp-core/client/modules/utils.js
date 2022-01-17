@@ -69,39 +69,17 @@ const drawText = (x, y, width, height, scale, { r, g, b, a }, text) => {
 const drawText3D = (x, y, z, text) => {
     natives.setTextScale(0.35, 0.35);
     natives.setTextFont(4);
-    natives.setTextProportional(true);
+    natives.setTextProportional(1);
     natives.setTextColour(255, 255, 255, 215);
-    natives.beginTextCommandDisplayText('STRING');
+    natives.setTextEntry('STRING');
     natives.setTextCentre(true);
-    natives.addTextComponentSubstringPlayerName(text);
+    natives.addTextComponentString(text);
     natives.setDrawOrigin(x, y, z, 0);
+    natives.drawText(0.0, 0.0);
     const factor = text.length / 370;
-    natives.drawRect(
-        0.0,
-        0.0 + 0.0125,
-        0.017 + factor,
-        0.03,
-        0,
-        0,
-        0,
-        75,
-        false
-    );
-    natives.endTextCommandDisplayText(0, 0, 0);
+    natives.drawRect(0.0, 0.0 + 0.0125, 0.017 + factor, 0.03, 0, 0, 0, 75);
+    natives.clearDrawOrigin();
 };
-
-function drawTextHelper(text, x, y) {
-    natives.beginTextCommandDisplayText('STRING');
-    natives.addTextComponentSubstringPlayerName(text);
-    natives.setTextFont(4);
-    natives.setTextScale(1, 0.5);
-    natives.setTextWrap(0.0, 1.0);
-    natives.setTextCentre(true);
-    natives.setTextColour(255, 255, 255, 180);
-    natives.setTextOutline();
-    natives.setTextDropShadow();
-    natives.endTextCommandDisplayText(x, y, 0);
-}
 let primaryCamera;
 
 const destroyCam = () => {
@@ -235,5 +213,4 @@ export default {
     interactionMode,
     destroyCam,
     createCamera,
-    drawTextHelper,
 };

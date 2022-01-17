@@ -19,9 +19,9 @@ function showNotify(type, tittle, message,time)  {
 			var html = "<div class='notification-box'><span class='fa-stack'><i class='fas fa-times'></i><i class='fas fa-times fill red'></i></span><div class='group negado'><div class='title denied'>"+ tittle +"</div><div class='texto'>"+message+"</div></div></div>"
 		} else if(type == "success"){
 			var html = "<div class='notification-box'><span class='fa-stack'><i class='fas fa-check'></i><i class='fas fa-check fill'></i></span><div class='group'><div class='title'>"+ tittle +"</div><div class='texto'>"+message+"</div></div></div>"
-		} else if(type == "important"){
+		} else if(type == "importante"){
 			var html = "<div class='notification-box'><i class='fas fa-exclamation'></i><i class='fas fa-exclamation fill-imp blue'></i><div class='group'><div class='title important'>"+ tittle +"</div><div class='texto'>"+message+"</div></div></div>"
-		} else if(type == "communicate"){
+		} else if(type == "comunicado"){
 			var html = "<div class='notification-box'><i class='fas fa-bullhorn'></i><i class='fas fa-bullhorn fill-imp yellow'></i><div class='group'><div class='title comunicado'>"+ tittle +"</div><div class='texto'>"+message+"</div></div></div>"
 		}
 		
@@ -40,7 +40,7 @@ function showNotify(type, tittle, message,time)  {
 
 function showNotifyCenter(type, message,time)  {
 	if (time < 0 || time === null || time === undefined) time = 3000
-	if (type == "communicate"){
+	if (type == "comunicado"){
 		var html =`
 			<div class='notification-box-center'>
 				<div class="grup-center">
