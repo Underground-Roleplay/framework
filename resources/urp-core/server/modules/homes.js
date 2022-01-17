@@ -49,8 +49,9 @@ const enterHome = async (source, home, entry) => {
 const requestAccess = async (source, home, slot, entry) => {
     const targetPlayer = alt.Player.all.find(
         (p) =>
-            p.playerData.atHome.slot === slot &&
-            p.playerData.atHome.home === home
+            p.playerData.metadata.atHome &&
+            p.playerData.metadata.atHome.slot === slot &&
+            p.playerData.metadata.atHome.home === home
     );
     if (!targetPlayer) {
         alt.emitClient(
@@ -64,7 +65,7 @@ const requestAccess = async (source, home, slot, entry) => {
     }
 
     const res = await requestPrompt(
-        source,
+        targetPlayer,
         `${source.playerData.charinfo.firstname} ${source.playerData.charinfo.lastname} wants to enter at your house! Do you want to allow it?`,
         5000
     );
@@ -81,12 +82,12 @@ const requestAccess = async (source, home, slot, entry) => {
     }
 
     source.playerData.metadata.atHome = {
-        slot: ownedHome[0].slot,
-        home: ownedHome[0].name,
+        slot: slot,
+        home: home,
         entry: entry,
     };
 
-    const homeDim = source.id + 1;
+    const homeDim = targetPlayer.dimension;
     Core.Functions.setPosition(source, entry.x, entry.y, entry.z, homeDim);
     return true;
 };

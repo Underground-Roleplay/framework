@@ -83,8 +83,8 @@ CREATE TABLE IF NOT EXISTS `characters_homes`(
   `name` VARCHAR(100),
   `chest` longtext DEFAULT NULL,
   `slot` INTEGER,
-  UNIQUE(home,number),
   PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE KEY `home` (`name`,`slot`) USING BTREE,
   KEY `ssn` (`ssn`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=1;
 

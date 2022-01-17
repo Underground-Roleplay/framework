@@ -1,6 +1,6 @@
 'use strict';
 
-function playHowl2d(soundfile, volume){
+function playHowl2d(soundfile, volume) {
     var sound = new Howl({
         src: [soundfile], //   './audio/fillup_start.wav'
         autoplay: true,
@@ -11,6 +11,6 @@ function playHowl2d(soundfile, volume){
     return sound;
 }
 
-if('alt' in window) {
-    alt.on("playHowl2d", playHowl2d);
+if ('alt' in window) {
+    alt.on('playHowl2d', playHowl2d);
 }

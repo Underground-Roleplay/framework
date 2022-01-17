@@ -77,7 +77,7 @@ alt.on('notifyCenter', (id, type, message, time) => {
 });
 
 alt.on('keydown', (key) => {
-    if (activePrompts.length < 0) return;
+    if (activePrompts.length - 1 < 0) return;
     if (key === 89) {
         const id = activePrompts.length - 1;
         console.log(id, 'true');
