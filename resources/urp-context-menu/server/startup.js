@@ -37,10 +37,19 @@ alt.onClient('context:mechanic:repair', (source) => {
 
 alt.onClient('context:player:showssn', (source) => {
     if (!source) return;
-    chat.send(source, `your ssn is ${source.getMeta('ssn')}`);
+    let playerData = source.getMeta('playerData');
+    chat.send(source, `your ssn is ${playerData.ssn}`);
 });
 
 alt.onClient('context:player:showid', (source) => {
     if (!source) return;
-    chat.send(source, `your id is ${source.getMeta('id')}`);
+    let playerData = source.getMeta('playerData');
+    chat.send(source, `your id is ${playerData.id}`);
+});
+alt.onClient('context:player:status', (source) => {
+    if (!source) return;
+    chat.send(
+        source,
+        `your id is ${JSON.stringify(source.getMeta('playerData'))}`
+    );
 });

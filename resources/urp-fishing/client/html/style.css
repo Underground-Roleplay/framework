@@ -1,0 +1,79 @@
+@font-face {
+    font-family: 'SignPainterHouseScriptRegular';
+    src: url('./SignPainterHouseScriptRegular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+@font-face {
+    font-family: 'ChaletNewYorkRegular';
+    src: url('./ChaletNewYorkRegular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+@font-face {
+    font-family: 'ChaletLondonNineteenSixty';
+    src: url('./ChaletLondonNineteenSixty.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+body,html {
+    height: 100%;
+-webkit-touch-callout: none; 
+  -webkit-user-select: none; 
+   -khtml-user-select: none; 
+     -moz-user-select: none; 
+      -ms-user-select: none; 
+          user-select: none;
+    background-color: transparent !important;
+  }
+
+#body {
+    visibility: hidden;
+    opacity: 0.0;
+    transition: .5s;
+}
+
+#cooldownbar {
+    position: absolute;
+    width: 20%;
+
+    bottom: 20px;
+    left: 50%;
+}
+
+#cooldownbar .progress {
+    position: relative;
+    left: -50%;
+}
+
+.keybk {
+    padding: 0px 5px 0px 5px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 12px;
+}
+
+#fishingMain {
+    padding-top: 50px;
+}
+
+.fishMessage {
+    background-color: #000000b8;
+    color: #FFF;
+    padding: 10px;
+
+    border-radius: 2px;
+    font-size: 14px;
+
+    width: fit-content;
+    margin: 5px auto;
+}
+
+.fishMessage b {
+    font-family: 'SignPainterHouseScriptRegular' !important;
+    font-size: 48px;
+    font-weight: normal;
+}
+
+.unsolved {
+    color: #cecece;
+}
+
+.solved {
+    color: #000;
+}

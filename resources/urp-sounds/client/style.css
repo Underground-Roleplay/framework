@@ -1,0 +1,27 @@
+html, body {
+    height: 100%;
+    /*needs more work on cursor...*/
+    /*cursor: url("mousepointer.png"), auto;*/
+    
+    -webkit-touch-callout: none; 
+    -webkit-user-select: none; 
+     -khtml-user-select: none; 
+       -moz-user-select: none; 
+        -ms-user-select: none; 
+            user-select: none;
+            
+    background-color: transparent;
+}
+
+#body {
+    visibility: visible;
+    opacity: 1.0;
+    color: #FFF;
+    overflow: hidden;
+}
+
+#howler_tag {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
