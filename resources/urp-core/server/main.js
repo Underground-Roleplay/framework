@@ -23,6 +23,7 @@ import { init, translate } from './libs/locale';
 import { Items } from '../shared/configs/items';
 import { executeSync } from './libs/utils';
 import { Jobs } from '../shared/configs/jobs';
+import homes from './modules/homes';
 
 const Core = {};
 
@@ -59,6 +60,8 @@ Core.Functions = functions;
 Core.License = license;
 
 Core.Job = job;
+
+Core.Homes = homes;
 
 Core.Police = police;
 

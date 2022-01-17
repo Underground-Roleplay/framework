@@ -110,13 +110,13 @@ const createMarker = (pos, data) => {
             data.g,
             data.b,
             data.a,
-            false,
-            true,
-            2,
-            false,
-            undefined,
-            undefined,
-            false
+            data.bobAndDown || false,
+            data.faceCamera || true,
+            data.p19 || 2,
+            data.rotate || false,
+            data.textureDict || undefined,
+            data.textureName || undefined,
+            data.drawOnEnts || false
         );
     });
     return marker;

@@ -1,6 +1,17 @@
 import * as alt from 'alt-server';
+import { createRequest } from 'urp-notify';
 import db from 'mysql2-wrapper';
 import sjcl from 'sjcl';
+
+// Prompt WRAPPER
+const requestPrompt = (target, message, time) => {
+    return new Promise((resolve, reject) => {
+        const resolvePromise = (response) => {
+            resolve(response);
+        };
+        createRequest(target, message, time, resolvePromise);
+    });
+};
 
 // Database WRAPPERS
 const executeSync = (query, parameters) => {
@@ -157,4 +168,5 @@ export {
     getForwardVector,
     getVectorInFrontOfPlayer,
     getClosestEntity,
+    requestPrompt,
 };

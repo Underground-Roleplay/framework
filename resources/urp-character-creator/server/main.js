@@ -86,6 +86,7 @@ alt.on('Creator:Start', (source, playerData) => {
         402.882,
         -996.537,
         -100.0,
+        source.id + 1,
         'mp_m_freemode_01'
     );
     source.setHeadBlendData(0, 0, 0, 0, 0, 0, 0, 0, 0);

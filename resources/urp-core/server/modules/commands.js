@@ -699,3 +699,8 @@ chat.registerCmd('repair', (source) => {
         );
     Core.Functions.repairVehicle(source);
 });
+
+chat.registerCmd('lefthome', (source) => {
+    if (!source) return;
+    Core.Homes.leftHome(source);
+});

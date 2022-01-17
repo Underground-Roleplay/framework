@@ -61,7 +61,7 @@ const checkPlayerData = async (source, playerData = undefined) => {
         playerData.ssn = await createSSN();
         playerData.license = source.socialID;
         playerData.name = source.name;
-        playerData.cid = 1;
+        playerData.dimension = 0;
         playerData.money = Core.Config.DefaultMoney;
         // Charinfo
         playerData.charinfo = Core.Config.DefaultInfo;
@@ -204,8 +204,9 @@ const updateBasicData = async (source) => {
     source.playerData.metadata.health = source.health;
     source.playerData.metadata.armour = source.armour;
     db.update(
-        'UPDATE characters SET metadata = ?, position = ? WHERE ssn = ?',
+        'UPDATE characters SET dimension = ?, metadata = ?, position = ? WHERE ssn = ?',
         [
+            source.dimension,
             JSON.stringify(source.playerData.metadata),
             JSON.stringify(source.pos),
             source.playerData.ssn,
@@ -217,10 +218,10 @@ const updateBasicData = async (source) => {
 
 const createCharacter = async (source, playerData, select = true) => {
     db.insert(
-        'INSERT INTO characters (ssn, cid, socialID, name, money, charinfo, job, gang, position, metadata, inventory) VALUES (:ssn, :cid, :socialID, :name, :money, :charinfo, :job, :gang, :position, :metadata, :inventory) ON DUPLICATE KEY UPDATE cid = :cid, name = :name, money = :money, charinfo = :charinfo',
+        'INSERT INTO characters (ssn, dimension, socialID, name, money, charinfo, job, gang, position, metadata, inventory) VALUES (:ssn, :dimension, :socialID, :name, :money, :charinfo, :job, :gang, :position, :metadata, :inventory) ON DUPLICATE KEY UPDATE dimension = :dimension, name = :name, money = :money, charinfo = :charinfo',
         {
             ssn: playerData.ssn,
-            cid: playerData.cid,
+            dimension: playerData.dimension,
             socialID: source.socialID,
             name: playerData.name,
             money: JSON.stringify(playerData.money),
@@ -407,7 +408,13 @@ const createCustoms = (source) => {
         undefined,
         alt.resourceName
     );
-    Core.Functions.setPosition(source, position.x, position.y, position.z);
+    Core.Functions.setPosition(
+        source,
+        position.x,
+        position.y,
+        position.z,
+        source.playerData.dimension
+    );
 };
 
 const setComponentVariations = (source, componentVariations) => {
@@ -531,6 +538,7 @@ const loadCustoms = async (source) => {
             position.x,
             position.y,
             position.z,
+            source.playerData.dimension,
             parseInt(result[0].model)
         );
         source.setHeadBlendData(

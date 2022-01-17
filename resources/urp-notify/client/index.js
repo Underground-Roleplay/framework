@@ -41,7 +41,15 @@ alt.onServer('alert', () => {
     );
 });
 
-alt.onServer('notifyCenter', (type, message, time) => {
+let activePrompts = [];
+alt.onServer('notifyCenter', (id, type, message, time) => {
+    const timer = alt.setTimeout(() => {
+        activePrompts.splice(0, 1);
+        //    alt.emitServer('notifyCenter:resolve', id, false)
+    }, time);
+    const newPrompt = { id: id, deleteTimer: timer };
+    const pid = activePrompts.push(newPrompt) - 1;
+
     view.emit('notifyCenter', type, message, time);
     natives.playSoundFrontend(
         -1,
@@ -50,7 +58,15 @@ alt.onServer('notifyCenter', (type, message, time) => {
         false
     );
 });
-alt.on('notifyCenter', (type, message, time) => {
+
+alt.on('notifyCenter', (id, type, message, time) => {
+    const timer = alt.setTimeout(() => {
+        activePrompts.splice(0, 1);
+        // alt.emitServer('notifyCenter:resolve', id, false)
+    }, time);
+    const newPrompt = { id: id, deleteTimer: timer };
+    const pid = activePrompts.push(newPrompt) - 1;
+
     view.emit('notifyCenter', type, message, time);
     natives.playSoundFrontend(
         -1,
@@ -58,4 +74,26 @@ alt.on('notifyCenter', (type, message, time) => {
         'Phone_SoundSet_Default',
         false
     );
+});
+
+alt.on('keydown', (key) => {
+    if (activePrompts.length < 0) return;
+    if (key === 89) {
+        const id = activePrompts.length - 1;
+        console.log(id, 'true');
+        if (activePrompts[id] && activePrompts[id].deleteTimer) {
+            alt.clearTimeout(activePrompts[id].deleteTimer);
+        }
+        alt.emitServer('notifyCenter:resolve', activePrompts[id].id, true);
+        delete activePrompts[id];
+    }
+    if (key === 85) {
+        const id = activePrompts.length - 1;
+        console.log(id, 'false');
+        if (activePrompts[id] && activePrompts[id].deleteTimer) {
+            alt.clearTimeout(activePrompts[id].deleteTimer);
+        }
+        alt.emitServer('notifyCenter:resolve', activePrompts[id].id, false);
+        delete activePrompts[id];
+    }
 });

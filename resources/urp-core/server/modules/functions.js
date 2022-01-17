@@ -194,12 +194,13 @@ const whitelistBanStatus = async (source, socialID, type) => {
 };
 
 // Player utils
-const setPosition = (source, x, y, z, model = undefined) => {
+const setPosition = (source, x, y, z, dimension = 0, model = undefined) => {
     if (model) {
         source.spawn(x, y, z, 0);
         source.model = model;
     }
     source.pos = new alt.Vector3(x, y, z);
+    source.dimension = dimension;
 };
 
 const getMoney = (source) => {
