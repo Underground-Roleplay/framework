@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+        />
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <title>Fishing GUI</title>
+
+        <!--BOOTSTRAP-->
+        <link
+            rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+            crossorigin="anonymous"
+        />
+        <script
+            src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"
+        ></script>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+            crossorigin="anonymous"
+        ></script>
+        <script
+            src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"
+        ></script>
+
+        <link rel="stylesheet" href="./style.css?v=1.0" />
+        <script src="./app.js"></script>
+    </head>
+    <body id="body">
+        <div id="fishingMain" class="container text-center">
+            <div id="fishMessage1" class="text-center fishMessage">
+                <b>Fishing! Ready to cast.</b><br />
+                Press
+                <button type="button" class="btn btn-light keybk">E</button> to
+                cast. Or
+                <button type="button" class="btn btn-light keybk">X</button> to
+                stop fishing.
+                <br />
+                Remember. The bigger the fish, the more
+                <button type="button" class="btn btn-light keybk">
+                    <i class="fas fa-bolt"></i>
+                </button>
+                it takes to catch it!
+            </div>
+            <div id="fishMessage2" class="text-center fishMessage">
+                <b>Now wait for a fish to bite...</b><br />
+                When a fish bites, Press
+                <button type="button" class="btn btn-light keybk">SPACE</button>
+                to hook the fish.<br />
+                Press
+                <button type="button" class="btn btn-light keybk">E</button> to
+                cancel cast
+                <button type="button" class="btn btn-light keybk">X</button> to
+                stop fishing.
+            </div>
+            <div id="fishMessage3" class="text-center fishMessage">
+                <b>You just hooked a fish!</b><br />
+                Solve the minigame before time runs out!
+                <br /><br />
+                <div id="keysPuzzle">
+                    <button
+                        id="game0"
+                        type="button"
+                        class="btn btn-light keybk solved"
+                    >
+                        A
+                    </button>
+                    <button
+                        id="game1"
+                        type="button"
+                        class="btn btn-light keybk solved"
+                    >
+                        A
+                    </button>
+                    <button
+                        id="game2"
+                        type="button"
+                        class="btn btn-light keybk solved"
+                    >
+                        S
+                    </button>
+                    <button
+                        id="game3"
+                        type="button"
+                        class="btn btn-light keybk unsolved"
+                    >
+                        W
+                    </button>
+                    <button
+                        id="game4"
+                        type="button"
+                        class="btn btn-light keybk unsolved"
+                    >
+                        D
+                    </button>
+                    <button
+                        id="game5"
+                        type="button"
+                        class="btn btn-light keybk unsolved"
+                    >
+                        S
+                    </button>
+                    <button
+                        id="game6"
+                        type="button"
+                        class="btn btn-light keybk unsolved"
+                    >
+                        S
+                    </button>
+                    <button
+                        id="game7"
+                        type="button"
+                        class="btn btn-light keybk unsolved"
+                    >
+                        A
+                    </button>
+                    <button
+                        id="game8"
+                        type="button"
+                        class="btn btn-light keybk unsolved"
+                    >
+                        W
+                    </button>
+                    <button
+                        id="game9"
+                        type="button"
+                        class="btn btn-light keybk unsolved"
+                    >
+                        D
+                    </button>
+                    <button
+                        id="game10"
+                        type="button"
+                        class="btn btn-light keybk unsolved"
+                    >
+                        S
+                    </button>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
