@@ -12,13 +12,13 @@ alt.on("hud:Tick", (data => {
     } else {
         $(".armor > .vprogress").show();
     }
-    $(".hunger > .vprogress").css("width", (100-(Math.ceil(data.hunger)) + "%"));
+    $(".hunger > .vprogress").css("width", (40 * (data.hunger/200) + "px"));
     if (data.hunger <= 0) {
         $(".hunger > .vprogress").hide();
     } else {
         $(".hunger > .vprogress").show();
     }
-    $(".thirst > .vprogress").css("width", (100-(Math.ceil(data.thirst)) + "%"));
+    $(".thirst > .vprogress").css("width", (40 * (data.thirst/200) + "px"));
     if (data.thirst <= 0) {
         $(".thirst > .vprogress").hide();
     } else {

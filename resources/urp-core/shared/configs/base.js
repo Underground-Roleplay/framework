@@ -17,7 +17,7 @@ URPConfig.MaxCharacters = 3;
 URPConfig.HungerRate = 4.2;
 URPConfig.ThirstRate = 3.8;
 //Every 5 Min
-URPConfig.HungerThirstTime = 1000 * 60 * 5;
+URPConfig.HungerThirstTime = 1000 * 60 * 2;
 
 URPConfig.DefaultMoney = { cash: 5000, bank: 5000, crypto: 0 };
 URPConfig.DefaultInfo = {

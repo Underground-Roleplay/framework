@@ -124,6 +124,7 @@ body {
 }
 
 .hunger .vprogress {
+    width: 40px;
     margin-left: 0px !important;
     top:1px;
     height: 21px;
@@ -153,6 +154,7 @@ body {
 }
 
 .thirst .vprogress {
+    width: 40px;
     margin-left: 0px !important;
     top: 1px;
     height: 21px;

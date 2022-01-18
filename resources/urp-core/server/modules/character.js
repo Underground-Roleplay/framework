@@ -137,10 +137,14 @@ const addHungerThirstDecay = (source) => {
     source.playerData.metadata.thirst -= Core.Config.ThirstRate;
 
     if (source.playerData.metadata.hunger <= 0) {
+        source.playerData.metadata.isdead = true;
+        setDeath(source, source.playerData.metadata.isdead);
         source.playerData.metadata.hunger = 0;
     }
 
     if (source.playerData.metadata.thirst <= 0) {
+        source.playerData.metadata.isdead = true;
+        setDeath(source, source.playerData.metadata.isdead);
         source.playerData.metadata.thirst = 0;
     }
     saveMetadata(source);

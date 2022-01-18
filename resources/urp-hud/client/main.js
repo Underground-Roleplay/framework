@@ -79,6 +79,7 @@ alt.onServer('Core:Client:CharacterLoaded', () => {
     isLogged = true;
 });
 let belt = false;
+let hurt = false
 alt.setInterval(() => {
     if (!isLogged) return;
     let isVehicle = false;
@@ -105,8 +106,8 @@ alt.setInterval(() => {
         pauseMenu: natives.isPauseMenuActive(),
         armour: localPlayer.armour,
         health: localPlayer.health,
-        hunger: Core.Functions.getMetaData('hunger'),
-        thirst: Core.Functions.getMetaData('thirst'),
+        hunger: parseInt(Core.Functions.getMetaData('hunger')),
+        thirst: parseInt(Core.Functions.getMetaData('thirst')),
         stress: Core.Functions.getMetaData('stress'),
         money: Core.Functions.getPlayerData('money'),
         playerid: undefined,
@@ -118,6 +119,17 @@ alt.setInterval(() => {
         minute: minutes,
         belt: belt,
     };
+    if (data.hunger <=20 || data.thirst <=20 || data.health <= 50){
+        hurt = true;
+        natives.requestAnimSet("move_m@injured");
+        natives.setPedMovementClipset(alt.Player.local.scriptID, "move_m@injured", 1.0);
+    } else if(hurt) {
+        hurt = false;
+        natives.resetPedMovementClipset(alt.Player.local.scriptID, 1.0);
+        natives.resetPedWeaponMovementClipset(alt.Player.local.scriptID);
+        natives.resetPedStrafeClipset(alt.Player.local.scriptID);
+    }
+    alt.log(data.hunger);
     hud.emit('hud:Tick', data);
 }, 1000);
 
