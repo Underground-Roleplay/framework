@@ -129,7 +129,6 @@ alt.setInterval(() => {
         natives.resetPedWeaponMovementClipset(alt.Player.local.scriptID);
         natives.resetPedStrafeClipset(alt.Player.local.scriptID);
     }
-    alt.log(data.hunger);
     hud.emit('hud:Tick', data);
 }, 1000);
 
