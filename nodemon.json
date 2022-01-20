@@ -1,0 +1,12 @@
+{
+    "ignore": [
+      ".git",
+      "node_modules"
+    ],
+    "watch": [
+     "resources/"
+    ],
+    "exec": "./altv-server.exe",
+    "ext": "js",
+    "delay": 2500
+  }
