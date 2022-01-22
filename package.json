@@ -6,6 +6,7 @@
   "license": "GPL-3.0-or-later",
   "type": "module",
   "scripts": {
+    "dev": "nodemon",
     "prettier-format": "prettier --config .prettierrc --ignore-path .prettierignore \"resources/**/*.js\" --write"
   },
   "husky": {
@@ -15,7 +16,8 @@
   },
   "dependencies": {
     "i18n": "^0.13.3",
-    "node-fetch": "^3.1.0",
+    "node-fetch": "^3.1.1",
+    "nodemon": "^2.0.15",
     "sjcl": "^1.0.8",
     "uuid": "^8.3.2"
   },
