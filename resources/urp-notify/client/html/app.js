@@ -38,11 +38,11 @@ function showNotify(type, tittle, message,time)  {
 			}, 1000);
 }
 
-function showNotifyCenter(type, message,time)  {
+function showNotifyCenter(uid, type, message,time)  {
 	if (time < 0 || time === null || time === undefined) time = 3000
 	if (type == "communicate"){
 		var html =`
-			<div class='notification-box-center'>
+			<div id='${uid}' class='notification-box-center'>
 				<div class="grup-center">
 					<div class='title-center'>COMUNICADO</div>
 					<div class='texto'>${message}</div>
@@ -58,6 +58,12 @@ function showNotifyCenter(type, message,time)  {
 	
 }
 
+function destroyNotifyCenter(uid){
+	const notification = document.getElementById(uid)
+	if(!notification) return;
+	notification.remove()
+}
+
 if('alt' in window){
 	alt.on('notify', (type, tittle, message) => {
 			showNotify(type, tittle, message);
@@ -65,6 +71,7 @@ if('alt' in window){
 	alt.on('notifyCenter', (type, message,time) => {
 		showNotifyCenter(type, message,time);
 	});
+	alt.on('removeNotifyCenter', destroyNotifyCenter)
 };
 
 

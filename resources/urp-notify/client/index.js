@@ -50,7 +50,7 @@ alt.onServer('notifyCenter', (id, type, message, time) => {
     const newPrompt = { id: id, deleteTimer: timer };
     const pid = activePrompts.push(newPrompt) - 1;
 
-    view.emit('notifyCenter', type, message, time);
+    view.emit('notifyCenter', id, type, message, time);
     natives.playSoundFrontend(
         -1,
         'Menu_Accept',
@@ -67,7 +67,7 @@ alt.on('notifyCenter', (id, type, message, time) => {
     const newPrompt = { id: id, deleteTimer: timer };
     const pid = activePrompts.push(newPrompt) - 1;
 
-    view.emit('notifyCenter', type, message, time);
+    view.emit('notifyCenter', id, type, message, time);
     natives.playSoundFrontend(
         -1,
         'Menu_Accept',
@@ -80,20 +80,22 @@ alt.on('keydown', (key) => {
     if (activePrompts.length - 1 < 0) return;
     if (key === 89) {
         const id = activePrompts.length - 1;
-        console.log(id, 'true');
+        console.log(activePrompts[id].id);
+        view.emit('removeNotifyCenter', activePrompts[id].id);
         if (activePrompts[id] && activePrompts[id].deleteTimer) {
             alt.clearTimeout(activePrompts[id].deleteTimer);
         }
         alt.emitServer('notifyCenter:resolve', activePrompts[id].id, true);
-        delete activePrompts[id];
+        activePrompts.pop();
     }
     if (key === 85) {
         const id = activePrompts.length - 1;
-        console.log(id, 'false');
+        console.log(activePrompts[id].id);
+        view.emit('removeNotifyCenter', activePrompts[id].id);
         if (activePrompts[id] && activePrompts[id].deleteTimer) {
             alt.clearTimeout(activePrompts[id].deleteTimer);
         }
         alt.emitServer('notifyCenter:resolve', activePrompts[id].id, false);
-        delete activePrompts[id];
+        activePrompts.pop();
     }
 });
