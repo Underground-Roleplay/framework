@@ -1,6 +1,6 @@
 import * as alt from 'alt-server';
 import Core from '../main';
-
+import { requestPrompt } from '../libs/utils';
 // alt:V default events
 alt.on('playerConnect', async (source) => {
     if (!source || !source.valid) {
@@ -87,4 +87,33 @@ alt.onClient('interaction:trigger', (source, type) => {
 //  Ticks
 alt.onClient('Core:Server:CharacterTick', async (source) => {
     Core.Character.tickManager(source);
+});
+
+alt.on('Core:Emergency:Alert', (source, job, msg) => {
+    if (!source) return;
+    alt.Player.all.forEach(async (targetPlayer) => {
+        let targetPlayerJob = Core.Functions.getPlayerData(targetPlayer, 'job');
+        if (targetPlayerJob.name === job && targetPlayerJob.onDuty) {
+            const res = await requestPrompt(targetPlayer, msg, 5000);
+
+            if (!res) {
+                alt.emitClient(
+                    targetPlayer,
+                    'notify',
+                    'important',
+                    'Warning',
+                    'call refused'
+                );
+                return false;
+            }
+            alt.emitClient(targetPlayer, 'notify', 'important', 'Warning', msg);
+
+            alt.emitClient(
+                targetPlayer,
+                'Alert:createBlip',
+                source.pos,
+                'alert'
+            );
+        }
+    });
 });

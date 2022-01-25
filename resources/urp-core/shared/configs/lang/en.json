@@ -73,7 +73,8 @@
         "LABEL": "{{ jobname }}",
         "UPDATED": "You are now a {{ jobname }}",
         "JOB_STARTED": "Welcome back to work!",
-        "JOB_ENDED": "Thanks for your todays work!."
+        "JOB_ENDED": "Thanks for your todays work!.",
+        "PAYCHECK_RECIVED": "You received your paycheck of ${{ value }},"
     },
     "HOMES": {
         "LABEL": "HOMES SYSTEM",

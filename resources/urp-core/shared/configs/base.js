@@ -8,7 +8,9 @@ URPConfig.WhitelistOn = false;
 //Vehicle
 URPConfig.VehicleUpdate = 10000;
 // URPConfig.VehicleFuelLost = 10
-URPConfig.VehicleFuelLost = 0.01;
+URPConfig.VehicleFuelLost = 0.08;
+URPConfig.VehicleengineOilLost = 0.006;
+URPConfig.VehicleengineWaterLost = 0.012;
 
 //CHARACTER
 URPConfig.SaveInterval = 4950;
@@ -18,6 +20,9 @@ URPConfig.HungerRate = 4.2;
 URPConfig.ThirstRate = 3.8;
 //Every 5 Min
 URPConfig.HungerThirstTime = 1000 * 60 * 2;
+
+//Paycheck
+URPConfig.payCheckTimeOut = 1000 * 60 * 10;
 
 URPConfig.DefaultMoney = { cash: 5000, bank: 5000, crypto: 0 };
 URPConfig.DefaultInfo = {

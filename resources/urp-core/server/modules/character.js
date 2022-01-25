@@ -90,9 +90,14 @@ const checkPlayerData = async (source, playerData = undefined) => {
 };
 
 const tickManager = async (source) => {
-    if (!source.nextPingTime && !source.timeHungerThirstDec) {
+    if (
+        !source.nextPingTime &&
+        !source.timeHungerThirstDec &&
+        !source.payCheckTimeOut
+    ) {
         source.nextPingTime = Date.now() + Core.Config.SaveInterval;
         source.timeHungerThirstDec = Date.now() + Core.Config.HungerThirstTime;
+        source.payCheckTimeOut = Date.now() + Core.Config.payCheckTimeOut;
     }
 
     if (Date.now() > source.nextPingTime) {
@@ -109,6 +114,11 @@ const tickManager = async (source) => {
         setDeath(source, false);
         source.spawn(0, 0, 0, 0);
         alt.emitClient(source, 'Core:Character:Respawned');
+    }
+
+    if (Date.now() > source.payCheckTimeOut) {
+        source.payCheckTimeOut = Date.now() + Core.Config.payCheckTimeOut;
+        Core.Job.verifyPayCheck(source);
     }
 
     // if(source.vehicle && source.vehicle.driver === source){

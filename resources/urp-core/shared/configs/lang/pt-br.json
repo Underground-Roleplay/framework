@@ -71,7 +71,8 @@
         "LABEL": "{{ jobname }}",
         "UPDATED": "Você agora é um {{ jobname }}",
         "JOB_STARTED": "Bem-vindo de volta ao trabalho!",
-        "JOB_ENDED": "Obrigado pelo seu trabalho de hoje!."
+        "JOB_ENDED": "Obrigado pelo seu trabalho de hoje!.",
+        "PAYCHECK_RECIVED": "Você recebeu seu pagamento no valor de ${{ value }},"
     },
     "HOMES": {
         "LABEL": "SISTEMA DE MORADIA",
