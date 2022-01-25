@@ -8,7 +8,9 @@ URPConfig.WhitelistOn = false;
 //Vehicle
 URPConfig.VehicleUpdate = 10000;
 // URPConfig.VehicleFuelLost = 10
-URPConfig.VehicleFuelLost = 0.01;
+URPConfig.VehicleFuelLost = 0.08;
+URPConfig.VehicleengineOilLost = 0.006;
+URPConfig.VehicleengineWaterLost = 0.012;
 
 //CHARACTER
 URPConfig.SaveInterval = 4950;
