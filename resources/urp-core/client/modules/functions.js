@@ -554,6 +554,179 @@ alt.on('keydown', (key) => {
     }
 });
 
+let rotateInterval;
+
+const rotateCharacter = (data) => {
+    if (data === 'left') {
+        if (rotateInterval) alt.clearInterval(rotateInterval);
+        rotateInterval = alt.setInterval(() => {
+            natives.setEntityHeading(
+                alt.Player.local.scriptID,
+                natives.getEntityHeading(alt.Player.local.scriptID) - 1
+            );
+        }, 10);
+    } else if (data === 'right') {
+        if (rotateInterval) alt.clearInterval(rotateInterval);
+        rotateInterval = alt.setInterval(() => {
+            natives.setEntityHeading(
+                alt.Player.local.scriptID,
+                natives.getEntityHeading(alt.Player.local.scriptID) + 1
+            );
+        }, 10);
+    } else if (data === 'keyup') {
+        alt.clearInterval(rotateInterval);
+    }
+};
+
+const generateBlip = (cds, name) => {
+    let pointBlip = new alt.PointBlip(cds.x, cds.y, cds.z);
+    pointBlip.name = name || 'called';
+    pointBlip.sprite = 66;
+    pointBlip.color = 4;
+    pointBlip.routeColor = 4;
+    pointBlip.shortRange = true;
+    pointBlip.route = true;
+    pointBlip.pulse = true;
+    return pointBlip;
+};
+
+let point = false;
+let pointInterval;
+alt.on('keydown', async (key) => {
+    if (key == '66') {
+        if (!natives.isPedInAnyVehicle(alt.Player.local.scriptID, true)) {
+            await loadAnim('anim@mp_point');
+            if (!point) {
+                natives.setPedCurrentWeaponVisible(
+                    alt.Player.local.scriptID,
+                    0,
+                    1,
+                    1,
+                    1
+                );
+                natives.setPedConfigFlag(alt.Player.local.scriptID, 36, true);
+                natives.taskMoveNetworkByName(
+                    alt.Player.local.scriptID,
+                    'task_mp_pointing',
+                    0.5,
+                    false,
+                    'anim@mp_point',
+                    24
+                );
+                point = true;
+                pointInterval = alt.everyTick(() => {
+                    let camRot = natives.getGameplayCamRot(2);
+
+                    natives.isTaskMoveNetworkActive(alt.Player.local.scriptID);
+
+                    let camPitch =
+                        camRot.x -
+                        natives.getEntityPitch(alt.Player.local.scriptID);
+
+                    if (camPitch < -70.0) {
+                        camPitch = -70.0;
+                    } else if (camPitch > 42.0) {
+                        camPitch = 42.0;
+                    }
+                    camPitch = (camPitch + 70.0) / 112.0;
+
+                    let camHeading = natives.getGameplayCamRelativeHeading();
+
+                    let cosCamHeading = Math.cos(camHeading);
+                    let sinCamHeading = Math.sin(camHeading);
+
+                    if (camHeading < -180.0) {
+                        camHeading = -180.0;
+                    } else if (camHeading > 180.0) {
+                        camHeading = 180.0;
+                    }
+                    camHeading = (camHeading + 180.0) / 360.0;
+
+                    let coords = natives.getOffsetFromEntityInWorldCoords(
+                        alt.Player.local.scriptID,
+                        cosCamHeading * -0.2 -
+                            sinCamHeading * (0.4 * camHeading + 0.3),
+                        sinCamHeading * -0.2 +
+                            cosCamHeading * (0.4 * camHeading + 0.3),
+                        0.6
+                    );
+
+                    let ray = natives.startShapeTestCapsule(
+                        coords.x,
+                        coords.y,
+                        coords.z - 0.2,
+                        coords.x,
+                        coords.y,
+                        coords.z + 0.2,
+                        1.0,
+                        95,
+                        alt.Player.local.scriptID,
+                        7
+                    );
+                    let [_, blocked, coords1, coords2, entity] =
+                        natives.getShapeTestResult(
+                            ray,
+                            false,
+                            null,
+                            null,
+                            null
+                        );
+                    natives.setTaskMoveNetworkSignalFloat(
+                        alt.Player.local.scriptID,
+                        'Pitch',
+                        camPitch
+                    );
+                    natives.setTaskMoveNetworkSignalFloat(
+                        alt.Player.local.scriptID,
+                        'Heading',
+                        camHeading * -1.0 + 1.0
+                    );
+                    natives.setTaskMoveNetworkSignalBool(
+                        alt.Player.local.scriptID,
+                        'isBlocked',
+                        blocked
+                    );
+                    natives.setTaskMoveNetworkSignalBool(
+                        alt.Player.local.scriptID,
+                        'isFirstPerson',
+                        natives.getCamViewModeForContext(
+                            natives.getCamActiveViewModeContext()
+                        ) === 4
+                    );
+                });
+            }
+        }
+    }
+});
+
+alt.on('keyup', (key) => {
+    if (key == '66') {
+        if (point) {
+            natives.requestTaskMoveNetworkStateTransition(
+                alt.Player.local.scriptID,
+                'Stop'
+            );
+            if (!natives.isPedInjured(alt.Player.local.scriptID)) {
+                natives.clearPedSecondaryTask(alt.Player.local.scriptID);
+            }
+            if (!natives.isPedInAnyVehicle(alt.Player.local.scriptID, true)) {
+                natives.setPedCurrentWeaponVisible(
+                    alt.Player.local.scriptID,
+                    1,
+                    1,
+                    1,
+                    1
+                );
+            }
+            natives.setPedConfigFlag(alt.Player.local.scriptID, 36, 0);
+            natives.clearPedSecondaryTask(alt.Player.local.scriptID);
+            point = false;
+            natives.removeAnimDict('anim@mp_point');
+            alt.clearEveryTick(pointInterval);
+        }
+    }
+});
+
 export default {
     startTicks,
     handleSetplayerData,
@@ -572,4 +745,6 @@ export default {
     setHandcuffs,
     removeHandcuffs,
     hasHandcuffs,
+    rotateCharacter,
+    generateBlip,
 };

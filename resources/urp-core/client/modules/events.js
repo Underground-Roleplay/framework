@@ -174,3 +174,18 @@ alt.onServer('police:uncuff', () => {
     natives.uncuffPed(alt.Player.local.scriptID, true);
     Core.Functions.stopAnim();
 });
+
+let alert = null;
+alt.onServer('Alert:createBlip', (cds, name) => {
+    alt.log(alert);
+    if (alert) {
+        alert.destroy();
+        alert = null;
+    }
+    alert = Core.Functions.generateBlip(cds, name);
+    alt.setTimeout(() => {
+        alert.destroy();
+        alert = null;
+    }, 15000);
+    return;
+});
