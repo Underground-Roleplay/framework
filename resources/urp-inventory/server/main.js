@@ -1,6 +1,33 @@
 import Core from 'urp-core';
 import * as alt from 'alt-server';
 
+alt.onClient('inventory:requestHomeInventory', async (source, id) => {
+    Core.Inventory.getHomeInventory(source, id);
+});
+alt.onClient('inventory:requestChest', async (source, id) => {
+    Core.Inventory.getChest(source, id);
+});
+
+alt.onClient('inventory:requestData', (source) => {
+    alt.emitClient(
+        source,
+        'inventory:requestData',
+        Core.Inventory.getCurrentInventory(source),
+        Core.Inventory.getInventoryActived(source)
+    );
+});
+
+alt.onClient('context:vehicle:trunk', async (source, data) => {
+    Core.Inventory.getVehicleInventory(source, data);
+});
+
+alt.onClient('inventory:sendItem', (source, item) => {
+    Core.Inventory.sendItem(source, item.name, 1);
+});
+
+alt.onClient('inventory:dropItem', (source, item) => {
+    Core.Inventory.dropItem(source, item.name, item.amount);
+});
 alt.onClient('inventory:useItem', (source, item) => {
     if (item.type === 'weapon') {
         Core.Inventory.useWeapon(source, item.name);
@@ -12,97 +39,64 @@ alt.onClient('inventory:useItem', (source, item) => {
     Core.Inventory.removeItem(source, item.name, 1);
 });
 
-// TODO
-alt.onClient(
-    'inventory:setInventoryData',
-    (
-        source,
-        fromInventory,
-        toInventory,
-        fromSlot,
-        toSlot,
-        fromAmount,
-        toAmount
-    ) => {
-        const fromItem = Core.Inventory.getItemBySlot(source, fromSlot);
-        const toItem = Core.Inventory.getItemBySlot(source, toSlot);
-        //Change Slot from same inventory
-        if (fromInventory === toInventory && toInventory !== 'dropzone') {
-            // console.log(fromItem, toItem)
-            if (toItem) {
-                // Remove item from target slot
-                Core.Inventory.removeItem(source, toItem.name, toItem.amount);
-                // Adds item to target slot
-                Core.Inventory.addItem(
-                    source,
-                    fromItem.name,
-                    fromItem.amount,
-                    toSlot,
-                    fromItem.info
-                );
-                // Remove to from slot
-                Core.Inventory.removeItem(
-                    source,
-                    fromItem.name,
-                    fromItem.amount
-                );
-                // Adds item to from slot
-                Core.Inventory.addItem(
-                    source,
-                    toItem.name,
-                    toItem.amount,
-                    fromSlot,
-                    toItem.info
-                );
-                return;
-            }
-            Core.Inventory.removeItem(source, fromItem.name, fromItem.amount);
-            Core.Inventory.addItem(
-                source,
-                fromItem.name,
-                fromItem.amount,
-                toSlot,
-                fromItem.info
-            );
-            return;
-        }
-        //Drop item
-        if (fromInventory !== toInventory && toInventory === 'dropzone') {
-            Core.Inventory.dropItem(source, fromItem, fromAmount);
-        }
-        // multiple inventory types such as = player, dropzone, stash
-        // if from = to, only removeAdd in same place
+alt.onClient('inventory:transfer:activedInventory', (source, item, slot) => {
+    if (Core.Inventory.removeItemActived(source, item, slot)) {
+        Core.Inventory.addItem(source, item, 1);
     }
-);
-
-alt.onClient(
-    'inventory:pickupItem',
-    (source, droppedItem, toSlot, fromAmount) => {
-        Core.Inventory.pickupItem(source, droppedItem, toSlot, fromAmount);
-    }
-);
-
-alt.onClient('inventory:getInventoryData', (source) => {
-    const iData = Core.Functions.getCurrentInventory(source);
-    alt.emitClient(source, 'inventory:open', iData);
 });
 
-// Ugly code
-//    const fromItemData =  Core.Inventory.GetItemBySlot(fromSlot)
-//    const fromAmountParsed = parseInt(fromAmount)
-//    if (fromInventory === "player" ||  fromInventory === "hotbar" &&
-//       toInventory.split('-')[1] == "itemshop" || toInventory == "crafting") return;
-//         if (fromInventory == "player"  || fromInventory == "hotbar"){
-//             const toItemData =  Core.Inventory.getItemBySlot(source, toSlot)
-//             Core.Inventory.removeItem(source, fromItemData.name, fromAmountParsed)
-//             // If is a weapon and its equipped unequip
-//             // TriggerClientEvent("inventory:client:CheckWeapon", src, fromItemData.name)
-//             if(!toItemData){
-//                const toAmountParsed = parseInt(toAmount)
-//                if (toItemData.name !== fromItemData.name) {
-//                   Core.Inventory.removeItem(source, toItemData.name, toAmountParsed)
-//                   Core.Inventory.addItem(source, toItemData.name, toAmountParsed, fromSlot, toItemData.info)
-//                }
-//             }
+alt.onClient('inventory:transferActived', (source, item, slot) => {
+    console.log('inventory:transferActived');
+    if (Core.Inventory.removeItem(source, item, 1)) {
+        Core.Inventory.addItemActived(source, item, slot);
+    }
+});
 
-//         }
+alt.onClient('inventory:transferChest', (source, item, amount, chestType) => {
+    console.log('inventory:transferChest', item, amount, chestType);
+    switch (chestType) {
+        case 'home':
+            if (Core.Inventory.removeItem(source, item, amount)) {
+                Core.Inventory.transferChest(source, item, amount);
+            }
+            break;
+        case 'chest':
+            if (Core.Inventory.removeItem(source, item, amount)) {
+                Core.Inventory.transferChest(source, item, amount);
+            }
+            break;
+        case 'vehicle':
+            if (Core.Inventory.removeItem(source, item, amount)) {
+                Core.Inventory.transferVehicle(source, item, amount);
+            }
+            break;
+        default:
+            break;
+    }
+});
+
+alt.onClient(
+    'inventory:transferInventory',
+    (source, item, amount, chestType) => {
+        console.log('inventory:transferInventory', item, amount, chestType);
+        switch (chestType) {
+            case 'home':
+                if (Core.Inventory.removeItemChest(source, item, amount)) {
+                    Core.Inventory.addItem(source, item, amount);
+                }
+                break;
+            case 'chest':
+                if (Core.Inventory.removeItemChest(source, item, amount)) {
+                    Core.Inventory.addItem(source, item, amount);
+                }
+                break;
+            case 'vehicle':
+                if (Core.Inventory.removeItemVehicle(source, item, amount)) {
+                    Core.Inventory.addItem(source, item, amount);
+                }
+                break;
+            default:
+                break;
+        }
+    }
+);

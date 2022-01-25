@@ -8,6 +8,8 @@ import { executeSync, insertSync } from '../libs/utils';
 
 import { VehList, modType, indexVehicle } from '../../shared/configs/vehicles';
 
+import inventory from './inventory';
+
 const pool = [];
 
 const getVehicleData = (veh, key) => {
@@ -73,12 +75,13 @@ const addToSource = async (
     newVehicle.plate = await generatePlate();
     newVehicle.status = { bodyHealth: 1000 };
     newVehicle.metadata = { fuel: 15, engineOil: 100, engineWater: 100 };
+    newVehicle.inventory = [];
     newVehicle.customizations = {
         customPrimaryColor: { r: 0, g: 0, b: 0, a: 255 },
         customSecondaryColor: { r: 0, g: 0, b: 0, a: 255 },
     };
     const id = await insertSync(
-        'INSERT INTO characters_vehicles (ssn, model, position, plate, status, metadata, customizations) VALUES (?,?,?,?,?,?,?)',
+        'INSERT INTO characters_vehicles (ssn, model, position, plate, status, metadata,inventory, customizations) VALUES (?,?,?,?,?,?,?,?)',
         [
             ssn,
             newVehicle.model,
@@ -86,6 +89,7 @@ const addToSource = async (
             newVehicle.plate,
             JSON.stringify(newVehicle.status),
             JSON.stringify(newVehicle.metadata),
+            JSON.stringify(newVehicle.inventory),
             JSON.stringify(newVehicle.customizations),
         ]
     );
@@ -178,8 +182,8 @@ const spawn = (source, vehicleData, pos, rot) => {
         loadStatus(vehicle, vehicleData.status);
     }
 
-    if (vehicleData.metadata.trunk) {
-        vehicle.setStreamSyncedMeta('trunk', vehicleData.trunk);
+    if (vehicleData.inventory) {
+        vehicle.setStreamSyncedMeta('inventory', vehicleData.inventory);
     }
 
     vehicle.setStreamSyncedMeta('fuel', vehicleData.metadata.fuel);
@@ -201,6 +205,7 @@ const spawnById = async (source, id, pos, rot) => {
     vehicleData[0].status = JSON.parse(vehicleData[0].status);
     vehicleData[0].metadata = JSON.parse(vehicleData[0].metadata);
     vehicleData[0].model = vehicleData[0].model;
+    vehicleData[0].inventory = JSON.parse(vehicleData[0].inventory);
     vehicleData[0].customizations = JSON.parse(vehicleData[0].customizations);
     spawn(source, vehicleData[0], pos, rot);
 };

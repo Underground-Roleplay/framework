@@ -1,119 +1,127 @@
 import Core from 'urp-core';
-import chat from 'urp-chat';
 import * as alt from 'alt-client';
 
 let isOpen = false;
+let activedSlots = [];
+const hotKeys = [49, 50, 51];
 
-const openInventory = (data) => {
+alt.onServer('Core:Client:UpdateIdentity', () => {
+    openIdentity();
+});
+
+const openInvy = (type) => {
     Core.Browser.open(
         'http://resources/urp-inventory/client/html/ui.html',
         true,
         true
     );
-    Core.Browser.on('inventory:useItem', (inventory, item) => {
-        alt.log('use');
-        alt.emitServer('inventory:useItem', item);
+
+    Core.Browser.on('load', () => {
+        alt.emitServer('inventory:requestData');
     });
-    Core.Browser.on('inventory:Notify', (msg, type) => {
-        alt.log('notify', msg, type);
+
+    Core.Browser.on('inventory:requestDataInvetory', () => {
+        alt.emitServer('inventory:requestData');
     });
-    Core.Browser.on('inventory:dropItem', (inventory, item, amount) => {
-        alt.log('drop');
-        alt.emitServer('inventory:dropItem', item.name, amount);
+
+    Core.Browser.on('inventory:useItem', (data) => {
+        alt.emitServer('inventory:useItem', data);
     });
-    Core.Browser.on('inventory:close', () => {
-        closeInventory();
+    Core.Browser.on('inventory:dropItem', (data) => {
+        alt.emitServer('inventory:dropItem', data);
+    });
+    Core.Browser.on('inventory:sendItem', (data) => {
+        alt.emitServer('inventory:sendItem', data);
+    });
+    Core.Browser.on('inventory:removeItemChest', (item, amount) => {
+        alt.emitServer('inventory:removeItemChest', item, amount);
+    });
+
+    Core.Browser.on('inventory:transferChest', (item, amount, chestType) => {
+        alt.emitServer('inventory:transferChest', item, amount, chestType);
+        console.log('inventory:transferChest', item, amount, chestType);
     });
     Core.Browser.on(
-        'inventory:setInventoryData',
-        (
-            fromInventory,
-            toInventory,
-            fromSlot,
-            toSlot,
-            fromAmount,
-            toAmount
-        ) => {
-            if (fromInventory === 'dropzone') {
-                const nearItems = Core.Functions.getCloseItems();
-                const droppedItem = nearItems.inventory.find(
-                    (i) => i.slot === parseInt(fromSlot)
-                );
-                if (!droppedItem) return;
-                alt.emitServer(
-                    'inventory:pickupItem',
-                    droppedItem,
-                    toSlot,
-                    fromAmount
-                );
-                return;
-            }
+        'inventory:transferInventory',
+        (item, amount, chestType) => {
             alt.emitServer(
-                'inventory:setInventoryData',
-                fromInventory,
-                toInventory,
-                fromSlot,
-                toSlot,
-                fromAmount,
-                toAmount
+                'inventory:transferInventory',
+                item,
+                amount,
+                chestType
             );
+            console.log('inventory:transferInventory', item, amount, chestType);
         }
     );
-    Core.Browser.on('load', () => {
-        Core.Browser.emit('inventory:open', data);
+    Core.Browser.on('inventory:transferActived', (item, slot) => {
+        alt.emitServer('inventory:transferActived', item, slot);
     });
+    Core.Browser.on('inventory:transfer:activedInventory', (item, slot) => {
+        alt.emitServer('inventory:transfer:activedInventory', item, slot);
+    });
+
     alt.toggleGameControls(false);
     isOpen = true;
 };
 
-const closeInventory = () => {
+const closeInv = () => {
     Core.Browser.close();
     alt.toggleGameControls(true);
     isOpen = false;
 };
 
-const updateInventory = (iData, isError) => {
-    const data = {
-        inventory: iData,
-        slots: Core.Config.MaxInvSlots,
-        maxWeight: Core.Config.MaxWeight,
-        error: isError,
-    };
-    Core.Browser.emit('inventory:update', data);
+const requetData = (inventory, actived) => {
+    Core.Browser.emit('inventory:dataRequest', inventory, actived);
+    activedSlots = actived;
 };
 
-const hotKeys = [49, 50, 51, 52, 53];
+alt.onServer('inventory:requestData', requetData);
+
+const requetDataHome = (data) => {
+    console.log('load: ', 'dataHomeRequest');
+    Core.Browser.emit('inventory:dataHomeRequest', data);
+};
+
+alt.onServer('inventory:updateHomeInventory', requetDataHome);
+
+const requetDataVehice = (data) => {
+    openInvy('vehicle');
+    setTimeout(() => {
+        Core.Browser.emit('inventory:dataVehiceRequest', data);
+    }, 150);
+};
+
+alt.onServer('inventory:updateVhecleInventory', requetDataVehice);
+
+const requetDataChest = (data) => {
+    console.log('load: ', 'dataChestRequest');
+    Core.Browser.emit('inventory:dataChestRequest', data);
+};
+
+alt.onServer('inventory:updateChest', requetDataChest);
 
 alt.on('keydown', (key) => {
-    if (
-        key === 73 &&
-        !isOpen &&
-        !Core.Browser.getCurrentViewState() &&
-        !alt.Player.local.isDead &&
-        !alt.isMenuOpen() &&
-        !chat.isChatOpen()
-    ) {
-        const inventory = Core.Functions.getPlayerData('inventory');
-        const nearItems = Core.Functions.getCloseItems();
-        console.log('dropped???', nearItems);
-        const data = {
-            inventory: inventory,
-            slots: Core.Config.MaxInvSlots,
-            other: nearItems,
-            maxWeight: Core.Config.MaxWeight,
-            ammo: {},
-            maxAmmo: 100,
-        };
-        openInventory(data);
+    if (key === 186) {
+        openInvy();
     }
     if (key === 27 && isOpen) {
-        closeInventory();
+        closeInv();
     }
-    //Inventory hotkeys setup
-    if (hotKeys.includes(key)) {
-        const inventory = Core.Functions.getPlayerData('inventory');
+    if (key === 221) {
+        openInvy();
+        setTimeout(() => {
+            alt.emitServer('inventory:requestHomeInventory', 1);
+        }, 150);
+    }
+    if (key === 220) {
+        openInvy();
+        setTimeout(() => {
+            alt.emitServer('inventory:requestChest', 1);
+        }, 150);
+    }
+    if (hotKeys.includes(key) && !isOpen) {
         const keyIndex = hotKeys.indexOf(key);
-        const item = inventory[keyIndex];
+        const item = activedSlots[keyIndex];
         if (!item) return;
         alt.emitServer('inventory:useItem', item);
     }
