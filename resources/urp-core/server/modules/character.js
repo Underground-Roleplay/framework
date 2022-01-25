@@ -25,9 +25,8 @@ const startCharacter = async (source, newCharacter = undefined) => {
         playerData.metadata = JSON.parse(playerData.metadata);
         playerData.charinfo = JSON.parse(playerData.charinfo);
         playerData.phone = playerData.charinfo.phone;
-        playerData.inventory = playerData.inventory
-            ? JSON.parse(playerData.inventory)
-            : [];
+        playerData.inventory = JSON.parse(playerData.inventory);
+
         checkPlayerData(source, playerData);
         return;
     }
@@ -82,7 +81,8 @@ const checkPlayerData = async (source, playerData = undefined) => {
         //Position
         playerData.position = Core.Config.DefaultSpawn;
         //Inventory
-        playerData.inventory = [];
+        playerData.inventory = [[], [{}, {}, {}]];
+
         createCharacter(source, playerData, false);
         return;
     }
@@ -272,7 +272,7 @@ const selectCharacter = async (source, playerData, fromCreation = false) => {
     Core.Functions.emitPlayerData(
         source,
         'inventory',
-        source.playerData.inventory
+        source.playerData.inventory[0]
     );
     Core.Functions.emitPlayerData(
         source,
