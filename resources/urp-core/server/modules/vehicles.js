@@ -72,7 +72,7 @@ const addToSource = async (
     newVehicle.position = initialPosition;
     newVehicle.plate = await generatePlate();
     newVehicle.status = { bodyHealth: 1000 };
-    newVehicle.metadata = { fuel: 15 };
+    newVehicle.metadata = { fuel: 15, engineOil: 100, engineWater: 100 };
     newVehicle.customizations = {
         customPrimaryColor: { r: 0, g: 0, b: 0, a: 255 },
         customSecondaryColor: { r: 0, g: 0, b: 0, a: 255 },
@@ -285,6 +285,8 @@ const vehicleTick = (vehicle) => {
     if (Date.now() > vehicle.nextUpdate) {
         vehicle.nextUpdate = Date.now() + Core.Config.VehicleUpdate;
         updateFuel(vehicle);
+        //updateEngineOil(vehicle);
+        //updateEngineWater(vehicle);
     }
 };
 
@@ -345,7 +347,6 @@ const updateFuel = (vehicle) => {
         vehicle.data.metadata.fuel = 100;
         vehicle.data.metadata.fuel = 100;
     }
-
     vehicle.data.metadata.fuel -= Core.Config.VehicleFuelLost;
 
     if (vehicle.data.metadata.fuel < 0) {
@@ -367,6 +368,109 @@ const updateFuel = (vehicle) => {
 
     vehicle.data.metadata.fuel = vehicle.data.metadata.fuel.toFixed(2);
     vehicle.setStreamSyncedMeta('fuel', vehicle.data.metadata.fuel);
+    saveVehicleMetadata(vehicle);
+};
+
+const updateEngineOil = (vehicle) => {
+    let engineFail = Math.floor(Math.random() * 100);
+    if (!vehicle || !vehicle.valid || !vehicle.engineOn) return;
+    if (!isNaN(vehicle.data.metadata.engineOil)) {
+        vehicle.data.metadata.engineOil = vehicle.data.metadata.engineOil;
+    } else {
+        vehicle.data.metadata.engineOil = 100;
+    }
+
+    vehicle.data.metadata.engineOil -= Core.Config.VehicleengineOilLost;
+
+    if (vehicle.data.metadata.engineOil <= 2) {
+        vehicle.data.metadata.engineOil = 0;
+        vehicle.engineHealth = 0;
+        if (engineFail > 60) vehicle.engineOn = false;
+        vehicle.setStreamSyncedMeta('engineBroken', true);
+        if (vehicle.driver) {
+            alt.emitClient(
+                vehicle.driver,
+                'notify',
+                'error',
+                'aviso',
+                'O motor do seu veiculo quebrou!'
+            );
+        }
+    }
+
+    if (
+        vehicle.data.metadata.engineOil < 10 &&
+        vehicle.data.metadata.engineOil > 2
+    ) {
+        vehicle.data.metadata.engineOil = 0;
+        vehicle.engineHealth = 20;
+        vehicle.engineOn = false;
+        vehicle.setStreamSyncedMeta('engineBroken', true);
+        if (vehicle.driver) {
+            alt.emitClient(
+                vehicle.driver,
+                'notify',
+                'error',
+                'aviso',
+                'O motor do seu veiculo esta com problemas!'
+            );
+        }
+    }
+
+    vehicle.data.metadata.engineOil = vehicle.data.metadata.engineOil;
+    vehicle.setStreamSyncedMeta('engineOil', vehicle.data.metadata.engineOil);
+    saveVehicleMetadata(vehicle);
+};
+
+const updateEngineWater = (vehicle) => {
+    let engineFail = Math.floor(Math.random() * 100);
+    if (!vehicle || !vehicle.valid || !vehicle.engineOn) return;
+    if (!isNaN(vehicle.data.metadata.engineWater)) {
+        vehicle.data.metadata.engineWater = vehicle.data.metadata.engineWater;
+    } else {
+        vehicle.data.metadata.engineWater = 100;
+    }
+
+    vehicle.data.metadata.engineWater -= Core.Config.VehicleengineWaterLost;
+
+    if (vehicle.data.metadata.engineWater <= 2) {
+        vehicle.data.metadata.engineWater = 0;
+        if (engineFail > 60) vehicle.engineOn = false;
+        vehicle.setStreamSyncedMeta('engineBroken', true);
+        if (vehicle.driver) {
+            alt.emitClient(
+                vehicle.driver,
+                'notify',
+                'error',
+                'aviso',
+                'O motor do seu veiculo quebrou!'
+            );
+        }
+    }
+
+    if (
+        vehicle.data.metadata.engineWater < 10 &&
+        vehicle.data.metadata.engineWater > 2
+    ) {
+        vehicle.data.metadata.engineWater = 0;
+        vehicle.engineHealth = 20;
+        vehicle.setStreamSyncedMeta('engineBroken', true);
+        if (vehicle.driver) {
+            alt.emitClient(
+                vehicle.driver,
+                'notify',
+                'error',
+                'aviso',
+                'O motor do seu veiculo esta com problemas!'
+            );
+        }
+    }
+
+    vehicle.data.metadata.engineWater = vehicle.data.metadata.engineWater;
+    vehicle.setStreamSyncedMeta(
+        'engineWater',
+        vehicle.data.metadata.engineWater
+    );
     saveVehicleMetadata(vehicle);
 };
 
