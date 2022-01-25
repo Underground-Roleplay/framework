@@ -74,4 +74,22 @@ const setDuty = (source) => {
     Core.Functions.emitPlayerData(source, 'job', source.playerData.job);
 };
 
-export default { saveJobdata, setJob, setDuty };
+const verifyPayCheck = (source) => {
+    const paymentAmount = source.playerData.job.payment;
+    if (!paymentAmount) return;
+    const offDutyPay = Core.Shared.Jobs[source.playerData.job.name];
+    if (!offDutyPay && !source.playerData.job.onDuty) return;
+    Core.Money.addMoney(source, 'bank', paymentAmount);
+    alt.emitClient(
+        source,
+        'notify',
+        'success',
+        Core.Translate('JOB.LABEL', {
+            jobname: source.playerData.job.name.toUpperCase(),
+        }),
+        Core.Translate('JOB.PAYCHECK_RECIVED', { value: paymentAmount })
+    );
+    source.payCheckTimeOut = Date.now() + Core.Config.payCheckTimeOut;
+};
+
+export default { saveJobdata, setJob, setDuty, verifyPayCheck };
