@@ -133,14 +133,14 @@ const addHungerThirstDecay = (source) => {
         source.playerData.metadata.hunger === undefined ||
         source.playerData.metadata.hunger === null
     ) {
-        source.playerData.metadata.hunger = 100;
+        source.playerData.metadata.hunger = Core.Config.DefaultHunger;
     }
 
     if (
         source.playerData.metadata.thirst === undefined ||
         source.playerData.metadata.thirst === null
     ) {
-        source.playerData.metadata.thirst = 100;
+        source.playerData.metadata.thirst = Core.Config.DefaultThirst;
     }
 
     source.playerData.metadata.hunger -= Core.Config.HungerRate;
@@ -171,16 +171,22 @@ const addHungerThirstDecay = (source) => {
 const addHungerThirst = (source, itemtype, value) => {
     if (!source) return;
 
-    if (itemtype === 'drinking' && source.playerData.metadata.thirst <= 200) {
+    if (
+        itemtype === 'drinking' &&
+        source.playerData.metadata.thirst <= Core.Config.DefaultThirst
+    ) {
         source.playerData.metadata.thirst += value;
-        if (source.playerData.metadata.thirst >= 200)
-            source.playerData.metadata.thirst = 200;
+        if (source.playerData.metadata.thirst >= Core.Config.DefaultThirst)
+            source.playerData.metadata.thirst = Core.Config.DefaultThirst;
     }
 
-    if (itemtype === 'eating' && source.playerData.metadata.hunger <= 200) {
+    if (
+        itemtype === 'eating' &&
+        source.playerData.metadata.hunger <= Core.Config.DefaultHunger
+    ) {
         source.playerData.metadata.hunger += value;
-        if (source.playerData.metadata.hunger >= 200)
-            source.playerData.metadata.hunger = 200;
+        if (source.playerData.metadata.hunger >= Core.Config.DefaultHunger)
+            source.playerData.metadata.hunger = Core.Config.DefaultHunger;
     }
 
     saveMetadata(source);
@@ -193,8 +199,8 @@ const addHungerThirst = (source, itemtype, value) => {
 
 const adminHeal = (source) => {
     if (!source) return;
-    source.playerData.metadata.thirst = 200;
-    source.playerData.metadata.hunger = 200;
+    source.playerData.metadata.thirst = Core.Config.DefaultThirst;
+    source.playerData.metadata.hunger = Core.Config.DefaultHunger;
     source.health = 200;
 
     saveMetadata(source);

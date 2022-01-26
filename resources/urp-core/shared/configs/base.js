@@ -16,6 +16,8 @@ URPConfig.VehicleengineWaterLost = 0.012;
 URPConfig.SaveInterval = 4950;
 URPConfig.MaxCharacters = 3;
 //Hunger and Thirst
+URPConfig.DefaultHunger = 100;
+URPConfig.DefaultThirst = 100;
 URPConfig.HungerRate = 4.2;
 URPConfig.ThirstRate = 3.8;
 //Every 5 Min
@@ -60,8 +62,8 @@ URPConfig.DefaultMeta = {
     ishandcuffed: false,
     isdead: false,
     stress: 0,
-    thirst: 100,
-    hunger: 100,
+    thirst: URPConfig.DefaultThirst,
+    hunger: URPConfig.DefaultHunger,
     armour: 0,
     health: 200,
 };
