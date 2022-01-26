@@ -184,7 +184,7 @@ function fishingCast() {
     }
 
     runRandomAnim('cast');
-    alt.emit('playHowl2d', './audio/fishing_cast.wav', 0.6);
+    alt.emit('playHowl2d', 'fishing_cast.wav', 0.6);
 
     let inter = alt.setInterval(() => {
         fishBobObj = natives.createObject(
@@ -196,7 +196,7 @@ function fishingCast() {
             false,
             false
         );
-        alt.emit('playHowl2d', './audio/fishing_castDone2.wav', 0.6);
+        alt.emit('playHowl2d', 'fishing_castDone2.wav', 0.6);
 
         isFishHooked = false;
         isFishBiting = false;
@@ -216,8 +216,8 @@ let fishBitingInter = alt.setInterval(() => {
         } else if (biteTime >= 10) {
             isFishBiting = true;
             runRandomAnim('fishOnHook');
-            alt.emit('playHowl2d', './audio/fishing_bitingFish.wav', 0.6);
-            alt.emit('playHowl2d', './audio/fishing_reelBiting.wav', 0.5);
+            alt.emit('playHowl2d', 'fishing_bitingFish.wav', 0.6);
+            alt.emit('playHowl2d', 'fishing_reelBiting.wav', 0.5);
         }
         biteTime += 1;
     }
@@ -254,7 +254,7 @@ function hookFish() {
             natives.deleteObject(fishBobObj);
             fishBobObj = null;
             runRandomAnim('hookFish');
-            alt.emit('playHowl2d', './audio/fishing_hooked.wav', 0.4);
+            alt.emit('playHowl2d', 'fishing_hooked.wav', 0.4);
             requestFishLootFromServer();
 
             alt.clearInterval(inter2);
