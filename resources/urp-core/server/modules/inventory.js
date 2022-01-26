@@ -119,6 +119,21 @@ const addItem = (source, ItemName, amount) => {
 
     if (i < 0) {
         const itemInfo = Core.Shared.Items[ItemName.toLowerCase()];
+        if (!itemInfo) {
+            alt.emitClient(
+                source,
+                'notify',
+                'error',
+                Core.Translate('INVENTORY.LABEL'),
+                Core.Translate('ITEM_DOESNT_EXISTS')
+            );
+            return;
+        }
+        if (itemInfo.type === 'weapon') {
+            itemInfo.info = {
+                serie: '99999',
+            };
+        }
         source.playerData.inventory[0].push({
             name: ItemName,
             amount: amount,
