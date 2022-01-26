@@ -2,6 +2,7 @@ import * as alt from 'alt-client';
 import * as natives from 'natives';
 import utils from './utils';
 import Core from '../main';
+import { VehList } from '../../shared/configs/vehicles';
 
 let deathInterval;
 let deathTime;
@@ -590,6 +591,14 @@ const generateBlip = (cds, name) => {
     return pointBlip;
 };
 
+const fuelTankSize = (vehicle) => {
+    if (!vehicle) return undefined;
+    const vehicleModel = Object.keys(VehList).find(
+        (v) => alt.hash(v) === vehicle.model
+    );
+    return VehList[vehicleModel].fuelTank;
+};
+
 let point = false;
 let pointInterval;
 alt.on('keydown', async (key) => {
@@ -747,4 +756,5 @@ export default {
     hasHandcuffs,
     rotateCharacter,
     generateBlip,
+    fuelTankSize,
 };
