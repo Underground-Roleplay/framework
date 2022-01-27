@@ -8,8 +8,6 @@ import { executeSync, insertSync } from '../libs/utils';
 
 import { VehList, modType, indexVehicle } from '../../shared/configs/vehicles';
 
-import inventory from './inventory';
-
 const pool = [];
 
 const getVehicleData = (veh, key) => {
@@ -74,14 +72,18 @@ const addToSource = async (
     newVehicle.position = initialPosition;
     newVehicle.plate = await generatePlate();
     newVehicle.status = { bodyHealth: 1000 };
-    newVehicle.metadata = { fuel: 15, engineOil: 100, engineWater: 100 };
-    newVehicle.inventory = [];
+    newVehicle.metadata = {
+        fuel: 15,
+        engineOil: 100,
+        engineWater: 100,
+        lockState: 2,
+    };
     newVehicle.customizations = {
         customPrimaryColor: { r: 0, g: 0, b: 0, a: 255 },
         customSecondaryColor: { r: 0, g: 0, b: 0, a: 255 },
     };
     const id = await insertSync(
-        'INSERT INTO characters_vehicles (ssn, model, position, plate, status, metadata,inventory, customizations) VALUES (?,?,?,?,?,?,?,?)',
+        'INSERT INTO characters_vehicles (ssn, model, position, plate, status, metadata, customizations) VALUES (?,?,?,?,?,?,?)',
         [
             ssn,
             newVehicle.model,
@@ -89,7 +91,6 @@ const addToSource = async (
             newVehicle.plate,
             JSON.stringify(newVehicle.status),
             JSON.stringify(newVehicle.metadata),
-            JSON.stringify(newVehicle.inventory),
             JSON.stringify(newVehicle.customizations),
         ]
     );
@@ -163,6 +164,7 @@ const spawn = (source, vehicleData, pos, rot) => {
     vehicle.data = vehicleData;
 
     vehicle.numberPlateText = vehicleData.plate;
+    vehicle.lockState = 2;
 
     vehicle.engineOn = false;
 
@@ -182,10 +184,9 @@ const spawn = (source, vehicleData, pos, rot) => {
         loadStatus(vehicle, vehicleData.status);
     }
 
-    if (vehicleData.inventory) {
-        vehicle.setStreamSyncedMeta('inventory', vehicleData.inventory);
+    if (vehicleData.metadata.trunk) {
+        vehicle.setStreamSyncedMeta('trunk', vehicleData.trunk);
     }
-
     vehicle.setStreamSyncedMeta('fuel', vehicleData.metadata.fuel);
     vehicle.setStreamSyncedMeta('owner', vehicleData.ssn);
     vehicle.setStreamSyncedMeta('engine', false);
@@ -205,7 +206,6 @@ const spawnById = async (source, id, pos, rot) => {
     vehicleData[0].status = JSON.parse(vehicleData[0].status);
     vehicleData[0].metadata = JSON.parse(vehicleData[0].metadata);
     vehicleData[0].model = vehicleData[0].model;
-    vehicleData[0].inventory = JSON.parse(vehicleData[0].inventory);
     vehicleData[0].customizations = JSON.parse(vehicleData[0].customizations);
     spawn(source, vehicleData[0], pos, rot);
 };
@@ -826,6 +826,7 @@ const reloadMods = (source) => {
 
 const loadStatus = (vehicle, data) => {
     alt.nextTick(() => {
+        vehicle.lockState = 2;
         vehicle.dirtLevel = data.dirtLevel;
         vehicle.bodyHealth = data.bodyHealth;
 
@@ -968,6 +969,25 @@ const loadStatus = (vehicle, data) => {
         );
     });
 };
+
+const vehicleLockState = (source) => {
+    if (!source) return;
+    const closestVeh = alt.Vehicle.all.find(
+        (targetVehicle) =>
+            source.pos.distanceTo(targetVehicle.pos) < 4 &&
+            source.playerData.ssn == targetVehicle.data.ssn
+    );
+
+    if (closestVeh.lockState === 1) {
+        alt.emitClient(source, 'playHowl2d', 'lock.ogg', 0.2);
+        return (closestVeh.lockState = 2);
+    }
+
+    if (closestVeh.lockState === 2) {
+        alt.emitClient(source, 'playHowl2d', 'lock.ogg', 0.2);
+        return (closestVeh.lockState = 1);
+    }
+};
 // const updateVehiclePosition = (vehicle) => {
 //     vehicle.data.position = vehicle.pos
 //     db.execute('UPDATE characters_vehicles SET position = ? WHERE ssn = ?', [JSON.stringify(vehicle.data.position), vehicle.data.ssn], undefined, alt.resourceName)
@@ -995,4 +1015,5 @@ export default {
     reFuel,
     fuelType,
     setNeon,
+    vehicleLockState,
 };

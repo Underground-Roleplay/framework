@@ -2,7 +2,7 @@
 
 function playHowl2d(soundfile, volume) {
     var sound = new Howl({
-        src: [soundfile], //   './audio/fillup_start.wav'
+        src: `./audio/${soundfile}`, //   './audio/fillup_start.wav' `./audio/${soundfile}`
         autoplay: true,
         loop: false,
         volume: volume, //        0.4

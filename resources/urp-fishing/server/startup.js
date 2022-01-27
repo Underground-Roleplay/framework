@@ -11,7 +11,7 @@ alt.onClient('fishing:caughtFish', (player) => {
     if (!player.getFishLoot) return;
     player.claimedLoot = true;
 
-    alt.emitClient(player, 'playHowl2d', './audio/item_pickup.wav', 0.2);
+    alt.emitClient(player, 'playHowl2d', 'item_pickup.wav', 0.2);
 });
 
 alt.onClient('fishing:reqLootDiff', (player, random) => {

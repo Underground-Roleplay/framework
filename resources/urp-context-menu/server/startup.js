@@ -53,3 +53,8 @@ alt.onClient('context:player:status', (source) => {
         `your id is ${JSON.stringify(source.getMeta('playerData'))}`
     );
 });
+
+alt.onClient('context:vehicle:lock', (source) => {
+    if (!source) return;
+    Core.Vehicles.vehicleLockState(source);
+});
