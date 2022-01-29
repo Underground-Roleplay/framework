@@ -78,19 +78,20 @@ const addToSource = async (
         engineWater: 100,
         lockState: 2,
     };
+    newVehicle.inventory = [];
     newVehicle.customizations = {
         customPrimaryColor: { r: 0, g: 0, b: 0, a: 255 },
         customSecondaryColor: { r: 0, g: 0, b: 0, a: 255 },
     };
     const id = await insertSync(
-        'INSERT INTO characters_vehicles (ssn, model, position, plate, status, metadata, customizations) VALUES (?,?,?,?,?,?,?)',
+        'INSERT INTO characters_vehicles (ssn, model, position, plate, status, metadata,inventory, customizations) VALUES (?,?,?,?,?,?,?,?)',
         [
             ssn,
             newVehicle.model,
-            JSON.stringify(newVehicle.position),
             newVehicle.plate,
             JSON.stringify(newVehicle.status),
             JSON.stringify(newVehicle.metadata),
+            JSON.stringify(newVehicle.inventory),
             JSON.stringify(newVehicle.customizations),
         ]
     );
@@ -206,6 +207,7 @@ const spawnById = async (source, id, pos, rot) => {
     vehicleData[0].status = JSON.parse(vehicleData[0].status);
     vehicleData[0].metadata = JSON.parse(vehicleData[0].metadata);
     vehicleData[0].model = vehicleData[0].model;
+    vehicleData[0].inventory = JSON.parse(vehicleData[0].inventory);
     vehicleData[0].customizations = JSON.parse(vehicleData[0].customizations);
     spawn(source, vehicleData[0], pos, rot);
 };
