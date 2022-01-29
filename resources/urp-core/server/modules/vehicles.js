@@ -88,6 +88,7 @@ const addToSource = async (
         [
             ssn,
             newVehicle.model,
+            JSON.stringify(newVehicle.position),
             newVehicle.plate,
             JSON.stringify(newVehicle.status),
             JSON.stringify(newVehicle.metadata),
