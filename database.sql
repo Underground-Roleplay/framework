@@ -82,13 +82,24 @@ CREATE TABLE IF NOT EXISTS `characters_homes`(
   `id` int NOT NULL AUTO_INCREMENT,
   `ssn` varchar(255) NOT NULL,
   `name` VARCHAR(100),
-  `chest` longtext DEFAULT NULL,
+  `chest` LONGTEXT NULL DEFAULT '[]' COLLATE 'utf8_general_ci',
   `slot` INTEGER,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `home` (`name`,`slot`) USING BTREE,
   KEY `ssn` (`ssn`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=1;
 
+--Dumping structure for table chest
+CREATE TABLE `chest` (
+	`id` INT(10) NOT NULL AUTO_INCREMENT,
+	`cords` VARCHAR(50) NOT NULL DEFAULT '' COLLATE 'utf8_general_ci',
+	`chest` LONGTEXT NOT NULL DEFAULT '[]' COLLATE 'utf8_general_ci',
+	PRIMARY KEY (`id`) USING BTREE
+)
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=2
+;
 -- Data exporting was unselected.
 
 CREATE TABLE IF NOT EXISTS dealership (
