@@ -72,7 +72,7 @@ CREATE TABLE IF NOT EXISTS `characters_vehicles` (
   `status` longtext NOT NULL NOT NULL,
   `metadata` longtext NOT NULL NOT NULL,
   `customizations` longtext NOT NULL,
-  `inventory` LONGTEXT NULL DEFAULT '[]' COLLATE 'utf8_general_ci',
+  `inventory` LONGTEXT NULL DEFAULT '[]',
   PRIMARY KEY (`id`) USING BTREE,
   KEY `ssn` (`ssn`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=1;
