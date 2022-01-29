@@ -82,7 +82,7 @@ CREATE TABLE IF NOT EXISTS `characters_homes`(
   `id` int NOT NULL AUTO_INCREMENT,
   `ssn` varchar(255) NOT NULL,
   `name` VARCHAR(100),
-  `chest` LONGTEXT NULL DEFAULT '[]' COLLATE 'utf8_general_ci',
+  `chest` LONGTEXT NULL DEFAULT '[]',
   `slot` INTEGER,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `home` (`name`,`slot`) USING BTREE,
@@ -92,8 +92,8 @@ CREATE TABLE IF NOT EXISTS `characters_homes`(
 --Dumping structure for table chest
 CREATE TABLE `chest` (
 	`id` INT(10) NOT NULL AUTO_INCREMENT,
-	`cords` VARCHAR(50) NOT NULL DEFAULT '' COLLATE 'utf8_general_ci',
-	`chest` LONGTEXT NOT NULL DEFAULT '[]' COLLATE 'utf8_general_ci',
+	`cords` VARCHAR(50) NOT NULL DEFAULT '',
+	`chest` LONGTEXT NOT NULL DEFAULT '[]',
 	PRIMARY KEY (`id`) USING BTREE
 )
 COLLATE='utf8_general_ci'
