@@ -10,7 +10,7 @@ const setHandcuffs = (source) => {
         [...alt.Player.all],
         5
     );
-    if (!targetPlayer) return;
+    if (!targetPlayer || targetPlayer === source) return;
 
     targetPlayer.setSyncedMeta('HasHandcuffs', true);
     targetPlayer.setClothes(7, 41, 0, 2);
@@ -24,7 +24,7 @@ const removeHandcuffs = (source) => {
         [...alt.Player.all],
         5
     );
-    if (!targetPlayer) return;
+    if (!targetPlayer || targetPlayer === source) return;
     targetPlayer.setSyncedMeta('HasHandcuffs', false);
     targetPlayer.setClothes(7, -1, -1, 0);
     alt.emitClient(targetPlayer, 'police:uncuff');
