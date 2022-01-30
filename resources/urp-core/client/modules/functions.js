@@ -736,34 +736,6 @@ alt.on('keyup', (key) => {
     }
 });
 
-let hurt = false
-
-alt.setInterval(() => {    
-    if (alt.Player.local.health > 150 && !hurt) {
-        hurt = true;
-        return setHurt()
-    }
-    hurt = false;
-    return setNotHurt()
-},2000)
-
-const setHurt = () => {
-    hurt = true
-    natives.requestAnimSet("move_m@injured")
-    natives.setPedMovementClipset(alt.Player.local.scriptID,"move_m@injured",1.0)
-	natives.setPlayerHealthRechargeMultiplier(alt.Player.local.scriptID,0.0)
-	natives.disableControlAction(0,21,true)
-	natives.disableControlAction(0,22,true)
-}
-
-const setNotHurt = () => {
-    hurt = false
-	natives.setPlayerHealthRechargeMultiplier(alt.Player.local.scriptID,0.0)
-    natives.resetPedMovementClipset(alt.Player.local.scriptID,0.0)
-    natives.resetPedWeaponMovementClipset(alt.Player.local.scriptID)
-    natives.resetPedStrafeClipset(alt.Player.local.scriptID)
-}
-
 export default {
     startTicks,
     handleSetplayerData,
