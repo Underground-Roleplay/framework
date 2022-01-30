@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS `characters` (
   `gang` text DEFAULT NULL,
   `position` mediumtext NOT NULL,
   `metadata` mediumtext NOT NULL,
-  `inventory` longtext DEFAULT NULL,
+  `inventory` longtext NOT NULL,
   `last_updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`ssn`),
   KEY `id` (`id`),
@@ -72,7 +72,7 @@ CREATE TABLE IF NOT EXISTS `characters_vehicles` (
   `status` longtext NOT NULL NOT NULL,
   `metadata` longtext NOT NULL NOT NULL,
   `customizations` longtext NOT NULL,
-  `inventory` LONGTEXT NULL DEFAULT '[]',
+  `inventory` longtext NULL,
   PRIMARY KEY (`id`) USING BTREE,
   KEY `ssn` (`ssn`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=1;
@@ -82,21 +82,20 @@ CREATE TABLE IF NOT EXISTS `characters_homes`(
   `id` int NOT NULL AUTO_INCREMENT,
   `ssn` varchar(255) NOT NULL,
   `name` VARCHAR(100),
-  `chest` LONGTEXT NULL DEFAULT '[]',
+  `chest` LONGTEXT NULL ,
   `slot` INTEGER,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `home` (`name`,`slot`) USING BTREE,
   KEY `ssn` (`ssn`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=1;
 
---Dumping structure for table chest
+
 CREATE TABLE `chest` (
 	`id` INT(10) NOT NULL AUTO_INCREMENT,
 	`cords` VARCHAR(50) NOT NULL DEFAULT '',
-	`chest` LONGTEXT NOT NULL DEFAULT '[]',
+	`chest` LONGTEXT NOT NULL ,
 	PRIMARY KEY (`id`) USING BTREE
 )
-COLLATE='utf8_general_ci'
 ENGINE=InnoDB
 AUTO_INCREMENT=2
 ;
