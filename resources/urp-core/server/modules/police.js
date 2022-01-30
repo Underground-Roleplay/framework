@@ -3,28 +3,28 @@ import db from 'mysql2-wrapper';
 import Core from '../main';
 import { getClosestEntity } from '../libs/utils';
 
-const setHandcuffs = () => {
+const setHandcuffs = (source) => {
     let targetPlayer = getClosestEntity(
         source.pos,
         source.rot,
         [...alt.Player.all],
         5
     );
-    if (!targetPlayer) return;
+    if (!targetPlayer || targetPlayer === source) return;
 
     targetPlayer.setSyncedMeta('HasHandcuffs', true);
     targetPlayer.setClothes(7, 41, 0, 2);
     alt.emitClient(targetPlayer, 'police:setHandsCuff');
 };
 
-const removeHandcuffs = () => {
+const removeHandcuffs = (source) => {
     let targetPlayer = getClosestEntity(
         source.pos,
         source.rot,
         [...alt.Player.all],
         5
     );
-    if (!targetPlayer) return;
+    if (!targetPlayer || targetPlayer === source) return;
     targetPlayer.setSyncedMeta('HasHandcuffs', false);
     targetPlayer.setClothes(7, -1, -1, 0);
     alt.emitClient(targetPlayer, 'police:uncuff');
