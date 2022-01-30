@@ -3,7 +3,7 @@ import db from 'mysql2-wrapper';
 import Core from '../main';
 import { getClosestEntity } from '../libs/utils';
 
-const setHandcuffs = () => {
+const setHandcuffs = (source) => {
     let targetPlayer = getClosestEntity(
         source.pos,
         source.rot,
@@ -17,7 +17,7 @@ const setHandcuffs = () => {
     alt.emitClient(targetPlayer, 'police:setHandsCuff');
 };
 
-const removeHandcuffs = () => {
+const removeHandcuffs = (source) => {
     let targetPlayer = getClosestEntity(
         source.pos,
         source.rot,
