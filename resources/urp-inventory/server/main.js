@@ -17,8 +17,8 @@ alt.onClient('inventory:requestData', (source) => {
     );
 });
 
-alt.onClient('context:vehicle:trunk', async (source, data) => {
-    Core.Inventory.getVehicleInventory(source, data);
+alt.onClient('inventory:accessVehTrunk', async (source, vehicle) => {
+    Core.Inventory.getVehicleInventory(source, vehicle);
 });
 
 alt.onClient('inventory:sendItem', (source, item) => {

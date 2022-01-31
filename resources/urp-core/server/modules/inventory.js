@@ -175,6 +175,7 @@ const addItemActived = (source, ItemName, slot) => {
     saveInventory(source);
     return true;
 };
+
 const transferChest = (source, ItemName, amount) => {
     console.log('transferChest: ', ItemName, amount);
     if (ItemName === undefined && ItemName === null) return false;
@@ -213,35 +214,50 @@ const transferChest = (source, ItemName, amount) => {
     return false;
 };
 
+// VEHICLES INV
+const getVehicleInventory = async (source, vehicle) => {
+    if (source.playerData.ssn !== vehicle.data.ssn) {
+        alt.emit('notify', 'error', `TRUNK`, `You do not own this car`);
+        return;
+    }
+    if (source.pos.distanceTo(vehicle) > 10) {
+        alt.emit(
+            'notify',
+            'error',
+            `TRUNK`,
+            `You aren't close enough to open this car trunk`
+        );
+        return;
+    }
+    source.playerData.trunk = vehicle.id;
+    source.playerData.chestOrigin = 'trunk';
+    alt.emitClient(
+        source,
+        'inventory:updateVehicleInventory',
+        vehicle.data.inventory
+    );
+};
+
 const transferVehicle = (source, ItemName, amount) => {
     if (ItemName === undefined && ItemName === null) return false;
     if (amount === null || amount === undefined) amount = 1;
 
-    const i = alt.Vehicle.all[source.playerData.trunk].data.inventory.findIndex(
+    const targetVehicle = alt.Vehicle.getByID(source.playerData.trunk);
+
+    const i = targetVehicle.data.inventory.findIndex(
         (item) => item.name === ItemName
     );
 
-    if (
-        i > -1 &&
-        alt.Vehicle.all[source.playerData.trunk].data.inventory[i].name ===
-            ItemName
-    ) {
-        alt.Vehicle.all[source.playerData.trunk].data.inventory[i].amount =
-            parseInt(
-                alt.Vehicle.all[source.playerData.trunk].data.inventory[i]
-                    .amount
-            ) + parseInt(amount);
-        saveInventoryChests(
-            source,
-            alt.Vehicle.all[source.playerData.trunk].data.inventory,
-            1
-        );
+    if (i > -1 && targetVehicle.data.inventory[i].name === ItemName) {
+        targetVehicle.data.inventory[i].amount =
+            parseInt(targetVehicle.data.inventory[i].amount) + parseInt(amount);
+        saveInventoryChests(source, targetVehicle.data.inventory, 1);
         return true;
     }
 
     if (i < 0) {
         const itemInfo = Core.Shared.Items[ItemName.toLowerCase()];
-        alt.Vehicle.all[source.playerData.trunk].data.inventory.push({
+        targetVehicle.data.inventory.push({
             name: ItemName,
             amount: amount,
             info: itemInfo.info || '',
@@ -255,14 +271,33 @@ const transferVehicle = (source, ItemName, amount) => {
             shouldClose: itemInfo.shouldClose,
             combinable: itemInfo.combinable,
         });
-        saveInventoryChests(
-            source,
-            alt.Vehicle.all[source.playerData.trunk].data.inventory,
-            1
-        );
+        saveInventoryChests(source, targetVehicle.data.inventory, 1);
         return true;
     }
     return false;
+};
+
+const removeItemVehicle = (source, ItemName, amount) => {
+    if (ItemName === undefined) return false;
+    if (amount === null || amount === undefined) amount = 1;
+
+    const targetVehicle = alt.Vehicle.getByID(source.playerData.trunk);
+
+    const i = targetVehicle.data.inventory.findIndex(
+        (item) => item.name === ItemName
+    );
+
+    if (targetVehicle.data.inventory[i].amount > amount) {
+        targetVehicle.data.inventory[i].amount =
+            targetVehicle.data.inventory[i].amount - amount;
+        saveInventoryChests(source, targetVehicle.data.inventory);
+        return true;
+    }
+    if (targetVehicle.data.inventory[i].amount == amount) {
+        targetVehicle.data.inventory.splice(i, 1);
+        saveInventoryChests(source, targetVehicle.data.inventory);
+        return true;
+    }
 };
 
 const removeItemChest = (source, ItemName, amount) => {
@@ -283,39 +318,6 @@ const removeItemChest = (source, ItemName, amount) => {
     if (source.playerData.chest[i].amount <= amount) {
         source.playerData.chest.splice(i, 1);
         saveInventoryChests(source, source.playerData.chest, 1);
-        return true;
-    }
-};
-
-const removeItemVehicle = (source, ItemName, amount) => {
-    if (ItemName === undefined) return false;
-    if (amount === null || amount === undefined) amount = 1;
-    const i = alt.Vehicle.all[source.playerData.trunk].data.inventory.findIndex(
-        (item) => item.name === ItemName
-    );
-
-    if (
-        alt.Vehicle.all[source.playerData.trunk].data.inventory[i].amount >
-        amount
-    ) {
-        alt.Vehicle.all[source.playerData.trunk].data.inventory[i].amount =
-            alt.Vehicle.all[source.playerData.trunk].data.inventory[i].amount -
-            amount;
-        saveInventoryChests(
-            source,
-            alt.Vehicle.all[source.playerData.trunk].data.inventory
-        );
-        return true;
-    }
-    if (
-        alt.Vehicle.all[source.playerData.trunk].data.inventory[i].amount <=
-        amount
-    ) {
-        alt.Vehicle.all[source.playerData.trunk].data.inventory.splice(i, 1);
-        saveInventoryChests(
-            source,
-            alt.Vehicle.all[source.playerData.trunk].data.inventory
-        );
         return true;
     }
 };
@@ -357,7 +359,7 @@ const getItemBySlot = (source, slot) => {
 };
 const saveInventoryChests = async (source, data, id) => {
     if (!source) return;
-    if (source.playerData.chestOringi === 'homeInventory') {
+    if (source.playerData.chestOrigin === 'homeInventory') {
         await updateSync(
             'UPDATE characters_homes SET inventory = ? WHERE id = ? AND ssn = ?',
             [JSON.stringify(data), id, source.playerData.ssn],
@@ -370,7 +372,7 @@ const saveInventoryChests = async (source, data, id) => {
             source.playerData.chest
         );
     }
-    if (source.playerData.chestOringi === 'chest') {
+    if (source.playerData.chestOrigin === 'chest') {
         await updateSync(
             'UPDATE chest SET chest = ? WHERE id = ? ',
             [JSON.stringify(data), id],
@@ -383,15 +385,15 @@ const saveInventoryChests = async (source, data, id) => {
             source.playerData.chest
         );
     }
-    if (source.playerData.chestOringi === 'trunk') {
+    if (source.playerData.chestOrigin === 'trunk') {
+        const targetVehicle = alt.Vehicle.getByID(source.playerData.trunk);
+
         await updateSync(
             'UPDATE characters_vehicles SET inventory = ? WHERE id = ? AND ssn = ?',
             [
-                JSON.stringify(
-                    alt.Vehicle.all[source.playerData.trunk].data.inventory
-                ),
-                alt.Vehicle.all[source.playerData.trunk].data.id,
-                alt.Vehicle.all[source.playerData.trunk].data.ssn,
+                JSON.stringify(targetVehicle.data.inventory),
+                targetVehicle.data.id,
+                targetVehicle.data.ssn,
             ],
             undefined,
             alt.resourceName
@@ -399,8 +401,8 @@ const saveInventoryChests = async (source, data, id) => {
 
         return alt.emitClient(
             source,
-            'inventory:updateVhecleInventory',
-            alt.Vehicle.all[source.playerData.trunk].data.inventory
+            'inventory:updateVehicleInventory',
+            targetVehicle.data.inventory
         );
     }
 };
@@ -476,27 +478,13 @@ const getInventoryActived = (source) => {
     return source.playerData.inventory[1];
 };
 
-const getVehicleInventory = async (source, data) => {
-    const vehicle = alt.Vehicle.all.find(
-        (v) => v.pos.distanceTo(data.coords) <= 10
-    );
-    console.log(vehicle.data.inventory);
-    source.playerData.trunk = vehicle.id - 1;
-    source.playerData.chestOringi = 'trunk';
-    alt.emitClient(
-        source,
-        'inventory:updateVhecleInventory',
-        vehicle.data.inventory
-    );
-};
-
 const getHomeInventory = async (source, id) => {
     const data = await executeSync(
         'SELECT * from characters_homes WHERE id = :id ',
         { id: id }
     );
     source.playerData.chest = JSON.parse(data[0].inventory);
-    source.playerData.chestOringi = 'homeInventory';
+    source.playerData.chestOrigin = 'homeInventory';
     alt.emitClient(
         source,
         'inventory:updateHomeInventory',
@@ -510,7 +498,7 @@ const getChest = async (source, id) => {
     });
 
     source.playerData.chest = JSON.parse(data[0].chest);
-    source.playerData.chestOringi = 'chest';
+    source.playerData.chestOrigin = 'chest';
     alt.emitClient(source, 'inventory:updateChest', source.playerData.chest);
 };
 

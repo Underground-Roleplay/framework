@@ -13,7 +13,7 @@ export const VEHICLE_MENU = {
         },
         {
             eventName: 'context:vehicle:trunk',
-            isServer: true,
+            isServer: false,
             name: 'Trunk',
         },
     ],
@@ -103,7 +103,7 @@ export const MECHANIC_MENU = {
         },
         {
             eventName: 'context:vehicle:trunk',
-            isServer: true,
+            isServer: false,
             name: 'Trunk',
         },
         {
