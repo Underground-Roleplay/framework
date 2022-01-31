@@ -88,7 +88,7 @@ setInterval(async () => {
         });
     }
 
-    if (time.minute >= 60) {
+    if (time.minute > 60) {
         time.minute = 0;
         time.hour += hoursPerSixtyMinutes;
         /*
@@ -102,7 +102,7 @@ setInterval(async () => {
             });
         }
     }
-    if (time.hour >= 24) {
+    if (time.hour > 23) {
         time.hour = 0;
     }
 }, 0);
@@ -127,8 +127,8 @@ alt.on('playerConnect', (player) => {
 
 function updateTime(player) {
     player.setDateTime(
-        today.getDate(),
-        today.getMonth(),
+        today.getDate() > 30 ? 30 : today.getDate(),
+        today.getMonth() > 11 ? 11 : today.getMonth(),
         today.getFullYear(),
         time.hour,
         time.minute,

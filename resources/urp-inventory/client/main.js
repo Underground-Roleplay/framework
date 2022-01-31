@@ -91,7 +91,7 @@ const requetDataVehice = (data) => {
     }, 150);
 };
 
-alt.onServer('inventory:updateVhecleInventory', requetDataVehice);
+alt.onServer('inventory:updateVehicleInventory', requetDataVehice);
 
 const requetDataChest = (data) => {
     console.log('load: ', 'dataChestRequest');
@@ -125,4 +125,9 @@ alt.on('keydown', (key) => {
         if (!item) return;
         alt.emitServer('inventory:useItem', item);
     }
+});
+
+alt.on('context:vehicle:trunk', (data) => {
+    const targetVehicle = alt.Vehicle.getByScriptID(data.entity);
+    alt.emitServer('inventory:accessVehTrunk', targetVehicle);
 });

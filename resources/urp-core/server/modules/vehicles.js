@@ -113,7 +113,9 @@ const putInGarage = (source, vehicle) => {
     }
     if (source.playerData.ssn !== vehicle.data.ssn) return;
     if (vehicle.timeoutTicker) {
-        alt.clearTimeout(vehicle.timeoutTicker);
+        try {
+            alt.clearTimeout(vehicle.timeoutTicker);
+        } catch (e) {}
     }
     saveVehicleMetadata(vehicle);
     saveMods(vehicle);
