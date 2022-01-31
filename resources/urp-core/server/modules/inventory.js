@@ -229,7 +229,7 @@ const getVehicleInventory = async (source, vehicle) => {
         );
         return;
     }
-    source.playerData.trunk = vehicle.id - 1;
+    source.playerData.trunk = vehicle.id;
     source.playerData.chestOrigin = 'trunk';
     alt.emitClient(
         source,
@@ -242,31 +242,22 @@ const transferVehicle = (source, ItemName, amount) => {
     if (ItemName === undefined && ItemName === null) return false;
     if (amount === null || amount === undefined) amount = 1;
 
-    const i = alt.Vehicle.all[source.playerData.trunk].data.inventory.findIndex(
+    const targetVehicle = alt.Vehicle.getByID(source.playerData.trunk);
+
+    const i = targetVehicle.data.inventory.findIndex(
         (item) => item.name === ItemName
     );
 
-    if (
-        i > -1 &&
-        alt.Vehicle.all[source.playerData.trunk].data.inventory[i].name ===
-            ItemName
-    ) {
-        alt.Vehicle.all[source.playerData.trunk].data.inventory[i].amount =
-            parseInt(
-                alt.Vehicle.all[source.playerData.trunk].data.inventory[i]
-                    .amount
-            ) + parseInt(amount);
-        saveInventoryChests(
-            source,
-            alt.Vehicle.all[source.playerData.trunk].data.inventory,
-            1
-        );
+    if (i > -1 && targetVehicle.data.inventory[i].name === ItemName) {
+        targetVehicle.data.inventory[i].amount =
+            parseInt(targetVehicle.data.inventory[i].amount) + parseInt(amount);
+        saveInventoryChests(source, targetVehicle.data.inventory, 1);
         return true;
     }
 
     if (i < 0) {
         const itemInfo = Core.Shared.Items[ItemName.toLowerCase()];
-        alt.Vehicle.all[source.playerData.trunk].data.inventory.push({
+        targetVehicle.data.inventory.push({
             name: ItemName,
             amount: amount,
             info: itemInfo.info || '',
@@ -280,11 +271,7 @@ const transferVehicle = (source, ItemName, amount) => {
             shouldClose: itemInfo.shouldClose,
             combinable: itemInfo.combinable,
         });
-        saveInventoryChests(
-            source,
-            alt.Vehicle.all[source.playerData.trunk].data.inventory,
-            1
-        );
+        saveInventoryChests(source, targetVehicle.data.inventory, 1);
         return true;
     }
     return false;
@@ -294,32 +281,21 @@ const removeItemVehicle = (source, ItemName, amount) => {
     if (ItemName === undefined) return false;
     if (amount === null || amount === undefined) amount = 1;
 
-    const i = alt.Vehicle.all[source.playerData.trunk].data.inventory.findIndex(
+    const targetVehicle = alt.Vehicle.getByID(source.playerData.trunk);
+
+    const i = targetVehicle.data.inventory.findIndex(
         (item) => item.name === ItemName
     );
 
-    if (
-        alt.Vehicle.all[source.playerData.trunk].data.inventory[i].amount >
-        amount
-    ) {
-        alt.Vehicle.all[source.playerData.trunk].data.inventory[i].amount =
-            alt.Vehicle.all[source.playerData.trunk].data.inventory[i].amount -
-            amount;
-        saveInventoryChests(
-            source,
-            alt.Vehicle.all[source.playerData.trunk].data.inventory
-        );
+    if (targetVehicle.data.inventory[i].amount > amount) {
+        targetVehicle.data.inventory[i].amount =
+            targetVehicle.data.inventory[i].amount - amount;
+        saveInventoryChests(source, targetVehicle.data.inventory);
         return true;
     }
-    if (
-        alt.Vehicle.all[source.playerData.trunk].data.inventory[i].amount ==
-        amount
-    ) {
-        alt.Vehicle.all[source.playerData.trunk].data.inventory.splice(i, 1);
-        saveInventoryChests(
-            source,
-            alt.Vehicle.all[source.playerData.trunk].data.inventory
-        );
+    if (targetVehicle.data.inventory[i].amount == amount) {
+        targetVehicle.data.inventory.splice(i, 1);
+        saveInventoryChests(source, targetVehicle.data.inventory);
         return true;
     }
 };
@@ -410,14 +386,14 @@ const saveInventoryChests = async (source, data, id) => {
         );
     }
     if (source.playerData.chestOrigin === 'trunk') {
+        const targetVehicle = alt.Vehicle.getByID(source.playerData.trunk);
+
         await updateSync(
             'UPDATE characters_vehicles SET inventory = ? WHERE id = ? AND ssn = ?',
             [
-                JSON.stringify(
-                    alt.Vehicle.all[source.playerData.trunk].data.inventory
-                ),
-                alt.Vehicle.all[source.playerData.trunk].data.id,
-                alt.Vehicle.all[source.playerData.trunk].data.ssn,
+                JSON.stringify(targetVehicle.data.inventory),
+                targetVehicle.data.id,
+                targetVehicle.data.ssn,
             ],
             undefined,
             alt.resourceName
@@ -426,7 +402,7 @@ const saveInventoryChests = async (source, data, id) => {
         return alt.emitClient(
             source,
             'inventory:updateVehicleInventory',
-            alt.Vehicle.all[source.playerData.trunk].data.inventory
+            targetVehicle.data.inventory
         );
     }
 };

@@ -129,5 +129,6 @@ alt.on('keydown', (key) => {
 
 alt.on('context:vehicle:trunk', (data) => {
     const targetVehicle = alt.Vehicle.getByScriptID(data.entity);
+    if (!targetVehicle) return;
     alt.emitServer('inventory:accessVehTrunk', targetVehicle);
 });
