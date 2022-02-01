@@ -48,7 +48,7 @@ const getPayment = (source, amount) => {
     if (amount < 0) {
         return;
     }
-    if (source.playerData.money['cash'] > parseInt(amount)) {
+    if (source.playerData.money['cash'] >= parseInt(amount)) {
         source.playerData.money['cash'] =
             parseInt(source.playerData.money['cash']) - parseInt(amount);
         updateMoney(source);
@@ -70,11 +70,9 @@ const addMoney = (source, moneytype, amount) => {
     if (amount < 0) {
         return;
     }
-    if (source.playerData.money[moneytype]) {
-        source.playerData.money[moneytype] =
-            parseInt(source.playerData.money[moneytype]) + parseInt(amount);
+    if(source.playerData.money[moneytype] < 0) return;
+        source.playerData.money[moneytype] = parseInt(source.playerData.money[moneytype]) + parseInt(amount);
         updateMoney(source);
-    }
     return;
 };
 
