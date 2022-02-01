@@ -40,6 +40,7 @@ const login = async (source) => {
         'SELECT * FROM users WHERE socialID = :socialID',
         { socialID: source.socialID }
     );
+
     if (account.length <= 0) {
         const hash = hashString(uID);
         const register = await insertSync(
@@ -50,53 +51,49 @@ const login = async (source) => {
             source.kick(Core.Translate('ACCOUNT.REGISTER_ERROR'));
             return;
         }
-        console.log(
-            Core.Translate('ACCOUNT.NEW_CREATED ', { sID: source.socialID })
-        );
-        if (Core.Config.WhitelistOn)
+
+        if (Core.Config.WhitelistOn) {
             return source.kick(
                 Core.Translate('ACCOUNT.NOT_ALLOW_LISTED', {
                     socialID: source.socialID,
                 })
             );
-    } else {
-        const dataMatch = compareHash(uID, account[0].identifier);
-        if (!dataMatch) {
-            source.kick(Core.Translate('ACCOUNT.LOGIN_ERROR'));
-            return;
         }
-        if (account[0].banned) {
-            source.kick(Core.Translate('ACCOUNT.BANNED'));
-            return;
-        }
-        if (!Core.Config.WhitelistOn) {
-            console.log(
-                Core.Translate('ACCOUNT.LOGIN', {
-                    playerName: `${source.name}`,
-                    sID: `${source.socialID}`,
-                })
-            );
-            Core.Character.startCharacter(source);
-            return;
-        }
-        if (!account[0].whitelisted) {
-            source.kick(
-                Core.Translate('ACCOUNT.NOT_ALLOW_LISTED', {
-                    socialID: account[0].id,
-                })
-            );
-            return;
-        } else {
-            console.log(
-                Core.Translate('ACCOUNT.LOGIN', {
-                    playerName: `${source.name}`,
-                    sID: `${source.socialID}`,
-                })
-            );
-            Core.Character.startCharacter(source);
-            // Now we start the character
-        }
+
+        console.log(
+            Core.Translate('ACCOUNT.NEW_CREATED ', { sID: source.socialID })
+        );
+        // Now we start the character
+        Core.Character.startCharacter(source);
     }
+
+    const dataMatch = compareHash(uID, account[0].identifier);
+    if (!dataMatch) {
+        source.kick(Core.Translate('ACCOUNT.LOGIN_ERROR'));
+        return;
+    }
+    if (account[0].banned) {
+        source.kick(Core.Translate('ACCOUNT.BANNED'));
+        return;
+    }
+
+    if (!account[0].whitelisted && Core.Config.WhitelistOn) {
+        source.kick(
+            Core.Translate('ACCOUNT.NOT_ALLOW_LISTED', {
+                socialID: source.socialID,
+            })
+        );
+        return;
+    }
+
+    console.log(
+        Core.Translate('ACCOUNT.LOGIN', {
+            playerName: `${source.name}`,
+            sID: `${source.socialID}`,
+        })
+    );
+    // Now we start the character
+    Core.Character.startCharacter(source);
 };
 
 //  Player whitelist & BAN status
