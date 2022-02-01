@@ -1,6 +1,11 @@
 export const URPConfig = {};
 
 URPConfig.DefaultSpawn = { x: -1035.71, y: -2731.87, z: 12.86 };
+URPConfig.DefaultHospital = {
+    x: -453.75823974609375,
+    y: -335.5120849609375,
+    z: 34.3516845703125,
+};
 URPConfig.DefaultModel = `mp_m_freemode_01`;
 
 URPConfig.WhitelistOn = false;

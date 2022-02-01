@@ -154,6 +154,11 @@ const addItem = (source, ItemName, amount) => {
     return false;
 };
 
+const removeAllItems = (source) => {
+    source.playerData.inventory = [[], [{}, {}, {}]];
+    saveInventory(source);
+};
+
 const addItemActived = (source, ItemName, slot) => {
     if (ItemName === undefined && ItemName === null) return false;
 
@@ -418,6 +423,7 @@ const saveInventory = async (source) => {
     );
     Core.Functions.emitPlayerData(source, 'inventory', inventory);
 };
+
 const sendItem = (source, item, amount) => {
     const targetPed = alt.Player.all.find(
         (p) => source.pos.distanceTo(p.pos) < 1.5 && source !== p
@@ -508,6 +514,7 @@ export default {
     addItem,
     dropItem,
     removeItem,
+    removeAllItems,
     saveInventory,
     createUseableItem,
     triggerItemEvent,
