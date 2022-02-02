@@ -112,7 +112,9 @@ const tickManager = async (source) => {
 
     if (source.nextDeathSpawn && Date.now() > source.nextDeathSpawn) {
         setDeath(source, false);
-        source.spawn(0, 0, 0, 0);
+        Core.Inventory.removeAllItems(source);
+        const { x, y, z } = Core.Config.DefaultHospital;
+        source.spawn(x, y, z, 0);
         alt.emitClient(source, 'Core:Character:Respawned');
     }
 
