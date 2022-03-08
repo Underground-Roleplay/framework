@@ -81,7 +81,7 @@ const checkPlayerData = async (source, playerData = undefined) => {
         //Position
         playerData.position = Core.Config.DefaultSpawn;
         //Inventory
-        playerData.inventory = [[], [{}, {}, {}]];
+        playerData.inventory = [];
 
         createCharacter(source, playerData, false);
         return;

@@ -106,13 +106,12 @@ const addItem = (source, ItemName, amount) => {
     if (ItemName === undefined && ItemName === null) return false;
     if (amount === null || amount === undefined) amount = 1;
 
-    const i = source.playerData.inventory[0].findIndex(
+    const i = source.playerData.inventory.findIndex(
         (item) => item.name === ItemName
     );
-    if (i > -1 && source.playerData.inventory[0][i].name === ItemName) {
-        source.playerData.inventory[0][i].amount =
-            parseInt(source.playerData.inventory[0][i].amount) +
-            parseInt(amount);
+    if (i > -1 && source.playerData.inventory[i].name === ItemName) {
+        source.playerData.inventory[i].amount =
+            parseInt(source.playerData.inventory[i].amount) + parseInt(amount);
         saveInventory(source);
         return true;
     }
@@ -134,7 +133,7 @@ const addItem = (source, ItemName, amount) => {
                 serie: '99999',
             };
         }
-        source.playerData.inventory[0].push({
+        source.playerData.inventory.push({
             name: ItemName,
             amount: amount,
             info: itemInfo.info || '',
@@ -155,7 +154,7 @@ const addItem = (source, ItemName, amount) => {
 };
 
 const removeAllItems = (source) => {
-    source.playerData.inventory = [[], [{}, {}, {}]];
+    source.playerData.inventory = [];
     saveInventory(source);
 };
 
@@ -332,18 +331,18 @@ const removeItem = (source, ItemName, amount) => {
     if (ItemName === undefined) return false;
     if (amount === null || amount === undefined) amount = 1;
 
-    const i = source.playerData.inventory[0].findIndex(
+    const i = source.playerData.inventory.findIndex(
         (item) => item.name === ItemName
     );
 
-    if (source.playerData.inventory[0][i].amount > amount) {
-        source.playerData.inventory[0][i].amount =
-            source.playerData.inventory[0][i].amount - amount;
+    if (source.playerData.inventory[i].amount > amount) {
+        source.playerData.inventory[i].amount =
+            source.playerData.inventory[i].amount - amount;
         saveInventory(source);
         return true;
     }
-    if (source.playerData.inventory[0][i].amount <= amount) {
-        source.playerData.inventory[0].splice(i, 1);
+    if (source.playerData.inventory[i].amount <= amount) {
+        source.playerData.inventory.splice(i, 1);
         saveInventory(source);
         return true;
     }
@@ -477,7 +476,7 @@ const isItem = (source, item) => {
 };
 
 const getCurrentInventory = (source) => {
-    return source.playerData.inventory[0];
+    return source.playerData.inventory;
 };
 
 const getInventoryActived = (source) => {
