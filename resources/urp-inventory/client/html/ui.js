@@ -180,14 +180,23 @@ $(document).ready(function () {
             var paramUrl = Option == 'send' ? 'sendItem' : 'dropItem';
             var $el = $(this).closest('.cell');
             var amount = Number($el.find('.amount-value').val());
-            alt.emit('inventory:sendItem', {
-                name: $el.data('item-key'),
-                amount,
-                type: $el.data('item-type'),
-            });
+            if (paramUrl == 'sendItem'){
+                alt.emit('inventory:sendItem', {
+                    name: $el.data('item-key'),
+                    amount,
+                    type: $el.data('item-type'),
+                })
+            }
+            if (paramUrl == 'dropItem'){
+                alt.emit('inventory:dropItem', {
+                    name: $el.data('item-key'),
+                    amount,
+                    type: $el.data('item-type'),
+                })
+            }
+
             alt.emit('inventory:requestDataInvetory');
         }
-
         Option = false;
 
         $('.amount-option').hide();
