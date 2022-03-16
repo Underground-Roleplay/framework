@@ -116,7 +116,7 @@ const getItemSlot = (inventory, item) => {
 const addItem = (source, ItemName, amount) => {
     console.log('addItem: ', ItemName, amount);
     if (ItemName === undefined && ItemName === null) return false;
-    if (amount === null || amount === undefined) amount = 1;
+    if (amount === null || amount === undefined || amount < 1) amount = 1;
 
     const i = source.playerData.inventory.findIndex(
         (item) => item.name === ItemName
@@ -195,12 +195,12 @@ const addItemActived = (source, ItemName, slot) => {
 const transferChest = (source, ItemName, amount) => {
     console.log('transferChest: ', ItemName, amount);
     if (ItemName === undefined && ItemName === null) return false;
-    if (amount === null || amount === undefined) amount = 1;
+    if (amount === null || amount === undefined || amount < 1) amount = 1;
 
     const i = source.playerData.chest.findIndex(
         (item) => item.name === ItemName
     );
-    if (amount > i.amount) return;
+
     if (i > -1 && source.playerData.chest[i].name === ItemName) {
         source.playerData.chest[i].amount =
             parseInt(source.playerData.chest[i].amount) + parseInt(amount);
@@ -257,14 +257,13 @@ const getVehicleInventory = async (source, vehicle) => {
 
 const transferVehicle = (source, ItemName, amount) => {
     if (ItemName === undefined && ItemName === null) return false;
-    if (amount === null || amount === undefined) return;
+    if (amount === null || amount === undefined || amount < 1) amount = 1;
 
     const targetVehicle = alt.Vehicle.getByID(source.playerData.trunk);
 
     const i = targetVehicle.data.inventory.findIndex(
         (item) => item.name === ItemName
     );
-    if (amount > i.amount || amount === 0) return;
 
     if (i > -1 && targetVehicle.data.inventory[i].name === ItemName) {
         targetVehicle.data.inventory[i].amount =
@@ -297,14 +296,13 @@ const transferVehicle = (source, ItemName, amount) => {
 
 const removeItemVehicle = (source, ItemName, amount) => {
     if (ItemName === undefined) return false;
-    if (amount === null || amount === undefined) return;
+    if (amount === null || amount === undefined || amount < 1) amount = 1;
 
     const targetVehicle = alt.Vehicle.getByID(source.playerData.trunk);
 
     const i = targetVehicle.data.inventory.findIndex(
         (item) => item.name === ItemName
     );
-    if (amount > i.amount || amount === 0) return;
 
     if (targetVehicle.data.inventory[i].amount > amount) {
         targetVehicle.data.inventory[i].amount =
@@ -322,7 +320,7 @@ const removeItemVehicle = (source, ItemName, amount) => {
 const removeItemChest = (source, ItemName, amount) => {
     console.log('removeItem Chest: ', ItemName, amount);
     if (ItemName === undefined) return false;
-    if (amount === null || amount === undefined) amount = 1;
+    if (amount === null || amount === undefined || amount < 1) amount = 1;
 
     const i = source.playerData.chest.findIndex(
         (item) => item.name === ItemName
@@ -344,12 +342,12 @@ const removeItemChest = (source, ItemName, amount) => {
 const removeItem = (source, ItemName, amount) => {
     console.log('removeItem: ', ItemName, amount);
     if (ItemName === undefined) return false;
-    if (amount === null || amount === undefined) amount = 1;
+    if (amount === null || amount === undefined || amount < 1) amount = 1;
 
     const i = source.playerData.inventory.findIndex(
         (item) => item.name === ItemName
     );
-
+    if (amount > source.playerData.inventory[i].amount) return;
     if (source.playerData.inventory[i].amount > amount) {
         source.playerData.inventory[i].amount =
             source.playerData.inventory[i].amount - amount;
