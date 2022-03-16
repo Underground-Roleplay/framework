@@ -6,7 +6,7 @@ let isOpen = false;
 let inventory = [];
 let stash = [];
 
-const openInvy = (type) => {
+const openInvy = () => {
     Core.Browser.open(
         'http://resources/urp-stash-inventory/client/html/index.html',
         true,
@@ -62,16 +62,27 @@ const closeInv = () => {
 
 alt.on('keydown', (key) => {
     if (key === 186) {
-        openInvy('vehicle');
+        alt.emitServer('inventory:requestHomeInventory');
     }
     if (key === 27 && isOpen) {
         closeInv();
     }
 });
 
-//alt.onServer('inventory:updateHomeInventory', (inv, stashHome) => {});
+alt.onServer('inventory:updateHomeInventory', (inv, stashHome) => {
+    openInvy();
+    itemsMap(inv, stashHome);
+    alt.setTimeout(() => {
+        Core.Browser.emit(
+            'stash:inventory:dataRequest',
+            inventory,
+            stash,
+            'home'
+        );
+    }, 150);
+});
 alt.onServer('inventory:updateVehicleInventory', (inv, stashVehice) => {
-    openInvy('vehicle');
+    openInvy();
     itemsMap(inv, stashVehice);
     alt.setTimeout(() => {
         Core.Browser.emit(

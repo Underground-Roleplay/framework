@@ -55,3 +55,6 @@ alt.onClient(
         }
     }
 );
+alt.onClient('inventory:requestHomeInventory', (source) => {
+    Core.Inventory.getHomeInventory(source);
+});

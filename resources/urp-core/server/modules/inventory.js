@@ -361,25 +361,18 @@ const removeItem = (source, ItemName, amount) => {
     }
     return false;
 };
-const removeItemActived = (source, ItemName, slot) => {
-    if (ItemName === undefined) return false;
 
-    if ((source.playerData.inventory[1][slot].amount = 1)) {
-        source.playerData.inventory[1][slot] = {};
-        saveInventory(source);
-        return true;
-    }
-    return false;
-};
-const getItemBySlot = (source, slot) => {
-    return source.playerData.inventory[slot];
-};
 const saveInventoryChests = async (source, data, id) => {
     if (!source) return;
+
     if (source.playerData.chestOrigin === 'homeInventory') {
         await updateSync(
-            'UPDATE characters_homes SET inventory = ? WHERE id = ? AND ssn = ?',
-            [JSON.stringify(data), id, source.playerData.ssn],
+            'UPDATE characters_homes SET chest = ? WHERE slot = ? AND name = ?',
+            [
+                JSON.stringify(data),
+                source.playerData.metadata.atHome.slot,
+                source.playerData.metadata.atHome.home,
+            ],
             undefined,
             alt.resourceName
         );
@@ -495,16 +488,16 @@ const getCurrentInventory = (source) => {
     return source.playerData.inventory;
 };
 
-const getInventoryActived = (source) => {
-    return source.playerData.inventory[1];
-};
-
-const getHomeInventory = async (source, id) => {
+const getHomeInventory = async (source) => {
+    if (!source.playerData.metadata.atHome) return;
     const data = await executeSync(
-        'SELECT * from characters_homes WHERE id = :id ',
-        { id: id }
+        'SELECT * from characters_homes WHERE slot = ? AND name = ?',
+        [
+            source.playerData.metadata.atHome.slot,
+            source.playerData.metadata.atHome.home,
+        ]
     );
-    source.playerData.chest = JSON.parse(data[0].inventory);
+    source.playerData.chest = JSON.parse(data[0].chest);
     source.playerData.chestOrigin = 'homeInventory';
     alt.emitClient(
         source,
@@ -541,7 +534,6 @@ export default {
     triggerItemEvent,
     isUseableItem,
     useWeapon,
-    getItemBySlot,
     isItem,
     pickupItem,
     removeItemChest,
@@ -549,9 +541,7 @@ export default {
     getChest,
     getHomeInventory,
     getCurrentInventory,
-    removeItemActived,
     addItemActived,
-    getInventoryActived,
     getVehicleInventory,
     transferVehicle,
     removeItemVehicle,
