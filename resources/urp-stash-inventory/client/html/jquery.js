@@ -146,7 +146,7 @@ const updateDrag = () => {
             );
             alt.emit('stash:inventory:requestDataInvetory', type);
 
-            document.getElementById('amount').value = '';
+            document.getElementById('amount').value = 1;
         },
     });
 
@@ -172,7 +172,7 @@ const updateDrag = () => {
             );
             alt.emit('stash:inventory:requestDataInvetory', type);
 
-            document.getElementById('amount').value = '';
+            document.getElementById('amount').value = 1;
         },
     });
 };
@@ -221,7 +221,7 @@ const updateMochila = (inv, stash) => {
 				${nameList2
                     .map(
                         (item) => `
-					<div class="item" data-item-key="${item.name}" data-vehname-key="${
+					<div class="item" data-item-key="${item.name}" data-amount-key="${item.amount}" data-vehname-key="${
                             item.vehname
                         }">
 					<div id="quantity">${
@@ -248,7 +248,7 @@ const updateMochila = (inv, stash) => {
 				${nameList
                     .map(
                         (item) => `
-					<div class="item2" data-item-key="${item.name}" data-vehname-key="${
+					<div class="item2" data-item-key="${item.name}" data-amount-key="${item.amount}" data-vehname-key="${
                             item.vehname
                         }">
 					<div id="quantity">${
