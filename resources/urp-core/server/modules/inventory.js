@@ -6,49 +6,61 @@ import { executeSync, updateSync } from '../libs/utils';
 
 //  Items
 const useableItems = {};
+const itemsDropped = [];
 
-const dropItem = (source, item, amount = 1) => {
+const dropItem = (source, item, amount) => {
     Core.Inventory.removeItem(source, item, amount);
-
     const itemPosition = new alt.Vector3(
         source.pos.x,
         source.pos.y,
         source.pos.z
     );
-    const droppedItem = Core.Entities.createDropItem(
+
+    const droppedItem = {
         itemPosition,
-        source.dimension,
-        item
-    );
-    return droppedItem;
+        item,
+        amount,
+    };
+
+    itemsDropped.push(droppedItem);
 };
 
-const pickupItem = (source, item, slot = undefined, amount) => {
-    amount = parseInt(amount);
-    let avaliableAmount = getDroppedItemAmountById(item.entityID);
-    if (!avaliableAmount) return;
+const itemsClosed = (source) => {
+    if (!itemsDropped) return;
+    let items = [];
+    itemsDropped.forEach((item) => {
+        if (source.pos.distanceTo(item.itemPosition) < 10) {
+            items.push(item);
+        }
+    });
 
-    if (amount > avaliableAmount) {
-        return;
-    }
+    //console.log(itemsDropped);
+    console.log('items', items);
+};
 
-    if (avaliableAmount === amount) {
-        Core.Entities.removeEntity(item.entityID, 3);
-        Core.Inventory.addItem(source, item.name, amount, slot);
-        return;
-    }
-
-    if (amount < avaliableAmount) {
-        avaliableAmount -= amount;
-        Core.Entities.updateEntityData(
-            item.entityID,
-            3,
-            'amount',
-            avaliableAmount
-        );
-        Core.Inventory.addItem(source, item.name, amount, slot);
-        return;
-    }
+const pickupItem = (source, item, amount) => {
+    // amount = parseInt(amount);
+    // let avaliableAmount = getDroppedItemAmountById(item.entityID);
+    // if (!avaliableAmount) return;
+    // if (amount > avaliableAmount) {
+    //     return;
+    // }
+    // if (avaliableAmount === amount) {
+    //     Core.Entities.removeEntity(item.entityID, 3);
+    //     Core.Inventory.addItem(source, item.name, amount);
+    //     return;
+    // }
+    // if (amount < avaliableAmount) {
+    //     avaliableAmount -= amount;
+    //     Core.Entities.updateEntityData(
+    //         item.entityID,
+    //         3,
+    //         'amount',
+    //         avaliableAmount
+    //     );
+    //     Core.Inventory.addItem(source, item.name, amount);
+    //     return;
+    // }
 };
 
 const getDroppedItemAmountById = (id) => {
@@ -188,7 +200,7 @@ const transferChest = (source, ItemName, amount) => {
     const i = source.playerData.chest.findIndex(
         (item) => item.name === ItemName
     );
-
+    if (amount > i.amount) return;
     if (i > -1 && source.playerData.chest[i].name === ItemName) {
         source.playerData.chest[i].amount =
             parseInt(source.playerData.chest[i].amount) + parseInt(amount);
@@ -238,19 +250,21 @@ const getVehicleInventory = async (source, vehicle) => {
     alt.emitClient(
         source,
         'inventory:updateVehicleInventory',
+        getCurrentInventory(source),
         vehicle.data.inventory
     );
 };
 
 const transferVehicle = (source, ItemName, amount) => {
     if (ItemName === undefined && ItemName === null) return false;
-    if (amount === null || amount === undefined) amount = 1;
+    if (amount === null || amount === undefined) return;
 
     const targetVehicle = alt.Vehicle.getByID(source.playerData.trunk);
 
     const i = targetVehicle.data.inventory.findIndex(
         (item) => item.name === ItemName
     );
+    if (amount > i.amount || amount === 0) return;
 
     if (i > -1 && targetVehicle.data.inventory[i].name === ItemName) {
         targetVehicle.data.inventory[i].amount =
@@ -283,13 +297,14 @@ const transferVehicle = (source, ItemName, amount) => {
 
 const removeItemVehicle = (source, ItemName, amount) => {
     if (ItemName === undefined) return false;
-    if (amount === null || amount === undefined) amount = 1;
+    if (amount === null || amount === undefined) return;
 
     const targetVehicle = alt.Vehicle.getByID(source.playerData.trunk);
 
     const i = targetVehicle.data.inventory.findIndex(
         (item) => item.name === ItemName
     );
+    if (amount > i.amount || amount === 0) return;
 
     if (targetVehicle.data.inventory[i].amount > amount) {
         targetVehicle.data.inventory[i].amount =
@@ -373,6 +388,7 @@ const saveInventoryChests = async (source, data, id) => {
         return alt.emitClient(
             source,
             'inventory:updateHomeInventory',
+            getCurrentInventory(source),
             source.playerData.chest
         );
     }
@@ -386,6 +402,7 @@ const saveInventoryChests = async (source, data, id) => {
         return alt.emitClient(
             source,
             'inventory:updateChest',
+            getCurrentInventory(source),
             source.playerData.chest
         );
     }
@@ -406,6 +423,7 @@ const saveInventoryChests = async (source, data, id) => {
         return alt.emitClient(
             source,
             'inventory:updateVehicleInventory',
+            getCurrentInventory(source),
             targetVehicle.data.inventory
         );
     }
@@ -493,6 +511,7 @@ const getHomeInventory = async (source, id) => {
     alt.emitClient(
         source,
         'inventory:updateHomeInventory',
+        getCurrentInventory(source),
         source.playerData.chest
     );
 };
@@ -504,7 +523,12 @@ const getChest = async (source, id) => {
 
     source.playerData.chest = JSON.parse(data[0].chest);
     source.playerData.chestOrigin = 'chest';
-    alt.emitClient(source, 'inventory:updateChest', source.playerData.chest);
+    alt.emitClient(
+        source,
+        'inventory:updateChest',
+        getCurrentInventory(source),
+        source.playerData.chest
+    );
 };
 
 export default {
@@ -534,4 +558,5 @@ export default {
     transferVehicle,
     removeItemVehicle,
     sendItem,
+    itemsClosed,
 };
