@@ -1,27 +1,29 @@
 let disabled = false;
 let disabledFunction = null;
+let type = null;
+class Interval {
+    constructor(time) {
+        var timer = false;
+        this.start = function () {
+            if (this.isRunning()) {
+                clearInterval(timer);
+                timer = false;
+            }
 
-function Interval(time) {
-    var timer = false;
-    this.start = function () {
-        if (this.isRunning()) {
+            timer = setInterval(function () {
+                disabled = false;
+            }, time);
+        };
+
+        this.stop = function () {
             clearInterval(timer);
             timer = false;
-        }
+        };
 
-        timer = setInterval(function () {
-            disabled = false;
-        }, time);
-    };
-
-    this.stop = function () {
-        clearInterval(timer);
-        timer = false;
-    };
-
-    this.isRunning = function () {
-        return timer !== false;
-    };
+        this.isRunning = function () {
+            return timer !== false;
+        };
+    }
 }
 
 const disableInventory = (ms) => {
@@ -40,9 +42,11 @@ const disableInventory = (ms) => {
 
 $(document).ready(function () {
     let actionContainer = $('#actionmenu');
-    alt.on('stash:inventory:dataRequest', (inv, stash) => {
-        //console.log(JSON.stringify(info));
+    alt.on('stash:inventory:dataRequest', (inv, stash, chestType) => {
+        console.log('inventory ui')
         updateMochila(inv, stash);
+        console.log(chestType)
+        type = chestType;
         // actionContainer.fadeIn(500);
     });
 
@@ -66,7 +70,7 @@ $(document).ready(function () {
 
     document.onkeyup = function (data) {
         if (data.which == 27) {
-            $.post('http://vrp_trunkchest/invClose');
+            alt.emit('stash:inventory:close')
         }
     };
 });
@@ -133,14 +137,14 @@ const updateDrag = () => {
             itemData = { key: ui.draggable.data('item-key') };
 
             if (itemData.key === undefined) return;
-
             disableInventory(500);
             alt.emit(
                 'stash:inventory:transferInventory',
                 itemData.key,
-                Number($('#amount').val())
+                Number($('#amount').val()),
+                type
             );
-            alt.emit('stash:inventory:requestDataInvetory');
+            alt.emit('stash:inventory:requestDataInvetory', type);
 
             document.getElementById('amount').value = '';
         },
@@ -163,9 +167,10 @@ const updateDrag = () => {
             alt.emit(
                 'stash:inventory:transferChest',
                 itemData.key,
-                Number($('#amount').val())
+                Number($('#amount').val()),
+                type
             );
-            alt.emit('stash:inventory:requestDataInvetory');
+            alt.emit('stash:inventory:requestDataInvetory', type);
 
             document.getElementById('amount').value = '';
         },

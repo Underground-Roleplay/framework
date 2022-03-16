@@ -1,47 +1,57 @@
 import Core from 'urp-core';
 import * as alt from 'alt-server';
 
-alt.onClient('stash:inventory:requestData', (source) => {
-    const closestVeh = alt.Vehicle.all.find(
-        (targetVehicle) => source.pos.distanceTo(targetVehicle.pos) < 3.5
-    );
-    Core.Inventory.getVehicleInventory(source, closestVeh);
-    alt.emitClient(
-        source,
-        'stash:inventory:requestData',
-        Core.Inventory.getCurrentInventory(source)
-    );
+alt.onClient('stash:inventory:dataRequest:vehicle', async (source, vehicle) => {
+    Core.Inventory.getVehicleInventory(source, vehicle);
 });
 
-alt.onClient('stash:inventory:useItem', (source, item) => {
-    if (item.type === 'weapon') {
-        Core.Inventory.useWeapon(source, item.name);
-        return;
+alt.onClient(
+    'stash:inventory:transferChest',
+    (source, item, amount, chestType) => {
+        console.log('stash:inventory:transferChest', item, amount, chestType);
+        switch (chestType) {
+            case 'home':
+                if (Core.Inventory.removeItem(source, item, amount)) {
+                    Core.Inventory.transferChest(source, item, amount);
+                }
+                break;
+            case 'chest':
+                if (Core.Inventory.removeItem(source, item, amount)) {
+                    Core.Inventory.transferChest(source, item, amount);
+                }
+                break;
+            case 'vehicle':
+                if (Core.Inventory.removeItem(source, item, amount)) {
+                    Core.Inventory.transferVehicle(source, item, amount);
+                }
+                break;
+            default:
+                break;
+        }
     }
-    if (Core.Inventory.isUseableItem(item.name)) {
-        Core.Inventory.triggerItemEvent(source, item);
+);
+
+alt.onClient(
+    'stash:inventory:transferInventory',
+    (source, item, amount, chestType) => {
+        switch (chestType) {
+            case 'home':
+                if (Core.Inventory.removeItemChest(source, item, amount)) {
+                    Core.Inventory.addItem(source, item, amount);
+                }
+                break;
+            case 'chest':
+                if (Core.Inventory.removeItemChest(source, item, amount)) {
+                    Core.Inventory.addItem(source, item, amount);
+                }
+                break;
+            case 'vehicle':
+                if (Core.Inventory.removeItemVehicle(source, item, amount)) {
+                    Core.Inventory.addItem(source, item, amount);
+                }
+                break;
+            default:
+                break;
+        }
     }
-    Core.Inventory.removeItem(source, item.name, 1);
-});
-
-alt.onClient('stash:inventory:dropItem', (source, item) => {
-    Core.Inventory.dropItem(source, item.name, item.amount);
-});
-alt.onClient('stash:inventory:sendItem', (source, item) => {
-    Core.Inventory.sendItem(source, item.name, item.amount);
-});
-
-alt.onClient('stash:inventory:transferChest', (source, item, amount) => {
-    alt.log(item, amount);
-
-    if (Core.Inventory.removeItem(source, item, amount)) {
-        Core.Inventory.transferVehicle(source, item, amount);
-    }
-});
-
-alt.onClient('stash:inventory:transferInventory', (source, item, amount) => {
-    alt.log(item, amount);
-    if (Core.Inventory.removeItemVehicle(source, item, amount)) {
-        Core.Inventory.addItem(source, item, amount);
-    }
-});
+);
