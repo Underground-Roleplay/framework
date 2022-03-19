@@ -60,6 +60,11 @@ const closeInv = () => {
     isOpen = false;
 };
 
+alt.onServer('homes:chest', () => {
+    alt.log('homes:chest');
+    alt.emitServer('inventory:requestHomeInventory');
+});
+
 alt.on('keydown', (key) => {
     if (key === 186) {
         alt.emitServer('inventory:requestHomeInventory');

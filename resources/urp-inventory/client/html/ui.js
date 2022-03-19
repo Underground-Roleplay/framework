@@ -30,7 +30,6 @@ function str_reverse(str) {
 $(document).ready(function () {
     var actionContainer = $('.inventory-mask, .inventory-content');
     alt.on('inventory:dataRequest', (data) => {
-        console.log(JSON.stringify(data));
         updateMochila(data);
         actionContainer.fadeIn(500);
     });  
@@ -165,7 +164,6 @@ $(document).ready(function () {
         } else if (event == 'use') {
             var $el = $(this).closest('.cell');
             var amount = 1;
-            console.log($el.data('item-key'), $el.data('item-type'), amount);
             alt.emit('inventory:useItem', {
                 name: $el.data('item-key'),
                 type: $el.data('item-type'),

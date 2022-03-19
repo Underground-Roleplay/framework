@@ -9,16 +9,6 @@ alt.onClient('inventory:requestData', (source) => {
     );
 });
 
-alt.onClient('inventory:CurrentWeight', (source) => {
-    alt.emitClient(
-        source,
-        'inventory:CurrentWeight',
-        Core.Inventory.getCurrentWeight(
-            Core.Inventory.getCurrentInventory(source)
-        )
-    );
-});
-
 alt.onClient('inventory:useItem', (source, item) => {
     if (item.type === 'weapon') {
         Core.Inventory.useWeapon(source, item.name);
@@ -31,9 +21,13 @@ alt.onClient('inventory:useItem', (source, item) => {
 });
 
 alt.onClient('inventory:dropItem', (source, item) => {
-    Core.Inventory.dropItem(source, item.name, item.amount);
+    Core.Inventory.dropItem(source, item, item.amount);
 });
 
 alt.onClient('inventory:sendItem', (source, item) => {
     Core.Inventory.sendItem(source, item.name, item.amount);
+});
+
+alt.onClient('inventory:pickupItem', (source, droppedItem, fromAmount) => {
+    Core.Inventory.pickupItem(source, droppedItem, fromAmount);
 });

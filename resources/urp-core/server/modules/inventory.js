@@ -6,61 +6,48 @@ import { executeSync, updateSync } from '../libs/utils';
 
 //  Items
 const useableItems = {};
-const itemsDropped = [];
-
-const dropItem = (source, item, amount) => {
-    Core.Inventory.removeItem(source, item, amount);
+const dropItem = (source, item, amount = 1) => {
+    Core.Inventory.removeItem(source, item.name, amount);
+    item.amount = amount;
     const itemPosition = new alt.Vector3(
         source.pos.x,
         source.pos.y,
         source.pos.z
     );
-
-    const droppedItem = {
+    const droppedItem = Core.Entities.createDropItem(
         itemPosition,
-        item,
-        amount,
-    };
-
-    itemsDropped.push(droppedItem);
-};
-
-const itemsClosed = (source) => {
-    if (!itemsDropped) return;
-    let items = [];
-    itemsDropped.forEach((item) => {
-        if (source.pos.distanceTo(item.itemPosition) < 10) {
-            items.push(item);
-        }
-    });
-
-    //console.log(itemsDropped);
-    console.log('items', items);
+        source.dimension,
+        item
+    );
+    return droppedItem;
 };
 
 const pickupItem = (source, item, amount) => {
-    // amount = parseInt(amount);
-    // let avaliableAmount = getDroppedItemAmountById(item.entityID);
-    // if (!avaliableAmount) return;
-    // if (amount > avaliableAmount) {
-    //     return;
-    // }
-    // if (avaliableAmount === amount) {
-    //     Core.Entities.removeEntity(item.entityID, 3);
-    //     Core.Inventory.addItem(source, item.name, amount);
-    //     return;
-    // }
-    // if (amount < avaliableAmount) {
-    //     avaliableAmount -= amount;
-    //     Core.Entities.updateEntityData(
-    //         item.entityID,
-    //         3,
-    //         'amount',
-    //         avaliableAmount
-    //     );
-    //     Core.Inventory.addItem(source, item.name, amount);
-    //     return;
-    // }
+    amount = parseInt(amount);
+    let avaliableAmount = getDroppedItemAmountById(item.entityID);
+    if (!avaliableAmount) return;
+
+    if (amount > avaliableAmount) {
+        return;
+    }
+
+    if (avaliableAmount === amount) {
+        Core.Entities.removeEntity(item.entityID, 3);
+        Core.Inventory.addItem(source, item.name, amount);
+        return;
+    }
+
+    if (amount < avaliableAmount) {
+        avaliableAmount -= amount;
+        Core.Entities.updateEntityData(
+            item.entityID,
+            3,
+            'amount',
+            avaliableAmount
+        );
+        Core.Inventory.addItem(source, item.name, amount);
+        return;
+    }
 };
 
 const getDroppedItemAmountById = (id) => {
@@ -546,5 +533,4 @@ export default {
     transferVehicle,
     removeItemVehicle,
     sendItem,
-    itemsClosed,
 };

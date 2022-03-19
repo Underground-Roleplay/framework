@@ -62,11 +62,24 @@ const requetData = (inventory) => {
 alt.onServer('inventory:requestData', requetData);
 
 alt.on('keydown', (key) => {
+    const nearItems = Core.Functions.getCloseItems();
     if (key === 192) {
         openInvy();
         Core.Browser.emit('inventory:open');
     }
     if (key === 27 && isOpen) {
         closeInv();
+    }
+    if (key === 69) {
+        if (!nearItems) return;
+        let item = nearItems.find((i) => {
+            let dist = alt.Player.local.pos.distanceTo(i.pos);
+            if (dist < 1) {
+                return i;
+            }
+        });
+        if (!item) return;
+        alt.log('Item', item);
+        alt.emitServer('inventory:pickupItem', item, item.amount);
     }
 });
