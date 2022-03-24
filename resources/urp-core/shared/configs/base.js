@@ -71,9 +71,8 @@ URPConfig.DefaultMeta = {
     hunger: URPConfig.DefaultHunger,
     armour: 0,
     health: 200,
+    maxWeight: 120000,
 };
-URPConfig.MaxInvSlots = 41;
-URPConfig.MaxWeight = 120000; //120 kg in grams
 //LANG
 URPConfig.lang = 'en';
 //URPConfig.lang = "pt-BR"
