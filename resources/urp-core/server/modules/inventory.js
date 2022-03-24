@@ -101,10 +101,32 @@ const getItemSlot = (inventory, item) => {
 };
 
 const addItem = (source, ItemName, amount) => {
-    console.log('addItem: ', ItemName, amount);
     if (ItemName === undefined && ItemName === null) return false;
     if (amount === null || amount === undefined || amount < 1) amount = 1;
-
+    const itemInfo = Core.Shared.Items[ItemName.toLowerCase()];
+    if (!itemInfo) {
+        alt.emitClient(
+            source,
+            'notify',
+            'error',
+            Core.Translate('INVENTORY.LABEL'),
+            Core.Translate('ITEM_DOESNT_EXISTS')
+        );
+        return;
+    }
+    const currentWeight = parseInt(
+        parseInt(source.playerData.metadata.maxWeight) -
+            parseInt(getCurrentWeight(source.playerData.inventory))
+    );
+    if (currentWeight < itemInfo.weight * amount) {
+        return alt.emitClient(
+            source,
+            'notify',
+            'error',
+            Core.Translate('INVENTORY.LABEL'),
+            Core.Translate('INVENTORY.WEIGHT_LIMIT')
+        );
+    }
     const i = source.playerData.inventory.findIndex(
         (item) => item.name === ItemName
     );
@@ -116,17 +138,6 @@ const addItem = (source, ItemName, amount) => {
     }
 
     if (i < 0) {
-        const itemInfo = Core.Shared.Items[ItemName.toLowerCase()];
-        if (!itemInfo) {
-            alt.emitClient(
-                source,
-                'notify',
-                'error',
-                Core.Translate('INVENTORY.LABEL'),
-                Core.Translate('ITEM_DOESNT_EXISTS')
-            );
-            return;
-        }
         if (itemInfo.type === 'weapon') {
             itemInfo.info = {
                 serie: '99999',
@@ -179,7 +190,7 @@ const addItemActived = (source, ItemName, slot) => {
     return true;
 };
 
-const transferChest = (source, ItemName, amount) => {
+const transferChest = (source, ItemName, amount, name) => {
     console.log('transferChest: ', ItemName, amount);
     if (ItemName === undefined && ItemName === null) return false;
     if (amount === null || amount === undefined || amount < 1) amount = 1;
@@ -191,7 +202,7 @@ const transferChest = (source, ItemName, amount) => {
     if (i > -1 && source.playerData.chest[i].name === ItemName) {
         source.playerData.chest[i].amount =
             parseInt(source.playerData.chest[i].amount) + parseInt(amount);
-        saveInventoryChests(source, source.playerData.chest, 1);
+        saveInventoryChests(source, source.playerData.chest, name);
         return true;
     }
 
@@ -211,7 +222,7 @@ const transferChest = (source, ItemName, amount) => {
             shouldClose: itemInfo.shouldClose,
             combinable: itemInfo.combinable,
         });
-        saveInventoryChests(source, source.playerData.chest, 1);
+        saveInventoryChests(source, source.playerData.chest, name);
         return true;
     }
     return false;
@@ -255,7 +266,7 @@ const transferVehicle = (source, ItemName, amount) => {
     if (i > -1 && targetVehicle.data.inventory[i].name === ItemName) {
         targetVehicle.data.inventory[i].amount =
             parseInt(targetVehicle.data.inventory[i].amount) + parseInt(amount);
-        saveInventoryChests(source, targetVehicle.data.inventory, 1);
+        saveInventoryChests(source, targetVehicle.data.inventory);
         return true;
     }
 
@@ -275,7 +286,7 @@ const transferVehicle = (source, ItemName, amount) => {
             shouldClose: itemInfo.shouldClose,
             combinable: itemInfo.combinable,
         });
-        saveInventoryChests(source, targetVehicle.data.inventory, 1);
+        saveInventoryChests(source, targetVehicle.data.inventory);
         return true;
     }
     return false;
@@ -304,7 +315,7 @@ const removeItemVehicle = (source, ItemName, amount) => {
     }
 };
 
-const removeItemChest = (source, ItemName, amount) => {
+const removeItemChest = (source, ItemName, amount, name) => {
     console.log('removeItem Chest: ', ItemName, amount);
     if (ItemName === undefined) return false;
     if (amount === null || amount === undefined || amount < 1) amount = 1;
@@ -316,12 +327,12 @@ const removeItemChest = (source, ItemName, amount) => {
     if (source.playerData.chest[i].amount > amount) {
         source.playerData.chest[i].amount =
             source.playerData.chest[i].amount - amount;
-        saveInventoryChests(source, source.playerData.chest, 1);
+        saveInventoryChests(source, source.playerData.chest, name);
         return true;
     }
     if (source.playerData.chest[i].amount <= amount) {
         source.playerData.chest.splice(i, 1);
-        saveInventoryChests(source, source.playerData.chest, 1);
+        saveInventoryChests(source, source.playerData.chest, name);
         return true;
     }
 };
@@ -349,7 +360,7 @@ const removeItem = (source, ItemName, amount) => {
     return false;
 };
 
-const saveInventoryChests = async (source, data, id) => {
+const saveInventoryChests = async (source, data, name) => {
     if (!source) return;
 
     if (source.playerData.chestOrigin === 'homeInventory') {
@@ -372,8 +383,8 @@ const saveInventoryChests = async (source, data, id) => {
     }
     if (source.playerData.chestOrigin === 'chest') {
         await updateSync(
-            'UPDATE chest SET chest = ? WHERE id = ? ',
-            [JSON.stringify(data), id],
+            'UPDATE storages SET data = ? WHERE ssn = ? AND name = ?',
+            [JSON.stringify(data), source.playerData.ssn, name],
             undefined,
             alt.resourceName
         );
@@ -381,7 +392,8 @@ const saveInventoryChests = async (source, data, id) => {
             source,
             'inventory:updateChest',
             getCurrentInventory(source),
-            source.playerData.chest
+            source.playerData.chest,
+            name
         );
     }
     if (source.playerData.chestOrigin === 'trunk') {
@@ -494,19 +506,39 @@ const getHomeInventory = async (source) => {
     );
 };
 
-const getChest = async (source, id) => {
-    const data = await executeSync('SELECT * from chest WHERE id = :id', {
-        id: id,
-    });
+const tryOpenChest = async (source, name) => {
+    if (!source) return;
+    const { ssn } = source.playerData;
+    const result = await executeSync(
+        'SELECT * FROM storages WHERE ssn = ? AND name = ?',
+        [ssn, name]
+    );
 
-    source.playerData.chest = JSON.parse(data[0].chest);
+    if (result.length <= 0) {
+        alt.emitClient(source, 'storage:buyStorage', name);
+        return;
+    }
+    source.playerData.chest = JSON.parse(result[0].data);
     source.playerData.chestOrigin = 'chest';
     alt.emitClient(
         source,
         'inventory:updateChest',
         getCurrentInventory(source),
-        source.playerData.chest
+        source.playerData.chest,
+        name
     );
+};
+
+const buyStorage = async (source, name) => {
+    if (!source) return;
+    const { ssn } = source.playerData;
+    await executeSync(
+        'INSERT INTO storages (ssn, name, data) VALUES (?, ?, ?)',
+        [ssn, name, '[]'],
+        undefined,
+        alt.resourceName
+    );
+    tryOpenChest(source, name);
 };
 
 export default {
@@ -525,7 +557,6 @@ export default {
     pickupItem,
     removeItemChest,
     transferChest,
-    getChest,
     getHomeInventory,
     getCurrentInventory,
     addItemActived,
@@ -533,4 +564,6 @@ export default {
     transferVehicle,
     removeItemVehicle,
     sendItem,
+    tryOpenChest,
+    buyStorage,
 };
