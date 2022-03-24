@@ -26,26 +26,24 @@ function str_reverse(str) {
     var joinArray = reverseArray.join('');
     return joinArray;
 }
-
 $(document).ready(function () {
     var actionContainer = $('.inventory-mask, .inventory-content');
     alt.on('inventory:dataRequest', (data) => {
-        updateMochila(data);
+        syncInventory(data);
         actionContainer.fadeIn(500);
+        open = true
     });  
 
     document.onkeyup = function (data) {
-        if (data.which == 27) {
-            $.post(
-                'http://vrp_inventory/invClose',
-                JSON.stringify({}),
-                function (datab) {}
-            );
+        if (data.which === 27) {
+            alt.emit('inventory:closeInv')
         }
     };
+ 
+
 });
 
-const formatarNumero = (n) => {
+const numberFormatter = (n) => {
     var n = n.toString();
     var r = '';
     var x = 0;
@@ -58,7 +56,7 @@ const formatarNumero = (n) => {
     return r.split('').reverse().join('');
 };
 
-var updateMochila = (data) => {
+var syncInventory = (data) => {
     const maxWeight = 120;
     const getCurrentWeight = (data) => {
         let weight = 0;
@@ -115,7 +113,7 @@ var updateMochila = (data) => {
         </div>
         <div class="row">
           <span class="amount">${
-              item.amount > 1 && item.unique ? 1 : formatarNumero(item.amount)
+              item.amount > 1 && item.unique ? 1 : numberFormatter(item.amount)
           }</span>
         </div>
         <div class="row">

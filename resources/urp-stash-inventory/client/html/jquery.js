@@ -41,32 +41,14 @@ const disableInventory = (ms) => {
 };
 
 $(document).ready(function () {
-    let actionContainer = $('#actionmenu');
     alt.on('stash:inventory:dataRequest', (inv, stash, chestType) => {
         console.log('inventory ui')
         updateMochila(inv, stash);
         console.log(chestType)
         type = chestType;
-        // actionContainer.fadeIn(500);
     });
 
-    // window.addEventListener('message', function (event) {
-    //     let item = event.data;
-    //     switch (item.action) {
-    //         case 'showMenu':
-    //             updateMochila();
-    //             actionContainer.fadeIn(500);
-    //             break;
 
-    //         case 'hideMenu':
-    //             actionContainer.fadeOut(500);
-    //             break;
-
-    //         case 'updateMochila':
-    //             updateMochila();
-    //             break;
-    //     }
-    // });
 
     document.onkeyup = function (data) {
         if (data.which == 27) {

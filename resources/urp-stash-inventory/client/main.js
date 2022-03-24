@@ -5,6 +5,7 @@ let isOpen = false;
 
 let inventory = [];
 let stash = [];
+let name;
 
 const openInvy = () => {
     Core.Browser.open(
@@ -28,7 +29,8 @@ const openInvy = () => {
                 'stash:inventory:transferChest',
                 item,
                 amount,
-                chestType
+                chestType,
+                name
             );
         }
     );
@@ -39,7 +41,8 @@ const openInvy = () => {
                 'stash:inventory:transferInventory',
                 item,
                 amount,
-                chestType
+                chestType,
+                name
             );
         }
     );
@@ -55,9 +58,9 @@ const openInvy = () => {
 const closeInv = () => {
     Core.Browser.close();
     alt.toggleGameControls(true);
+    isOpen = false;
     inventory = [];
     stash = [];
-    isOpen = false;
 };
 
 alt.onServer('homes:chest', () => {
@@ -69,9 +72,21 @@ alt.on('keydown', (key) => {
     if (key === 186) {
         alt.emitServer('inventory:requestHomeInventory');
     }
-    if (key === 27 && isOpen) {
-        closeInv();
-    }
+});
+
+alt.onServer('inventory:updateChest', (inv, stashHome, cname) => {
+    openInvy();
+    itemsMap(inv, stashHome);
+    name = cname;
+    alt.log(name);
+    alt.setTimeout(() => {
+        Core.Browser.emit(
+            'stash:inventory:dataRequest',
+            inventory,
+            stash,
+            'chest'
+        );
+    }, 150);
 });
 
 alt.onServer('inventory:updateHomeInventory', (inv, stashHome) => {

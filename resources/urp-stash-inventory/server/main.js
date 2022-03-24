@@ -7,24 +7,23 @@ alt.onClient('stash:inventory:dataRequest:vehicle', async (source, vehicle) => {
 
 alt.onClient(
     'stash:inventory:transferChest',
-    (source, item, amount, chestType) => {
-        console.log('stash:inventory:transferChest', item, amount, chestType);
+    (source, item, amount, chestType, name) => {
         switch (chestType) {
             case 'home':
                 if (Core.Inventory.removeItem(source, item, amount)) {
                     Core.Inventory.transferChest(source, item, amount);
+                    break;
                 }
-                break;
             case 'chest':
-                if (Core.Inventory.removeItem(source, item, amount)) {
-                    Core.Inventory.transferChest(source, item, amount);
+                if (Core.Inventory.removeItem(source, item, amount, name)) {
+                    Core.Inventory.transferChest(source, item, amount, name);
+                    break;
                 }
-                break;
             case 'vehicle':
                 if (Core.Inventory.removeItem(source, item, amount)) {
                     Core.Inventory.transferVehicle(source, item, amount);
+                    break;
                 }
-                break;
             default:
                 break;
         }
@@ -33,21 +32,21 @@ alt.onClient(
 
 alt.onClient(
     'stash:inventory:transferInventory',
-    (source, item, amount, chestType) => {
+    (source, item, amount, chestType, name) => {
         switch (chestType) {
             case 'home':
-                if (Core.Inventory.removeItemChest(source, item, amount)) {
-                    Core.Inventory.addItem(source, item, amount);
+                if (Core.Inventory.addItem(source, item, amount)) {
+                    Core.Inventory.removeItemChest(source, item, amount);
                 }
                 break;
             case 'chest':
-                if (Core.Inventory.removeItemChest(source, item, amount)) {
-                    Core.Inventory.addItem(source, item, amount);
+                if (Core.Inventory.addItem(source, item, amount, name)) {
+                    Core.Inventory.removeItemChest(source, item, amount, name);
                 }
                 break;
             case 'vehicle':
-                if (Core.Inventory.removeItemVehicle(source, item, amount)) {
-                    Core.Inventory.addItem(source, item, amount);
+                if (Core.Inventory.addItem(source, item, amount)) {
+                    Core.Inventory.removeItemVehicle(source, item, amount);
                 }
                 break;
             default:
@@ -58,3 +57,9 @@ alt.onClient(
 alt.onClient('inventory:requestHomeInventory', (source) => {
     Core.Inventory.getHomeInventory(source);
 });
+
+alt.onClient('inventory:requestHomeInventory', (source) => {
+    Core.Inventory.getHomeInventory(source);
+});
+
+//Core.Inventory.getItemInfos

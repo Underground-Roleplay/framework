@@ -32,6 +32,9 @@ const openInvy = () => {
     Core.Browser.on('inventory:sendItem', (data) => {
         alt.emitServer('inventory:sendItem', data);
     });
+    Core.Browser.on('inventory:closeInv', (data) => {
+        closeInv();
+    });
 
     alt.toggleGameControls(false);
     isOpen = true;
@@ -67,11 +70,10 @@ alt.on('keydown', (key) => {
         openInvy();
         Core.Browser.emit('inventory:open');
     }
-    if (key === 27 && isOpen) {
-        closeInv();
-    }
+
     if (key === 69) {
         if (!nearItems) return;
+        console.log(nearItems);
         let item = nearItems.find((i) => {
             let dist = alt.Player.local.pos.distanceTo(i.pos);
             if (dist < 1) {
