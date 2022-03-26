@@ -2,7 +2,7 @@ import * as alt from 'alt-server';
 
 import db from 'mysql2-wrapper';
 import Core from '../main';
-import { executeSync, updateSync } from '../libs/utils';
+import { executeSync, updateSync, numberFormatter } from '../libs/utils';
 
 //  Items
 const useableItems = {};
@@ -506,7 +506,7 @@ const getHomeInventory = async (source) => {
     );
 };
 
-const tryOpenChest = async (source, name) => {
+const tryOpenChest = async (source, name, size, price) => {
     if (!source) return;
     const { ssn } = source.playerData;
     const result = await executeSync(
@@ -515,7 +515,13 @@ const tryOpenChest = async (source, name) => {
     );
 
     if (result.length <= 0) {
-        alt.emitClient(source, 'storage:buyStorage', name);
+        alt.emitClient(
+            source,
+            'storage:buyStorage',
+            name,
+            size,
+            numberFormatter(price)
+        );
         return;
     }
     source.playerData.chest = JSON.parse(result[0].data);
@@ -529,7 +535,7 @@ const tryOpenChest = async (source, name) => {
     );
 };
 
-const buyStorage = async (source, name) => {
+const buyStorage = async (source, name, size) => {
     if (!source) return;
     const { ssn } = source.playerData;
     await executeSync(
@@ -538,7 +544,7 @@ const buyStorage = async (source, name) => {
         undefined,
         alt.resourceName
     );
-    tryOpenChest(source, name);
+    tryOpenChest(source, name, size);
 };
 
 export default {

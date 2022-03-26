@@ -159,6 +159,19 @@ const compareHash = (plainString, pbkdf2Hash) => {
     return true;
 };
 
+const numberFormatter = (value) => {
+    var value = value.toString();
+    var r = '';
+    var x = 0;
+
+    for (var i = value.length; i > 0; i--) {
+        r += value.substr(i - 1, 1) + (x === 2 && i !== 1 ? '.' : '');
+        x = x === 2 ? 0 : x + 1;
+    }
+
+    return r.split('').reverse().join('');
+};
+
 export {
     executeSync,
     insertSync,
@@ -169,4 +182,5 @@ export {
     getVectorInFrontOfPlayer,
     getClosestEntity,
     requestPrompt,
+    numberFormatter,
 };
