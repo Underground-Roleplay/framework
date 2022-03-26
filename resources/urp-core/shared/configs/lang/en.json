@@ -29,13 +29,14 @@
     "INVENTORY": {
         "LABEL": "INVENTORY",
         "ITEM_DOESNT_EXISTS": "This item does not exists",
-        "FULL": "You inventory is full"
+        "FULL": "You inventory is full",
+        "WEIGHT_LIMIT": "You inventory weight is too high"
     },
     "PERMISSIONS": {
         "LABEL": "PERMISSION SYSTEM",
         "DONT_HAVE_PERM": "You DON'T have the necessary permissions"
     },
-    "COMMANDS":{
+    "COMMANDS": {
         "LABEL": "COMMANDS",
         "USER_ID_NOT_FOUND": "User Id not found",
         "USER_ID_WHITELISTED": "Social Id has been Whitelisted",
@@ -96,5 +97,4 @@
     },
     "NO_PLAYERS_NEAR": "No players nearby",
     "WELCOME": "Welcome to {{ serverName }}"
-
 }

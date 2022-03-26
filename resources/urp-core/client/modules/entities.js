@@ -78,6 +78,7 @@ const createDroppedItem = (id, pos, data) => {
             if (!nearItems[i]) {
                 nearItems[i] = data;
                 nearItems[i].slot = i;
+                nearItems[i].pos = pos;
                 nearItems[i].entityID = id;
                 return i;
             }
@@ -85,6 +86,7 @@ const createDroppedItem = (id, pos, data) => {
     }
     const idx = nearItems.push(data) - 1;
     nearItems[idx].slot = idx;
+    nearItems[idx].pos = pos;
     nearItems[idx].entityID = id;
     return idx;
 };
@@ -163,12 +165,5 @@ const destroyEntity = (id, type) => {
         list[`${id}_${type}`].local = undefined;
     }
 };
-
-// const destroyEntities = () => {
-//     for(let ent in list) {
-//         let entity = list[ent];
-//         if(entity) delete entity;
-//     }
-// }
 
 export default { getEntity, createPed, destroyEntity, updatePos, nearItems };

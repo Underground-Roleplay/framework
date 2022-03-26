@@ -446,12 +446,7 @@ const handleVehicleStates = (vehicle, key, value, oldValue) => {
 
 const getCloseItems = () => {
     if (Core.Entities.nearItems.length <= 0) return undefined;
-    return {
-        name: 'dropzone',
-        label: 'Drop',
-        slots: 30,
-        inventory: Core.Entities.nearItems,
-    };
+    return Core.Entities.nearItems;
 };
 
 const setHandcuffs = () => {
