@@ -318,12 +318,11 @@ const removeItemVehicle = (source, ItemName, amount) => {
 const removeItemChest = (source, ItemName, amount, name) => {
     console.log('removeItem Chest: ', ItemName, amount);
     if (ItemName === undefined) return false;
-    if (amount === null || amount === undefined || amount < 1) amount = 1;
 
     const i = source.playerData.chest.findIndex(
         (item) => item.name === ItemName
     );
-
+    if (amount > source.playerData.chest[i].amount) return;
     if (source.playerData.chest[i].amount > amount) {
         source.playerData.chest[i].amount =
             source.playerData.chest[i].amount - amount;

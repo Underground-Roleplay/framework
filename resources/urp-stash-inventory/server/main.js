@@ -35,18 +35,20 @@ alt.onClient(
     (source, item, amount, chestType, name) => {
         switch (chestType) {
             case 'home':
-                if (Core.Inventory.addItem(source, item, amount)) {
-                    Core.Inventory.removeItemChest(source, item, amount);
+                if (Core.Inventory.removeItemChest(source, item, amount)) {
+                    Core.Inventory.addItem(source, item, amount);
                 }
                 break;
             case 'chest':
-                if (Core.Inventory.addItem(source, item, amount, name)) {
-                    Core.Inventory.removeItemChest(source, item, amount, name);
+                if (
+                    Core.Inventory.removeItemChest(source, item, amount, name)
+                ) {
+                    Core.Inventory.addItem(source, item, amount, name);
                 }
                 break;
             case 'vehicle':
-                if (Core.Inventory.addItem(source, item, amount)) {
-                    Core.Inventory.removeItemVehicle(source, item, amount);
+                if (Core.Inventory.removeItemVehicle(source, item, amount)) {
+                    Core.Inventory.addItem(source, item, amount);
                 }
                 break;
             default:
