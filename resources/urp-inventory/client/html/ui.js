@@ -105,10 +105,10 @@ var syncInventory = (data) => {
             </div>
           </div>
           <div class="row">
-            <button class="button" data-event="send">Enviar</button>
+            <button class="button" data-event="send">send</button>
           </div>
           <div class="row">
-            <button class="button cancel" data-event="cancel">Cancelar</button>
+            <button class="button cancel" data-event="cancel">Cancel</button>
           </div>
         </div>
         <div class="row">

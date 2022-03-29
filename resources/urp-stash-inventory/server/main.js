@@ -7,23 +7,32 @@ alt.onClient('stash:inventory:dataRequest:vehicle', async (source, vehicle) => {
 
 alt.onClient(
     'stash:inventory:transferChest',
-    (source, item, amount, chestType, name) => {
+    (source, item, amount, chestType, name, perm, maxWeight) => {
         switch (chestType) {
             case 'home':
                 if (Core.Inventory.removeItem(source, item, amount)) {
                     Core.Inventory.transferChest(source, item, amount);
-                    break;
                 }
+                break;
             case 'chest':
-                if (Core.Inventory.removeItem(source, item, amount, name)) {
-                    Core.Inventory.transferChest(source, item, amount, name);
-                    break;
+                if (
+                    Core.Inventory.transferChest(
+                        source,
+                        item,
+                        amount,
+                        name,
+                        perm,
+                        maxWeight
+                    )
+                ) {
+                    Core.Inventory.removeItem(source, item, amount, name, perm);
                 }
+                break;
             case 'vehicle':
                 if (Core.Inventory.removeItem(source, item, amount)) {
                     Core.Inventory.transferVehicle(source, item, amount);
-                    break;
                 }
+                break;
             default:
                 break;
         }
@@ -32,7 +41,7 @@ alt.onClient(
 
 alt.onClient(
     'stash:inventory:transferInventory',
-    (source, item, amount, chestType, name) => {
+    (source, item, amount, chestType, name, perm, maxWeight) => {
         switch (chestType) {
             case 'home':
                 if (Core.Inventory.removeItemChest(source, item, amount)) {
@@ -41,9 +50,16 @@ alt.onClient(
                 break;
             case 'chest':
                 if (
-                    Core.Inventory.removeItemChest(source, item, amount, name)
+                    Core.Inventory.removeItemChest(
+                        source,
+                        item,
+                        amount,
+                        name,
+                        perm,
+                        maxWeight
+                    )
                 ) {
-                    Core.Inventory.addItem(source, item, amount, name);
+                    Core.Inventory.addItem(source, item, amount, name, perm);
                 }
                 break;
             case 'vehicle':
@@ -63,5 +79,3 @@ alt.onClient('inventory:requestHomeInventory', (source) => {
 alt.onClient('inventory:requestHomeInventory', (source) => {
     Core.Inventory.getHomeInventory(source);
 });
-
-//Core.Inventory.getItemInfos

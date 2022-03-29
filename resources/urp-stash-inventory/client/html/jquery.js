@@ -41,9 +41,9 @@ const disableInventory = (ms) => {
 };
 
 $(document).ready(function () {
-    alt.on('stash:inventory:dataRequest', (inv, stash, chestType) => {
+    alt.on('stash:inventory:dataRequest', (inv, stash, chestType, maxWeight) => {
         console.log('inventory ui')
-        updateMochila(inv, stash);
+        updateMochila(inv, stash, maxWeight);
         console.log(chestType)
         type = chestType;
     });
@@ -172,8 +172,7 @@ const formatarNumero = (n) => {
     return r.split('').reverse().join('');
 };
 
-const updateMochila = (inv, stash) => {
-    const maxWeight = 120;
+const updateMochila = (inv, stash, maxWeight) => {
     const getCurrentWeight = (data) => {
         let weight = 0;
         if (!data) return;
@@ -187,18 +186,18 @@ const updateMochila = (inv, stash) => {
     const nameList = stash.sort((a, b) => (a.name > b.name ? 1 : -1));
     const nameList2 = inv.sort((a, b) => (a.name > b.name ? 1 : -1));
     $('#inventory').html(`
-	<div class="peso"><b>USADO:</b>  ${(getCurrentWeight(inv) * 0.001).toFixed(
+	<div class="peso"><b>USED:</b>  ${(getCurrentWeight(inv) * 0.001).toFixed(
         2
-    )}    <s>|</s>    <b>RESTANTE:</b>  ${(
+    )}    <s>|</s>    <b>DISPONIBLE:</b>  ${(
         maxWeight -
         getCurrentWeight(inv) * 0.001
-    ).toFixed(2)}    <s>|</s>    <b>TOTAL:</b>  ${maxWeight.toFixed(2)}</div>
-	<div class="peso2"><b>USADO:</b>  ${(getCurrentWeight(stash) * 0.001).toFixed(
+    ).toFixed(2)}    <s>|</s>    <b>MAX WEIGHT:</b>  ${maxWeight.toFixed(2)}</div>
+	<div class="peso2"><b>USED:</b>  ${(getCurrentWeight(stash) * 0.001).toFixed(
         2
-    )}    <s>|</s>    <b>RESTANTE:</b>  ${(
+    )}    <s>|</s>    <b>DISPONIBLE:</b>  ${(
         maxWeight -
         getCurrentWeight(stash) * 0.001
-    ).toFixed(2)}    <s>|</s>    <b>TOTAL:</b>  ${maxWeight.toFixed(2)}</div>
+    ).toFixed(2)}    <s>|</s>    <b>MAX WEIGHT:</b>  ${maxWeight.toFixed(2)}</div>
 			<div class="esquerda">
 				${nameList2
                     .map(

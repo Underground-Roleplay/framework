@@ -142,6 +142,7 @@ alt.onServer('Phone:ReciveMessage', (data) => {
 
 alt.on('keydown', (key) => {
     if (key === 75) {
+        if (alt.Player.local.getSyncedMeta('HasHandcuffs')) return;
         if (!isOpen && alt.gameControlsEnabled()) {
             openCellPhone();
         } else {

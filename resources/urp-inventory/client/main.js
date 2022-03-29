@@ -67,6 +67,8 @@ alt.onServer('inventory:requestData', requetData);
 alt.on('keydown', (key) => {
     const nearItems = Core.Functions.getCloseItems();
     if (key === 192) {
+        if (alt.Player.local.getSyncedMeta('HasHandcuffs')) return;
+
         openInvy();
         Core.Browser.emit('inventory:open');
     }

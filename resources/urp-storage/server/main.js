@@ -25,10 +25,10 @@ alt.on('storage:open', (source) => {
     if (!closesStorages && closesStorages !== 0) {
         return;
     }
-    const { name, size } = CHESTS_INTERACTIONS[closesStorages];
+    const { name, size, perm } = CHESTS_INTERACTIONS[closesStorages];
     const { buy_price } = CHESTS_PRICES[name];
 
-    Core.Inventory.tryOpenChest(source, name, size, buy_price);
+    Core.Inventory.tryOpenChest(source, name, size, buy_price, perm);
 });
 
 alt.onClient('storage:buy', (source) => {

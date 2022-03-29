@@ -6,6 +6,8 @@ let isOpen = false;
 let inventory = [];
 let stash = [];
 let name;
+let perm;
+let maxWeight;
 
 const openInvy = () => {
     Core.Browser.open(
@@ -30,7 +32,9 @@ const openInvy = () => {
                 item,
                 amount,
                 chestType,
-                name
+                name,
+                perm,
+                maxWeight
             );
         }
     );
@@ -42,7 +46,9 @@ const openInvy = () => {
                 item,
                 amount,
                 chestType,
-                name
+                name,
+                perm,
+                maxWeight
             );
         }
     );
@@ -63,31 +69,31 @@ const closeInv = () => {
     stash = [];
 };
 
-alt.onServer('homes:chest', () => {
-    alt.log('homes:chest');
-    alt.emitServer('inventory:requestHomeInventory');
-});
-
 alt.on('keydown', (key) => {
     if (key === 186) {
         alt.emitServer('inventory:requestHomeInventory');
     }
 });
 
-alt.onServer('inventory:updateChest', (inv, stashHome, cname) => {
-    openInvy();
-    itemsMap(inv, stashHome);
-    name = cname;
-    alt.log(name);
-    alt.setTimeout(() => {
-        Core.Browser.emit(
-            'stash:inventory:dataRequest',
-            inventory,
-            stash,
-            'chest'
-        );
-    }, 150);
-});
+alt.onServer(
+    'inventory:updateChest',
+    (inv, stashHome, cname, cmaxWeight, cperm) => {
+        openInvy();
+        itemsMap(inv, stashHome);
+        name = cname;
+        perm = cperm;
+        maxWeight = cmaxWeight;
+        alt.setTimeout(() => {
+            Core.Browser.emit(
+                'stash:inventory:dataRequest',
+                inventory,
+                stash,
+                'chest',
+                maxWeight
+            );
+        }, 500);
+    }
+);
 
 alt.onServer('inventory:updateHomeInventory', (inv, stashHome) => {
     openInvy();
@@ -99,7 +105,7 @@ alt.onServer('inventory:updateHomeInventory', (inv, stashHome) => {
             stash,
             'home'
         );
-    }, 150);
+    }, 500);
 });
 alt.onServer('inventory:updateVehicleInventory', (inv, stashVehice) => {
     openInvy();
@@ -111,7 +117,7 @@ alt.onServer('inventory:updateVehicleInventory', (inv, stashVehice) => {
             stash,
             'vehicle'
         );
-    }, 150);
+    }, 500);
 });
 
 const itemsMap = (inv, stashInv) => {
