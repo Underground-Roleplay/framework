@@ -41,9 +41,8 @@ const disableInventory = (ms) => {
 };
 
 $(document).ready(function () {
-    alt.on('stash:inventory:dataRequest', (inv, stash, chestType, maxWeight) => {
-        console.log('inventory ui')
-        updateMochila(inv, stash, maxWeight);
+    alt.on('stash:inventory:dataRequest', (inv, stash, chestType, maxWeight, maxInvWeight) => {
+        updateMochila(inv, stash, maxWeight,maxInvWeight);
         console.log(chestType)
         type = chestType;
     });
@@ -172,7 +171,7 @@ const formatarNumero = (n) => {
     return r.split('').reverse().join('');
 };
 
-const updateMochila = (inv, stash, maxWeight) => {
+const updateMochila = (inv, stash, maxWeight, maxInvWeight) => {
     const getCurrentWeight = (data) => {
         let weight = 0;
         if (!data) return;
@@ -186,18 +185,15 @@ const updateMochila = (inv, stash, maxWeight) => {
     const nameList = stash.sort((a, b) => (a.name > b.name ? 1 : -1));
     const nameList2 = inv.sort((a, b) => (a.name > b.name ? 1 : -1));
     $('#inventory').html(`
-	<div class="peso"><b>USED:</b>  ${(getCurrentWeight(inv) * 0.001).toFixed(
-        2
-    )}    <s>|</s>    <b>DISPONIBLE:</b>  ${(
+	<div class="peso"><b>USED:</b>  ${formatarNumero(getCurrentWeight(inv))}    <s>|</s>    <b>DISPONIBLE:</b>  ${formatarNumero(
+        (parseInt(maxInvWeight) -
+        getCurrentWeight(inv) )
+    )}    <s>|</s>    <b>MAX WEIGHT:</b>  ${formatarNumero(parseInt(maxInvWeight))}</div>
+	<div class="peso2"><b>USED:</b>  ${formatarNumero(getCurrentWeight(stash)
+    )}    <s>|</s>    <b>DISPONIBLE:</b>  ${formatarNumero(
         maxWeight -
-        getCurrentWeight(inv) * 0.001
-    ).toFixed(2)}    <s>|</s>    <b>MAX WEIGHT:</b>  ${maxWeight.toFixed(2)}</div>
-	<div class="peso2"><b>USED:</b>  ${(getCurrentWeight(stash) * 0.001).toFixed(
-        2
-    )}    <s>|</s>    <b>DISPONIBLE:</b>  ${(
-        maxWeight -
-        getCurrentWeight(stash) * 0.001
-    ).toFixed(2)}    <s>|</s>    <b>MAX WEIGHT:</b>  ${maxWeight.toFixed(2)}</div>
+        getCurrentWeight(stash)
+    )}    <s>|</s>    <b>MAX WEIGHT:</b>  ${formatarNumero(maxWeight)}</div>
 			<div class="esquerda">
 				${nameList2
                     .map(

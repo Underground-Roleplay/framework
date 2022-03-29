@@ -89,7 +89,8 @@ alt.onServer(
                 inventory,
                 stash,
                 'chest',
-                maxWeight
+                maxWeight,
+                Core.Functions.getPlayerData('maxWeight')
             );
         }, 500);
     }

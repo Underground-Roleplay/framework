@@ -32,7 +32,7 @@ const openInvy = () => {
     Core.Browser.on('inventory:sendItem', (data) => {
         alt.emitServer('inventory:sendItem', data);
     });
-    Core.Browser.on('inventory:closeInv', (data) => {
+    Core.Browser.on('inventory:closeInv', () => {
         closeInv();
     });
 
@@ -59,7 +59,11 @@ const requetData = (inventory) => {
             }
         }
     });
-    Core.Browser.emit('inventory:dataRequest', data);
+    Core.Browser.emit(
+        'inventory:dataRequest',
+        data,
+        Core.Functions.getPlayerData('maxWeight')
+    );
 };
 
 alt.onServer('inventory:requestData', requetData);

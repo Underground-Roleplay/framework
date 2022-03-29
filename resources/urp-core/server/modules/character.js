@@ -286,6 +286,11 @@ const selectCharacter = async (source, playerData, fromCreation = false) => {
     Core.Functions.emitPlayerData(source, 'money', source.playerData.money);
     Core.Functions.emitPlayerData(source, 'ssn', source.playerData.ssn);
     Core.Functions.emitPlayerData(source, 'id', source.playerData.id);
+    Core.Functions.emitPlayerData(
+        source,
+        'maxWeight',
+        source.playerData.metadata.maxWeight
+    );
     source.setMeta('playerData', source.playerData);
     setDeath(source, source.playerData.metadata.isdead);
     alt.setTimeout(() => {

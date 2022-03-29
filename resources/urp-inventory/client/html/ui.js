@@ -28,8 +28,8 @@ function str_reverse(str) {
 }
 $(document).ready(function () {
     var actionContainer = $('.inventory-mask, .inventory-content');
-    alt.on('inventory:dataRequest', (data) => {
-        syncInventory(data);
+    alt.on('inventory:dataRequest', (data, maxWeight) => {
+        syncInventory(data, maxWeight);
         actionContainer.fadeIn(500);
         open = true
     });  
@@ -56,8 +56,7 @@ const numberFormatter = (n) => {
     return r.split('').reverse().join('');
 };
 
-var syncInventory = (data) => {
-    const maxWeight = 120;
+var syncInventory = (data, maxWeight) => {
     const getCurrentWeight = (data) => {
         let weight = 0;
         if (!data) return;
@@ -72,14 +71,14 @@ var syncInventory = (data) => {
 
     $('.inventory-title').html(`    
     <div class="d-flex justify-content-center bd-highlight mb-3">
-    <div class="p-2 bd-highlight barra"><p class="cima">Max Weight</p><p class="down">${maxWeight.toFixed()}kg</p></div>
-    <div class="p-2 bd-highlight barra"><p class="cima">Used</p><p class="down">${(
-        getCurrentWeight(data) * 0.001
-    ).toFixed(2)}kg</p></div>
-    <div class="p-2 bd-highlight "><p class="cima">Disponible</p><p class="down">${(
-        maxWeight -
-        getCurrentWeight(data) * 0.001
-    ).toFixed(2)}kg</p></div>
+    <div class="p-2 bd-highlight barra"><p class="cima">Max Weight</p><p class="down">${numberFormatter(parseInt(maxWeight))}kg</p></div>
+    <div class="p-2 bd-highlight barra"><p class="cima">Used</p><p class="down">${numberFormatter(
+        getCurrentWeight(data)
+    )}kg</p></div>
+    <div class="p-2 bd-highlight "><p class="cima">Disponible</p><p class="down">${numberFormatter(
+        parseInt(maxWeight) -
+        getCurrentWeight(data)
+    )}kg</p></div>
     </div>
     `);
     $('.row.objects').html(`    
