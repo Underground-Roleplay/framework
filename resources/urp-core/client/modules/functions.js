@@ -598,6 +598,7 @@ let point = false;
 let pointInterval;
 alt.on('keydown', async (key) => {
     if (key == '66') {
+        if (alt.Player.local.getSyncedMeta('HasHandcuffs')) return;
         if (!natives.isPedInAnyVehicle(alt.Player.local.scriptID, true)) {
             await loadAnim('anim@mp_point');
             if (!point) {

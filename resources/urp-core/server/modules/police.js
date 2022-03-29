@@ -26,7 +26,8 @@ const removeHandcuffs = (source) => {
     );
     if (!targetPlayer || targetPlayer === source) return;
     targetPlayer.setSyncedMeta('HasHandcuffs', false);
-    targetPlayer.setClothes(7, -1, -1, 0);
+    targetPlayer.setClothes(7, 0, 0, 2);
+
     alt.emitClient(targetPlayer, 'police:uncuff');
 };
 

@@ -27,6 +27,7 @@ if (!view) {
 }
 
 function handleInteraction(type, entity, model, coords) {
+    if (alt.Player.local.getSyncedMeta('HasHandcuffs')) return;
     let job = Core.Functions.getJobInfo('name');
 
     alt.log(
