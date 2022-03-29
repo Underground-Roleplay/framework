@@ -116,7 +116,6 @@ const getAvaliableSlot = async (home, max) => {
 
 const buyHome = async (source, home, maxSlots, price) => {
     const slot = await getAvaliableSlot(home, maxSlots);
-    console.log(slot);
     const { ssn } = source.playerData;
     if (!slot && slot !== 0) {
         alt.emitClient(
