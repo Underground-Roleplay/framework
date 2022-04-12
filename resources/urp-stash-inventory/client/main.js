@@ -108,18 +108,22 @@ alt.onServer('inventory:updateHomeInventory', (inv, stashHome) => {
         );
     }, 500);
 });
-alt.onServer('inventory:updateVehicleInventory', (inv, stashVehice) => {
-    openInvy();
-    itemsMap(inv, stashVehice);
-    alt.setTimeout(() => {
-        Core.Browser.emit(
-            'stash:inventory:dataRequest',
-            inventory,
-            stash,
-            'vehicle'
-        );
-    }, 500);
-});
+alt.onServer(
+    'inventory:updateVehicleInventory',
+    (inv, stashVehice, maxWeight) => {
+        openInvy();
+        itemsMap(inv, stashVehice);
+        alt.setTimeout(() => {
+            Core.Browser.emit(
+                'stash:inventory:dataRequest',
+                inventory,
+                stash,
+                'vehicle',
+                maxWeight
+            );
+        }, 500);
+    }
+);
 
 const itemsMap = (inv, stashInv) => {
     inventory = [];
@@ -147,15 +151,15 @@ const itemsMap = (inv, stashInv) => {
         }
     });
 };
-alt.onServer('inventory:updateVehicleInventory', (inv, stashVehice) => {
-    itemsMap(inv, stashVehice);
-    Core.Browser.emit(
-        'stash:inventory:dataRequest',
-        inventory,
-        stash,
-        'vehicle'
-    );
-});
+// alt.onServer('inventory:updateVehicleInventory', (inv, stashVehice) => {
+//     itemsMap(inv, stashVehice);
+//     Core.Browser.emit(
+//         'stash:inventory:dataRequest',
+//         inventory,
+//         stash,
+//         'vehicle'
+//     );
+// });
 
 alt.on('context:vehicle:trunk', (data) => {
     const targetVehicle = alt.Vehicle.getByScriptID(data.entity);
