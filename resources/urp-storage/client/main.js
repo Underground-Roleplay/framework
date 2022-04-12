@@ -15,6 +15,7 @@ alt.onServer('storage:buyStorage', (name, size, price) => {
     Core.Browser.on('load', () => {
         Core.Browser.emit('storage:load', data);
     });
+
     Core.Browser.on('storage:closeMenu', () => {
         closeMenu();
     });
