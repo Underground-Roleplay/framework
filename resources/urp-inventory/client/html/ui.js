@@ -39,6 +39,8 @@ $(document).ready(function () {
             alt.emit('inventory:closeInv')
         }
     };
+
+    
  
 
 });
