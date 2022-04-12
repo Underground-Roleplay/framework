@@ -4,7 +4,7 @@
 
 ### Useful links
 
--   .NET 5.0 SDK (https://dotnet.microsoft.com/download/dotnet/5.0)
+-   .NET 6.0 SDK (https://dotnet.microsoft.com/download/dotnet/6.0)
 -   Node.JS (https://nodejs.org/en/)
 -   Uniform Server (https://www.uniformserver.com/) [This can be used to run a MySQL server in your windows machine, but you can use MySQL Community Server or XAMPP (it's all about preferences)]
 
