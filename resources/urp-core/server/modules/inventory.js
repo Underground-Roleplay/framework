@@ -273,7 +273,8 @@ const getVehicleInventory = async (source, vehicle) => {
         source,
         'inventory:updateVehicleInventory',
         getCurrentInventory(source),
-        vehicle.data.inventory
+        vehicle.data.inventory,
+        vehicle.trunkSize
     );
 };
 
@@ -465,7 +466,8 @@ const saveInventoryChests = async (source, data, name, perm, maxWeight) => {
             source,
             'inventory:updateVehicleInventory',
             getCurrentInventory(source),
-            targetVehicle.data.inventory
+            targetVehicle.data.inventory,
+            targetVehicle.trunkSize
         );
     }
 };
