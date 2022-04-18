@@ -91,7 +91,9 @@ var syncInventory = (data, maxWeight) => {
                 item.type
             }">
         <div class="options">
-          <div class="option" data-event="use">Use</div>
+          ${
+            item.useable ? `<div class="option" data-event="use">Use</div>` : ""
+          }
           <div class="option" data-event="send">Send</div>
           <div class="option" data-event="drop">Drop</div>
         </div> 
