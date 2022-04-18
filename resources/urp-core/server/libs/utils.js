@@ -147,7 +147,7 @@ const hashString = (plainString) => {
  * @param  {string} pbkdf2Hash
  * @returns boolean
  */
-const compareHash = (plainString, pbkdf2Hash) => {
+const compareHash = async (plainString, pbkdf2Hash) => {
     const [_key, _salt] = pbkdf2Hash.split('$');
     const saltBits = sjcl.codec.base64.toBits(_salt);
     const derivedKey = sjcl.misc.pbkdf2(plainString, saltBits, 2000, 48);
