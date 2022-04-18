@@ -19,15 +19,27 @@ const loadDealership = async (source) => {
 };
 
 const buyVehicle = async (source, model) => {
-    alt.log(model);
     const result = await executeSync(
         'SELECT * from dealership WHERE model = ?',
         [model],
         undefined,
         alt.resourceName
     );
-    alt.log(result);
     const vehicle = result[0];
+    alt.log(source.getMeta('playerData').ssn);
+    let hasVeh = await executeSync(
+        'SELECT * FROM characters_vehicles WHERE ssn = ? AND model = ?',
+        [source.getMeta('playerData').ssn, model]
+    );
+    if (hasVeh[0])
+        return alt.emitClient(
+            source,
+            'notify',
+            'error',
+            'Error',
+            'you already have this vehicle'
+        );
+
     if (
         Core.Money.hasFullMoney(source, vehicle.price) &&
         parseInt(vehicle.stock) > 0
