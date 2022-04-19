@@ -5,7 +5,7 @@ import Core from '../main';
 
 chat.registerCmd('addItem', (source, args) => {
     const [item, amount, slot] = args;
-    if (!item || !amount) {
+    if (!item) {
         alt.emitClient(
             source,
             'notify',
@@ -17,7 +17,9 @@ chat.registerCmd('addItem', (source, args) => {
     }
     const isAllowed = Core.Functions.hasPermission(source, 'admin');
     if (isAllowed) {
-        Core.Inventory.addItem(source, item, amount, slot ? slot : undefined);
+        let count = amount || 1;
+        count = count < 0 ? 1 : count;
+        Core.Inventory.addItem(source, item, count, slot ? slot : undefined);
     } else {
         alt.emitClient(
             source,
