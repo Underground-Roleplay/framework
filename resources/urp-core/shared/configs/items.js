@@ -7,7 +7,7 @@ export const Items = {
         ammotype: 'undefined',
         image: 'placeholder.png',
         unique: true,
-        useable: false,
+        useable: true,
         description: 'Fisticuffs',
     },
     weapon_dagger: {
@@ -18,7 +18,7 @@ export const Items = {
         ammotype: 'nil',
         image: 'weapon_dagger.png',
         unique: true,
-        useable: false,
+        useable: true,
         description:
             'A short knife with a pointed and edged blade, used as a weapon',
     },
@@ -30,7 +30,7 @@ export const Items = {
         ammotype: 'nil',
         image: 'weapon_bat.png',
         unique: true,
-        useable: false,
+        useable: true,
         description: 'Used for hitting a ball in sports (or other things)',
     },
     weapon_bottle: {
@@ -41,7 +41,7 @@ export const Items = {
         ammotype: 'nil',
         image: 'weapon_bottle.png',
         unique: true,
-        useable: false,
+        useable: true,
         description: 'A broken bottle',
     },
     weapon_crowbar: {
@@ -52,7 +52,7 @@ export const Items = {
         ammotype: 'nil',
         image: 'weapon_crowbar.png',
         unique: true,
-        useable: false,
+        useable: true,
         description: 'An iron bar with a flattened end, used as a lever',
     },
     weapon_flashlight: {
@@ -74,7 +74,7 @@ export const Items = {
         ammotype: 'nil',
         image: 'weapon_golfclub.png',
         unique: true,
-        useable: false,
+        useable: true,
         description: 'A club used to hit the ball in golf',
     },
     weapon_hammer: {
@@ -85,7 +85,7 @@ export const Items = {
         ammotype: 'nil',
         image: 'weapon_hammer.png',
         unique: true,
-        useable: false,
+        useable: true,
         description:
             'Used for jobs such as breaking things (legs) and driving in nails',
     },
@@ -97,7 +97,7 @@ export const Items = {
         ammotype: 'AMMO_PISTOL',
         image: 'weapon_hatchet.png',
         unique: true,
-        useable: false,
+        useable: true,
         description: 'A small axe with a short handle for use in one hand',
     },
     weapon_knuckle: {
@@ -108,7 +108,7 @@ export const Items = {
         ammotype: 'nil',
         image: 'weapon_knuckle.png',
         unique: true,
-        useable: false,
+        useable: true,
         description:
             'A metal guard worn over the knuckles in fighting, especially to increase the effect of the blows',
     },
@@ -120,7 +120,7 @@ export const Items = {
         ammotype: 'nil',
         image: 'weapon_knife.png',
         unique: true,
-        useable: false,
+        useable: true,
         description:
             'An instrument composed of a blade fixed into a handle, used for cutting or as a weapon',
     },
@@ -132,7 +132,7 @@ export const Items = {
         ammotype: 'nil',
         image: 'weapon_machete.png',
         unique: true,
-        useable: false,
+        useable: true,
         description: 'A broad, heavy knife used as a weapon',
     },
     weapon_switchblade: {
@@ -143,7 +143,7 @@ export const Items = {
         ammotype: 'nil',
         image: 'weapon_switchblade.png',
         unique: true,
-        useable: false,
+        useable: true,
         description:
             'A knife with a blade that springs out from the handle when a button is pressed',
     },
@@ -155,7 +155,7 @@ export const Items = {
         ammotype: 'nil',
         image: 'weapon_nightstick.png',
         unique: true,
-        useable: false,
+        useable: true,
         description: "A police officer\\'s club or billy",
     },
     weapon_wrench: {
@@ -167,6 +167,7 @@ export const Items = {
         image: 'weapon_wrench.png',
         unique: true,
         useable: false,
+        useable: true,
         description:
             'A tool used for gripping and turning nuts, bolts, pipes, etc',
     },
@@ -178,7 +179,7 @@ export const Items = {
         ammotype: 'nil',
         image: 'weapon_battleaxe.png',
         unique: true,
-        useable: false,
+        useable: true,
         description: 'A large broad-bladed axe used in ancient warfare',
     },
     weapon_poolcue: {
@@ -189,7 +190,7 @@ export const Items = {
         ammotype: 'nil',
         image: 'weapon_poolcue.png',
         unique: true,
-        useable: false,
+        useable: true,
         description:
             'A stick used to strike a ball, usually the cue ball (or other things)',
     },
@@ -201,7 +202,7 @@ export const Items = {
         ammotype: 'nil',
         image: 'weapon_briefcase.png',
         unique: true,
-        useable: false,
+        useable: true,
         description: 'A briefcase for storing important documents',
     },
     weapon_briefcase_02: {
@@ -212,7 +213,7 @@ export const Items = {
         ammotype: 'nil',
         image: 'weapon_briefcase2.png',
         unique: true,
-        useable: false,
+        useable: true,
         description: 'Wonderfull for nice vacation to Liberty City',
     },
     weapon_garbagebag: {
@@ -223,7 +224,7 @@ export const Items = {
         ammotype: 'nil',
         image: 'weapon_garbagebag.png',
         unique: true,
-        useable: false,
+        useable: true,
         description: 'A garbage bag',
     },
     weapon_handcuffs: {
@@ -234,7 +235,7 @@ export const Items = {
         ammotype: 'nil',
         image: 'weapon_handcuffs.png',
         unique: true,
-        useable: false,
+        useable: true,
         description:
             "A pair of lockable linked metal rings for securing a prisoner\\'s wrists",
     },
@@ -246,7 +247,7 @@ export const Items = {
         ammotype: 'nil',
         image: 'baquette.png',
         unique: true,
-        useable: false,
+        useable: true,
         description: 'Bread...?',
     },
     weapon_stone_hatchet: {
@@ -268,7 +269,7 @@ export const Items = {
         ammotype: 'AMMO_PISTOL',
         image: 'weapon_pistol.png',
         unique: true,
-        useable: false,
+        useable: true,
         description: 'A small firearm designed to be held in one hand',
     },
     weapon_pistol_mk2: {
@@ -279,7 +280,7 @@ export const Items = {
         ammotype: 'AMMO_PISTOL',
         image: 'weapon_pistol_mk2.png',
         unique: true,
-        useable: false,
+        useable: true,
         description:
             'An upgraded small firearm designed to be held in one hand',
     },
@@ -291,7 +292,7 @@ export const Items = {
         ammotype: 'AMMO_PISTOL',
         image: 'weapon_combatpistol.png',
         unique: true,
-        useable: false,
+        useable: true,
         description:
             'A combat version small firearm designed to be held in one hand',
     },
@@ -303,7 +304,7 @@ export const Items = {
         ammotype: 'AMMO_PISTOL',
         image: 'weapon_appistol.png',
         unique: true,
-        useable: false,
+        useable: true,
         description:
             'A small firearm designed to be held in one hand that is automatic',
     },
@@ -315,7 +316,7 @@ export const Items = {
         ammotype: 'nil',
         image: 'weapon_stungun.png',
         unique: true,
-        useable: false,
+        useable: true,
         description:
             'A weapon firing barbs attached by wires to batteries, causing temporary paralysis',
     },
@@ -327,7 +328,7 @@ export const Items = {
         ammotype: 'AMMO_PISTOL',
         image: 'weapon_pistol50.png',
         unique: true,
-        useable: false,
+        useable: true,
         description:
             'A .50 caliber firearm designed to be held with both hands',
     },
@@ -339,7 +340,7 @@ export const Items = {
         ammotype: 'AMMO_PISTOL',
         image: 'weapon_snspistol.png',
         unique: true,
-        useable: false,
+        useable: true,
         description: 'A very small firearm designed to be easily concealed',
     },
     weapon_heavypistol: {
@@ -350,7 +351,7 @@ export const Items = {
         ammotype: 'AMMO_PISTOL',
         image: 'weapon_heavypistol.png',
         unique: true,
-        useable: false,
+        useable: true,
         description:
             'A hefty firearm designed to be held in one hand (or attempted)',
     },
@@ -362,7 +363,7 @@ export const Items = {
         ammotype: 'AMMO_PISTOL',
         image: 'weapon_vintagepistol.png',
         unique: true,
-        useable: false,
+        useable: true,
         description: 'An antique firearm designed to be held in one hand',
     },
     weapon_flaregun: {
@@ -373,7 +374,7 @@ export const Items = {
         ammotype: 'AMMO_FLARE',
         image: 'weapon_flaregun.png',
         unique: true,
-        useable: false,
+        useable: true,
         description: 'A handgun for firing signal rockets',
     },
     weapon_marksmanpistol: {
@@ -384,7 +385,7 @@ export const Items = {
         ammotype: 'AMMO_PISTOL',
         image: 'weapon_marksmanpistol.png',
         unique: true,
-        useable: false,
+        useable: true,
         description:
             'A very accurate small firearm designed to be held in one hand',
     },
@@ -396,7 +397,7 @@ export const Items = {
         ammotype: 'AMMO_PISTOL',
         image: 'weapon_revolver.png',
         unique: true,
-        useable: false,
+        useable: true,
         description:
             'A pistol with revolving chambers enabling several shots to be fired without reloading',
     },
@@ -485,7 +486,7 @@ export const Items = {
         ammotype: 'AMMO_SMG',
         image: 'weapon_microsmg.png',
         unique: true,
-        useable: false,
+        useable: true,
         description: 'A handheld lightweight machine gun',
     },
     weapon_smg: {
@@ -496,7 +497,7 @@ export const Items = {
         ammotype: 'AMMO_SMG',
         image: 'weapon_smg.png',
         unique: true,
-        useable: false,
+        useable: true,
         description: 'A handheld lightweight machine gun',
     },
     weapon_smg_mk2: {
@@ -518,7 +519,7 @@ export const Items = {
         ammotype: 'AMMO_SMG',
         image: 'weapon_assaultsmg.png',
         unique: true,
-        useable: false,
+        useable: true,
         description: 'An assault version of a handheld lightweight machine gun',
     },
     weapon_combatpdw: {
@@ -529,7 +530,7 @@ export const Items = {
         ammotype: 'AMMO_SMG',
         image: 'weapon_combatpdw.png',
         unique: true,
-        useable: false,
+        useable: true,
         description: 'A combat version of a handheld lightweight machine gun',
     },
     weapon_machinepistol: {
@@ -540,7 +541,7 @@ export const Items = {
         ammotype: 'AMMO_PISTOL',
         image: 'weapon_machinepistol.png',
         unique: true,
-        useable: false,
+        useable: true,
         description:
             'A self-loading pistol capable of burst or fully automatic fire',
     },
@@ -552,7 +553,7 @@ export const Items = {
         ammotype: 'AMMO_SMG',
         image: 'weapon_minismg.png',
         unique: true,
-        useable: false,
+        useable: true,
         description: 'A mini handheld lightweight machine gun',
     },
     weapon_raycarbine: {
@@ -574,7 +575,7 @@ export const Items = {
         ammotype: 'AMMO_SHOTGUN',
         image: 'weapon_pumpshotgun.png',
         unique: true,
-        useable: false,
+        useable: true,
         description:
             'A pump-action smoothbore gun for firing small shot at short range',
     },
@@ -586,7 +587,7 @@ export const Items = {
         ammotype: 'AMMO_SHOTGUN',
         image: 'weapon_sawnoffshotgun.png',
         unique: true,
-        useable: false,
+        useable: true,
         description:
             'A sawn-off smoothbore gun for firing small shot at short range',
     },
@@ -598,7 +599,7 @@ export const Items = {
         ammotype: 'AMMO_SHOTGUN',
         image: 'weapon_assaultshotgun.png',
         unique: true,
-        useable: false,
+        useable: true,
         description:
             'An assault version of asmoothbore gun for firing small shot at short range',
     },
@@ -610,7 +611,7 @@ export const Items = {
         ammotype: 'AMMO_SHOTGUN',
         image: 'weapon_bullpupshotgun.png',
         unique: true,
-        useable: false,
+        useable: true,
         description:
             'A compact smoothbore gun for firing small shot at short range',
     },
@@ -622,7 +623,7 @@ export const Items = {
         ammotype: 'AMMO_SHOTGUN',
         image: 'weapon_musket.png',
         unique: true,
-        useable: false,
+        useable: true,
         description:
             "An infantryman\\'s light gun with a long barrel, typically smooth-bored, muzzleloading, and fired from the shoulder",
     },
@@ -634,7 +635,7 @@ export const Items = {
         ammotype: 'AMMO_SHOTGUN',
         image: 'weapon_heavyshotgun.png',
         unique: true,
-        useable: false,
+        useable: true,
         description:
             'A large smoothbore gun for firing small shot at short range',
     },
@@ -646,7 +647,7 @@ export const Items = {
         ammotype: 'AMMO_SHOTGUN',
         image: 'weapon_dbshotgun.png',
         unique: true,
-        useable: false,
+        useable: true,
         description:
             'A shotgun with two parallel barrels, allowing two single shots to be fired in quick succession',
     },
@@ -658,7 +659,7 @@ export const Items = {
         ammotype: 'AMMO_SHOTGUN',
         image: 'weapon_autoshotgun.png',
         unique: true,
-        useable: false,
+        useable: true,
         description: 'A shotgun capable of rapid continous fire',
     },
     weapon_pumpshotgun_mk2: {
@@ -691,7 +692,7 @@ export const Items = {
         ammotype: 'AMMO_RIFLE',
         image: 'weapon_assaultrifle.png',
         unique: true,
-        useable: false,
+        useable: true,
         description:
             'A rapid-fire, magazine-fed automatic rifle designed for infantry use',
     },
@@ -714,7 +715,7 @@ export const Items = {
         ammotype: 'AMMO_RIFLE',
         image: 'weapon_carbinerifle.png',
         unique: true,
-        useable: false,
+        useable: true,
         description: 'A lightweight automatic rifle',
     },
     weapon_carbinerifle_mk2: {
@@ -736,7 +737,7 @@ export const Items = {
         ammotype: 'AMMO_RIFLE',
         image: 'weapon_advancedrifle.png',
         unique: true,
-        useable: false,
+        useable: true,
         description:
             'An assault version of a rapid-fire, magazine-fed automatic rifle designed for infantry use',
     },
@@ -748,7 +749,7 @@ export const Items = {
         ammotype: 'AMMO_RIFLE',
         image: 'weapon_specialcarbine.png',
         unique: true,
-        useable: false,
+        useable: true,
         description:
             'An extremely versatile assault rifle for any combat situation',
     },
@@ -760,7 +761,7 @@ export const Items = {
         ammotype: 'AMMO_RIFLE',
         image: 'weapon_bullpuprifle.png',
         unique: true,
-        useable: false,
+        useable: true,
         description: 'A compact automatic assault rifle',
     },
     weapon_compactrifle: {
@@ -771,7 +772,7 @@ export const Items = {
         ammotype: 'AMMO_RIFLE',
         image: 'weapon_compactrifle.png',
         unique: true,
-        useable: false,
+        useable: true,
         description: 'A compact version of an assault rifle',
     },
     weapon_specialcarbine_mk2: {
@@ -815,7 +816,7 @@ export const Items = {
         ammotype: 'AMMO_MG',
         image: 'weapon_mg.png',
         unique: true,
-        useable: false,
+        useable: true,
         description:
             'An automatic gun that fires bullets in rapid succession for as long as the trigger is pressed',
     },
@@ -827,7 +828,7 @@ export const Items = {
         ammotype: 'AMMO_MG',
         image: 'weapon_combatmg.png',
         unique: true,
-        useable: false,
+        useable: true,
         description:
             'A combat version of an automatic gun that fires bullets in rapid succession for as long as the trigger is pressed',
     },
@@ -839,7 +840,7 @@ export const Items = {
         ammotype: 'AMMO_MG',
         image: 'weapon_gusenberg.png',
         unique: true,
-        useable: false,
+        useable: true,
         description: 'An automatic rifle commonly referred to as a tommy gun',
     },
     weapon_combatmg_mk2: {
@@ -861,7 +862,7 @@ export const Items = {
         ammotype: 'AMMO_SNIPER',
         image: 'weapon_sniperrifle.png',
         unique: true,
-        useable: false,
+        useable: true,
         description: 'A high-precision, long-range rifle',
     },
     weapon_heavysniper: {
@@ -872,7 +873,7 @@ export const Items = {
         ammotype: 'AMMO_SNIPER',
         image: 'weapon_heavysniper.png',
         unique: true,
-        useable: false,
+        useable: true,
         description: 'An upgraded high-precision, long-range rifle',
     },
     weapon_marksmanrifle: {
@@ -883,7 +884,7 @@ export const Items = {
         ammotype: 'AMMO_SNIPER',
         image: 'weapon_marksmanrifle.png',
         unique: true,
-        useable: false,
+        useable: true,
         description: 'A very accurate single-fire rifle',
     },
     weapon_remotesniper: {
@@ -894,7 +895,7 @@ export const Items = {
         ammotype: 'AMMO_SNIPER_REMOTE',
         image: 'weapon_remotesniper.png',
         unique: true,
-        useable: false,
+        useable: true,
         description: 'A portable high-precision, long-range rifle',
     },
     weapon_heavysniper_mk2: {
@@ -927,7 +928,7 @@ export const Items = {
         ammotype: 'AMMO_RPG',
         image: 'weapon_rpg.png',
         unique: true,
-        useable: false,
+        useable: true,
         description: 'A rocket-propelled grenade launcher',
     },
     weapon_grenadelauncher: {
@@ -938,7 +939,7 @@ export const Items = {
         ammotype: 'AMMO_GRENADELAUNCHER',
         image: 'weapon_grenadelauncher.png',
         unique: true,
-        useable: false,
+        useable: true,
         description:
             'A weapon that fires a specially-designed large-caliber projectile, often with an explosive, smoke or gas warhead',
     },
@@ -950,7 +951,7 @@ export const Items = {
         ammotype: 'AMMO_GRENADELAUNCHER',
         image: 'weapon_smokegrenade.png',
         unique: true,
-        useable: false,
+        useable: true,
         description: 'A bomb that produces a lot of smoke when it explodes',
     },
     weapon_minigun: {
@@ -961,7 +962,7 @@ export const Items = {
         ammotype: 'AMMO_MINIGUN',
         image: 'weapon_minigun.png',
         unique: true,
-        useable: false,
+        useable: true,
         description:
             'A portable machine gun consisting of a rotating cluster of six barrels and capable of variable rates of fire of up to 6,000 rounds per minute',
     },
@@ -973,7 +974,7 @@ export const Items = {
         ammotype: 'nil',
         image: 'weapon_firework.png',
         unique: true,
-        useable: false,
+        useable: true,
         description:
             'A device containing gunpowder and other combustible chemicals that causes a spectacular explosion when ignited',
     },
@@ -985,7 +986,7 @@ export const Items = {
         ammotype: 'nil',
         image: 'weapon_railgun.png',
         unique: true,
-        useable: false,
+        useable: true,
         description:
             'A weapon that uses electromagnetic force to launch high velocity projectiles',
     },
@@ -997,7 +998,7 @@ export const Items = {
         ammotype: 'AMMO_STINGER',
         image: 'weapon_hominglauncher.png',
         unique: true,
-        useable: false,
+        useable: true,
         description:
             'A weapon fitted with an electronic device that enables it to find and hit a target',
     },
@@ -1009,7 +1010,7 @@ export const Items = {
         ammotype: 'nil',
         image: 'weapon_compactlauncher.png',
         unique: true,
-        useable: false,
+        useable: true,
         description: 'A compact grenade launcher',
     },
     weapon_rayminigun: {
@@ -1031,7 +1032,7 @@ export const Items = {
         ammotype: 'nil',
         image: 'weapon_grenade.png',
         unique: true,
-        useable: false,
+        useable: true,
         description: 'A handheld throwable bomb',
     },
     weapon_bzgas: {
@@ -1042,7 +1043,7 @@ export const Items = {
         ammotype: 'nil',
         image: 'weapon_bzgas.png',
         unique: true,
-        useable: false,
+        useable: true,
         description: 'A cannister of gas that causes extreme pain',
     },
     weapon_molotov: {
@@ -1053,7 +1054,7 @@ export const Items = {
         ammotype: 'nil',
         image: 'weapon_molotov.png',
         unique: true,
-        useable: false,
+        useable: true,
         description:
             'A crude bomb made of a bottle filled with a flammable liquid and fitted with a wick for lighting',
     },
@@ -1065,7 +1066,7 @@ export const Items = {
         ammotype: 'nil',
         image: 'weapon_stickybomb.png',
         unique: true,
-        useable: false,
+        useable: true,
         description:
             'An explosive charge covered with an adhesive that when thrown against an object sticks until it explodes',
     },
@@ -1077,7 +1078,7 @@ export const Items = {
         ammotype: 'nil',
         image: 'weapon_proximitymine.png',
         unique: true,
-        useable: false,
+        useable: true,
         description:
             'A bomb placed on the ground that detonates when going within its proximity',
     },
@@ -1089,7 +1090,7 @@ export const Items = {
         ammotype: 'nil',
         image: 'weapon_snowball.png',
         unique: true,
-        useable: false,
+        useable: true,
         description:
             'A ball of packed snow, especially one made for throwing at other people for fun',
     },
@@ -1101,7 +1102,7 @@ export const Items = {
         ammotype: 'nil',
         image: 'weapon_pipebomb.png',
         unique: true,
-        useable: false,
+        useable: true,
         description:
             'A homemade bomb, the components of which are contained in a pipe',
     },
@@ -1113,7 +1114,7 @@ export const Items = {
         ammotype: 'AMMO_BALL',
         image: 'weapon_ball.png',
         unique: true,
-        useable: false,
+        useable: true,
         description:
             'A solid or hollow spherical or egg-shaped object that is kicked, thrown, or hit in a game',
     },
@@ -1125,7 +1126,7 @@ export const Items = {
         ammotype: 'nil',
         image: 'weapon_c4.png',
         unique: true,
-        useable: false,
+        useable: true,
         description: 'An explosive charge that can be remotely detonated',
     },
     weapon_flare: {
@@ -1136,7 +1137,7 @@ export const Items = {
         ammotype: 'AMMO_FLARE',
         image: 'weapon_flare.png',
         unique: true,
-        useable: false,
+        useable: true,
         description:
             'A small pyrotechnic devices used for illumination and signalling',
     },
@@ -1148,7 +1149,7 @@ export const Items = {
         ammotype: 'AMMO_PETROLCAN',
         image: 'weapon_petrolcan.png',
         unique: true,
-        useable: false,
+        useable: true,
         description: 'A robust liquid container made from pressed steel',
     },
     weapon_fireextinguisher: {
@@ -1159,7 +1160,7 @@ export const Items = {
         ammotype: 'nil',
         image: 'weapon_fireextinguisher.png',
         unique: true,
-        useable: false,
+        useable: true,
         description:
             'A portable device that discharges a jet of water, foam, gas, or other material to extinguish a fire',
     },
