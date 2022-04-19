@@ -78,7 +78,9 @@ alt.on('keydown', (key) => {
 alt.onServer(
     'inventory:updateChest',
     (inv, stashHome, cname, cmaxWeight, cperm) => {
-        openInvy();
+        if (!isOpen) {
+            openInvy();
+        }
         itemsMap(inv, stashHome);
         name = cname;
         perm = cperm;
@@ -92,12 +94,14 @@ alt.onServer(
                 maxWeight,
                 Core.Functions.getPlayerData('maxWeight')
             );
-        }, 500);
+        }, 200);
     }
 );
 
 alt.onServer('inventory:updateHomeInventory', (inv, stashHome) => {
-    openInvy();
+    if (!isOpen) {
+        openInvy();
+    }
     itemsMap(inv, stashHome);
     alt.setTimeout(() => {
         Core.Browser.emit(
@@ -106,12 +110,14 @@ alt.onServer('inventory:updateHomeInventory', (inv, stashHome) => {
             stash,
             'home'
         );
-    }, 500);
+    }, 200);
 });
 alt.onServer(
     'inventory:updateVehicleInventory',
     (inv, stashVehice, maxWeight) => {
-        openInvy();
+        if (!isOpen) {
+            openInvy();
+        }
         itemsMap(inv, stashVehice);
         alt.setTimeout(() => {
             Core.Browser.emit(
@@ -121,7 +127,7 @@ alt.onServer(
                 'vehicle',
                 maxWeight
             );
-        }, 500);
+        }, 200);
     }
 );
 
@@ -151,15 +157,6 @@ const itemsMap = (inv, stashInv) => {
         }
     });
 };
-// alt.onServer('inventory:updateVehicleInventory', (inv, stashVehice) => {
-//     itemsMap(inv, stashVehice);
-//     Core.Browser.emit(
-//         'stash:inventory:dataRequest',
-//         inventory,
-//         stash,
-//         'vehicle'
-//     );
-// });
 
 alt.on('context:vehicle:trunk', (data) => {
     const targetVehicle = alt.Vehicle.getByScriptID(data.entity);
