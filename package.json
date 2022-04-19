@@ -23,10 +23,10 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "@altv/types-client": "^1.9.9",
+    "@altv/types-client": "^2.1.4",
     "@altv/types-natives": "^1.4.4",
-    "@altv/types-server": "^2.1.7",
-    "@altv/types-shared": "^1.1.2",
+    "@altv/types-server": "^2.3.1",
+    "@altv/types-shared": "^1.2.3",
     "@altv/types-webview": "^1.0.2",
     "husky": "^7.0.4",
     "prettier": "2.5.1"

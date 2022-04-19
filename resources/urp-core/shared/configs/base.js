@@ -54,6 +54,8 @@ URPConfig.DefaultMeta = {
     criminalrecord: {
         hasRecord: false,
     },
+    isInJail: false,
+    jailTime: 0,
     licences: {
         business: false,
         weapon: false,
@@ -71,9 +73,8 @@ URPConfig.DefaultMeta = {
     hunger: URPConfig.DefaultHunger,
     armour: 0,
     health: 200,
+    maxWeight: 60000,
 };
-URPConfig.MaxInvSlots = 41;
-URPConfig.MaxWeight = 120000; //120 kg in grams
 //LANG
 URPConfig.lang = 'en';
 //URPConfig.lang = "pt-BR"

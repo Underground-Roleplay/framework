@@ -2,14 +2,13 @@ import * as alt from 'alt-server';
 
 import db from 'mysql2-wrapper';
 import Core from '../main';
-import { executeSync, updateSync } from '../libs/utils';
+import { executeSync, updateSync, numberFormatter } from '../libs/utils';
 
 //  Items
 const useableItems = {};
-
 const dropItem = (source, item, amount = 1) => {
-    Core.Inventory.removeItem(source, item, amount);
-
+    Core.Inventory.removeItem(source, item.name, amount);
+    item.amount = amount;
     const itemPosition = new alt.Vector3(
         source.pos.x,
         source.pos.y,
@@ -23,7 +22,7 @@ const dropItem = (source, item, amount = 1) => {
     return droppedItem;
 };
 
-const pickupItem = (source, item, slot = undefined, amount) => {
+const pickupItem = (source, item, amount) => {
     amount = parseInt(amount);
     let avaliableAmount = getDroppedItemAmountById(item.entityID);
     if (!avaliableAmount) return;
@@ -34,7 +33,7 @@ const pickupItem = (source, item, slot = undefined, amount) => {
 
     if (avaliableAmount === amount) {
         Core.Entities.removeEntity(item.entityID, 3);
-        Core.Inventory.addItem(source, item.name, amount, slot);
+        Core.Inventory.addItem(source, item.name, amount);
         return;
     }
 
@@ -46,7 +45,7 @@ const pickupItem = (source, item, slot = undefined, amount) => {
             'amount',
             avaliableAmount
         );
-        Core.Inventory.addItem(source, item.name, amount, slot);
+        Core.Inventory.addItem(source, item.name, amount);
         return;
     }
 };
@@ -102,39 +101,49 @@ const getItemSlot = (inventory, item) => {
 };
 
 const addItem = (source, ItemName, amount) => {
-    console.log('addItem: ', ItemName, amount);
     if (ItemName === undefined && ItemName === null) return false;
-    if (amount === null || amount === undefined) amount = 1;
-
-    const i = source.playerData.inventory[0].findIndex(
+    if (amount === null || amount === undefined || amount < 1) amount = 1;
+    const itemInfo = Core.Shared.Items[ItemName.toLowerCase()];
+    if (!itemInfo) {
+        alt.emitClient(
+            source,
+            'notify',
+            'error',
+            Core.Translate('INVENTORY.LABEL'),
+            Core.Translate('ITEM_DOESNT_EXISTS')
+        );
+        return;
+    }
+    const currentWeight = parseInt(
+        parseInt(source.playerData.metadata.maxWeight) -
+            parseInt(getCurrentWeight(source.playerData.inventory))
+    );
+    if (currentWeight < itemInfo.weight * amount) {
+        return alt.emitClient(
+            source,
+            'notify',
+            'error',
+            Core.Translate('INVENTORY.LABEL'),
+            Core.Translate('INVENTORY.WEIGHT_LIMIT')
+        );
+    }
+    const i = source.playerData.inventory.findIndex(
         (item) => item.name === ItemName
     );
-    if (i > -1 && source.playerData.inventory[0][i].name === ItemName) {
-        source.playerData.inventory[0][i].amount =
-            parseInt(source.playerData.inventory[0][i].amount) +
-            parseInt(amount);
+    if (i > -1 && source.playerData.inventory[i].name === ItemName) {
+        source.playerData.inventory[i].amount =
+            parseInt(source.playerData.inventory[i].amount) + parseInt(amount);
         saveInventory(source);
         return true;
     }
 
     if (i < 0) {
-        const itemInfo = Core.Shared.Items[ItemName.toLowerCase()];
-        if (!itemInfo) {
-            alt.emitClient(
-                source,
-                'notify',
-                'error',
-                Core.Translate('INVENTORY.LABEL'),
-                Core.Translate('ITEM_DOESNT_EXISTS')
-            );
-            return;
-        }
         if (itemInfo.type === 'weapon') {
             itemInfo.info = {
                 serie: '99999',
             };
         }
-        source.playerData.inventory[0].push({
+        source.playerData.inventory.push({
             name: ItemName,
             amount: amount,
             info: itemInfo.info || '',
@@ -155,7 +164,7 @@ const addItem = (source, ItemName, amount) => {
 };
 
 const removeAllItems = (source) => {
-    source.playerData.inventory = [[], [{}, {}, {}]];
+    source.playerData.inventory = [];
     saveInventory(source);
 };
 
@@ -181,19 +190,37 @@ const addItemActived = (source, ItemName, slot) => {
     return true;
 };
 
-const transferChest = (source, ItemName, amount) => {
-    console.log('transferChest: ', ItemName, amount);
+const transferChest = (source, ItemName, amount, name, perm, maxWeight) => {
     if (ItemName === undefined && ItemName === null) return false;
-    if (amount === null || amount === undefined) amount = 1;
+    if (amount === null || amount === undefined || amount < 1) amount = 1;
+    const itemInfo = Core.Shared.Items[ItemName.toLowerCase()];
 
+    const currentWeight = parseInt(
+        parseInt(maxWeight) -
+            parseInt(getCurrentWeight(source.playerData.chest))
+    );
+    if (currentWeight < itemInfo.weight * amount) {
+        return alt.emitClient(
+            source,
+            'notify',
+            'error',
+            Core.Translate('INVENTORY.LABEL'),
+            Core.Translate('INVENTORY.WEIGHT_LIMIT')
+        );
+    }
     const i = source.playerData.chest.findIndex(
         (item) => item.name === ItemName
     );
-
     if (i > -1 && source.playerData.chest[i].name === ItemName) {
         source.playerData.chest[i].amount =
             parseInt(source.playerData.chest[i].amount) + parseInt(amount);
-        saveInventoryChests(source, source.playerData.chest, 1);
+        saveInventoryChests(
+            source,
+            source.playerData.chest,
+            name,
+            perm,
+            maxWeight
+        );
         return true;
     }
 
@@ -213,7 +240,13 @@ const transferChest = (source, ItemName, amount) => {
             shouldClose: itemInfo.shouldClose,
             combinable: itemInfo.combinable,
         });
-        saveInventoryChests(source, source.playerData.chest, 1);
+        saveInventoryChests(
+            source,
+            source.playerData.chest,
+            name,
+            perm,
+            maxWeight
+        );
         return true;
     }
     return false;
@@ -239,13 +272,15 @@ const getVehicleInventory = async (source, vehicle) => {
     alt.emitClient(
         source,
         'inventory:updateVehicleInventory',
-        vehicle.data.inventory
+        getCurrentInventory(source),
+        vehicle.data.inventory,
+        vehicle.trunkSize
     );
 };
 
 const transferVehicle = (source, ItemName, amount) => {
     if (ItemName === undefined && ItemName === null) return false;
-    if (amount === null || amount === undefined) amount = 1;
+    if (amount === null || amount === undefined || amount < 1) amount = 1;
 
     const targetVehicle = alt.Vehicle.getByID(source.playerData.trunk);
 
@@ -256,7 +291,7 @@ const transferVehicle = (source, ItemName, amount) => {
     if (i > -1 && targetVehicle.data.inventory[i].name === ItemName) {
         targetVehicle.data.inventory[i].amount =
             parseInt(targetVehicle.data.inventory[i].amount) + parseInt(amount);
-        saveInventoryChests(source, targetVehicle.data.inventory, 1);
+        saveInventoryChests(source, targetVehicle.data.inventory);
         return true;
     }
 
@@ -276,7 +311,7 @@ const transferVehicle = (source, ItemName, amount) => {
             shouldClose: itemInfo.shouldClose,
             combinable: itemInfo.combinable,
         });
-        saveInventoryChests(source, targetVehicle.data.inventory, 1);
+        saveInventoryChests(source, targetVehicle.data.inventory);
         return true;
     }
     return false;
@@ -284,7 +319,7 @@ const transferVehicle = (source, ItemName, amount) => {
 
 const removeItemVehicle = (source, ItemName, amount) => {
     if (ItemName === undefined) return false;
-    if (amount === null || amount === undefined) amount = 1;
+    if (amount === null || amount === undefined || amount < 1) amount = 1;
 
     const targetVehicle = alt.Vehicle.getByID(source.playerData.trunk);
 
@@ -305,92 +340,115 @@ const removeItemVehicle = (source, ItemName, amount) => {
     }
 };
 
-const removeItemChest = (source, ItemName, amount) => {
-    console.log('removeItem Chest: ', ItemName, amount);
+const removeItemChest = (source, ItemName, amount, name, perm, maxWeight) => {
     if (ItemName === undefined) return false;
-    if (amount === null || amount === undefined) amount = 1;
 
     const i = source.playerData.chest.findIndex(
         (item) => item.name === ItemName
     );
-
+    if (amount > source.playerData.chest[i].amount) return;
     if (source.playerData.chest[i].amount > amount) {
         source.playerData.chest[i].amount =
             source.playerData.chest[i].amount - amount;
-        saveInventoryChests(source, source.playerData.chest, 1);
+        saveInventoryChests(
+            source,
+            source.playerData.chest,
+            name,
+            perm,
+            maxWeight
+        );
         return true;
     }
     if (source.playerData.chest[i].amount <= amount) {
         source.playerData.chest.splice(i, 1);
-        saveInventoryChests(source, source.playerData.chest, 1);
+        saveInventoryChests(
+            source,
+            source.playerData.chest,
+            name,
+            perm,
+            maxWeight
+        );
         return true;
     }
 };
 
 const removeItem = (source, ItemName, amount) => {
-    console.log('removeItem: ', ItemName, amount);
     if (ItemName === undefined) return false;
-    if (amount === null || amount === undefined) amount = 1;
+    if (amount === null || amount === undefined || amount < 1) amount = 1;
 
-    const i = source.playerData.inventory[0].findIndex(
+    const i = source.playerData.inventory.findIndex(
         (item) => item.name === ItemName
     );
-
-    if (source.playerData.inventory[0][i].amount > amount) {
-        source.playerData.inventory[0][i].amount =
-            source.playerData.inventory[0][i].amount - amount;
+    if (amount > source.playerData.inventory[i].amount) return;
+    if (source.playerData.inventory[i].amount > amount) {
+        source.playerData.inventory[i].amount =
+            source.playerData.inventory[i].amount - amount;
         saveInventory(source);
         return true;
     }
-    if (source.playerData.inventory[0][i].amount <= amount) {
-        source.playerData.inventory[0].splice(i, 1);
-        saveInventory(source);
-        return true;
-    }
-    return false;
-};
-const removeItemActived = (source, ItemName, slot) => {
-    if (ItemName === undefined) return false;
-
-    if ((source.playerData.inventory[1][slot].amount = 1)) {
-        source.playerData.inventory[1][slot] = {};
+    if (source.playerData.inventory[i].amount <= amount) {
+        source.playerData.inventory.splice(i, 1);
         saveInventory(source);
         return true;
     }
     return false;
 };
-const getItemBySlot = (source, slot) => {
-    return source.playerData.inventory[slot];
-};
-const saveInventoryChests = async (source, data, id) => {
+
+const saveInventoryChests = async (source, data, name, perm, maxWeight) => {
     if (!source) return;
+
     if (source.playerData.chestOrigin === 'homeInventory') {
         await updateSync(
-            'UPDATE characters_homes SET inventory = ? WHERE id = ? AND ssn = ?',
-            [JSON.stringify(data), id, source.playerData.ssn],
+            'UPDATE characters_homes SET chest = ? WHERE slot = ? AND name = ?',
+            [
+                JSON.stringify(data),
+                source.playerData.metadata.atHome.slot,
+                source.playerData.metadata.atHome.home,
+            ],
             undefined,
             alt.resourceName
         );
         return alt.emitClient(
             source,
             'inventory:updateHomeInventory',
+            getCurrentInventory(source),
             source.playerData.chest
         );
-    }
-    if (source.playerData.chestOrigin === 'chest') {
+    } else if (source.playerData.chestOrigin === 'chest') {
+        if (!perm) {
+            await updateSync(
+                'UPDATE storages SET data = ? WHERE ssn = ? AND name = ?',
+                [JSON.stringify(data), source.playerData.ssn, name],
+                undefined,
+                alt.resourceName
+            );
+            return alt.emitClient(
+                source,
+                'inventory:updateChest',
+                getCurrentInventory(source),
+                source.playerData.chest,
+                name,
+                maxWeight,
+                perm
+            );
+        }
         await updateSync(
-            'UPDATE chest SET chest = ? WHERE id = ? ',
-            [JSON.stringify(data), id],
+            'UPDATE storages SET data = ? WHERE name = ? AND perm = ?',
+            [JSON.stringify(data), name, perm],
             undefined,
             alt.resourceName
         );
+
         return alt.emitClient(
             source,
             'inventory:updateChest',
-            source.playerData.chest
+            getCurrentInventory(source),
+            source.playerData.chest,
+            name,
+            maxWeight,
+            perm
         );
-    }
-    if (source.playerData.chestOrigin === 'trunk') {
+    } else if (source.playerData.chestOrigin === 'trunk') {
         const targetVehicle = alt.Vehicle.getByID(source.playerData.trunk);
 
         await updateSync(
@@ -407,7 +465,9 @@ const saveInventoryChests = async (source, data, id) => {
         return alt.emitClient(
             source,
             'inventory:updateVehicleInventory',
-            targetVehicle.data.inventory
+            getCurrentInventory(source),
+            targetVehicle.data.inventory,
+            targetVehicle.trunkSize
         );
     }
 };
@@ -477,35 +537,88 @@ const isItem = (source, item) => {
 };
 
 const getCurrentInventory = (source) => {
-    return source.playerData.inventory[0];
+    return source.playerData.inventory;
 };
 
-const getInventoryActived = (source) => {
-    return source.playerData.inventory[1];
-};
-
-const getHomeInventory = async (source, id) => {
+const getHomeInventory = async (source) => {
+    if (!source.playerData.metadata.atHome) return;
     const data = await executeSync(
-        'SELECT * from characters_homes WHERE id = :id ',
-        { id: id }
+        'SELECT * from characters_homes WHERE slot = ? AND name = ?',
+        [
+            source.playerData.metadata.atHome.slot,
+            source.playerData.metadata.atHome.home,
+        ]
     );
-    source.playerData.chest = JSON.parse(data[0].inventory);
+    source.playerData.chest = JSON.parse(data[0].chest);
     source.playerData.chestOrigin = 'homeInventory';
     alt.emitClient(
         source,
         'inventory:updateHomeInventory',
+        getCurrentInventory(source),
         source.playerData.chest
     );
 };
 
-const getChest = async (source, id) => {
-    const data = await executeSync('SELECT * from chest WHERE id = :id', {
-        id: id,
-    });
+const tryOpenChest = async (source, name, size, price, perm) => {
+    if (!source) return;
+    if (perm) return tryOpenStaticStorage(source, size, name, perm);
+    const { ssn } = source.playerData;
+    const result = await executeSync(
+        'SELECT * FROM storages WHERE ssn = ? AND name = ?',
+        [ssn, name]
+    );
 
-    source.playerData.chest = JSON.parse(data[0].chest);
+    if (result.length <= 0) {
+        alt.emitClient(
+            source,
+            'storage:buyStorage',
+            name,
+            size,
+            numberFormatter(price)
+        );
+        return;
+    }
+    source.playerData.chest = JSON.parse(result[0].data);
     source.playerData.chestOrigin = 'chest';
-    alt.emitClient(source, 'inventory:updateChest', source.playerData.chest);
+    alt.emitClient(
+        source,
+        'inventory:updateChest',
+        getCurrentInventory(source),
+        source.playerData.chest,
+        name,
+        size
+    );
+};
+const tryOpenStaticStorage = async (source, size, name, perm) => {
+    const result = await executeSync(
+        'SELECT * FROM storages WHERE name = ? AND perm = ?',
+        [name, perm]
+    );
+    if (result.length <= 0) {
+        return;
+    }
+    source.playerData.chest = JSON.parse(result[0].data);
+    source.playerData.chestOrigin = 'chest';
+    alt.emitClient(
+        source,
+        'inventory:updateChest',
+        getCurrentInventory(source),
+        source.playerData.chest,
+        name,
+        size,
+        perm
+    );
+};
+const buyStorage = async (source, name, size) => {
+    if (!source) return;
+    const { ssn } = source.playerData;
+    await executeSync(
+        'INSERT INTO storages (ssn, name, data) VALUES (?, ?, ?)',
+        [ssn, name, '[]'],
+        undefined,
+        alt.resourceName
+    );
+    tryOpenChest(source, name, size);
 };
 
 export default {
@@ -520,19 +633,17 @@ export default {
     triggerItemEvent,
     isUseableItem,
     useWeapon,
-    getItemBySlot,
     isItem,
     pickupItem,
     removeItemChest,
     transferChest,
-    getChest,
     getHomeInventory,
     getCurrentInventory,
-    removeItemActived,
     addItemActived,
-    getInventoryActived,
     getVehicleInventory,
     transferVehicle,
     removeItemVehicle,
     sendItem,
+    tryOpenChest,
+    buyStorage,
 };

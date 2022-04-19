@@ -90,6 +90,14 @@ alt.onClient('Core:Server:CharacterTick', async (source) => {
 });
 
 alt.on('Core:Emergency:Alert', (source, job, msg) => {
+    emergencyAlert(source, job, msg);
+});
+
+alt.onClient('Core:Emergency:Alert', (source, job, msg) => {
+    emergencyAlert(source, job, msg);
+});
+
+const emergencyAlert = (source, job, msg) => {
     if (!source) return;
     alt.Player.all.forEach(async (targetPlayer) => {
         let targetPlayerJob = Core.Functions.getPlayerData(targetPlayer, 'job');
@@ -116,4 +124,4 @@ alt.on('Core:Emergency:Alert', (source, job, msg) => {
             );
         }
     });
-});
+};

@@ -147,7 +147,7 @@ const hashString = (plainString) => {
  * @param  {string} pbkdf2Hash
  * @returns boolean
  */
-const compareHash = (plainString, pbkdf2Hash) => {
+const compareHash = async (plainString, pbkdf2Hash) => {
     const [_key, _salt] = pbkdf2Hash.split('$');
     const saltBits = sjcl.codec.base64.toBits(_salt);
     const derivedKey = sjcl.misc.pbkdf2(plainString, saltBits, 2000, 48);
@@ -157,6 +157,19 @@ const compareHash = (plainString, pbkdf2Hash) => {
     }
 
     return true;
+};
+
+const numberFormatter = (value) => {
+    var value = value.toString();
+    var r = '';
+    var x = 0;
+
+    for (var i = value.length; i > 0; i--) {
+        r += value.substr(i - 1, 1) + (x === 2 && i !== 1 ? '.' : '');
+        x = x === 2 ? 0 : x + 1;
+    }
+
+    return r.split('').reverse().join('');
 };
 
 export {
@@ -169,4 +182,5 @@ export {
     getVectorInFrontOfPlayer,
     getClosestEntity,
     requestPrompt,
+    numberFormatter,
 };

@@ -412,17 +412,17 @@ const disableBehaviours = () => {
         }
 
         //  Disable Weapon Wheel
-        natives.disableControlAction(0, 12, true);
-        natives.disableControlAction(0, 13, true);
-        natives.disableControlAction(0, 14, true);
-        natives.disableControlAction(0, 15, true);
+        // natives.disableControlAction(0, 12, true);
+        // natives.disableControlAction(0, 13, true);
+        // natives.disableControlAction(0, 14, true);
+        // natives.disableControlAction(0, 15, true);
 
-        if (
-            natives.isPedTryingToEnterALockedVehicle(alt.Player.local.scriptID)
-        ) {
-            natives.clearPedTasks(alt.Player.local.scriptID);
-            natives.clearPedSecondaryTask(alt.Player.local.scriptID);
-        }
+        // if (
+        //     natives.isPedTryingToEnterALockedVehicle(alt.Player.local.scriptID)
+        // ) {
+        //     natives.clearPedTasks(alt.Player.local.scriptID);
+        //     natives.clearPedSecondaryTask(alt.Player.local.scriptID);
+        // }
     });
 };
 
@@ -446,12 +446,7 @@ const handleVehicleStates = (vehicle, key, value, oldValue) => {
 
 const getCloseItems = () => {
     if (Core.Entities.nearItems.length <= 0) return undefined;
-    return {
-        name: 'dropzone',
-        label: 'Drop',
-        slots: 30,
-        inventory: Core.Entities.nearItems,
-    };
+    return Core.Entities.nearItems;
 };
 
 const setHandcuffs = () => {
@@ -603,6 +598,7 @@ let point = false;
 let pointInterval;
 alt.on('keydown', async (key) => {
     if (key == '66') {
+        if (alt.Player.local.getSyncedMeta('HasHandcuffs')) return;
         if (!natives.isPedInAnyVehicle(alt.Player.local.scriptID, true)) {
             await loadAnim('anim@mp_point');
             if (!point) {
@@ -732,6 +728,53 @@ alt.on('keyup', (key) => {
             point = false;
             natives.removeAnimDict('anim@mp_point');
             alt.clearEveryTick(pointInterval);
+        }
+    }
+});
+
+let hurt = false;
+alt.setInterval(() => {
+    if (!natives.isEntityInWater(alt.Player.local.scriptID)) {
+        if (alt.Player.local.health <= 150 && !hurt) {
+            setHurt();
+            return;
+        }
+        if (alt.Player.local.health >= 151 && hurt) {
+            setNotHurt();
+            return;
+        }
+    }
+}, 5000);
+
+const setHurt = () => {
+    hurt = true;
+    natives.requestAnimSet('move_m@injured');
+    natives.setPedMovementClipset(
+        alt.Player.local.scriptID,
+        'move_m@injured',
+        1.0
+    );
+    natives.setPlayerHealthRechargeMultiplier(alt.Player.local.scriptID, 0.0);
+    natives.disableControlAction(0, 21, true);
+    natives.disableControlAction(0, 22, true);
+};
+
+const setNotHurt = () => {
+    hurt = false;
+    natives.setPlayerHealthRechargeMultiplier(alt.Player.local.scriptID, 0.0);
+    natives.resetPedMovementClipset(alt.Player.local.scriptID, 0.0);
+    natives.resetPedWeaponMovementClipset(alt.Player.local.scriptID);
+    natives.resetPedStrafeClipset(alt.Player.local.scriptID);
+};
+
+alt.everyTick(() => {
+    if (
+        natives.isPedShooting(alt.Player.local.scriptID) &&
+        Core.Functions.getJobInfo('name') !== 'police'
+    ) {
+        let random = Math.floor(0 + Math.random() * (100 + 1));
+        if (random <= 20) {
+            alt.emitServer('Core:Emergency:Alert', 'police', 'bora bnora');
         }
     }
 });

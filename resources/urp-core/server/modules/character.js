@@ -40,12 +40,14 @@ const createSSN = async () => {
         ssn = `${Math.floor(Math.random() * 1000000)}-${Math.floor(
             Math.random() * 10000
         )}`;
-        const result = await executeSync(
-            'SELECT COUNT(*) as count FROM characters WHERE ssn = ?',
-            [ssn]
-        );
-        if (result[0]['count'] == 0) {
-            uniqueFound = true;
+        if (ssn.length === 11) {
+            const result = await executeSync(
+                'SELECT COUNT(*) as count FROM characters WHERE ssn = ?',
+                [ssn]
+            );
+            if (result[0]['count'] == 0) {
+                uniqueFound = true;
+            }
         }
     }
     return ssn;
@@ -81,7 +83,7 @@ const checkPlayerData = async (source, playerData = undefined) => {
         //Position
         playerData.position = Core.Config.DefaultSpawn;
         //Inventory
-        playerData.inventory = [[], [{}, {}, {}]];
+        playerData.inventory = [];
 
         createCharacter(source, playerData, false);
         return;
@@ -270,7 +272,7 @@ const createCharacter = async (source, playerData, select = true) => {
 const selectCharacter = async (source, playerData, fromCreation = false) => {
     source.playerData = playerData;
     // const model = 'mp_m_freemode_01'
-    chat.send(source, `Logado com sucesso!`);
+    // chat.send(source, `Logado com sucesso!`);
     Core.Functions.emitPlayerData(
         source,
         'charinfo',
@@ -287,9 +289,15 @@ const selectCharacter = async (source, playerData, fromCreation = false) => {
         'metadata',
         source.playerData.metadata
     );
+
     Core.Functions.emitPlayerData(source, 'money', source.playerData.money);
     Core.Functions.emitPlayerData(source, 'ssn', source.playerData.ssn);
     Core.Functions.emitPlayerData(source, 'id', source.playerData.id);
+    Core.Functions.emitPlayerData(
+        source,
+        'maxWeight',
+        source.playerData.metadata.maxWeight
+    );
     source.setMeta('playerData', source.playerData);
     setDeath(source, source.playerData.metadata.isdead);
     alt.setTimeout(() => {
@@ -312,6 +320,13 @@ const selectCharacter = async (source, playerData, fromCreation = false) => {
         alt.emit('Core:Phone:CreateSQL', source);
         source.playerData.firstTime = false;
     }
+    alt.setTimeout(() => {
+        if (source.playerData.metadata.ishandcuffed) {
+            source.setSyncedMeta('HasHandcuffs', true);
+            source.setClothes(7, 41, 0, 2);
+            alt.emitClient(source, 'police:setHandsCuff');
+        }
+    }, 2000);
 };
 
 const getProps = (source) => {
