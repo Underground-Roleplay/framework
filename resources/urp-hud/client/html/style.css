@@ -1,0 +1,264 @@
+@font-face {
+    font-family: JuhlBold;
+    src: url(JuhlBold.ttf);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+}
+
+.ikoncircle {
+    position: absolute;
+    box-sizing: border-box;
+    display: inline-block;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    background-color: rgba(20, 19, 23, 0.8);
+}
+
+#mik {
+    right: 0.1%;
+    bottom: 0.1%;
+}
+
+#su {
+    right: 0.1%;
+    bottom: 6%;
+}
+
+#sumik {
+    fill: rgb(53, 194, 255);
+}
+
+#yemek {
+    right: 0.1%;
+    bottom: 12%;
+}
+
+#yemekmik {
+    fill: rgb(255, 201, 7);
+}
+
+#yemekmik1 {
+    fill: rgb(255, 201, 7);
+}
+
+#zirh {
+    right: 0.1%;
+    bottom: 18%;
+}
+
+#zirhmik {
+    fill: rgb(154, 208, 97);
+}
+
+#can {
+    right: 0.1%;
+    bottom: 24%;
+    overflow: hidden;
+}
+
+#canmik {
+    fill: rgb(215, 47, 79);
+}
+
+.wallet {
+    display: inline-block;
+    position: absolute;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1.2rem;
+    font-weight: bold;
+    background-color: rgba(20, 19, 23, 0.5);
+    right: 0;
+    top: 2%;
+    padding: 0 10px 0 8px;
+    border-radius: 10px 0 0 10px;
+    color: antiquewhite;
+}
+
+.bank {
+    display: inline-block;
+    position: absolute;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1.2rem;
+    font-weight: bold;
+    background-color: rgba(20, 19, 23, 0.5);
+    right: 0;
+    top: 6%;
+    padding: 0 10px 0 8px;
+    border-radius: 10px 0 0 10px;
+    color: antiquewhite;
+}
+.ssn {
+    display: inline-block;
+    position: absolute;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1.2rem;
+    font-weight: bold;
+    background-color: rgba(20, 19, 23, 0.5);
+    right: 0;
+    top: 10%;
+    padding: 0 10px 0 8px;
+    border-radius: 10px 0 0 10px;
+    color: antiquewhite;
+}
+
+.genelsvgs {
+    position: absolute;
+    right: 50%;
+    bottom: 50%;
+    transform: translate(50%, 50%);
+    width: 26px;
+}
+
+.mikozel {
+    width: 21px;
+}
+
+.vehicle-holder {
+    display: inline-block;
+    position: absolute;
+    width: 14rem;
+    height: 14rem;
+    box-sizing: border-box;
+    background-color: rgba(20, 19, 23, 0.5);
+    border: 2px solid rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+    bottom: 2.7%;
+    right: 5.3%;
+}
+
+.hiz {
+    font-family: JuhlBold;
+    font-size: 60px;
+    color: white;
+    position: absolute;
+    right: 50%;
+    bottom: 56%;
+    transform: translate(50%, 50%);
+}
+
+.kmh {
+    font-family: JuhlBold;
+    font-size: 20px;
+    color: white;
+    position: absolute;
+    right: 50%;
+    bottom: 40%;
+    transform: translate(50%, 50%);
+}
+
+.vehicle-svgs {
+    width: 25px;
+    position: absolute;
+    right: 50%;
+    top: 10%;
+    transform: translate(50%, 0);
+}
+
+#far {
+    position: absolute;
+    width: 30px;
+    right: 50%;
+    top: 10%;
+    transform: translate(50%, 0);
+}
+
+#solok {
+    position: absolute;
+    width: 30px;
+    left: 8%;
+    top: 45%;
+    width: 20px;
+}
+
+#sagok {
+    position: absolute;
+    width: 30px;
+    right: 10%;
+    top: 45%;
+    width: 20px;
+}
+
+#motor {
+    position: absolute;
+    width: 30px;
+    top: 66%;
+    left: 20%;
+}
+
+#benzin {
+    position: absolute;
+    width: 30px;
+    top: 65.5%;
+    right: 20%;
+}
+
+#kemeracik {
+    position: absolute;
+    width: 36px;
+    right: 50%;
+    top: 73%;
+    transform: translate(50%, 0);
+}
+
+#kemertakili {
+    position: absolute;
+    width: 36px;
+    right: 50%;
+    top: 73%;
+    transform: translate(50%, 0);
+}
+
+.kapali {
+    fill: rgb(15, 18, 21) !important;
+}
+
+.sariparlama {
+    fill: rgb(255, 199, 1) !important;
+}
+
+.yesilparlama {
+    fill: rgb(122, 209, 85) !important;
+}
+
+#benzinmik1 {
+    fill: rgb(199, 32, 32);
+}
+
+#benzinmik {
+    fill: rgb(199, 32, 32);
+}
+
+.carcan {
+    right: 3.8%;
+    bottom: 23%;
+}
+
+.carzirh {
+    right: 2.5%;
+    bottom: 17.5%;
+}
+
+.caryemek {
+    right: 2%;
+    bottom: 12%;
+}
+
+.carsu {
+    right: 2.7%;
+    bottom: 6.2%;
+}
+
+.carmik {
+    right: 4.2%;
+    bottom: 1%;
+}

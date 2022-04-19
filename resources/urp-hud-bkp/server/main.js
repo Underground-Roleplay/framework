@@ -1,11 +1,11 @@
 import Core from 'urp-core';
 import * as alt from 'alt-server';
 
-alt.onClient('porcentagemCombustivel', (source) => {
-    alt.emitClient(source, 'UpdateValues', PorcetagemTanke(source));
+alt.onClient('fuel:Percents', (source) => {
+    alt.emitClient(source, 'UpdateValues', fuelPercents(source));
 });
 
-const PorcetagemTanke = (source) => {
+const fuelPercents = (source) => {
     let porcentagem = 0;
     let dataTank = {
         tank: Core.Vehicles.hasFuel(source),
