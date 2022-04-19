@@ -166,7 +166,6 @@ export const Items = {
         ammotype: 'nil',
         image: 'weapon_wrench.png',
         unique: true,
-        useable: false,
         useable: true,
         description:
             'A tool used for gripping and turning nuts, bolts, pipes, etc',
