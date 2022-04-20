@@ -6,11 +6,8 @@ alt.onClient('fuel:Percents', (source) => {
 });
 
 const fuelPercents = (source) => {
-    let porcentagem = 0;
-    let dataTank = {
-        tank: Core.Vehicles.hasFuel(source),
-        full: Core.Vehicles.fuelTankSize(source),
-    };
-    porcentagem = (dataTank.tank / dataTank.full) * 100;
-    return porcentagem;
+    let data =
+        (Core.Vehicles.hasFuel(source) / Core.Vehicles.fuelTankSize(source)) *
+        100;
+    return data > 100 ? 100 : data;
 };
