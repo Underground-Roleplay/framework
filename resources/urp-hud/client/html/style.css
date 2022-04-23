@@ -258,6 +258,10 @@ body {
     bottom: 6.2%;
 }
 
+.talking {
+    background-color: rgba(175, 164, 13, 0.5) !important;
+}
+
 .carmik {
     right: 4.2%;
     bottom: 1%;

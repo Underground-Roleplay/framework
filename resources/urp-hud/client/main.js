@@ -114,6 +114,7 @@ alt.setInterval(() => {
         vehicle: isVehicle,
         hour: hours,
         minute: minutes,
+        isTalking: localPlayer.isTalking,
     };
     hud.emit('hud:Tick', data);
 }, 1000);

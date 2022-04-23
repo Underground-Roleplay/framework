@@ -5,6 +5,12 @@ alt.on('hud:Tick', (item) => {
         aracdisi();
     }
 
+    if (item.isTalking) {
+        $('#mik').addClass('talking');
+    } else {
+        $('#mik').removeClass('talking');
+    }
+
     $('.wallet').text(String(item.money.cash));
     $('.bank').text(String(item.money.bank));
     $('.ssn').text(String(item.ssn));
