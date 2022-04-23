@@ -3,11 +3,24 @@ import alt from 'alt';
 import Core from 'urp-core';
 import * as native from 'natives';
 
+const url = 'http://resource/client/html/index.html';
+const menus = {};
+
+// import {
+//     VEHICLE_MENU,
+//     POLICE_MENU,
+//     PLAYER_MENU,
+//     PERSONAL_MENU,
+//     AMBULANCE_MENU,
+//     MECHANIC_MENU,
+// } from '../shared/config';
+
 import { itemsList } from '../shared/config';
 
 let view;
 let data;
 
+alt.on('context:Dismount', handleDismount);
 alt.on('context:ParseInteraction', handleInteraction);
 alt.on('context:CreateMenu', handleCreateMenu);
 alt.on('context:AppendToMenu', handleAppendToMenu);
@@ -16,7 +29,6 @@ const openWheel = (data, entityDate) => {
     const items = itemsList.find((item) => {
         if (item.index === data) return item;
     });
-    if (!items) return;
     let menu = items.items;
     openWheelMenu(menu, entityDate);
 };
@@ -107,6 +119,7 @@ function handleInteraction(type, entity, model, coords) {
         coords,
     };
     if (type === 'vehicle') {
+        //view.focus();
         showCursor(true);
 
         if (job === 'mechanic') return openWheel('mechanic', entity);
@@ -127,9 +140,49 @@ function handleInteraction(type, entity, model, coords) {
         return openWheel('self', entity);
     }
 
+    if (!menus[model]) {
+        return;
+    }
+
     showCursor(true);
 
     return openWheel(model, entity);
+}
+
+function handleCreateMenu(model, title) {
+    if (menus[model]) {
+        alt.log(
+            `[CONTEXT-ERROR] Model ${model} is already in use for entity/model ${model}.`
+        );
+        return;
+    }
+
+    alt.log(`[CONTEXT-SUCCESS] Model ${model} is now bound. Title: ${title}`);
+    menus[model] = {
+        title,
+        options: [],
+    };
+}
+
+function handleAppendToMenu(
+    model,
+    contextOptionName,
+    eventCallbackName,
+    isServer = false
+) {
+    if (!menus[model]) {
+        alt.log(`[CONTEXT-ERROR] Identifier ${identifier} not found.`);
+        return;
+    }
+
+    alt.log(
+        `[CONTEXT-SUCCESS] Appended ${contextOptionName} to model ${model}.`
+    );
+    menus[model].options.push({
+        name: contextOptionName,
+        eventName: eventCallbackName,
+        isServer,
+    });
 }
 
 function showCursor(state) {
@@ -145,6 +198,9 @@ function handleDismount() {
         return;
     }
     wheelnavOpen = false;
+
+    // view.emit('context:Dismount');
+    // view.unfocus();
     showCursor(false);
     alt.toggleGameControls(true);
 }
@@ -158,3 +214,5 @@ const handleSelect = (data, entityDate) => {
     }
     handleDismount();
 };
+
+alt.emit('context:Ready');
