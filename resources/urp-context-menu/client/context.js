@@ -24,14 +24,6 @@ alt.setInterval(useMenu, 0);
 function useMenu() {
     let markedAsInvalid = false;
 
-    // if (alt.Player.local.getSyncedMeta('STOP_DRAWS')) {
-    //     markedAsInvalid = true;
-    // }
-
-    // if (alt.Player.local.getSyncedMeta('CHATTING')) {
-    //     markedAsInvalid = true;
-    // }
-
     if (native.isEntityDead(alt.Player.local.scriptID, false)) {
         markedAsInvalid = true;
     }

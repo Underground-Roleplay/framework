@@ -67,7 +67,7 @@ const login = async (source) => {
         Core.Character.startCharacter(source);
     }
 
-    const dataMatch = compareHash(uID, account[0].identifier);
+    const dataMatch = await compareHash(uID, account[0].identifier);
     if (!dataMatch) {
         source.kick(Core.Translate('ACCOUNT.LOGIN_ERROR'));
         return;

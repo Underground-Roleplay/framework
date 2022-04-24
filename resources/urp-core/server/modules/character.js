@@ -285,7 +285,6 @@ const selectCharacter = async (source, playerData, fromCreation = false) => {
         'metadata',
         source.playerData.metadata
     );
-    alt.log(source.playerData.metadata.ishandcuffed);
 
     Core.Functions.emitPlayerData(source, 'money', source.playerData.money);
     Core.Functions.emitPlayerData(source, 'ssn', source.playerData.ssn);

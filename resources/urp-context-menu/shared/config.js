@@ -1,116 +1,311 @@
-export const VEHICLE_MENU = {
-    identifier: 'Vehicle Menu',
-    options: [
-        {
-            eventName: 'context:vehicle:engine',
-            isServer: true,
-            name: 'Start/Stop Engine',
-        },
-        {
-            eventName: 'context:vehicle:lock',
-            isServer: true,
-            name: 'Lock/Unlock',
-        },
-        {
-            eventName: 'context:vehicle:trunk',
-            isServer: false,
-            name: 'Trunk',
-        },
-    ],
-    title: 'Vehicle Options',
-};
+export const itemsList = [
+    // usando png ou svg local ou web, sem texto
+    {
+        index: 'vehicle',
+        items: [
+            {
+                title: 'Seat Belt',
+                image: './img/seatbelt.png',
+                event: { name: 'seatbelt', type: 'client', params: '' },
+            },
+            {
+                title: 'Start Engine',
+                image: './img/startengine.png',
+                event: {
+                    name: 'context:vehicle:engine',
+                    type: 'client',
+                    params: '',
+                },
+            },
+            {
+                title: 'Lock',
+                image: './img/carlock.png',
+                event: {
+                    name: 'context:vehicle:lock',
+                    type: 'client',
+                    params: '',
+                },
+            },
+            {
+                title: 'Trunk',
+                image: './img/trunk.png',
+                event: {
+                    name: 'context:vehicle:trunk',
+                    type: 'client',
+                    params: '',
+                },
+            },
+            {
+                title: 'Repair',
+                image: './img/repair_3.png',
+                event: {
+                    name: 'whellmenu:mechanic:repair',
+                    type: 'server',
+                    params: '',
+                },
+            },
+        ],
+    },
 
-export const POLICE_MENU = {
-    identifier: 'Player Menu',
-    options: [
-        {
-            eventName: 'context:police:cuff',
-            isServer: true,
-            name: 'Hands Cuffs',
-        },
-        {
-            eventName: 'context:police:uncuff',
-            isServer: true,
-            name: 'UnCuffs',
-        },
-    ],
-    title: 'Player Options',
-};
+    // usando https://fontawesome.com/icons/   \u{icon id}\n
+    // texto + icone
+    {
+        index: 'self',
+        items: [
+            {
+                title: '\uf085\n personal',
+                event: { name: 'hideRadar', type: 'client', params: '' },
+            },
+            {
+                title: '\uf577\n personal',
+                event: { name: 'hideRadar', type: 'client', params: '' },
+            },
+            {
+                title: '\uf080\n personal',
+                event: { name: 'hideRadar', type: 'client', params: '' },
+            },
+            {
+                title: '\uf2c2\n personal',
+                event: { name: 'hideRadar', type: 'client', params: '' },
+            },
+            {
+                title: '\uf080\n personal',
+                event: { name: 'hideRadar', type: 'client', params: '' },
+            },
+            {
+                title: '\ue32e\n personal',
+                event: { name: 'hideRadar', type: 'client', params: '' },
+            },
+            {
+                title: '\uf080\n personal',
+                event: { name: 'hideRadar', type: 'client', params: '' },
+            },
+        ],
+    },
 
-export const PLAYER_MENU = {
-    identifier: 'Player Menu',
-    options: [
-        {
-            eventName: 'context:player:cuff',
-            isServer: true,
-            name: 'Start/Stop',
-        },
-        {
-            eventName: 'context:player:cuff',
-            isServer: true,
-            name: 'Manga',
-        },
-    ],
-    title: 'Player Options',
-};
+    {
+        index: 'police',
+        items: [
+            {
+                title: 'Cuff',
+                image: './img/handcuffs_3.png',
+                event: { name: 'seatbelt', type: 'client', params: '' },
+            },
+            {
+                title: 'MDT',
+                image: './img/police-mdt.png',
+                event: { name: 'lockdoor', type: 'client', params: '' },
+            },
+            {
+                title: 'Invoice',
+                image: './img/invoice.png',
+                event: { name: 'truck', type: 'client', params: '' },
+            },
+            {
+                title: 'Search',
+                image: './img/police_search.png',
+                event: { name: 'police_search', type: 'client', params: '' },
+            },
+            {
+                title: 'Drag',
+                image: './img/drag.png',
+                event: { name: 'police_drag', type: 'client', params: '' },
+            },
+            {
+                title: 'Put Inside Vehicle',
+                image: './img/put_in_car.png',
+                event: { name: 'police_putinveh', type: 'client', params: '' },
+            },
+            {
+                title: 'Put Outside Vehicle',
+                image: './img/put_out_car.png',
+                event: { name: 'police_putoutveh', type: 'client', params: '' },
+            },
+            {
+                title: 'Jail',
+                image: './img/jail.png',
+                event: { name: 'police_jail', type: 'client', params: '' },
+            },
+            {
+                title: 'Community Service',
+                image: './img/penalty.png',
+                event: { name: 'police_comnser', type: 'client', params: '' },
+            },
+        ],
+    },
 
-export const PERSONAL_MENU = {
-    identifier: 'Personal Menu',
-    options: [
-        {
-            eventName: 'context:player:showid',
-            isServer: true,
-            name: 'Show ID',
-        },
-        {
-            eventName: 'context:player:showssn',
-            isServer: true,
-            name: 'Show SSN',
-        },
-        {
-            eventName: 'context:player:status',
-            isServer: true,
-            name: 'Status',
-        },
-    ],
-    title: 'Personal Options',
-};
+    {
+        index: 'ambulance',
+        items: [
+            {
+                title: 'Drag',
+                image: './img/drag.png',
+                event: { name: 'ems_drag', type: 'client', params: '' },
+            },
+            {
+                title: 'Invoice',
+                image: './img/invoice.png',
+                event: { name: 'ems_invoice', type: 'client', params: '' },
+            },
+            {
+                title: 'Put Inside Vehicle',
+                image: './img/put_in_car.png',
+                event: { name: 'ems_putinveh', type: 'client', params: '' },
+            },
+            {
+                title: 'Put Outside Vehicle',
+                image: './img/put_out_car.png',
+                event: { name: 'ems_putoutveh', type: 'client', params: '' },
+            },
+            {
+                title: 'Heal',
+                image: './img/heal.png',
+                event: { name: 'ems_heal', type: 'client', params: '' },
+            },
+            {
+                title: 'Revive',
+                image: './img/revive.png',
+                event: { name: 'ems_revive', type: 'client', params: '' },
+            },
+        ],
+    },
 
-export const AMBULANCE_MENU = {
-    identifier: 'Ambulance Menu',
-    options: [
-        {
-            eventName: 'context:ambulance:revive',
-            isServer: true,
-            name: 'Revive',
-        },
-    ],
-    title: 'Ambulance Options',
-};
+    {
+        index: 'mechanic',
+        items: [
+            {
+                title: 'Drag',
+                image: './img/drag.png',
+                event: { name: 'custom', type: 'client', params: '' },
+            },
+            {
+                title: 'Invoice',
+                image: './img/invoice.png',
+                event: { name: 'truck', type: 'client', params: '' },
+            },
+            {
+                title: 'Put Inside Vehicle',
+                image: './img/put_in_car.png',
+                event: { name: 'custom', type: 'client', params: '' },
+            },
+            {
+                title: 'Put Outside Vehicle',
+                image: './img/put_out_car.png',
+                event: { name: 'custom', type: 'client', params: '' },
+            },
+            {
+                title: 'Heal',
+                image: './img/heal.png',
+                event: { name: 'custom', type: 'client', params: '' },
+            },
+            {
+                title: 'Revive',
+                image: './img/revive.png',
+                event: { name: 'custom', type: 'client', params: '' },
+            },
+        ],
+    },
 
-export const MECHANIC_MENU = {
-    identifier: 'Mechanic Menu',
-    options: [
-        {
-            eventName: 'context:vehicle:engine',
-            isServer: true,
-            name: 'Start/Stop Engine',
-        },
-        {
-            eventName: 'context:vehicle:lock',
-            isServer: true,
-            name: 'Lock/Unlock',
-        },
-        {
-            eventName: 'context:vehicle:trunk',
-            isServer: false,
-            name: 'Trunk',
-        },
-        {
-            eventName: 'context:mechanic:repair',
-            isServer: true,
-            name: 'Repair Vehicle',
-        },
-    ],
-    title: 'Mechanic Options',
-};
+    //pump gas start
+    {
+        index: 2287735495,
+        items: [
+            {
+                title: 'Drag',
+                image: './img/drag.png',
+                event: { name: 'Station:open', type: 'client', params: '' },
+            },
+        ],
+    },
+    {
+        index: -2007231801,
+        items: [
+            {
+                title: 'Drag',
+                image: './img/drag.png',
+                event: { name: 'Station:open', type: 'client', params: '' },
+            },
+        ],
+    },
+    {
+        index: 1339433404,
+        items: [
+            {
+                title: 'Drag',
+                image: './img/drag.png',
+                event: { name: 'Station:open', type: 'client', params: '' },
+            },
+        ],
+    },
+    {
+        index: 1694452750,
+        items: [
+            {
+                title: 'Drag',
+                image: './img/drag.png',
+                event: { name: 'Station:open', type: 'client', params: '' },
+            },
+        ],
+    },
+    {
+        index: 1933174915,
+        items: [
+            {
+                title: 'Drag',
+                image: './img/drag.png',
+                event: { name: 'Station:open', type: 'client', params: '' },
+            },
+        ],
+    },
+    {
+        index: -462817101,
+        items: [
+            {
+                title: 'Drag',
+                image: './img/drag.png',
+                event: { name: 'Station:open', type: 'client', params: '' },
+            },
+        ],
+    },
+    {
+        index: -469694731,
+        items: [
+            {
+                title: 'Drag',
+                image: './img/drag.png',
+                event: { name: 'Station:open', type: 'client', params: '' },
+            },
+        ],
+    },
+    {
+        index: -164877493,
+        items: [
+            {
+                title: 'Drag',
+                image: './img/drag.png',
+                event: { name: 'Station:open', type: 'client', params: '' },
+            },
+        ],
+    },
+    {
+        index: 4130089803,
+        items: [
+            {
+                title: 'Drag',
+                image: './img/drag.png',
+                event: { name: 'Station:open', type: 'client', params: '' },
+            },
+        ],
+    },
+    {
+        index: 3832150195,
+        items: [
+            {
+                title: 'Drag',
+                image: './img/drag.png',
+                event: { name: 'Station:open', type: 'client', params: '' },
+            },
+        ],
+    },
+    //pump gas end
+];

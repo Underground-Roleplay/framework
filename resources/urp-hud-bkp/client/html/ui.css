@@ -1,0 +1,315 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+* {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    outline: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;    
+}
+
+body {
+    font-weight: normal;
+    overflow: hidden;
+    height: 100%;
+}
+
+.progress {
+    -webkit-transition: 0.35s stroke-dashoffset;
+    -o-transition: 0.35s stroke-dashoffset;
+    transition: 0.35s stroke-dashoffset;
+    -webkit-transform: rotate(140deg);
+    -ms-transform: rotate(140deg);
+    transform: rotate(140deg);
+    -webkit-transform-origin: 50% 50%;
+    -ms-transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
+}
+
+.huds .hud.dashboard {
+    position: absolute;
+    height: 40px;
+    bottom: 110px;
+    right: -30px;
+    -webkit-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    transform: translateX(-50%);
+
+}
+.huds {
+    height: 100%;
+    width: 20%;
+    left: 80%;
+}
+
+.health {
+    width: 80px;
+    height: 25px;
+    position: absolute;
+    border: 1px solid rgba(255, 255, 255, .1);    
+    margin-left: -255px !important;
+    margin-top: 110px !important;
+    background: rgba(255, 255, 255, .03);
+    -webkit-transform: skew(-30deg);
+    -ms-transform: skew(-30deg);
+    transform: skew(-30deg);
+    
+}
+
+.health img {
+    width: 15px;
+    margin-top: 6px;
+    margin-left: 70%;
+    opacity: .5;
+}
+
+.health .vprogress {
+    margin-left: 0px !important;
+    top:1px;
+    height: 23px;
+    position: absolute;
+    background: radial-gradient(circle, rgba(172, 37, 19, 1) 0%, rgba(199, 31, 31, 1) 100%);    
+    
+}
+
+.armor {
+    width: 80px;
+    height: 25px;
+    position: absolute;
+    border: 1px solid rgba(255, 255, 255, .1);    
+    margin-left: -170px !important;
+    margin-top: 110px !important;
+    background: rgba(255, 255, 255, .03);
+    -webkit-transform: skew(-30deg);
+    -ms-transform: skew(-30deg);
+    transform: skew(-30deg);
+}
+
+.armor img {
+    width: 15px;
+    margin-top: 6px;
+    margin-left: 70%;
+    opacity: .3;
+}
+
+.armor .vprogress {
+    margin-left: 0px !important;
+    top:1px;  
+    height: 21px;
+    position: absolute;
+    border: 1px solid rgba(255, 255, 255, .1);
+    background: radial-gradient(circle, rgba(190, 190, 190, 1) 0%, rgba(182, 174, 174, 1) 100%);    
+   
+}
+
+
+.hunger {
+    width: 40px;
+    height: 25px;
+    position: absolute;
+    border: 1px solid rgba(255, 255, 255, .1);
+    margin-left: -85px !important;
+    margin-top: 110px !important;
+    background: rgba(255, 255, 255, .03);
+    -webkit-transform: skew(-30deg);
+    -ms-transform: skew(-30deg);
+    transform: skew(-30deg);
+}
+
+.hunger img {
+    width: 15px;
+    margin-top: 6px;
+    margin-left: 30%;
+    opacity: .5;
+}
+
+.hunger .vprogress {
+    width: 40px;
+    margin-left: 0px !important;
+    top:1px;
+    height: 21px;
+    position: absolute;
+    border: 1px solid rgba(255, 255, 255, .1);
+    background: radial-gradient(circle, rgba(96, 197, 14,1) 0%, rgba(33, 212, 9, 1) 100%);
+}
+
+.thirst {
+    width: 40px;
+    height: 25px;
+    position: absolute;
+    border: 1px solid rgba(255, 255, 255, .1);
+    margin-left: -40px !important;
+    margin-top: 110px !important;
+    background: rgba(255, 255, 255, .03);
+    -webkit-transform: skew(-30deg);
+    -ms-transform: skew(-30deg);
+    transform: skew(-30deg);
+}
+
+.thirst img {
+    width: 15px;
+    margin-top: 6px;
+    margin-left: 30%;
+    opacity: .3;
+}
+
+.thirst .vprogress {
+    width: 40px;
+    margin-left: 0px !important;
+    top: 1px;
+    height: 21px;
+    position: absolute;
+    border: 1px solid rgba(255, 255, 255, .1);
+    background: radial-gradient(circle, rgba(21, 75, 124, 1) 0%, rgba(31, 74, 199, 1) 100%);
+}
+
+.vprogress {
+    -webkit-transition: width 2s;
+    transition: width 2s;
+}
+
+.date {    
+    border: 1px solid rgba(255, 255, 255, .1);
+    display: inline-flex;    
+    width: 50px;
+    height: 25px;
+    position: absolute;
+    margin-left: -310px !important;
+    margin-top: 110px ;
+    background: rgba(12, 12, 12, 0.2);
+    -webkit-transform: skew(-30deg);
+    -ms-transform: skew(-30deg);
+    transform: skew(-30deg);
+}
+
+.date font {
+    top: 5px;
+    left: 5px;
+    text-align: right;
+    font-family: 'Titillium Web', sans-serif;
+    position: absolute;
+    color: rgba(255, 255, 255, 0.986);
+    font-size: 14px;
+    text-transform: uppercase;
+    display: inline-flex;   
+    position: absolute;
+   
+}
+
+
+.huds .hud.fuel {
+    -webkit-transform: scale(0.7);
+    -ms-transform: scale(0.7);
+    transform: scale(0.7);
+    position: absolute;
+    bottom: -60px;
+    right: 187px;
+    position: absolute;
+    text-align: center;
+    margin: 15px 0;
+}
+
+.huds .hud.fuel span {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 12px;
+    display: block;
+    margin-top: 0px;
+}
+
+
+
+.hud.fuel span {
+    opacity: 0;
+    margin-top: -4px;
+}
+
+.hud.fuel span:after {
+    position: absolute;
+    content: '%';
+    top: 1px;
+    right: 4px;
+    font-size: 7px;
+}
+
+.hud.fuel g {
+    -webkit-transform: translate(16px, 13px);
+    -ms-transform: translate(16px, 13px);
+    transform: translate(16px, 13px);
+}
+
+.orangeStroke {
+    stroke: #ffaf02;
+}
+
+.redStroke {
+    stroke: #FF0245;
+}
+
+.fuel {
+    width: 30px;
+    height: 25px;
+    background: rgba(255, 255, 255, .03);
+    position: absolute;
+    margin-left: -80px !important;
+    margin-top: 10px !important;
+    border: 1px solid rgba(255, 255, 255, .1);
+}
+
+.fuel font {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 12px;
+    text-transform: uppercase;
+    margin-left: 5px;
+    margin-top: 6px;
+    position: absolute;
+}
+
+.belt {
+    width: 30px;
+    height: 25px;
+    background: rgba(255, 255, 255, .03);
+    position: absolute;
+    margin-left: -80px !important;
+    margin-top: 49px !important;
+    border: 1px solid rgba(255, 255, 255, .1);
+}
+
+.belt img {
+    width: 15px;
+    margin-top: 5px;
+    margin-left: 7px;
+    opacity: .5;
+}
+
+.logoserver {
+	background: url("logo.png") no-repeat;
+	position: absolute;
+    right: 50%;
+    transform: translate(-50%,-50%);
+	width: 100px;
+	height: 100px;
+	top: 30px;
+	opacity: 0.8;
+}
+.money {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    top: 25px;
+    right: 15px;
+    font-weight: 400;
+    font-size: 1.2rem;
+    font-family: 'Anton', sans-serif;
+    color: rgb(104, 240, 165);
+}
+
+.wallet {
+    width: 100%;
+    text-align: right;
+    
+}
+
+.bank {
+    width: 100%;
+    text-align: right;
+}

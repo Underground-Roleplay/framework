@@ -1,0 +1,34 @@
+body {
+    background: transparent;
+}
+
+.wheelnav {
+    display: grid;
+    height: 50vh;
+    width: 50vw;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+#piemenu > svg { width: 100%; height: 100%; }
+#piemenu { height: 400px; width: 400px; margin:auto; }
+@media (max-width: 400px) { #piemenu { height: 300px; width: 300px; } }
+
+[class|=wheelnav-piemenu-slice-basic] { fill: #333333; stroke: none; fill-opacity: 0.77}
+[class|=wheelnav-piemenu-slice-selected] { fill: #C03A2A; stroke: none; }
+[class|=wheelnav-piemenu-slice-hover] { fill: #C03A2A;  stroke: none; fill-opacity: 0.77; cursor: pointer; }
+
+[class|=wheelnav-piemenu-title-basic] { fill: #fff; stroke: none; }
+[class|=wheelnav-piemenu-title-selected] { fill: #fff; stroke: none; }
+[class|=wheelnav-piemenu-title-hover] { fill: #fff; stroke: none; cursor: pointer; }
+[class|=wheelnav-piemenu-title] > tspan { font-family: "Font Awesome 5 Free", Helvetica, sans-serif; font-size: 24px; font-weight: 900;}
+[class|=wheelnav-piemenu-title] > tspan:nth-child(2) { font-size: 15px; font-weight: 900;}
+
+.wheelnav-piemenu-spreader-in,
+.wheelnav-piemenu-spreader-out { fill: #444; stroke: #444; stroke-width: 2; cursor: pointer; }
+.wheelnav-piemenu-spreadertitle-in,
+.wheelnav-piemenu-spreadertitle-out { fill: #eee; stroke: #444; cursor: pointer; }

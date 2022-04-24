@@ -74,24 +74,21 @@ const cameraTransition = () => {
 
 alt.onServer('Core:Client:CharacterLoaded', () => {
     cameraTransition();
-    hud = new alt.WebView('http://resource/client/html/ui.html');
+    hud = new alt.WebView('http://resource/client/html/index.html');
     natives.freezeEntityPosition(localPlayer, false);
     isLogged = true;
 });
 let belt = false;
+let fuel = undefined;
 alt.setInterval(() => {
     if (!isLogged) return;
-    let isVehicle = false;
     let hudPos = 'left';
     let fuelPos = undefined;
-    let fuel = undefined;
     let hours = natives.getClockHours();
     let minutes = natives.getClockMinutes();
     if (!localPlayer.vehicle) {
-        isVehicle = false;
         natives.displayRadar(false);
     } else {
-        isVehicle = true;
         alt.emitServer('fuel:Percents');
         natives.displayRadar(true);
         fuel = localPlayer.vehicle.getStreamSyncedMeta('fuel');
@@ -103,12 +100,13 @@ alt.setInterval(() => {
     const data = {
         hud: true,
         pauseMenu: natives.isPauseMenuActive(),
-        armour: localPlayer.armour,
-        health: localPlayer.health,
-        hunger: Core.Functions.getMetaData('hunger'),
-        thirst: Core.Functions.getMetaData('thirst'),
+        armour: localPlayer.armour / 2.6,
+        health: (localPlayer.health - 100) / 2.6,
+        hunger: ((Core.Functions.getMetaData('hunger') / 100) * 100) / 2.6,
+        thirst: ((Core.Functions.getMetaData('thirst') / 100) * 100) / 2.6,
         stress: Core.Functions.getMetaData('stress'),
         money: Core.Functions.getPlayerData('money'),
+        ssn: Core.Functions.getPlayerData('ssn'),
         playerid: undefined,
         fuel: tank,
         hudPosition: hudPos,
@@ -116,10 +114,21 @@ alt.setInterval(() => {
         vehicle: isVehicle,
         hour: hours,
         minute: minutes,
-        belt: belt,
+        isTalking: localPlayer.isTalking,
     };
     hud.emit('hud:Tick', data);
 }, 1000);
+
+let isVehicle = false;
+
+alt.on('enteredVehicle', (vehicle, seat) => {
+    if (seat === 1) {
+        isVehicle = true;
+    }
+});
+alt.on('leftVehicle', (vehicle, seat) => {
+    isVehicle = false;
+});
 
 alt.everyTick(() => {
     natives.hideHudComponentThisFrame(1); // Wanted Stars
@@ -133,18 +142,41 @@ alt.everyTick(() => {
     natives.hideHudComponentThisFrame(13); // Cash Change
     natives.hideHudComponentThisFrame(17); // Save Game
     natives.hideHudComponentThisFrame(20); // Weapon Stats
+    if (!isVehicle) return;
+    if (!localPlayer.vehicle) {
+        natives.displayRadar(false);
+    } else {
+        natives.displayRadar(true);
+    }
+
+    let CarRPM = alt.Player.local.vehicle.rpm;
+    let CarSpeed = alt.Player.local.vehicle.speed;
+    let CarGear = alt.Player.local.vehicle.gear;
+    let CarMph = (CarSpeed * 2.236936).toFixed();
+    let CarKmh = CarSpeed * 3.6;
+    let CalcRpm = CarRPM * 9;
+    let engine = natives.getIsVehicleEngineRunning(
+        localPlayer.vehicle.scriptID
+    );
+    let lights = natives.getVehicleLightsState(localPlayer.vehicle.scriptID);
+    let lightOn = lights[2];
+    const data = {
+        ShowHud: true,
+        CurrentCarRPM: CarRPM,
+        CurrentCarSpeed: CarSpeed * 3.6,
+        CurrentCarGear: CarGear,
+        CurrentCarMph: CarMph,
+        CurrentCarKmh: CarKmh,
+        CurrentCalcRpm: CalcRpm,
+        CurrentFuel: tank / 2.6,
+        vehicle: isVehicle,
+        belt: belt,
+        engine,
+        lightOn,
+    };
+    hud.emit('speedometer:data', data);
 });
 
-/**
- * The code above is adding a watermark to the top right corner of the image.
- */
-alt.setWatermarkPosition(3);
-// set belt
-/**
- * If the player presses G, toggle the seatbelt on or off.
- * @param key - The key that was pressed.
- * @returns The value of the flag.
- */
 alt.on('keydown', (key) => {
     if (key === 71) {
         if (!localPlayer.vehicle) return;
