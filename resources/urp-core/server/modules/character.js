@@ -95,16 +95,22 @@ const tickManager = async (source) => {
     if (
         !source.nextPingTime &&
         !source.timeHungerThirstDec &&
-        !source.payCheckTimeOut
+        !source.payCheckTimeOut &&
+        !source.moneyTick
     ) {
         source.nextPingTime = Date.now() + Core.Config.SaveInterval;
         source.timeHungerThirstDec = Date.now() + Core.Config.HungerThirstTime;
         source.payCheckTimeOut = Date.now() + Core.Config.payCheckTimeOut;
+        source.moneyTick = Date.now() + Core.Config.moneyTick;
     }
 
     if (Date.now() > source.nextPingTime) {
         source.nextPingTime = Date.now() + Core.Config.SaveInterval;
         updateBasicData(source);
+    }
+    if (Date.now() > source.moneyTick) {
+        source.nextPingTime = Date.now() + Core.Config.moneyTick;
+        Core.Money.updateMoney(source);
     }
 
     if (Date.now() > source.timeHungerThirstDec) {
@@ -124,10 +130,6 @@ const tickManager = async (source) => {
         source.payCheckTimeOut = Date.now() + Core.Config.payCheckTimeOut;
         Core.Job.verifyPayCheck(source);
     }
-
-    // if(source.vehicle && source.vehicle.driver === source){
-    //    Fuel logic
-    // }
 };
 
 const addHungerThirstDecay = (source) => {

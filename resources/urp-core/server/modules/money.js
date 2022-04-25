@@ -10,7 +10,7 @@ import { executeSync } from '../libs/utils';
 const setMoney = (source, moneytype, amount) => {
     if (source.playerData.money[moneytype]) {
         source.playerData.money[moneytype] = parseInt(amount);
-        updateMoney(source);
+        Core.Functions.emitPlayerData(source, 'money', source.playerData.money);
     }
     return;
 };
@@ -21,7 +21,7 @@ const moneyDeposit = (source, amount) => {
             parseInt(source.playerData.money['cash']) - parseInt(amount);
         source.playerData.money['bank'] =
             parseInt(source.playerData.money['bank']) + parseInt(amount);
-        updateMoney(source);
+        Core.Functions.emitPlayerData(source, 'money', source.playerData.money);
     } else {
         // TODO
         alt.log('Não possui a quantia na carteira');
@@ -34,7 +34,7 @@ const moneywithdraw = (source, amount) => {
             parseInt(source.playerData.money['bank']) - parseInt(amount);
         source.playerData.money['cash'] =
             parseInt(source.playerData.money['cash']) + parseInt(amount);
-        updateMoney(source);
+        Core.Functions.emitPlayerData(source, 'money', source.playerData.money);
     } else {
         // TODO
         alt.log('Não possui a quantia no banco');
@@ -51,7 +51,7 @@ const getPayment = (source, amount) => {
     if (source.playerData.money['cash'] > parseInt(amount)) {
         source.playerData.money['cash'] =
             parseInt(source.playerData.money['cash']) - parseInt(amount);
-        updateMoney(source);
+        Core.Functions.emitPlayerData(source, 'money', source.playerData.money);
 
         return;
     } else {
@@ -73,7 +73,7 @@ const addMoney = (source, moneytype, amount) => {
     if (source.playerData.money[moneytype]) {
         source.playerData.money[moneytype] =
             parseInt(source.playerData.money[moneytype]) + parseInt(amount);
-        updateMoney(source);
+        Core.Functions.emitPlayerData(source, 'money', source.playerData.money);
     }
     return;
 };
@@ -226,4 +226,5 @@ export default {
     getFullPayment,
     hasMoney,
     transferMoney,
+    updateMoney,
 };
