@@ -51,19 +51,18 @@ function drawText2D(text, pos, scale, color, alignment = 0, padding = 0) {
 
     natives.endTextCommandDisplayText(pos.x, pos.y, 0);
 }
-
-const drawText = (x, y, width, height, scale, { r, g, b, a }, text) => {
-    natives.setTextFont(4);
-    natives.setTextProportional(0);
-    natives.setTextScale(scale, scale);
-    natives.setTextColour(r, g, b, a);
-    natives.setTextDropShadow(0, 0, 0, 0, 255);
-    natives.setTextEdge(2, 0, 0, 0, 255);
-    natives.setTextDropShadow();
+const drawText = (text, position, font, scale) => {
+    natives.setDrawOrigin(position.x, position.y, position.z - 0.5, 0);
+    natives.beginTextCommandDisplayText('STRING');
+    natives.addTextComponentSubstringPlayerName(text);
+    natives.setTextFont(font);
+    natives.setTextScale(1, scale);
+    natives.setTextWrap(0.0, 1.0);
+    natives.setTextCentre(true);
+    natives.setTextColour(255, 255, 255, 255);
     natives.setTextOutline();
-    natives.setTextEntry('STRING');
-    natives.addTextComponentString(text);
-    natives.drawText(x - width / 2, y - height / 2 + 0.005);
+    natives.endTextCommandDisplayText(0, 0, 0);
+    natives.clearDrawOrigin();
 };
 
 const drawText3D = (x, y, z, text) => {
@@ -141,6 +140,34 @@ const createCamera = (camx, camy, camz, rotx, roty, angle, timelapse) => {
     natives.setCamFov(primaryCamera, 55);
     natives.renderScriptCams(true, true, 0, true, false, 0);
 };
+let drawMarker = (pos, data) => {
+    natives.drawMarker(
+        data.type,
+        pos.x,
+        pos.y,
+        pos.z,
+        data.dirx || 0,
+        data.diry || 0,
+        data.dirz || 0,
+        data.rotx || 0,
+        data.roty || 0,
+        data.rotz || 0,
+        data.scalex || 2.5,
+        data.scaley || 2.5,
+        data.scalez || 2.5,
+        data.r,
+        data.g,
+        data.b,
+        data.a,
+        data.bobAndDown || false,
+        data.faceCamera || true,
+        data.p19 || 2,
+        data.rotate || false,
+        data.textureDict || undefined,
+        data.textureName || undefined,
+        data.drawOnEnts || false
+    );
+};
 
 export default {
     drawText,
@@ -150,4 +177,5 @@ export default {
     destroyCam,
     createCamera,
     drawTextHelper,
+    drawMarker,
 };

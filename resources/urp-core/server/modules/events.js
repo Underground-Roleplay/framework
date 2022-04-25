@@ -33,6 +33,7 @@ alt.on('entityLeaveColshape', (colshape, source) => {
 alt.on('playerDisconnect', async (source) => {
     if (source.playerData) {
         Core.Character.updateBasicData(source);
+        Core.Money.updateMoney(source);
     }
     alt.emit(
         'Core:CreateLog',
