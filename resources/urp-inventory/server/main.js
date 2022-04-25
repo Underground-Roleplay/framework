@@ -27,7 +27,3 @@ alt.onClient('inventory:dropItem', (source, item) => {
 alt.onClient('inventory:sendItem', (source, item) => {
     Core.Inventory.sendItem(source, item.name, item.amount);
 });
-
-alt.onClient('inventory:pickupItem', (source, droppedItem, fromAmount) => {
-    Core.Inventory.pickupItem(source, droppedItem, fromAmount);
-});
