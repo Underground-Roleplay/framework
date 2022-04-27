@@ -495,12 +495,28 @@ const getCurrentInventory = (source) => {
 };
 
 const searchPlayerInventory = (source, targetSource) => {
+    source.targetData = targetSource;
+    source.playerData.chestOrigin = 'search';
     alt.emitClient(
         source,
         'inventory:searchPlayerInventory',
         source.playerData.inventory,
         targetSource.playerData.inventory
     );
+};
+
+const searchPlayerTransfer = (source, item, amount) => {
+    if (!source) return;
+    if (removeItem(source.targetData, item, amount)) {
+        if (addItem(source, item, amount)) {
+            alt.emitClient(
+                source,
+                'inventory:searchPlayerInventory',
+                source.playerData.inventory,
+                source.targetData.playerData.inventory
+            );
+        }
+    }
 };
 
 const getHomeInventory = async (source) => {
@@ -662,4 +678,5 @@ export default {
     tryOpenChest,
     buyStorage,
     searchPlayerInventory,
+    searchPlayerTransfer,
 };

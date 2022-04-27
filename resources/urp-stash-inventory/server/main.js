@@ -67,15 +67,24 @@ alt.onClient(
                     Core.Inventory.addItem(source, item, amount);
                 }
                 break;
+            case 'search':
+                Core.Inventory.searchPlayerTransfer(source, item, amount);
+                break;
             default:
                 break;
         }
     }
 );
+
 alt.onClient('inventory:requestHomeInventory', (source) => {
     Core.Inventory.getHomeInventory(source);
 });
 
 alt.onClient('inventory:requestHomeInventory', (source) => {
     Core.Inventory.getHomeInventory(source);
+});
+
+alt.onClient('context:search:inventory:player', (source, data) => {
+    if (!source || !data) return;
+    Core.Inventory.searchPlayerInventory(source, data);
 });

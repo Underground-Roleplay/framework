@@ -114,19 +114,21 @@ alt.onServer('police:setHandsCuff', () => {
     natives.setEnableHandcuffs(alt.Player.local.scriptID, true);
     alt.log(natives.isPedCuffed(alt.Player.local.scriptID));
     Core.Functions.loadAnim('mp_arresting');
-    natives.taskPlayAnim(
-        alt.Player.local.scriptID,
-        'mp_arresting',
-        'idle',
-        3.0,
-        -3.0,
-        -1,
-        63,
-        0,
-        0,
-        0,
-        0
-    );
+    alt.setTimeout(() => {
+        natives.taskPlayAnim(
+            alt.Player.local.scriptID,
+            'mp_arresting',
+            'idle',
+            3.0,
+            -3.0,
+            -1,
+            63,
+            0,
+            0,
+            0,
+            0
+        );
+    }, 200);
 });
 
 alt.everyTick(() => {
