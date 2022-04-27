@@ -31,7 +31,7 @@ URPConfig.HungerThirstTime = 1000 * 60 * 5;
 //Paycheck
 URPConfig.payCheckTimeOut = 1000 * 60 * 10;
 
-URPConfig.moneyTick = 1000 * 60 * 2;
+URPConfig.moneyTick = 1000 * 60 * 10;
 
 URPConfig.DefaultMoney = { cash: 5000, bank: 5000, crypto: 0 };
 URPConfig.DefaultInfo = {

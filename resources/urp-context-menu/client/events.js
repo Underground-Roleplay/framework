@@ -26,3 +26,21 @@ alt.on('context:vehicle:engine', (i, data) => {
     if (!targetVehicle) return;
     alt.emitServer('context:vehicle:engine', targetVehicle);
 });
+
+alt.on('search:inventory:player', (i, data) => {
+    const targetPlayer = alt.Player.getByScriptID(data);
+    if (!targetPlayer) return;
+    alt.emitServer('context:search:inventory:player', targetPlayer);
+});
+
+alt.on('context:police:cuff', (i, data) => {
+    const targetPlayer = alt.Player.getByScriptID(data);
+    if (!targetPlayer) return;
+    alt.emitServer('context:police:cuff', targetPlayer);
+});
+
+alt.on('context:police:putinprison', (i, data) => {
+    const targetPlayer = alt.Player.getByScriptID(data);
+    if (!targetPlayer) return;
+    alt.emitServer('context:police:putinprison', targetPlayer);
+});

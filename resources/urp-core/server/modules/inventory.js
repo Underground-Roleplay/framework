@@ -455,6 +455,7 @@ const sendItem = (source, item, amount) => {
     Core.Inventory.removeItem(source, item, amount);
     Core.Inventory.addItem(targetPed, item, amount);
 };
+
 const useWeapon = async (source, weaponName) => {
     const wHash = alt.hash(weaponName);
     if (!wHash) return;
@@ -491,6 +492,15 @@ const isItem = (source, item) => {
 
 const getCurrentInventory = (source) => {
     return source.playerData.inventory;
+};
+
+const searchPlayerInventory = (source, targetSource) => {
+    alt.emitClient(
+        source,
+        'inventory:searchPlayerInventory',
+        source.playerData.inventory,
+        targetSource.playerData.inventory
+    );
 };
 
 const getHomeInventory = async (source) => {
@@ -651,4 +661,5 @@ export default {
     sendItem,
     tryOpenChest,
     buyStorage,
+    searchPlayerInventory,
 };
