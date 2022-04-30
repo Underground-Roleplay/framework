@@ -1,55 +1,48 @@
-alt.on("Bank:updateMoney", AttBalance)
-alt.on("Bank:charinfo", AttCharinfo)
-alt.on("Bank:ssn", AttSSN)
-alt.on("Bank:RefreshPage", RefreshPage)
+alt.on('Bank:updateMoney', AttBalance);
+alt.on('Bank:charinfo', AttCharinfo);
+alt.on('Bank:ssn', AttSSN);
+alt.on('Bank:RefreshPage', RefreshPage);
 
 let data = {};
 let page = '';
 
-
 function AttBalance(i) {
-    data.money = i
+    data.money = i;
 }
 
 function AttCharinfo(i) {
-    data.charinfo = i
-    Acount()
+    data.charinfo = i;
+    Acount();
 }
 
 function AttSSN(i) {
-    data.ssn = i
-
+    data.ssn = i;
 }
 
 function RefreshPage() {
     switch (page) {
-
         case 'transfer':
-            Transferencia()
+            Transferencia();
             break;
 
         case 'withdraw':
-
-            Saque()
+            Saque();
             break;
 
         case 'deposit':
             console.log();
-            Deposito()
+            Deposito();
 
             break;
 
         case 'acount':
-
-            Acount()
+            Acount();
             break;
-
     }
 }
 
 function Transferencia() {
-
-    $("#viwer").empty().append(`
+    $('#viwer').empty().append(`
         <div class="full content-center mb-1">
             <p>Balance</p>
         </div>
@@ -62,13 +55,12 @@ function Transferencia() {
         <div class=" full content-center box-btn-deposito">
             <button type="button" class="btn btn-success" onclick="FinalizarTransferencia()">Transfer</button>
         </div>
-    `)
-    page = 'transfer'
+    `);
+    page = 'transfer';
 }
 
-
 function Saque() {
-    $("#viwer").empty().append(`
+    $('#viwer').empty().append(`
         <div class="full content-center mb-1">
             <p>Wallet</p>
         </div>
@@ -86,12 +78,12 @@ function Saque() {
         <div class=" full content-center box-btn-deposito">
             <button type="button" class="btn btn-success" onclick="FinalizarSaque()">Withdraw</button>
         </div>
-    `)
+    `);
     page = 'withdraw';
 }
 
 function Deposito() {
-    $("#viwer").empty().append(`
+    $('#viwer').empty().append(`
         <div class="full content-center mb-1">
             <p>Wallet</p>
         </div>
@@ -109,12 +101,12 @@ function Deposito() {
         <div class=" full content-center box-btn-deposito">
             <button type="button" class="btn btn-success" onclick="FinalizarDeposito()">Deposit</button>
         </div>
-        `)
+        `);
     page = 'deposit';
 }
 
 function Acount() {
-    $("#viwer").empty().append(`
+    $('#viwer').empty().append(`
         <div class="full content-center mb-1">
             <p>Hello</p>
         </div>
@@ -127,34 +119,32 @@ function Acount() {
         <div class="full content-center balance mb-3">
             <h2>$ ${data.money.bank},00 </h2>
         </div>
-    `)
-    document.getElementById('acount-name').innerHTML = data.charinfo.firstname + ' ' + data.charinfo.lastname;
+    `);
+    document.getElementById('acount-name').innerHTML =
+        data.charinfo.firstname + ' ' + data.charinfo.lastname;
 
     page = 'acount';
 }
 
 function FinalizarDeposito(params) {
-    var value = $("#amount-deposit").val();
+    var value = $('#amount-deposit').val();
 
-    alt.emit('Bank:deposit', value)
-
-
+    alt.emit('Bank:deposit', value);
 }
 
 function FinalizarSaque(params) {
-    var value = $("#amount-withdraw").val();
+    var value = $('#amount-withdraw').val();
 
-    alt.emit('Bank:withdraw', value)
-
+    alt.emit('Bank:withdraw', value);
 }
 
 function FinalizarTransferencia(params) {
-    var data = {}
-    data.ssn = $("#amount-ssn").val();
-    data.value = $("#amount-transfer").val();
-    alt.emit('Bank:transfer', JSON.stringify(data))
+    var data = {};
+    data.ssn = $('#amount-ssn').val();
+    data.value = $('#amount-transfer').val();
+    alt.emit('Bank:transfer', JSON.stringify(data));
 }
 
 function Close(params) {
-    alt.emit('Bank:close')
+    alt.emit('Bank:close');
 }

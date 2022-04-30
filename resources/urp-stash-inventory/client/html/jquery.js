@@ -41,17 +41,18 @@ const disableInventory = (ms) => {
 };
 
 $(document).ready(function () {
-    alt.on('stash:inventory:dataRequest', (inv, stash, chestType, maxWeight, maxInvWeight) => {
-        updateMochila(inv, stash, maxWeight,maxInvWeight);
-        console.log(chestType)
-        type = chestType;
-    });
-
-
+    alt.on(
+        'stash:inventory:dataRequest',
+        (inv, stash, chestType, maxWeight, maxInvWeight) => {
+            updateMochila(inv, stash, maxWeight, maxInvWeight);
+            console.log(chestType);
+            type = chestType;
+        }
+    );
 
     document.onkeyup = function (data) {
         if (data.which == 27) {
-            alt.emit('stash:inventory:close')
+            alt.emit('stash:inventory:close');
         }
     };
 });
@@ -185,22 +186,25 @@ const updateMochila = (inv, stash, maxWeight, maxInvWeight) => {
     const nameList = stash.sort((a, b) => (a.name > b.name ? 1 : -1));
     const nameList2 = inv.sort((a, b) => (a.name > b.name ? 1 : -1));
     $('#inventory').html(`
-	<div class="peso"><b>USED:</b>  ${formatarNumero(getCurrentWeight(inv))}    <s>|</s>    <b>DISPONIBLE:</b>  ${formatarNumero(
-        (parseInt(maxInvWeight) -
-        getCurrentWeight(inv) )
-    )}    <s>|</s>    <b>MAX WEIGHT:</b>  ${formatarNumero(parseInt(maxInvWeight))}</div>
-	<div class="peso2"><b>USED:</b>  ${formatarNumero(getCurrentWeight(stash)
+	<div class="peso"><b>USED:</b>  ${formatarNumero(
+        getCurrentWeight(inv)
     )}    <s>|</s>    <b>DISPONIBLE:</b>  ${formatarNumero(
-        maxWeight -
+        parseInt(maxInvWeight) - getCurrentWeight(inv)
+    )}    <s>|</s>    <b>MAX WEIGHT:</b>  ${formatarNumero(
+        parseInt(maxInvWeight)
+    )}</div>
+	<div class="peso2"><b>USED:</b>  ${formatarNumero(
         getCurrentWeight(stash)
+    )}    <s>|</s>    <b>DISPONIBLE:</b>  ${formatarNumero(
+        maxWeight - getCurrentWeight(stash)
     )}    <s>|</s>    <b>MAX WEIGHT:</b>  ${formatarNumero(maxWeight)}</div>
 			<div class="esquerda">
 				${nameList2
                     .map(
                         (item) => `
-					<div class="item" data-item-key="${item.name}" data-amount-key="${item.amount}" data-vehname-key="${
-                            item.vehname
-                        }">
+					<div class="item" data-item-key="${item.name}" data-amount-key="${
+                            item.amount
+                        }" data-vehname-key="${item.vehname}">
 					<div id="quantity">${
                         item.amount > 1 && item.unique
                             ? 1
@@ -225,9 +229,9 @@ const updateMochila = (inv, stash, maxWeight, maxInvWeight) => {
 				${nameList
                     .map(
                         (item) => `
-					<div class="item2" data-item-key="${item.name}" data-amount-key="${item.amount}" data-vehname-key="${
-                            item.vehname
-                        }">
+					<div class="item2" data-item-key="${item.name}" data-amount-key="${
+                            item.amount
+                        }" data-vehname-key="${item.vehname}">
 					<div id="quantity">${
                         item.amount > 1 && item.unique
                             ? 1

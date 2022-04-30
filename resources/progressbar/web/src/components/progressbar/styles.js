@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Container = styled.div`
     width: 100vw;
@@ -49,9 +49,9 @@ export const ProgressBarContainer = styled.div`
 `;
 
 export const ProgressBarFill = styled.div`
-    background-color: #FFC130 !important;
+    background-color: #ffc130 !important;
     width: 0%;
     height: 4vh;
     transition: width 0.3s;
     transition-timing-function: ease-out;
-`
+`;
