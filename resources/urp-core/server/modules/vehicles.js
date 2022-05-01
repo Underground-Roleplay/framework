@@ -274,9 +274,6 @@ const sourceLeavesVehicle = (source, vehicle, seat) => {
                     vehicle.pos.z
             );
         }
-
-        // If car in future will stay spawned
-        // updateVehiclePosition(vehicle)
     }
 };
 
@@ -972,28 +969,19 @@ const loadStatus = (vehicle, data) => {
     });
 };
 
-const vehicleLockState = (source) => {
-    if (!source) return;
-    const closestVeh = alt.Vehicle.all.find(
-        (targetVehicle) =>
-            source.pos.distanceTo(targetVehicle.pos) < 4 &&
-            source.playerData.ssn == targetVehicle.data.ssn
-    );
+const vehicleLockState = (source, vehicle) => {
+    if (!source || !vehicle) return;
 
-    if (closestVeh.lockState === 1) {
+    if (vehicle.lockState === 1) {
         alt.emitClient(source, 'playHowl2d', 'lock.ogg', 0.2);
-        return (closestVeh.lockState = 2);
+        return (vehicle.lockState = 2);
     }
 
-    if (closestVeh.lockState === 2) {
+    if (vehicle.lockState === 2) {
         alt.emitClient(source, 'playHowl2d', 'lock.ogg', 0.2);
-        return (closestVeh.lockState = 1);
+        return (vehicle.lockState = 1);
     }
 };
-// const updateVehiclePosition = (vehicle) => {
-//     vehicle.data.position = vehicle.pos
-//     db.execute('UPDATE characters_vehicles SET position = ? WHERE ssn = ?', [JSON.stringify(vehicle.data.position), vehicle.data.ssn], undefined, alt.resourceName)
-// }
 
 export default {
     pool,

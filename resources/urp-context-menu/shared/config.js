@@ -6,7 +6,11 @@ export const itemsList = [
             {
                 title: 'Seat Belt',
                 image: './img/seatbelt.png',
-                event: { name: 'seatbelt', type: 'client', params: '' },
+                event: {
+                    name: 'context:vehicle:seatbelt',
+                    type: 'client',
+                    params: '',
+                },
             },
             {
                 title: 'Start Engine',
@@ -53,32 +57,13 @@ export const itemsList = [
         index: 'self',
         items: [
             {
-                title: '\uf085\n personal',
-                event: { name: 'hideRadar', type: 'client', params: '' },
-            },
-            {
-                title: '\uf577\n personal',
-                event: { name: 'hideRadar', type: 'client', params: '' },
-            },
-            {
-                title: '\uf080\n personal',
-                event: { name: 'hideRadar', type: 'client', params: '' },
-            },
-            {
-                title: '\uf2c2\n personal',
-                event: { name: 'hideRadar', type: 'client', params: '' },
-            },
-            {
-                title: '\uf080\n personal',
-                event: { name: 'hideRadar', type: 'client', params: '' },
-            },
-            {
-                title: '\ue32e\n personal',
-                event: { name: 'hideRadar', type: 'client', params: '' },
-            },
-            {
-                title: '\uf080\n personal',
-                event: { name: 'hideRadar', type: 'client', params: '' },
+                title: 'personal',
+                image: './img/police_search.png',
+                event: {
+                    name: 'splayer',
+                    type: 'client',
+                    params: '',
+                },
             },
         ],
     },
@@ -89,7 +74,11 @@ export const itemsList = [
             {
                 title: 'Cuff',
                 image: './img/handcuffs_3.png',
-                event: { name: 'seatbelt', type: 'client', params: '' },
+                event: {
+                    name: 'context:police:cuff',
+                    type: 'client',
+                    params: '',
+                },
             },
             {
                 title: 'MDT',
@@ -104,7 +93,11 @@ export const itemsList = [
             {
                 title: 'Search',
                 image: './img/police_search.png',
-                event: { name: 'police_search', type: 'client', params: '' },
+                event: {
+                    name: 'search:inventory:player',
+                    type: 'client',
+                    params: '',
+                },
             },
             {
                 title: 'Drag',
@@ -124,7 +117,11 @@ export const itemsList = [
             {
                 title: 'Jail',
                 image: './img/jail.png',
-                event: { name: 'police_jail', type: 'client', params: '' },
+                event: {
+                    name: 'context:police:putinprison',
+                    type: 'client',
+                    params: '',
+                },
             },
             {
                 title: 'Community Service',

@@ -1,44 +1,43 @@
-alt.on("hud:Tick", (data => {        
-
-    $(".health > .vprogress").css("width", (80 * (data.health / 200)) + "px");
+alt.on('hud:Tick', (data) => {
+    $('.health > .vprogress').css('width', 80 * (data.health / 200) + 'px');
     if (data.health <= 0) {
-        $(".health > .vprogress").hide();
+        $('.health > .vprogress').hide();
     } else {
-        $(".health > .vprogress").show();
+        $('.health > .vprogress').show();
     }
-    $(".armor > .vprogress").css("width", (80 * (data.armor / 100)) + "px");
+    $('.armor > .vprogress').css('width', 80 * (data.armor / 100) + 'px');
     if (data.armor <= 0) {
-        $(".armor > .vprogress").hide();
+        $('.armor > .vprogress').hide();
     } else {
-        $(".armor > .vprogress").show();
+        $('.armor > .vprogress').show();
     }
-    $(".hunger > .vprogress").css("width", (40 * (data.hunger/100) + "px"));
+    $('.hunger > .vprogress').css('width', 40 * (data.hunger / 100) + 'px');
     if (data.hunger <= 0) {
-        $(".hunger > .vprogress").hide();
+        $('.hunger > .vprogress').hide();
     } else {
-        $(".hunger > .vprogress").show();
+        $('.hunger > .vprogress').show();
     }
-    $(".thirst > .vprogress").css("width", (40 * (data.thirst/100) + "px"));
+    $('.thirst > .vprogress').css('width', 40 * (data.thirst / 100) + 'px');
     if (data.thirst <= 0) {
-        $(".thirst > .vprogress").hide();
+        $('.thirst > .vprogress').hide();
     } else {
-        $(".thirst > .vprogress").show();
+        $('.thirst > .vprogress').show();
     }
 
     let hour = data.hour;
-    if (hour <= 9) hour = "0" + hour;
+    if (hour <= 9) hour = '0' + hour;
 
     let minute = data.minute;
-    if (minute <= 9) minute = "0" + minute;
-    let money = data.money
-    $(".wallet > font").html( `$ ${money.cash}` );
-    $(".bank > font").html( `$ ${money.bank}` );
+    if (minute <= 9) minute = '0' + minute;
+    let money = data.money;
+    $('.wallet > font').html(`$ ${money.cash}`);
+    $('.bank > font').html(`$ ${money.bank}`);
 
-    $(".date > font").html( hour + ":" + minute);
+    $('.date > font').html(hour + ':' + minute);
 
     if (data.vehicle) {
         $('.vehicle').fadeIn('fast');
-        let fuel = Math.ceil(data.fuel)
+        let fuel = Math.ceil(data.fuel);
         if (fuel >= 100) {
             fuel = 99;
         }
@@ -55,12 +54,8 @@ alt.on("hud:Tick", (data => {
         } else {
             $('.belt > img').css('opacity', '.5');
         }
-        
     } else {
         $('.vehicle').css('display', 'none');
         $('.vehicle').fadeOut('fast');
     }
-        
-        
-
-}));
+});

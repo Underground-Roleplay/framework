@@ -6,54 +6,7 @@ import { executeSync, updateSync, numberFormatter } from '../libs/utils';
 
 //  Items
 const useableItems = {};
-const dropItem = (source, item, amount = 1) => {
-    Core.Inventory.removeItem(source, item.name, amount);
-    item.amount = amount;
-    const itemPosition = new alt.Vector3(
-        source.pos.x,
-        source.pos.y,
-        source.pos.z
-    );
-    const droppedItem = Core.Entities.createDropItem(
-        itemPosition,
-        source.dimension,
-        item
-    );
-    return droppedItem;
-};
-
-const pickupItem = (source, item, amount) => {
-    amount = parseInt(amount);
-    let avaliableAmount = getDroppedItemAmountById(item.entityID);
-    if (!avaliableAmount) return;
-
-    if (amount > avaliableAmount) {
-        return;
-    }
-
-    if (avaliableAmount === amount) {
-        Core.Entities.removeEntity(item.entityID, 3);
-        Core.Inventory.addItem(source, item.name, amount);
-        return;
-    }
-
-    if (amount < avaliableAmount) {
-        avaliableAmount -= amount;
-        Core.Entities.updateEntityData(
-            item.entityID,
-            3,
-            'amount',
-            avaliableAmount
-        );
-        Core.Inventory.addItem(source, item.name, amount);
-        return;
-    }
-};
-
-const getDroppedItemAmountById = (id) => {
-    const amount = Core.Entities.getEntityData(id, 3, 'amount');
-    return amount;
-};
+let dropList = [];
 
 const createUseableItem = (itemName, eventName, isServer = false) => {
     if (useableItems[itemName]) throw new Error('Item already registered');
@@ -502,6 +455,7 @@ const sendItem = (source, item, amount) => {
     Core.Inventory.removeItem(source, item, amount);
     Core.Inventory.addItem(targetPed, item, amount);
 };
+
 const useWeapon = async (source, weaponName) => {
     const wHash = alt.hash(weaponName);
     if (!wHash) return;
@@ -538,6 +492,31 @@ const isItem = (source, item) => {
 
 const getCurrentInventory = (source) => {
     return source.playerData.inventory;
+};
+
+const searchPlayerInventory = (source, targetSource) => {
+    source.targetData = targetSource;
+    source.playerData.chestOrigin = 'search';
+    alt.emitClient(
+        source,
+        'inventory:searchPlayerInventory',
+        source.playerData.inventory,
+        targetSource.playerData.inventory
+    );
+};
+
+const searchPlayerTransfer = (source, item, amount) => {
+    if (!source) return;
+    if (removeItem(source.targetData, item, amount)) {
+        if (addItem(source, item, amount)) {
+            alt.emitClient(
+                source,
+                'inventory:searchPlayerInventory',
+                source.playerData.inventory,
+                source.targetData.playerData.inventory
+            );
+        }
+    }
 };
 
 const getHomeInventory = async (source) => {
@@ -597,6 +576,8 @@ const tryOpenStaticStorage = async (source, size, name, perm) => {
     if (result.length <= 0) {
         return;
     }
+    let job = source.playerData.job.name;
+    if (job !== perm) retun;
     source.playerData.chest = JSON.parse(result[0].data);
     source.playerData.chestOrigin = 'chest';
     alt.emitClient(
@@ -621,6 +602,57 @@ const buyStorage = async (source, name, size) => {
     tryOpenChest(source, name, size);
 };
 
+let generateID = () => {
+    let id =
+        Math.floor(Math.random() * 10) +
+        'z' +
+        Math.floor(Math.random() * 10000) +
+        'a' +
+        Math.floor(Math.random() * 100);
+    return id;
+};
+
+const dropItem = (source, item, amount) => {
+    if (amount < 1) amount = 1;
+    let data = {
+        id: generateID(),
+        name: item.name,
+        amount: amount,
+        pos: source.pos,
+    };
+    if (Core.Inventory.removeItem(source, data.name, data.amount)) {
+        dropList.push(data);
+        alt.emitClient(source, 'pikItem');
+        refreshDropList(source, dropList);
+    }
+};
+
+const refreshDropList = (source, data) => {
+    alt.Player.all.forEach((player) => {
+        alt.emitClient(player, 'dropList', data);
+    });
+};
+
+alt.on('playerConnect', (source) => {
+    alt.emitClient(source, 'dropList', dropList);
+});
+
+alt.onClient('pickupItem', (source, id) => {
+    getItemDrop(source, id);
+});
+
+const getItemDrop = (source, id) => {
+    let item = dropList.find((item) => {
+        if (item.id === id) return item;
+    });
+    if (!item) return;
+    if (Core.Inventory.addItem(source, item.name, item.amount)) {
+        alt.emitClient(source, 'pikItem');
+        dropList.splice(dropList.indexOf(item), 1);
+        refreshDropList(source, dropList);
+    }
+};
+
 export default {
     getCurrentWeight,
     getItemSlot,
@@ -634,7 +666,6 @@ export default {
     isUseableItem,
     useWeapon,
     isItem,
-    pickupItem,
     removeItemChest,
     transferChest,
     getHomeInventory,
@@ -646,4 +677,6 @@ export default {
     sendItem,
     tryOpenChest,
     buyStorage,
+    searchPlayerInventory,
+    searchPlayerTransfer,
 };

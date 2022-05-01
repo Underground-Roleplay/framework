@@ -31,18 +31,14 @@ $(document).ready(function () {
     alt.on('inventory:dataRequest', (data, maxWeight) => {
         syncInventory(data, maxWeight);
         actionContainer.fadeIn(500);
-        open = true
-    });  
+        open = true;
+    });
 
     document.onkeyup = function (data) {
         if (data.which === 27) {
-            alt.emit('inventory:closeInv')
+            alt.emit('inventory:closeInv');
         }
     };
-
-    
- 
-
 });
 
 const numberFormatter = (n) => {
@@ -73,13 +69,14 @@ var syncInventory = (data, maxWeight) => {
 
     $('.inventory-title').html(`    
     <div class="d-flex justify-content-center bd-highlight mb-3">
-    <div class="p-2 bd-highlight barra"><p class="cima">Max Weight</p><p class="down">${numberFormatter(parseInt(maxWeight))}kg</p></div>
+    <div class="p-2 bd-highlight barra"><p class="cima">Max Weight</p><p class="down">${numberFormatter(
+        parseInt(maxWeight)
+    )}kg</p></div>
     <div class="p-2 bd-highlight barra"><p class="cima">Used</p><p class="down">${numberFormatter(
         getCurrentWeight(data)
     )}kg</p></div>
     <div class="p-2 bd-highlight "><p class="cima">Disponible</p><p class="down">${numberFormatter(
-        parseInt(maxWeight) -
-        getCurrentWeight(data)
+        parseInt(maxWeight) - getCurrentWeight(data)
     )}kg</p></div>
     </div>
     `);
@@ -92,7 +89,9 @@ var syncInventory = (data, maxWeight) => {
             }">
         <div class="options">
           ${
-            item.useable ? `<div class="option" data-event="use">Use</div>` : ""
+              item.useable
+                  ? `<div class="option" data-event="use">Use</div>`
+                  : ''
           }
           <div class="option" data-event="send">Send</div>
           <div class="option" data-event="drop">Drop</div>
@@ -179,19 +178,19 @@ $(document).ready(function () {
             var paramUrl = Option == 'send' ? 'sendItem' : 'dropItem';
             var $el = $(this).closest('.cell');
             var amount = Number($el.find('.amount-value').val());
-            if (paramUrl == 'sendItem'){
+            if (paramUrl == 'sendItem') {
                 alt.emit('inventory:sendItem', {
                     name: $el.data('item-key'),
                     amount,
                     type: $el.data('item-type'),
-                })
+                });
             }
-            if (paramUrl == 'dropItem'){
+            if (paramUrl == 'dropItem') {
                 alt.emit('inventory:dropItem', {
                     name: $el.data('item-key'),
                     amount,
                     type: $el.data('item-type'),
-                })
+                });
             }
 
             alt.emit('inventory:requestDataInvetory');

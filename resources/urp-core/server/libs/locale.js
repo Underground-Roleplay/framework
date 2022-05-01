@@ -1,16 +1,16 @@
 import i18n from 'i18n';
-import br from '../../shared/configs/lang/pt-br.json';
-import en from '../../shared/configs/lang/en.json';
+import br from '../../shared/configs/lang/br';
+import en from '../../shared/configs/lang/en';
 
 let provider;
 
 const init = (lang) => {
     i18n.configure({
-        locales: ['pt-br', 'en'],
-        defaultLocale: 'pt-br',
+        locales: ['br', 'en'],
+        defaultLocale: 'br',
         objectNotation: true,
         staticCatalog: {
-            'pt-br': br,
+            br: br,
             en: en,
         },
         api: {

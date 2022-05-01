@@ -158,8 +158,25 @@ const itemsMap = (inv, stashInv) => {
     });
 };
 
-alt.on('context:vehicle:trunk', (data) => {
-    const targetVehicle = alt.Vehicle.getByScriptID(data.entity);
-    if (!targetVehicle) return;
-    alt.emitServer('stash:inventory:dataRequest:vehicle', targetVehicle);
+// alt.on('context:vehicle:trunk', (data) => {
+//     const targetVehicle = alt.Vehicle.getByScriptID(data.entity);
+//     if (!targetVehicle) return;
+//     alt.emitServer('stash:inventory:dataRequest:vehicle', targetVehicle);
+// });
+
+alt.onServer('inventory:searchPlayerInventory', (inv, targetInv) => {
+    if (!isOpen) {
+        openInvy();
+    }
+    itemsMap(inv, targetInv);
+    alt.setTimeout(() => {
+        Core.Browser.emit(
+            'stash:inventory:dataRequest',
+            inventory,
+            stash,
+            'search',
+            Core.Functions.getPlayerData('maxWeight')
+        );
+    }, 200);
+    alt.log(inventory, stash);
 });

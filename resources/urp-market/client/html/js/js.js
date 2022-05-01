@@ -1,34 +1,31 @@
-alt.on("Market:updateData", AttBalance)
+alt.on('Market:updateData', AttBalance);
 
 let quantidade = 1;
 let index = '';
 let value = 0;
-let product = []
-
+let product = [];
 
 function AttBalance(data) {
-   product = data
-   index = '';
-   value = 0;
-   filter('drink')
+    product = data;
+    index = '';
+    value = 0;
+    filter('drink');
 }
-
 
 function CloseComfirmed() {
-    $("#comfirmed").css("display", "none");
-    $('#comfirmed').empty()
-    index = ''
-    quantidade = 1
+    $('#comfirmed').css('display', 'none');
+    $('#comfirmed').empty();
+    index = '';
+    quantidade = 1;
 }
 
-
 function comfirmed(i) {
-       $("#comfirmed").css("display", "flex");
-       product.map((obj)=>{
-           if (obj.index === i) {
-                value = obj.value
-                
-                $('#comfirmed').append(`
+    $('#comfirmed').css('display', 'flex');
+    product.map((obj) => {
+        if (obj.index === i) {
+            value = obj.value;
+
+            $('#comfirmed').append(`
                     <div class="comfirmed-externo">
                         <i class="fal fa-times-circle" onclick="CloseComfirmed()" ></i>
                         <div class="comfirmed-img background"  style="background-image: url('./img/item/${obj.index}.png');"></div>
@@ -46,52 +43,50 @@ function comfirmed(i) {
                         <h5 id="total">$ ${obj.value}</h5>
                         <button class="btn btn-primary" onclick="purchaseComfirmed('${obj.index}')">Comfirmed</button>
                     </div>
-                `)
-
+                `);
         }
-    })
-
+    });
 }
 
 function count(type) {
-    if (value > 1 && quantidade >=1) {
-        if (type ==='input') {
+    if (value > 1 && quantidade >= 1) {
+        if (type === 'input') {
             input = $('#amount').val();
             if (input < 1) {
-                quantidade = 1
-            }else{
-                quantidade = input
+                quantidade = 1;
+            } else {
+                quantidade = input;
             }
         }
-        if (type ==='up') {
-            quantidade ++
-          
+        if (type === 'up') {
+            quantidade++;
+
             console.log(quantidade);
         }
-        if (type ==='down' && quantidade > 1) {
-            quantidade --
+        if (type === 'down' && quantidade > 1) {
+            quantidade--;
             console.log(quantidade);
         }
         $('#amount').val(quantidade);
-        document.getElementById('total').innerHTML = `$ ${quantidade * value}`;  
+        document.getElementById('total').innerHTML = `$ ${quantidade * value}`;
     }
 }
 
-
 function purchaseComfirmed(i) {
-    alt.emit('Market:purchase',quantidade, i,value)
-    $("#comfirmed").css("display", "none");
-    $('#comfirmed').empty()
-    setTimeout(() => { 
-        index = ''
-        quantidade = 1
+    alt.emit('Market:purchase', quantidade, i, value);
+    $('#comfirmed').css('display', 'none');
+    $('#comfirmed').empty();
+    setTimeout(() => {
+        index = '';
+        quantidade = 1;
     }, 50);
-
 }
 
 function filter(i) {
-    $('#boxProdutos').empty().append(` <div class="storange" id='storange' ></div`)
-    product.map((obj)=>{
+    $('#boxProdutos')
+        .empty()
+        .append(` <div class="storange" id='storange' ></div`);
+    product.map((obj) => {
         if (obj.type === i) {
             $('#storange').append(`
                 <div class="item">
@@ -108,13 +103,11 @@ function filter(i) {
                         <button class="btn btn-success" onclick="comfirmed('${obj.index}')">purchase</button>
                     </div>
                 </div>
-            `)
+            `);
         }
-    })
+    });
 }
-
 
 function Close() {
-    alt.emit('Market:close')
+    alt.emit('Market:close');
 }
-

@@ -2,8 +2,6 @@ import * as alt from 'alt-client';
 import * as natives from 'natives';
 import Core from '../main';
 
-const nearItems = [];
-
 const list = [];
 
 const getEntity = async (id, type, pos, data) => {
@@ -52,43 +50,11 @@ const createEntity = async (type, pos, data, id = undefined) => {
         const markerTimer = createMarker(pos, data);
         return markerTimer;
     }
-    if (type === 3) {
-        const itemID = createDroppedItem(id, pos, data);
-        return itemID;
-    }
 };
 
 const updatePos = async (id, type, pos) => {
     destroyEntity(id, type);
     getEntity(id, type, pos);
-};
-
-const createDroppedItem = (id, pos, data) => {
-    const defaultMarker = {
-        type: 0,
-        scalex: 1,
-        scaley: 1,
-        scalez: 1,
-        ...new alt.RGBA(0, 181, 204, 200),
-    };
-    const marker = createMarker(pos, defaultMarker);
-    data.marker = marker;
-    if (nearItems.length > 0) {
-        for (let i = 0; i < nearItems.length; i++) {
-            if (!nearItems[i]) {
-                nearItems[i] = data;
-                nearItems[i].slot = i;
-                nearItems[i].pos = pos;
-                nearItems[i].entityID = id;
-                return i;
-            }
-        }
-    }
-    const idx = nearItems.push(data) - 1;
-    nearItems[idx].slot = idx;
-    nearItems[idx].pos = pos;
-    nearItems[idx].entityID = id;
-    return idx;
 };
 
 const createMarker = (pos, data) => {
@@ -98,7 +64,7 @@ const createMarker = (pos, data) => {
             data.type,
             pos.x,
             pos.y,
-            pos.z - 1,
+            pos.z,
             data.dirx || 0,
             data.diry || 0,
             data.dirz || 0,
@@ -122,6 +88,16 @@ const createMarker = (pos, data) => {
         );
     });
     return marker;
+};
+const getClosesItems = () => {
+    let item = dropList.find((i) => {
+        let dist = alt.Player.local.pos.distanceTo(i.pos);
+        if (dist <= 1.5) {
+            return i;
+        }
+    });
+    if (!item) return;
+    alt.emitServer('pickupItem', item.id);
 };
 
 const createPed = async (pos, data) => {
@@ -156,14 +132,65 @@ const destroyEntity = (id, type) => {
         alt.clearEveryTick(local);
         list[`${id}_${type}`].local = undefined;
     }
-    if (type === 3) {
-        const { local } = list[`${id}_${type}`];
-        if (nearItems[local] && nearItems[local].marker) {
-            alt.clearEveryTick(nearItems[local].marker);
-        }
-        nearItems[local] = undefined;
-        list[`${id}_${type}`].local = undefined;
-    }
 };
 
-export default { getEntity, createPed, destroyEntity, updatePos, nearItems };
+let dropList = [];
+
+alt.onServer('dropList', (data) => {
+    dropList = data;
+});
+
+alt.everyTick(() => {
+    for (let i = 0; i < dropList.length; i++) {
+        let itemPos = new alt.Vector3(
+            dropList[i].pos.x,
+            dropList[i].pos.y,
+            dropList[i].pos.z - 0.7
+        );
+        let dist = alt.Player.local.pos.distanceTo(itemPos);
+        if (dist <= 3) {
+            Core.Utils.drawMarker(itemPos, {
+                type: 21,
+                dirx: 0,
+                diry: 0,
+                dirz: 0,
+                rotx: 0,
+                roty: 180,
+                rotz: 0,
+                scalex: 0.25,
+                scaley: 0.25,
+                scalez: 0.25,
+                r: 0,
+                g: 200,
+                b: 0,
+                a: 50,
+                bobAndDown: false,
+                faceCamera: true,
+                p19: 2,
+                rotate: 0,
+                textureDict: 0,
+                textureName: 0,
+                drawOnEnts: false,
+            });
+            Core.Utils.drawText(
+                `${dropList[i].name} x${dropList[i].amount}`,
+                itemPos,
+                0,
+                0.4
+            );
+        }
+    }
+});
+alt.onServer('pikItem', () => {
+    Core.Functions.loadAnim('pickup_object');
+    Core.Functions.playAnim('pickup_object', 'pickup_low', 1000, 1);
+});
+
+export default {
+    getEntity,
+    createPed,
+    destroyEntity,
+    updatePos,
+    createMarker,
+    getClosesItems,
+};

@@ -1,51 +1,41 @@
 import * as alt from 'alt-server';
 import db from 'mysql2-wrapper';
 import Core from '../main';
-import { getClosestEntity } from '../libs/utils';
 
-const setHandcuffs = (source) => {
-    let targetPlayer = getClosestEntity(
-        source.pos,
-        source.rot,
-        [...alt.Player.all],
-        5
-    );
-    //if (!targetPlayer || targetPlayer === source) return;
+const cuffsState = (source, targetPlayer) => {
+    if (targetPlayer.playerData.metadata.ishandcuffed)
+        return removeHandcuffs(source, targetPlayer);
+
+    setHandcuffs(source, targetPlayer);
+};
+
+const setHandcuffs = (source, targetPlayer) => {
+    if (!targetPlayer) return;
     targetPlayer.setSyncedMeta('HasHandcuffs', true);
+    alt.emitClient(source, 'playHowl2d', 'cuff.ogg', 0.6);
+    alt.emitClient(targetPlayer, 'playHowl2d', 'cuff.ogg', 0.6);
     targetPlayer.setClothes(7, 41, 0, 2);
     targetPlayer.playerData.metadata.ishandcuffed = true;
-    saveMetadata(targetPlayer);
     alt.emitClient(targetPlayer, 'police:setHandsCuff');
 };
 
-const removeHandcuffs = (source) => {
-    let targetPlayer = getClosestEntity(
-        source.pos,
-        source.rot,
-        [...alt.Player.all],
-        5
-    );
-    if (!targetPlayer || targetPlayer === source) return;
+const removeHandcuffs = (source, targetPlayer) => {
+    if (!targetPlayer) return;
     targetPlayer.setSyncedMeta('HasHandcuffs', false);
+    alt.emitClient(source, 'playHowl2d', 'uncuff.ogg', 0.6);
+    alt.emitClient(targetPlayer, 'playHowl2d', 'uncuff.ogg', 0.6);
     targetPlayer.setClothes(7, 0, 0, 2);
     targetPlayer.playerData.metadata.ishandcuffed = false;
-    saveMetadata(targetPlayer);
     alt.emitClient(targetPlayer, 'police:uncuff');
 };
 
-const putInPrison = (source, time = 5) => {
-    let targetPlayer = getClosestEntity(
-        source.pos,
-        source.rot,
-        [...alt.Player.all],
-        5
-    );
-    if (!targetPlayer || targetPlayer === source) return;
+const putInPrison = (source, targetPlayer, time = 5) => {
+    if (!targetPlayer) return;
     targetPlayer.playerData.metadata.isInJail = true;
     targetPlayer.playerData.metadata.jailTime = time;
     targetPlayer.setSyncedMeta('HasHandcuffs', false);
     targetPlayer.setClothes(7, 0, 0, 2);
-    saveMetadata(targetPlayer);
+    alt.emitClient(targetPlayer, 'playHowl2d', 'jaildoor.ogg', 0.6);
     Core.Functions.setPosition(
         targetPlayer,
         1680.896728515625,
@@ -90,4 +80,5 @@ export default {
     setHandcuffs,
     removeHandcuffs,
     putInPrison,
+    cuffsState,
 };

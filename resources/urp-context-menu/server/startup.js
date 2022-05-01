@@ -20,20 +20,12 @@ alt.onClient('context:vehicle:lock', (source, vehicle) => {
 // POLICE CONTEXT EVENTS
 ////////////////////////////////////////////////////////////////////////////////////
 
-alt.onClient('context:police:cuff', (source) => {
-    Core.Police.setHandcuffs(source);
+alt.onClient('context:police:cuff', (source, targetPlayer) => {
+    Core.Police.cuffsState(source, targetPlayer);
 });
 
-alt.onClient('context:police:uncuff', (source) => {
-    Core.Police.removeHandcuffs(source);
-});
-
-alt.onClient('context:police:putinprison', (source) => {
-    Core.Police.putInPrison(source);
-});
-
-alt.onClient('context:police:carryPlayer', (source) => {
-    Core.Police.carryPlayer(source);
+alt.onClient('context:police:putinprison', (source, targetPlayer) => {
+    Core.Police.putInPrison(source, targetPlayer);
 });
 
 /////////////////////////////////////////////////////////////////////////////////////
