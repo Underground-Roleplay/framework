@@ -1,7 +1,6 @@
 import * as alt from 'alt-client';
 import Core from 'urp-core';
 
-
 alt.on('context:vehicle:trunk', (i, data) => {
     const targetVehicle = alt.Vehicle.getByScriptID(data);
     if (!targetVehicle) return;
