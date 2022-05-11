@@ -4,38 +4,39 @@ import Core from 'urp-core';
 import * as native from 'natives';
 
 const url = 'http://resource/client/html/index.html';
-const menus = {};
 
-// import {
-//     VEHICLE_MENU,
-//     POLICE_MENU,
-//     PLAYER_MENU,
-//     PERSONAL_MENU,
-//     AMBULANCE_MENU,
-//     MECHANIC_MENU,
-// } from '../shared/config';
-
-import { itemsList } from '../shared/config';
+import { itemsList, PROPS_LIST_EVENT } from '../shared/config';
 
 let view;
 let data;
+let wheelnavOpen = false;
 
 alt.on('context:Dismount', handleDismount);
 alt.on('context:ParseInteraction', handleInteraction);
-alt.on('context:CreateMenu', handleCreateMenu);
-alt.on('context:AppendToMenu', handleAppendToMenu);
 
-const openWheel = (data, entityDate) => {
+const getMenuItens = (data) => {
+    const menuIndex = PROPS_LIST_EVENT[data];
+    const items = itemsList.find((item) => {
+        if (item.index === menuIndex) return item;
+    });
+    let menu = items.items;
+    if (!wheelnavOpen) openWheelMenu(menu);
+};
+
+const openWheel = (data, entityDate, type) => {
+    alt.log(data, entityDate, type);
+    if (type) return getMenuItens(entityDate);
+
     const items = itemsList.find((item) => {
         if (item.index === data) return item;
     });
     let menu = items.items;
-    openWheelMenu(menu, entityDate);
+    if (!wheelnavOpen) openWheelMenu(menu, entityDate);
 };
-let wheelnavOpen = false;
 const openWheelMenu = (data, entityDate) => {
-    if (wheelnavOpen != true) {
+    if (wheelnavOpen !== true) {
         view = new alt.WebView('http://resource/client/html/index.html');
+
         view.on('CEFLoaded', (e) => {
             alt.nextTick(() => {
                 view.emit('createWheel', data, entityDate);
@@ -61,7 +62,6 @@ const openWheelMenu = (data, entityDate) => {
 
 const destroyMenu = () => {
     showCursor(false);
-
     wheelnavOpen = false;
     view.destroy();
     native.freezeEntityPosition(alt.Player.local.scriptID, false);
@@ -140,49 +140,13 @@ function handleInteraction(type, entity, model, coords) {
         return openWheel('self', entity);
     }
 
-    if (!menus[model]) {
+    if (!PROPS_LIST_EVENT[model]) {
         return;
     }
 
     showCursor(true);
 
-    return openWheel(model, entity);
-}
-
-function handleCreateMenu(model, title) {
-    if (menus[model]) {
-        alt.log(
-            `[CONTEXT-ERROR] Model ${model} is already in use for entity/model ${model}.`
-        );
-        return;
-    }
-
-    alt.log(`[CONTEXT-SUCCESS] Model ${model} is now bound. Title: ${title}`);
-    menus[model] = {
-        title,
-        options: [],
-    };
-}
-
-function handleAppendToMenu(
-    model,
-    contextOptionName,
-    eventCallbackName,
-    isServer = false
-) {
-    if (!menus[model]) {
-        alt.log(`[CONTEXT-ERROR] Identifier ${identifier} not found.`);
-        return;
-    }
-
-    alt.log(
-        `[CONTEXT-SUCCESS] Appended ${contextOptionName} to model ${model}.`
-    );
-    menus[model].options.push({
-        name: contextOptionName,
-        eventName: eventCallbackName,
-        isServer,
-    });
+    return openWheel(model, model, 'prop');
 }
 
 function showCursor(state) {
@@ -194,9 +158,9 @@ function showCursor(state) {
 }
 
 function handleDismount() {
-    if (!view) {
-        return;
-    }
+    // if (!view) {
+    //     return;
+    // }
     wheelnavOpen = false;
 
     // view.emit('context:Dismount');
@@ -212,7 +176,6 @@ const handleSelect = (data, entityDate) => {
     } else {
         alt.emitServer(data.name, data.params, entityDate);
     }
-    handleDismount();
 };
 
 alt.emit('context:Ready');

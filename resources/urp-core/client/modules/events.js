@@ -112,7 +112,6 @@ alt.on('gameEntityDestroy', (entity) => {
 
 alt.onServer('police:setHandsCuff', () => {
     natives.setEnableHandcuffs(alt.Player.local.scriptID, true);
-    alt.log(natives.isPedCuffed(alt.Player.local.scriptID));
     Core.Functions.loadAnim('mp_arresting');
     alt.setTimeout(() => {
         natives.taskPlayAnim(
