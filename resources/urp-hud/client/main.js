@@ -126,9 +126,6 @@ alt.on('enteredVehicle', (vehicle, seat) => {
         isVehicle = true;
     }
 });
-alt.on('leftVehicle', (vehicle, seat) => {
-    isVehicle = false;
-});
 
 alt.everyTick(() => {
     natives.hideHudComponentThisFrame(1); // Wanted Stars
@@ -142,10 +139,21 @@ alt.everyTick(() => {
     natives.hideHudComponentThisFrame(13); // Cash Change
     natives.hideHudComponentThisFrame(17); // Save Game
     natives.hideHudComponentThisFrame(20); // Weapon Stats
-    if (!isVehicle) return;
+    if (belt) {
+        natives.setPedConfigFlag(alt.Player.local.scriptID, 32, false);
+        natives.disableControlAction(0, 75, true);
+    } else {
+        natives.setPedConfigFlag(alt.Player.local.scriptID, 32, true);
+        natives.enableControlAction(0, 75, true);
+    }
     if (!localPlayer.vehicle) {
         natives.displayRadar(false);
+        isVehicle = false;
+        belt = false;
+        return;
     } else {
+        isVehicle = true;
+
         natives.displayRadar(true);
     }
 
@@ -179,13 +187,19 @@ alt.everyTick(() => {
 
 alt.on('keydown', (key) => {
     if (key === 71) {
-        if (!localPlayer.vehicle) return;
-        if (!belt) {
-            natives.setPedConfigFlag(alt.Player.local.scriptID, 32, false);
-            belt = true;
-        } else {
-            natives.setPedConfigFlag(alt.Player.local.scriptID, 32, true);
-            belt = false;
-        }
+        seatBelt();
     }
 });
+alt.on('context:vehicle:seatbelt', () => {
+    seatBelt();
+});
+const seatBelt = () => {
+    if (!localPlayer.vehicle) return;
+    if (!belt) {
+        belt = true;
+        alt.emit('playHowl2d', 'belt.ogg', 0.6);
+    } else {
+        belt = false;
+        alt.emit('playHowl2d', 'unbelt.ogg', 0.6);
+    }
+};
