@@ -121,7 +121,7 @@ alt.setInterval(() => {
 
 let isVehicle = false;
 
-alt.on('enteredVehicle', (vehicle, seat) => {
+alt.on('enteredVehicle', (_vehicle, seat) => {
     if (seat === 1) {
         isVehicle = true;
     }
@@ -139,6 +139,7 @@ alt.everyTick(() => {
     natives.hideHudComponentThisFrame(13); // Cash Change
     natives.hideHudComponentThisFrame(17); // Save Game
     natives.hideHudComponentThisFrame(20); // Weapon Stats
+
     if (belt) {
         natives.setPedConfigFlag(alt.Player.local.scriptID, 32, false);
         natives.disableControlAction(0, 75, true);
@@ -146,6 +147,7 @@ alt.everyTick(() => {
         natives.setPedConfigFlag(alt.Player.local.scriptID, 32, true);
         natives.enableControlAction(0, 75, true);
     }
+
     if (!localPlayer.vehicle) {
         natives.displayRadar(false);
         isVehicle = false;
@@ -190,16 +192,15 @@ alt.on('keydown', (key) => {
         seatBelt();
     }
 });
+
 alt.on('context:vehicle:seatbelt', () => {
     seatBelt();
 });
+
 const seatBelt = () => {
     if (!localPlayer.vehicle) return;
-    if (!belt) {
-        belt = true;
-        alt.emit('playHowl2d', 'belt.ogg', 0.6);
-    } else {
-        belt = false;
-        alt.emit('playHowl2d', 'unbelt.ogg', 0.6);
-    }
+
+    belt = !belt;
+
+    belt ? alt.emit('playHowl2d', 'belt.ogg', 0.6) : alt.emit('playHowl2d', 'unbelt.ogg', 0.6);
 };
