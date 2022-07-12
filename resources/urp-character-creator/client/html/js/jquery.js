@@ -1538,14 +1538,9 @@
                             u > 1 && xe(p),
                             u > 1 &&
                                 ve(
-                                    e
-                                        .slice(0, u - 1)
-                                        .concat({
-                                            value:
-                                                ' ' === e[u - 2].type
-                                                    ? '*'
-                                                    : '',
-                                        })
+                                    e.slice(0, u - 1).concat({
+                                        value: ' ' === e[u - 2].type ? '*' : '',
+                                    })
                                 ).replace(B, '$1'),
                             n,
                             u < i && Ce(e.slice(u, i)),
