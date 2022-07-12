@@ -1,0 +1,24 @@
+body {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    margin-left: calc(90% - 300px);
+    align-items: center;
+    overflow: hidden;
+    background: transparent;
+}
+#app {
+    padding: 0 10px;
+    width: 300px;
+    height: max-content;
+    border-radius: 10px;
+}
+.btn {
+    width: 100% !important;
+}
+.external {
+    padding: 5px 0;
+}
+.form-control {
+    text-align: center !important;
+}

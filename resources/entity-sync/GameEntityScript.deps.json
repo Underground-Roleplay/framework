@@ -1,67 +1,89 @@
 {
   "runtimeTarget": {
-    "name": ".NETCoreApp,Version=v5.0",
+    "name": ".NETCoreApp,Version=v6.0",
     "signature": ""
   },
   "compilationOptions": {},
   "targets": {
-    ".NETCoreApp,Version=v5.0": {
+    ".NETCoreApp,Version=v6.0": {
       "GameEntityScript/1.0.0": {
         "dependencies": {
-          "AltV.Net": "9.0.20-rc61",
-          "AltV.Net.EntitySync": "1.13.0",
-          "AltV.Net.EntitySync.ServerEvent": "9.0.20-rc61"
+          "AltV.Net": "10.0.3",
+          "AltV.Net.EntitySync": "1.18.0",
+          "AltV.Net.EntitySync.ServerEvent": "10.0.3"
         },
         "runtime": {
           "GameEntityScript.dll": {}
         }
       },
-      "AltV.Net/9.0.20-rc61": {
-        "runtime": {
-          "lib/net5.0/AltV.Net.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.0.0"
-          }
-        }
-      },
-      "AltV.Net.Async/9.0.20-rc61": {
+      "AltV.Net/10.0.3": {
         "dependencies": {
-          "AltV.Net": "9.0.20-rc61",
-          "System.Threading.Channels": "5.0.0"
+          "AltV.Net.Shared": "10.0.3"
         },
         "runtime": {
-          "lib/net5.0/AltV.Net.Async.dll": {
+          "lib/net6.0/AltV.Net.dll": {
             "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.0.0"
           }
         }
       },
-      "AltV.Net.EntitySync/1.13.0": {
+      "AltV.Net.Async/10.0.3": {
         "dependencies": {
-          "System.Threading.Channels": "5.0.0"
+          "AltV.Net": "10.0.3",
+          "System.Threading.Channels": "6.0.0"
         },
         "runtime": {
-          "lib/net5.0/AltV.Net.EntitySync.dll": {
+          "lib/net6.0/AltV.Net.Async.dll": {
             "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.0.0"
           }
         }
       },
-      "AltV.Net.EntitySync.ServerEvent/9.0.20-rc61": {
+      "AltV.Net.CApi/10.0.3": {
+        "runtime": {
+          "lib/net6.0/AltV.Net.CApi.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "AltV.Net.EntitySync/1.18.0": {
         "dependencies": {
-          "AltV.Net": "9.0.20-rc61",
-          "AltV.Net.Async": "9.0.20-rc61",
-          "AltV.Net.EntitySync": "1.13.0",
-          "System.Threading.Channels": "5.0.0"
+          "System.Threading.Channels": "6.0.0"
         },
         "runtime": {
-          "lib/net5.0/AltV.Net.EntitySync.ServerEvent.dll": {
+          "lib/net6.0/AltV.Net.EntitySync.dll": {
             "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.0.0"
           }
         }
       },
-      "System.Threading.Channels/5.0.0": {}
+      "AltV.Net.EntitySync.ServerEvent/10.0.3": {
+        "dependencies": {
+          "AltV.Net": "10.0.3",
+          "AltV.Net.Async": "10.0.3",
+          "AltV.Net.EntitySync": "1.18.0",
+          "System.Threading.Channels": "6.0.0"
+        },
+        "runtime": {
+          "lib/net6.0/AltV.Net.EntitySync.ServerEvent.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "AltV.Net.Shared/10.0.3": {
+        "dependencies": {
+          "AltV.Net.CApi": "10.0.3"
+        },
+        "runtime": {
+          "lib/net6.0/AltV.Net.Shared.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "System.Threading.Channels/6.0.0": {}
     }
   },
   "libraries": {
@@ -70,40 +92,54 @@
       "serviceable": false,
       "sha512": ""
     },
-    "AltV.Net/9.0.20-rc61": {
+    "AltV.Net/10.0.3": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-Inaie5t8jz/957HucKdHiAOLv2lJbmgdCWJyhhlCHP3vsUeFWNkDDygj9H5Sc/NEGj3xZkVdH+tynk6d0RpFzg==",
-      "path": "altv.net/9.0.20-rc61",
-      "hashPath": "altv.net.9.0.20-rc61.nupkg.sha512"
+      "sha512": "sha512-8smVvkxaOb9bXg4l1NIPuZt/iCr466Lt9b9MyYTrzL3w7BVBDNfXVOFgS+5RvzEkmcGdGi0PnVlF2T8zMGwrwQ==",
+      "path": "altv.net/10.0.3",
+      "hashPath": "altv.net.10.0.3.nupkg.sha512"
     },
-    "AltV.Net.Async/9.0.20-rc61": {
+    "AltV.Net.Async/10.0.3": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-iGeyj9Xf8Am9mKZjUwRTy2GrrRuWVGgCRz3IePnWUi08j2fiMUvzSKmaCRFO0qt80QYFYaxB4iLcm3xJqyScCw==",
-      "path": "altv.net.async/9.0.20-rc61",
-      "hashPath": "altv.net.async.9.0.20-rc61.nupkg.sha512"
+      "sha512": "sha512-BEx2us5b1P0cULz5Ctmo7KRmuSbEViGjqumJUxOwaKLz7nvxRWjvj9hz6v6ni7khy1idAHebu3vG1JiRR+ToBQ==",
+      "path": "altv.net.async/10.0.3",
+      "hashPath": "altv.net.async.10.0.3.nupkg.sha512"
     },
-    "AltV.Net.EntitySync/1.13.0": {
+    "AltV.Net.CApi/10.0.3": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-b0DkilzzJqXd0PTI7h9f/k5OVDKn60h95NU3z13y3Nz+pxlgS2V1lSE8MbVwqkdFr2Jl+3dZUwRAOs9Ic77Sbg==",
-      "path": "altv.net.entitysync/1.13.0",
-      "hashPath": "altv.net.entitysync.1.13.0.nupkg.sha512"
+      "sha512": "sha512-T+kaocjmPF4UQm0bM3+YoyVWILOzAaSysheJkLRlrVnRL9atHWYmMooxZgD7Ih/vV8rAqUirpQ626t3S3GdcrA==",
+      "path": "altv.net.capi/10.0.3",
+      "hashPath": "altv.net.capi.10.0.3.nupkg.sha512"
     },
-    "AltV.Net.EntitySync.ServerEvent/9.0.20-rc61": {
+    "AltV.Net.EntitySync/1.18.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-AAcxoIKh0I5wsfTghu8wZ78ZT9D4pnr2jdtcAbV7mNwfr8PfFpelJMkbsotA3OeuUAfgp+SZzvm/RTC5AdQJxg==",
-      "path": "altv.net.entitysync.serverevent/9.0.20-rc61",
-      "hashPath": "altv.net.entitysync.serverevent.9.0.20-rc61.nupkg.sha512"
+      "sha512": "sha512-MQK9bitRkjq6AXEzPX4qMrfA95Iq8D8zfgAHA5y1Xk1xDymaJWrt+s5SubsueD6JCWILgHebMI8g8S1dfxRHZQ==",
+      "path": "altv.net.entitysync/1.18.0",
+      "hashPath": "altv.net.entitysync.1.18.0.nupkg.sha512"
     },
-    "System.Threading.Channels/5.0.0": {
+    "AltV.Net.EntitySync.ServerEvent/10.0.3": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-RLBIxntLaG9pRmmuVDwY1kc8Bvp/FQzSxPU+19VekkScKkWtVP9r8bLhm28ama3usc816UBrmkg3vv3jUea/hw==",
-      "path": "system.threading.channels/5.0.0",
-      "hashPath": "system.threading.channels.5.0.0.nupkg.sha512"
+      "sha512": "sha512-J7lyPeYj2Clz8GubpxA9Ul8RdG3KfptE3fkNRLc8T22Fg0EM4mDkuc8OyfR67g+GNhbtfOCbxp6yXZ36L+tJkQ==",
+      "path": "altv.net.entitysync.serverevent/10.0.3",
+      "hashPath": "altv.net.entitysync.serverevent.10.0.3.nupkg.sha512"
+    },
+    "AltV.Net.Shared/10.0.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Po8WQcOM8IFI03VO+njmNPLFT9XCKpbto5tvYA4QmFx5eHoyuGjcCHc2O7qdxy0sy+roBDbSN7ex4Zr2qGy+uA==",
+      "path": "altv.net.shared/10.0.3",
+      "hashPath": "altv.net.shared.10.0.3.nupkg.sha512"
+    },
+    "System.Threading.Channels/6.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-TY8/9+tI0mNaUMgntOxxaq2ndTkdXqLSxvPmas7XEqOlv9lQtB7wLjYGd756lOaO7Dvb5r/WXhluM+0Xe87v5Q==",
+      "path": "system.threading.channels/6.0.0",
+      "hashPath": "system.threading.channels.6.0.0.nupkg.sha512"
     }
   }
 }

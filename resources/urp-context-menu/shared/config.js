@@ -204,98 +204,9 @@ export const itemsList = [
     },
 
     //pump gas start
+
     {
-        index: 2287735495,
-        items: [
-            {
-                title: 'Drag',
-                image: './img/drag.png',
-                event: { name: 'Station:open', type: 'client', params: '' },
-            },
-        ],
-    },
-    {
-        index: -2007231801,
-        items: [
-            {
-                title: 'Drag',
-                image: './img/drag.png',
-                event: { name: 'Station:open', type: 'client', params: '' },
-            },
-        ],
-    },
-    {
-        index: 1339433404,
-        items: [
-            {
-                title: 'Drag',
-                image: './img/drag.png',
-                event: { name: 'Station:open', type: 'client', params: '' },
-            },
-        ],
-    },
-    {
-        index: 1694452750,
-        items: [
-            {
-                title: 'Drag',
-                image: './img/drag.png',
-                event: { name: 'Station:open', type: 'client', params: '' },
-            },
-        ],
-    },
-    {
-        index: 1933174915,
-        items: [
-            {
-                title: 'Drag',
-                image: './img/drag.png',
-                event: { name: 'Station:open', type: 'client', params: '' },
-            },
-        ],
-    },
-    {
-        index: -462817101,
-        items: [
-            {
-                title: 'Drag',
-                image: './img/drag.png',
-                event: { name: 'Station:open', type: 'client', params: '' },
-            },
-        ],
-    },
-    {
-        index: -469694731,
-        items: [
-            {
-                title: 'Drag',
-                image: './img/drag.png',
-                event: { name: 'Station:open', type: 'client', params: '' },
-            },
-        ],
-    },
-    {
-        index: -164877493,
-        items: [
-            {
-                title: 'Drag',
-                image: './img/drag.png',
-                event: { name: 'Station:open', type: 'client', params: '' },
-            },
-        ],
-    },
-    {
-        index: 4130089803,
-        items: [
-            {
-                title: 'Drag',
-                image: './img/drag.png',
-                event: { name: 'Station:open', type: 'client', params: '' },
-            },
-        ],
-    },
-    {
-        index: 3832150195,
+        index: 'GAS_STATION',
         items: [
             {
                 title: 'Drag',
@@ -306,3 +217,17 @@ export const itemsList = [
     },
     //pump gas end
 ];
+
+//prop
+export const PROPS_LIST_EVENT = {
+    3832150195: 'GAS_STATION',
+    4130089803: 'GAS_STATION',
+    '-164877493': 'GAS_STATION',
+    '-469694731': 'GAS_STATION',
+    '-462817101': 'GAS_STATION',
+    1933174915: 'GAS_STATION',
+    1694452750: 'GAS_STATION',
+    1339433404: 'GAS_STATION',
+    '-2007231801': 'GAS_STATION',
+    2287735495: 'GAS_STATION',
+};
